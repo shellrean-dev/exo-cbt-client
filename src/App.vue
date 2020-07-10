@@ -1,32 +1,38 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div>
+        <loading :active.sync="loadPage" 
+        :is-full-page="true" :loader="'bars'" :color="'#1f1498'"></loading>
+
+        <app-sidebar v-show="isAuth"/>
+        <div class="c-wrapper">
+            <app-header v-if="isAuth" />
+            <transition name="fade" mode="out-in">
+                <router-view />
+            </transition>
+            <app-footer v-if="isAuth" />
+        </div >
     </div>
-    <router-view/>
-  </div>
 </template>
-
+<script>
+import { mapState, mapGetters } from 'vuex'
+import AppSidebar from '@/components/AppSidebar.vue'
+import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+export default {
+    components: {
+        AppHeader,
+        AppSidebar,
+        AppFooter,
+        Loading
+    },
+    computed: {
+        ...mapState(['token', 'loadPage']),
+        ...mapGetters(['isAuth']),
+    },
+}
+</script>
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+    @import "@/assets/scss/app.scss";
 </style>
