@@ -22,38 +22,61 @@
 
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" to="/jurusan"> <span class="c-sidebar-nav-icon"></span> Jurusan</router-link>
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'jurusan.data' }"> 
+                <span class="c-sidebar-nav-icon"></span> Jurusan
+              </router-link>
             </li>
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" to="/peserta">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.data' }">
                 <span class="c-sidebar-nav-icon"></span> Peserta
               </router-link>
             </li>
 
             <li class="c-sidebar-nav-item" >
-              <router-link class="c-sidebar-nav-link" to="/matpel"> <span class="c-sidebar-nav-icon"></span> Matpel</router-link>
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'matpel.data' }"> 
+                <span class="c-sidebar-nav-icon"></span> Matpel
+              </router-link>
             </li>
           </ul>
         </li>
-        <!--
+        
          <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" to="/banksoal">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
             <i class="c-sidebar-nav-icon cil-briefcase"></i>Banksoal
           </router-link>
         </li>
         <li class="c-sidebar-nav-item" >
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.data' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
             <i class="c-sidebar-nav-icon cil-notes"></i>Jadwal ujian
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.koreksi' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
             <i class="c-sidebar-nav-icon cil-task"></i> Koreksi esay
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" to="/filemedia">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
             <i class="c-sidebar-nav-icon cil-folder"></i>File media
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-title">Menu ujian</li>
+        <li class="c-sidebar-nav-item">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+            <i class="c-sidebar-nav-icon cil-clipboard"></i>
+            Status ujian
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-item">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+            <i class="c-sidebar-nav-icon cil-task"></i>
+            Status peserta
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-item">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+            <i class="c-sidebar-nav-icon cil-sync"></i>
+            Reset login peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-title">Menu heager</li>
@@ -63,32 +86,32 @@
           </a>
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'analys.siswa' }">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
                 <span class="c-sidebar-nav-icon"></span> Capaian siswa
               </router-link>
             </li>
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'analys.banksoal' }">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
                 <span class="c-sidebar-nav-icon"></span> Kesulitan soal
               </router-link>
             </li>
           </ul>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'hasil.ujian' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
             <i class="c-sidebar-nav-icon cil-chart"></i>Hasil ujian
           </router-link>
         </li>
         <li class="c-sidebar-nav-item" >
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'role.permissions' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
             <i class="c-sidebar-nav-icon cil-cog"></i>Role & permission
           </router-link>
         </li>
         <li class="c-sidebar-nav-item" >
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'heager.dashboard' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
             <i class="c-sidebar-nav-icon cil-globe-alt"></i>Heager actions
           </router-link>
-        </li>  --> 
+        </li>   
         <li class="c-sidebar-nav-item">
           <a class="c-sidebar-nav-link" href="#" @click.prevent="logout">
             <i class="c-sidebar-nav-icon cil-account-logout"></i> 
@@ -102,16 +125,33 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 export default {
+  data() {
+    return {
+      activeClass: 'c-active'
+    }
+  },
   methods: {
     ...mapActions('auth', ['loggedOut']),
-      logout() {
-
+    async logout() {
+      try {
+        await this.loggedOut()
+        localStorage.removeItem('token')
+        this.$store.state.token = localStorage.getItem('token')
+        this.$router.push('/login')
+      } catch (error) {
+        localStorage.removeItem('token')
+        this.$store.state.token = localStorage.getItem('token')
+        this.$router.push('/login')
       }
-    },
+    }
+  },
+  computed: {
+    currentPage() {
+      return this.$route.name ? this.$route.name : [];
+    }
+  }
 }
 </script>
 <style type="text/css">
-  .router-link-exact-active.router-link-active {
-    background-color: #46536d !important;
-  }
+  
 </style>

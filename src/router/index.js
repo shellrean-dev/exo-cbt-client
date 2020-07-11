@@ -6,19 +6,24 @@ const Home = () => import('@/views/Home')
 const Login = () => import('@/views/Login')
 
 import SekolahIndex from '@/views/sekolah/Index'
-const DataSekolah = () => import('@/views/sekolah/Sekolah')
+const DataSekolah = () => import(/* webpackChunkName: "sekolah" */ '@/views/sekolah/Sekolah')
 
 import JurusanIndex from '@/views/jurusan/Index'
-const DataJurusan = () => import('@/views/jurusan/Jurusan')
-const EditJurusan = () => import('@/views/jurusan/Edit')
-const AddJurusan = () => import('@/views/jurusan/Add')
+const DataJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Jurusan')
+const EditJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Edit')
+const AddJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Add')
 
 import PesertaIndex from '@/views/peserta/Index'
-const DataPeserta = () => import('@/views/peserta/Peserta')
-const AddPeserta = () => import('@/views/peserta/Add')
-const EditPeserta = () => import('@/views/peserta/Edit')
-const UploadPeserta = () => import('@/views/peserta/Upload')
-const KartuPeserta = () => import('@/views/peserta/Kartu')
+const DataPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Peserta')
+const AddPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Add')
+const EditPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Edit')
+const UploadPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Upload')
+const KartuPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Kartu')
+
+import MatpelIndex from '@/views/matpel/Index'
+const DataMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Matpel')
+const AddMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Add')
+const EditMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Edit')
 
 Vue.use(VueRouter)
 
@@ -106,6 +111,31 @@ const routes = [
         name: 'peserta.kartu',
         component: KartuPeserta,
         meta: { title: 'Kartu peserta' }
+      }
+    ]
+  },
+  {
+    path: '/matpel',
+    component: MatpelIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'matpel.data',
+        component: DataMatpel,
+        meta: { title: 'Manage mata pelajaran' }
+      },
+      {
+        path: 'add',
+        name: 'matpel.add',
+        component: AddMatpel,
+        meta: { title: 'Tambah mata pelajara' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'matpel.edit',
+        component: EditMatpel,
+        meta: { title: 'Edit mata pelajaran' }
       }
     ]
   },

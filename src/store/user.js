@@ -1,16 +1,32 @@
 import $axios from '@/services/api.js'
 
 const state = () => ({
+    users: [],
     authenticated: []
 })
 
 const mutations = {
+    ASSIGN_USER(state, payload) {
+        state.users = payload
+    },
     ASSIGN_USER_AUTH(state, payload) {
         state.authenticated = payload
     }
 }
 
 const actions = {
+    getUserLists({ commit }) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let network = await $axios.get(`/user-lists`)
+
+                commit('ASSIGN_USER', network.data.data)
+                resolve(network.data)
+            } catch (error) {
+                reject(error.response.data)
+            }
+        })
+    },
     getUserLogin({ commit }) {
         commit('LOADING_PAGE',true, { root: true })
         return new Promise(async (resolve, reject) => {

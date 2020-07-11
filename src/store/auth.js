@@ -27,6 +27,17 @@ const actions = {
                 reject(error.response.data)
             }
         })
+    },
+    loggedOut({ commit }, payload) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let network = await $axios.get('logout')
+
+                resolve(network.data)
+            } catch (error) {
+                reject(error.response.data)
+            }
+        })
     }
 }
 

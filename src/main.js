@@ -6,7 +6,26 @@ import store from './store'
 
 import CoreuiVue from '@coreui/coreui'
 import VueSweetalert2 from 'vue-sweetalert2'
-import BootstrapVue from 'bootstrap-vue'
+import {
+ TablePlugin,
+ ButtonPlugin,
+ CardPlugin,
+ SpinnerPlugin,
+ FormGroupPlugin,
+ InputGroupPlugin,
+ PaginationPlugin,
+ FormCheckboxPlugin,
+ BadgePlugin,
+ FormSelectPlugin,
+ ProgressPlugin 
+} from 'bootstrap-vue';
+
+[TablePlugin, ButtonPlugin, CardPlugin, SpinnerPlugin, FormGroupPlugin, 
+InputGroupPlugin, PaginationPlugin, FormCheckboxPlugin, BadgePlugin,
+FormSelectPlugin,ProgressPlugin].forEach(comp => {
+  Vue.use(comp);
+});
+
 import VueHtmlToPaper from 'vue-html-to-paper';
 import CKEditor from 'ckeditor4-vue';
 
@@ -36,7 +55,6 @@ const options = {
 
 Vue.use(VueHtmlToPaper, options);
 Vue.use(CoreuiVue)
-Vue.use(BootstrapVue)
 Vue.use(VueSweetalert2)
 Vue.use(CKEditor);
 

@@ -101,6 +101,11 @@
 							</template>
 						</b-table>
 					</div>
+					<template v-else>
+                        <div class="text-center my-2">
+                            Loading...
+                        </div>
+                    </template>
 				</div>
 				<div class="card-footer">
 					

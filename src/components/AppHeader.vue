@@ -26,15 +26,31 @@
             </li>
         </ul>
         <div class="c-subheader px-3">
-            <!-- <breadcrumb></breadcrumb> -->
+            <breadcrumb></breadcrumb>
         </div>
     </header>
 </template>
 <script>
-import Breadcrumb from './AppBreadcrumb.vue'
+import Breadcrumb from './Breadcrumb.vue'
 import { mapState, mapActions } from 'vuex'
 export default {
     components: {
-        Breadcrumb
+      'breadcrumb' : Breadcrumb
+    },
+    methods: {
+        ...mapActions('auth', ['loggedOut']),
+        async logout() {
+            try {
+              await this.loggedOut()
+              localStorage.removeItem('token')
+              this.$store.state.token = localStorage.getItem('token')
+              this.$router.push('/login')
+            } catch (error) {
+              localStorage.removeItem('token')
+              this.$store.state.token = localStorage.getItem('token')
+              this.$router.push('/login')
+            }
+        }
     },
 }
+</script>

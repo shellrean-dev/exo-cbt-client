@@ -6,6 +6,7 @@ import user from './user'
 import jurusan from './jurusan'
 import peserta from './peserta'
 import agama from './agama'
+import matpel from './matpel'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ export default new Vuex.Store({
     user,
     jurusan,
     peserta,
-    agama
+    agama,
+    matpel
   },
   state: {
     errors: [],

@@ -120,7 +120,7 @@
 		...mapActions('sekolah', ['getAllSekolah', ]),
 		changeData() {
 			this.getPesertas({
-				search: this.search, perPage: this.perPage
+				search: this.search
 			})
 		},
         print() {
