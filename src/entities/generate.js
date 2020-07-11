@@ -13,7 +13,7 @@ export function generateBanksoalCode() {
    let d = new Date();
    let yea = d.getFullYear();
 
-   return `${id}-  -${yea}`
+   return `${id}-${yea}-`
 }
 
 export function generateMatpelCode() {

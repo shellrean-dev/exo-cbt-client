@@ -7,6 +7,11 @@ import jurusan from './jurusan'
 import peserta from './peserta'
 import agama from './agama'
 import matpel from './matpel'
+import banksoal from './banksoal'
+import soal from './soal'
+import filemedia from './filemedia'
+import ujian from './ujian'
+import event from './event'
 
 Vue.use(Vuex)
 
@@ -17,7 +22,12 @@ export default new Vuex.Store({
     jurusan,
     peserta,
     agama,
-    matpel
+    matpel,
+    banksoal,
+    soal,
+    filemedia,
+    ujian,
+    event
   },
   state: {
     errors: [],

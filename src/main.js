@@ -17,12 +17,17 @@ import {
  FormCheckboxPlugin,
  BadgePlugin,
  FormSelectPlugin,
- ProgressPlugin 
+ ProgressPlugin ,
+ FormInputPlugin,
+ ModalPlugin,
+ ToastPlugin,
+ FormRadioPlugin 
 } from 'bootstrap-vue';
 
 [TablePlugin, ButtonPlugin, CardPlugin, SpinnerPlugin, FormGroupPlugin, 
 InputGroupPlugin, PaginationPlugin, FormCheckboxPlugin, BadgePlugin,
-FormSelectPlugin,ProgressPlugin].forEach(comp => {
+FormSelectPlugin,ProgressPlugin, FormInputPlugin, ModalPlugin, ToastPlugin,
+FormRadioPlugin ].forEach(comp => {
   Vue.use(comp);
 });
 

@@ -16,9 +16,12 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right pt-0">
                     <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
-                    <a class="dropdown-item" href="#" @click.prevent="logout">
-                        <i class="cil-user"></i> &nbsp; Profile
-                    </a>
+                    <b-button class="dropdown-item" :to="{ name: 'sekolah.setting' }" >
+                        <i class="cil-cog"></i> &nbsp; Setting
+                    </b-button>
+                    <b-button class="dropdown-item" href="#" v-b-modal.modal-profile >
+                        <i class="cil-lock-locked"></i> &nbsp; Ubah password
+                    </b-button>
                     <a class="dropdown-item" href="#" @click.prevent="logout">
                         <i class="cil-account-logout"></i> &nbsp; Logout
                     </a>
@@ -28,14 +31,37 @@
         <div class="c-subheader px-3">
             <breadcrumb></breadcrumb>
         </div>
+        <b-modal id="modal-profile" centered no-close-on-backdrop title="Ubah password">
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" v-model="password" class="form-control" placeholder="Password" name="">
+                <b-progress :value="score" :max="4" height="2px" class="mb-3"></b-progress>
+            </div>
+            <password @score="showScore" :showStrengthMeter="false" v-model="password" :strength-meter-only="true"/>
+            <div class="form-group">
+                <label>Re-password</label>
+                <input type="password" v-model="password2" class="form-control" placeholder="Re password" name="">
+                <small class="text-danger" v-show="error">Password tidak sesuai</small>
+            </div>
+        </b-modal>
     </header>
 </template>
 <script>
+import Password from 'vue-password-strength-meter'
 import Breadcrumb from './Breadcrumb.vue'
 import { mapState, mapActions } from 'vuex'
 export default {
+    data() {
+        return {
+            password: '',
+            password2: '',
+            score: 0,
+            error: false
+        }
+    },
     components: {
-      'breadcrumb' : Breadcrumb
+      'breadcrumb' : Breadcrumb,
+      Password
     },
     methods: {
         ...mapActions('auth', ['loggedOut']),
@@ -50,7 +76,19 @@ export default {
               this.$store.state.token = localStorage.getItem('token')
               this.$router.push('/login')
             }
+        },
+        showScore (score) {
+            this.score = score
         }
     },
+    watch:{
+        password2(val) {
+            if(this.password != val) {
+                this.error = true
+            } else {
+                this.error = false
+            }
+        }
+    }
 }
 </script>

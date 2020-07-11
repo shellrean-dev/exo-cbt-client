@@ -5,8 +5,8 @@ import store from '@/store'
 const Home = () => import('@/views/Home')
 const Login = () => import('@/views/Login')
 
-import SekolahIndex from '@/views/sekolah/Index'
-const DataSekolah = () => import(/* webpackChunkName: "sekolah" */ '@/views/sekolah/Sekolah')
+import SettingIndex from '@/views/setting/Index'
+const SetSekolah = () => import(/* webpackChunkName: "sekolah" */ '@/views/setting/Sekolah')
 
 import JurusanIndex from '@/views/jurusan/Index'
 const DataJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Jurusan')
@@ -25,6 +25,18 @@ const DataMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel
 const AddMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Add')
 const EditMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Edit')
 
+import BanksoalIndex from '@/views/banksoal/Index'
+const DataBanksoal = () => import(/* webpackChunkName: "banksoal" */ '@/views/banksoal/DataBanksoal')
+const SoalBanksoal = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoal')
+const SoalBanksoalTambah = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalTambah')
+const SoalBanksoalTemplate = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalTemplate')
+const SoalBanksoalEdit = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalEdit')
+const SoalBanksoalPrev = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalPrev')
+
+import UjianIndex from '@/views/ujian/Index'
+const DataUjian = () => import('@/views/ujian/Ujian')
+const StatusUjian = () => import('@/views/ujian/StatusUjian')
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,14 +52,14 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/sekolah',
-    component: SekolahIndex,
+    path: '/setting',
+    component: SettingIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
-        name: 'sekolah.data',
-        component: DataSekolah,
+        path: 'sekolah',
+        name: 'sekolah.setting',
+        component: SetSekolah,
         meta: { title: 'Data sekolah' }
       }
     ]
@@ -136,6 +148,68 @@ const routes = [
         name: 'matpel.edit',
         component: EditMatpel,
         meta: { title: 'Edit mata pelajaran' }
+      }
+    ]
+  },
+  {
+    path: '/banksoal',
+    component: BanksoalIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'banksoal.data',
+        component: DataBanksoal,
+        meta: { title: 'Manage banksoal' }
+      },
+      {
+        path: ':banksoal_id/soal',
+        name: 'banksoal.soal',
+        component: SoalBanksoal,
+        meta: { title: 'Manage soal' }
+      },
+      {
+        path: ':banksoal_id/soal/tambah',
+        name: 'banksoal.soal.tambah',
+        component: SoalBanksoalTambah,
+        meta: { title: 'Tambah soal' }
+      },
+      {
+        path: ':banksoal_id/soal/paste',
+        name: 'banksoal.soal.paste',
+        component: SoalBanksoalTemplate,
+        meta: { title: 'Tambah soal' }
+      },
+      {
+        path: ':banksoal_id/soal/:soal_id',
+        name: 'banksoal.soal.edit',
+        component : SoalBanksoalEdit,
+        meta: { title: 'Edit soal' }
+      },
+      {
+        path: ':banksoal_id/prev',
+        name: 'banksoal.prev',
+        component: SoalBanksoalPrev,
+        meta: { title: 'Preview soal banksoal' }
+      }
+    ]
+  },
+  {
+    path: '/ujian',
+    component: UjianIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'ujian.data',
+        component: DataUjian,
+        meta: { title: 'Manage ujian' }
+      },
+      {
+        path: 'status',
+        name: 'ujian.status',
+        component: StatusUjian,
+        meta: { title: 'Status ujian' }
       }
     ]
   },

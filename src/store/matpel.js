@@ -72,10 +72,10 @@ const actions = {
             try {
                 let network = await $axios.get(`/matpels/all`)
 
-                commit('ASSIGN_ALL_DATA', response.data)
-                resolve(response.data)
+                commit('ASSIGN_ALL_DATA', network.data.data)
+                resolve(network.data)
             } catch (error) {
-                reject(error.response.data)
+                reject(error.network.data)
             }
         }) 
     },

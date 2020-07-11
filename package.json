@@ -16,6 +16,8 @@
     "luxon": "^1.24.1",
     "perfect-scrollbar": "^1.5.0",
     "register-service-worker": "^1.7.1",
+    "tiptap": "^1.29.0",
+    "tiptap-extensions": "^1.31.0",
     "vue": "^2.6.11",
     "vue-datetime": "^1.0.0-beta.13",
     "vue-google-charts": "^0.3.3",
@@ -23,11 +25,13 @@
     "vue-json-excel": "^0.2.98",
     "vue-loading-overlay": "^3.3.2",
     "vue-multiselect": "^2.1.6",
+    "vue-password-strength-meter": "^1.7.2",
     "vue-router": "^3.2.0",
     "vue-select": "^3.10.7",
     "vue-sweetalert2": "^3.0.6",
     "vuex": "^3.4.0",
-    "weekstart": "^1.0.1"
+    "weekstart": "^1.0.1",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
