@@ -57,13 +57,13 @@
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.peserta' }">
             <i class="c-sidebar-nav-icon cil-task"></i>
             Status peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.peserta.reset' }">
             <i class="c-sidebar-nav-icon cil-sync"></i>
             Reset login peserta
           </router-link>

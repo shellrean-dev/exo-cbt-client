@@ -2,6 +2,7 @@ import $axios from '@/services/api.js'
 
 const state = () => ({
     pesertas: [],
+    peserta_login: [],
     peserta: {
         no_ujian: '',
         nama: '',
@@ -11,6 +12,7 @@ const state = () => ({
         agama_id: ''
     },
     page: 1,
+    login_page: 1,
     uploadPercentage: 0
 })
 
@@ -18,8 +20,14 @@ const mutations = {
     ASSIGN_DATA(state, payload) {
         state.pesertas = payload
     },
+    ASSIGN_PESERTA_LOGIN(state, payload) {
+        state.peserta_login = payload
+    },
     SET_PAGE(state, payload) {
         state.page = payload
+    },
+    SET_LOGIN_PESERTA_PAGE(state, payload) {
+        state.login_page = payload
     },
     ASSIGN_FORM(state, payload) {
         state.peserta = {
@@ -151,6 +159,38 @@ const actions = {
                 commit('SET_LOADING',false, { root: true })
                 reject(error.response.data)
             }
+        })
+    },
+    getPesertasLogin({ commit, state }, payload) {
+        let search = typeof payload != 'undefined' ? payload : ''
+        commit('SET_LOADING',true, { root: true })
+
+        return new Promise(( resolve, reject ) => {
+            $axios.get(`/pesertas/login?page=${state.page}&q=${search}`)
+            .then((response) => {
+                commit('ASSIGN_PESERTA_LOGIN', response.data.data)
+                commit('SET_LOADING',false, { root: true })
+                resolve(response.data)
+            })
+            .catch((error) => {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            })
+        })
+    },
+    resetLoginPeserta({ commit }, payload) {
+        commit('SET_LOADING',true, { root: true })
+
+        return new Promise(( resolve, reject ) => {
+            $axios.delete(`/pesertas/${payload}/login`)
+            .then((response) => {
+                commit('SET_LOADING',false, { root: true })
+                resolve(response.data)
+            })
+            .catch((error) => {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            })
         })
     }
 }

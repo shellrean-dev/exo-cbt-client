@@ -3,7 +3,9 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-header">
-					<h1 class="border-primary text-primary" style="max-width: 220px; text-align: center;">DG5GC</h1>
+					<h1 class="border-primary text-primary" v-if="diujikan.status_token === 1" style="max-width: 220px; text-align: center;">
+						{{ diujikan.token }}
+					</h1>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -34,15 +36,15 @@
 		                    		<label>Token</label>
 		                    		<div class="input-group">
 		                    			<input type="text" readonly="" class="form-control" 
-		                    			:value="((diujikan.status_token == 1) ? 
+		                    			:value="((diujikan.status_token === 1) ? 
 		                    			diujikan.token + ' | 15 Menit' : '-')">
-		                    			<div class="input-group-append" v-show="diujikan.status_token == 0">
+		                    			<div class="input-group-append" v-show="diujikan.status_token === 0">
 						                    <b-button variant="dark" type="button" @click="ubahToken">Rilis token</b-button>
 						                </div>
 								    </div>
 		                    	</div>
 		                    	<div class="form-group">
-		                    		<b-button variant="primary" @click="postStatus"><i class="cil-save"></i> Simpan</b-button>
+		                    		<b-button variant="primary" @click="postStatus" :disabled="isLoading"><i class="cil-save"></i> {{ isLoading ? 'Processing...' : 'Simpan' }}</b-button>
 		                    	</div>
                     		</div>
                     	</div>
@@ -77,6 +79,7 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters(['isLoading']),
 		...mapState('ujian', {
 			diujikan: state => state.diujikan,
 			ujians: state => state.ujianActive,
@@ -87,7 +90,8 @@ export default {
 		...mapActions('ujian', ['getUjianDiujian','getUjianActive', 'getSesi', 'saveStatus', 'rilisToken', 'changeToken']),
 		postStatus() {
 			this.saveStatus()
-			.then((res) => {
+			.then(async (res) => {
+				await this.getUjianDiujian()
 		        this.$bvToast.toast('Ujian aktif disimpan.', successToas())
 			})
 			.catch((error) => {
@@ -116,8 +120,7 @@ export default {
 		}
 	},
 	mounted() {
-		// setInterval(() => { this.timeout ++ }, 15 * 60000);
-		// setInterval(() => { this.timeout ++ }, 5000);
+		setInterval(() => { this.timeout ++ }, 15 * 60000);
 	}
 }
 </script>

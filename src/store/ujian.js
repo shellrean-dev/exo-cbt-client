@@ -13,7 +13,12 @@ const state = () => ({
 	banksoals: [],
 	capaians: [],
 	events: [],
-	diujikan: {},
+	diujikan: {
+		jadwal: '',
+		sesi: '',
+		status_token: '',
+		token: ''
+	},
 	sesis: []
 })
 
@@ -28,7 +33,12 @@ const mutations = {
 		state.ujianActive = payload
 	},
 	ASSIGN_UJIAN_AKTIF(state, payload) {
-		state.diujikan =  payload
+		state.diujikan = {
+			jadwal: payload.ujian_id,
+			sesi: payload.kelompok,
+			status_token: parseInt(payload.status_token),
+			token: payload.token
+		}
 	},
 	ASSIGN_DATA_EVENT(state, payload) {
 		state.events = payload
@@ -132,8 +142,8 @@ const actions = {
 		commit('SET_LOADING', true, { root: true })
 		return new Promise((resolve, reject) => {
 			const data = {
-				ujian_id: state.diujikan.ujian_id,
-				kelompok: state.diujikan.kelompok
+				jadwal: state.diujikan.jadwal,
+				kelompok: state.diujikan.sesi
 			}
 			$axios.post(`ujians/status`, data)
 			.then((response) => {
@@ -273,16 +283,49 @@ const actions = {
 		})
 	},
 	getPesertas({ commit, state }, payload) {
+		commit('SET_LOADING', true, { root: true })
+
 		return new Promise((resolve, reject) => {
-			$axios.get(`/ujian/get-peserta/${payload}`)
+			$axios.get(`ujians/peserta`)
 			.then((response) => {
-				commit('ASSIGN_PESERTA_UJIAN', response.data)
+				commit('ASSIGN_PESERTA_UJIAN', response.data.data)
+				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
 			})
 			.catch((error) => {
-
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
 			})
 		})
+	},
+	resetUjianPeserta({ commit, state }, payload) {
+		commit('SET_LOADING', true, { root: true })
+
+		return new Promise(async (resolve, reject) => {
+			try {
+				let network = await $axios.get(`ujians/peserta/${payload}/reset`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}	
+		})
+	},
+	selesaiUjianPeserta({ commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async (resolve, reject) => {
+			try {
+				let network = await $axios.get(`ujians/peserta/${payload}/close`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		});
 	},
 	getHasilPeserta({ commit, state }, payload) {
 		return new Promise((resolve, reject) => {

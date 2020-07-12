@@ -36,6 +36,8 @@ const SoalBanksoalPrev = () => import(/* webpackChunkName: "banksoal" */'@/views
 import UjianIndex from '@/views/ujian/Index'
 const DataUjian = () => import('@/views/ujian/Ujian')
 const StatusUjian = () => import('@/views/ujian/StatusUjian')
+const PesertaUjian = () => import('@/views/ujian/PesertaUjian')
+const ResetPesertaUjian = () => import('@/views/ujian/ResetPesertaUjian')
 
 Vue.use(VueRouter)
 
@@ -210,6 +212,18 @@ const routes = [
         name: 'ujian.status',
         component: StatusUjian,
         meta: { title: 'Status ujian' }
+      },
+      {
+        path: 'peserta',
+        name: 'ujian.peserta',
+        component: PesertaUjian,
+        meta: { title: 'Peserta ujian' }
+      },
+      {
+        path: 'reset/peserta',
+        name: 'ujian.peserta.reset',
+        component: ResetPesertaUjian,
+        meta: { title: 'Reset peserta ujian' }
       }
     ]
   },
