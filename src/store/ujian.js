@@ -7,6 +7,8 @@ const state = () => ({
 	ujianAll: [],
 	pesertas: [],
 	page: 1,
+	koreksi_page: 1,
+	page_hasil: 1,
 	hasilUjian: [],
 	essies: [],
 	sekolahs: [],
@@ -51,6 +53,12 @@ const mutations = {
 	},
 	SET_PAGE(state, payload) {
 		state.page = payload
+	},
+	SET_PAGE_KOREKSI(state, payload) {
+		state.koreksi_page = payload
+	},
+	SET_PAGE_HASIL(state, payload) {
+		state.page_hasil = payload
 	},
 	ASSIGN_PESERTA_UJIAN(state, payload) {
 		state.pesertas = payload
@@ -339,38 +347,45 @@ const actions = {
 	submitNilaiEsay({ commit, state }, payload) {
 		return new Promise((resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.post(`/ujian/esay/input`, payload)
+			$axios.post(`ujians/esay/input`, payload)
 			.then((response) => {
 				commit('SET_LOADING', false, { root: true })
-				resolve(response)
+				resolve(response.data)
 			})
 			.catch((err) => {
 				commit('SET_LOADING', false, { root: true })
-				reject(err)
+				reject(err.response.data)
 			})
 		})
 	},
 	getExistsEsay({ state, commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
 		return new Promise((resolve, reject) => {
-			$axios.get(`/ujian/esay/exists`, payload)
+			$axios.get(`ujians/esay/exists`, payload)
 			.then((response) => {
-				commit('ASSIGN_DATA_EXISTS', response.data)
-				resolve()
+				commit('ASSIGN_DATA_EXISTS', response.data.data)
+				commit('SET_LOADING', false, { root: true })
+				resolve(response.data)
 			})
 			.catch((err) => {
-				reject()
+				commit('SET_LOADING', false, { root: true })
+				reject(err.response.data)
 			})
 		})
 	},
 	getExistsByBanksoal({ state, commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+
 		return new Promise((resolve, reject) => {
-			$axios.get(`/ujian/esay/koreksi/${payload}?page=${state.page}`)
+			$axios.get(`/ujians/esay/${payload}/koreksi?page=${state.koreksi_page}`)
 			.then((response) => {
 				commit('ASSIGN_JAWABAN_ESAY', response.data.data)
-				resolve()
+				commit('SET_LOADING', false, { root: true })
+				resolve(response.data)
 			})
 			.catch((err) => {
-				reject()
+				commit('SET_LOADING', false, { root: true })
+				reject(err.response.data)
 			})
 		})
 	},
@@ -385,6 +400,23 @@ const actions = {
 			.catch((err) => {
 				commit('SET_LOADING', false, { root: true })
 				reject(err)
+			})
+		})
+	},
+	getHasilUjian({ state, commit }, payload) {
+		let perPage = typeof payload.perPage != 'undefined' ? payload.perPage: ''
+
+		return new Promise((resolve, reject) => {
+			commit('SET_LOADING', true, { root: true })
+			$axios.get(`/ujians/${payload.id}/result?page=${state.page_hasil}&perPage=${perPage}`)
+			.then((response) => {
+				commit('ASSIGN_HASIL_UJIAN', response.data.data)
+				commit('SET_LOADING', false, { root: true })
+				resolve(response.data)
+			})
+			.catch((err) => {
+				commit('SET_LOADING', false, { root: true })
+				reject(err.response.data)
 			})
 		})
 	}

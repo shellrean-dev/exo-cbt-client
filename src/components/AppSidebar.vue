@@ -44,11 +44,6 @@
             <i class="c-sidebar-nav-icon cil-notes"></i>Jadwal ujian
           </router-link>
         </li>
-        <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
-            <i class="c-sidebar-nav-icon cil-folder"></i>File media
-          </router-link>
-        </li>
         <li class="c-sidebar-nav-title">Menu ujian</li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.status' }">
@@ -70,7 +65,7 @@
         </li>
         <li class="c-sidebar-nav-title">Menu pengolahan</li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }">
             <i class="c-sidebar-nav-icon cil-task"></i> Koreksi esay
           </router-link>
         </li>
@@ -80,32 +75,22 @@
           </a>
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.analys.capaian.siswa' }">
                 <span class="c-sidebar-nav-icon"></span> Capaian siswa
               </router-link>
             </li>
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.analys.banksoal' }">
                 <span class="c-sidebar-nav-icon"></span> Kesulitan soal
               </router-link>
             </li>
           </ul>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.hasil.ujian' }">
             <i class="c-sidebar-nav-icon cil-chart"></i>Hasil ujian
           </router-link>
         </li>
-        <li class="c-sidebar-nav-item" >
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
-            <i class="c-sidebar-nav-icon cil-cog"></i>Role & permission
-          </router-link>
-        </li>
-        <li class="c-sidebar-nav-item" >
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }">
-            <i class="c-sidebar-nav-icon cil-globe-alt"></i>Heager actions
-          </router-link>
-        </li>   
         <li class="c-sidebar-nav-item">
           <a class="c-sidebar-nav-link" href="#" @click.prevent="logout">
             <i class="c-sidebar-nav-icon cil-account-logout"></i> 

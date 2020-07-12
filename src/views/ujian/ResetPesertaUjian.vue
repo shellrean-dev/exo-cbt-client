@@ -19,7 +19,7 @@
                                 <b-button :disabled="isLoading" size="sm" variant="danger" @click="resetPeserta(row.item.id)"><i class="cil-sync"></i> reset api token</b-button>
                             </template>
                         </b-table>
-                        <div class="row" v-if="typeof pesertas.data != 'undefine' ">
+                        <div class="row" v-if="typeof pesertas.data != 'undefined' ">
                             <div class="col-md-6">
                                 <p><i class="fa fa-bars"></i> {{ pesertas.data.length }} item dari {{ pesertas.total }} total data</p>
                             </div>

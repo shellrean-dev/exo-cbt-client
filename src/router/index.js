@@ -34,10 +34,17 @@ const SoalBanksoalEdit = () => import(/* webpackChunkName: "banksoal" */'@/views
 const SoalBanksoalPrev = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalPrev')
 
 import UjianIndex from '@/views/ujian/Index'
-const DataUjian = () => import('@/views/ujian/Ujian')
-const StatusUjian = () => import('@/views/ujian/StatusUjian')
-const PesertaUjian = () => import('@/views/ujian/PesertaUjian')
-const ResetPesertaUjian = () => import('@/views/ujian/ResetPesertaUjian')
+const DataUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/Ujian')
+const StatusUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/StatusUjian')
+const PesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/PesertaUjian')
+const ResetPesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/ResetPesertaUjian')
+
+import KelolaIndex from '@/views/kelola/Index'
+const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
+const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
+const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
+const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
+const HasilUjian = () => import('@/views/kelola/HasilUjian')
 
 Vue.use(VueRouter)
 
@@ -227,6 +234,43 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/kelola',
+    component: KelolaIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'koreksi-esay',
+        name: 'kelola.koreksi.esay',
+        component: KoreksiEsay,
+        meta: { title: 'Koreksi esay siswa'}
+      },
+      {
+        path: 'koreksi-esay/:banksoal',
+        name: 'kelola.koreksi.nilai.esay',
+        component: KoreksiNilaiEsay,
+        meta: { title: 'Koreksi nilai esay' }
+      },
+      {
+        path: 'analys/banksoal',
+        name: 'kelola.analys.banksoal',
+        component: AnalysBanksoal,
+        meta: { title: 'Analys banksoal' }
+      },
+      {
+        path: 'analys/capaian-siswa',
+        name: 'kelola.analys.capaian.siswa',
+        component: AnalysSiswa,
+        meta: { title: 'Analys capaian siswa' }
+      },
+      {
+        path: 'hasil-ujian',
+        name: 'kelola.hasil.ujian',
+        component: HasilUjian,
+        meta: { title: 'Hasil ujian' }
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({
