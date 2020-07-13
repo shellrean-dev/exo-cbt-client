@@ -16,9 +16,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right pt-0">
                     <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
-                    <b-button class="dropdown-item" :to="{ name: 'sekolah.setting' }" >
-                        <i class="cil-cog"></i> &nbsp; Setting
-                    </b-button>
                     <b-button class="dropdown-item" href="#" v-b-modal.modal-profile >
                         <i class="cil-lock-locked"></i> &nbsp; Ubah password
                     </b-button>
@@ -35,7 +32,7 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" v-model="password" class="form-control" placeholder="Password" name="">
-                <b-progress :value="score" :max="4" height="2px" class="mb-3"></b-progress>
+                <b-progress :value="score" :max="4" height="2px" class="mb-3" autofocus></b-progress>
             </div>
             <password @score="showScore" :showStrengthMeter="false" v-model="password" :strength-meter-only="true"/>
             <div class="form-group">
@@ -43,6 +40,14 @@
                 <input type="password" v-model="password2" class="form-control" placeholder="Re password" name="">
                 <small class="text-danger" v-show="error">Password tidak sesuai</small>
             </div>
+            <template v-slot:modal-footer="{ ok, cancel}">
+              <b-button size="sm" variant="secondary" @click="cancel()">
+                Batal
+              </b-button>
+              <b-button size="sm" variant="primary" :disabled="error" @click="changePass">
+                Ubah password
+              </b-button>
+            </template>
         </b-modal>
     </header>
 </template>
@@ -50,6 +55,7 @@
 import Password from 'vue-password-strength-meter'
 import Breadcrumb from './Breadcrumb.vue'
 import { mapState, mapActions } from 'vuex'
+import { successToas, errorToas} from '@/entities/notif'
 export default {
     data() {
         return {
@@ -65,6 +71,7 @@ export default {
     },
     methods: {
         ...mapActions('auth', ['loggedOut']),
+        ...mapActions('user', ['changeUserPassword']),
         async logout() {
             try {
               await this.loggedOut()
@@ -79,6 +86,25 @@ export default {
         },
         showScore (score) {
             this.score = score
+        },
+        async changePass() {
+            if(this.error) {
+                this.$swal({
+                    title: 'Perhatikan password 2',
+                    text: "Pastikan password sama",
+                    icon: 'error',
+                })
+                return
+            }
+            try {
+                await this.changeUserPassword({ password: this.password })
+                this.$bvToast.toast('Password berhasil diubah', successToas())
+                this.$bvModal.hide('modal-profile')
+                this.password = ''
+                this.password2 = ''
+            } catch (error) {
+                this.$bvToast.toast(error.message, errorToas())
+            }
         }
     },
     watch:{

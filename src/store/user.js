@@ -41,6 +41,20 @@ const actions = {
                 reject(error.response.data)
             }
         })
+    },
+    changeUserPassword({ commit }, payload) {
+        commit('LOADING_PAGE', true, { root: true })
+        return new Promise(async (resolve, reject) => {
+            try {
+                let network = await $axios.post('user/change-password', payload)
+
+                commit('LOADING_PAGE', false, { root: true })
+                resolve(network.data)
+            } catch(error) {
+                commit('LOADING_PAGE', false, { root: true })
+                reject(error.response.data)
+            }
+        })
     }
 }
 

@@ -230,7 +230,7 @@ const routes = [
       },
       {
         path: 'reset/peserta',
-        name: 'ujian.peserta.reset',
+        name: 'ujian.peserta-reset',
         component: ResetPesertaUjian,
         meta: { title: 'Reset peserta ujian' }
       }

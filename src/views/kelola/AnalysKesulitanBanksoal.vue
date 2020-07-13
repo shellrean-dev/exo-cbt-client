@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <router-link :to="{ name: 'analys.banksoal' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
+                    <router-link :to="{ name: 'kelola.analys.banksoal' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
                     <button class="btn float-right btn-primary btn-sm mx-1" @click="print" :disabled="isLoading">Print</button>
                 </div>
                 <div class="card-body back" id="printSoal">

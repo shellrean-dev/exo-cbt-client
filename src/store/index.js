@@ -12,6 +12,7 @@ import soal from './soal'
 import filemedia from './filemedia'
 import ujian from './ujian'
 import event from './event'
+import setting from './setting'
 
 Vue.use(Vuex)
 
@@ -27,7 +28,8 @@ export default new Vuex.Store({
     soal,
     filemedia,
     ujian,
-    event
+    event,
+    setting
   },
   state: {
     errors: [],
