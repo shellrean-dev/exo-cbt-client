@@ -6,10 +6,29 @@ const $axios = axios.create({
     baseURL: process.env.VUE_APP_API_SERVER+'/api/v1',
     headers: {
         'Accept': 'application/json'
-    }
+    },
+})
+
+const $axios2 = axios.create({
+    baseURL: process.env.VUE_APP_API_SERVER+'/api/v1',
+    headers: {
+        'Accept': 'application/vnd.openxmlformats-officedocument'
+        + '.spreadsheetml.sheet',
+    },
+    responseType: 'blob',
 })
 
 $axios.interceptors.request.use (
+    function ( config ) {
+        config.headers.Authorization = 'Bearer '+store.state.token;
+        return config;
+    },
+    function ( error ) {
+        return Promise.reject( error )
+    }
+)
+
+$axios2.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
         return config;
@@ -36,5 +55,5 @@ $axios.interceptors.response.use(
       return Promise.reject(error);
     }
 )
-
+export { $axios2, $axios }
 export default $axios

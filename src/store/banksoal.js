@@ -4,6 +4,7 @@ const state = () => ({
     banksoals: [],
     allBanksoals: [],
     banksoal: '',
+    analys: [],
 	page: 1
 })
 
@@ -19,6 +20,9 @@ const mutations = {
     },
     ASSIGN_FORM(state, payload) {
         state.banksoal = payload
+    },
+    ASSIGN_DATA_ANALYS(state, payload) {
+        state.analys = payload
     }
 }
 
@@ -167,6 +171,21 @@ const actions = {
                 reject(error.response.data)
             })
         })
+    },
+    getAllSoalAnalys({ commit, state }, payload) {
+        commit('SET_LOADING',true, { root: true })
+        return new Promise(( resolve, reject ) =>  {
+            $axios.get(`/banksoals/${payload}/analys`)
+            .then((response) => {
+                commit('ASSIGN_DATA_ANALYS', response.data.data)
+                commit('SET_LOADING',false, { root: true })
+                resolve(response.data)
+            })
+            .catch((err) => {
+                commit('SET_LOADING',false, { root: true })
+                reject(err.response.data)
+            })
+        })  
     },
     // getMyBanksoal({ commit }, payload) {
     //     return new Promise((resolve, reject) => {

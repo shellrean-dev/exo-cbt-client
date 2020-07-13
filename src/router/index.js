@@ -43,7 +43,9 @@ import KelolaIndex from '@/views/kelola/Index'
 const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
 const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
 const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
+const AnalysKesulitanBanksoal = () => import('@/views/kelola/AnalysKesulitanBanksoal')
 const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
+const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa');
 const HasilUjian = () => import('@/views/kelola/HasilUjian')
 
 Vue.use(VueRouter)
@@ -258,9 +260,21 @@ const routes = [
         meta: { title: 'Analys banksoal' }
       },
       {
+        path: 'analys/banksoal/:banksoal',
+        name: 'kelola.analys.kesulitan.banksoal',
+        component: AnalysKesulitanBanksoal,
+        meta: { title: 'Analys kesulitan banksoal' }
+      },
+      {
         path: 'analys/capaian-siswa',
         name: 'kelola.analys.capaian.siswa',
         component: AnalysSiswa,
+        meta: { title: 'Analys capaian siswa' }
+      },
+      {
+        path: 'analys/capaian-siswa/:banksoal/:jadwal',
+        name: 'kelola.analys.capaian.siswa.data',
+        component: AnalysCapaianSiswa,
         meta: { title: 'Analys capaian siswa' }
       },
       {

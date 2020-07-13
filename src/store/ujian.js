@@ -1,4 +1,4 @@
-import $axios from '@/services/api.js'
+import { $axios, $axios2 } from '@/services/api.js'
 
 const state = () => ({
 	ujians: [],
@@ -190,57 +190,33 @@ const actions = {
 		})
 	},
 	getAllUjians({ commit, state }, payload) {
+		commit('SET_LOADING', true, { root: true })
 		let search = typeof payload != 'undefined' ? payload: ''
 		return new Promise((resolve, reject) => {
 			$axios.get(`/ujians/all`)
 			.then((response) => {
 				commit('ASSIGN_DATA_ALL', response.data.data)
+				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
 			})
 			.catch((err) => {
-				reject()
-			})
-		})
-	},
-	getSekolahByJadwal({ commit, state }, payload) {
-		return new Promise((resolve, reject) => {
-			$axios.get(`/ujian/result/sekolah/jadwal/${payload}`)
-			.then((response) => {
-				commit('ASSIGN_DATA_SEKOLAH', response.data)
-				resolve(response.data)
-			})
-			.catch((err) => {
-				reject(err)
-			})
-		})
-	},
-	getHasilByJadwalAndSekolah({ commit, state }, payload) {
-		return new Promise((resolve, reject) => {
-			$axios.post(`/ujian/result/sekolah/hasil?page=${state.page}&perPage=${payload.perPage}`,payload)
-			.then((response) => {
-				commit('ASSIGN_HASIL_UJIAN', response.data.data)
-				resolve(response.data)
-			})
-			.catch((err) => {
-				reject(err)
-			})
-		})
-	},
-	getBanksoalByJadwalAndSekolah({ state, commit }, payload) {
-		return new Promise((resolve, reject) => {
-			$axios.post(`/ujian/result/sekolah/banksoal`, payload)
-			.then((response) => {
-				commit('ASSIGN_DATA_BANKSOAL', response.data)
-				resolve(response)
+				commit('SET_LOADING', false, { root: true })
+				reject(err.response.data)
 			})
 		})
 	},
 	getCapaianSiswa({ state, commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
 		return new Promise((resolve, reject) => {
-			$axios.post(`/ujian/resul/capaian-siswa`, payload)
+			$axios.get(`/ujians/${payload.ujian}/banksoal/${payload.banksoal}/capaian-siswa`)
 			.then((response) => {
-				commit('ASSIGN_CAPAIAN_SISWA', response.data)
-				resolve(response)
+				commit('SET_LOADING', false, { root: true })
+				commit('ASSIGN_CAPAIAN_SISWA', response.data.data)
+				resolve(response.data)
+			})
+			.catch((error) => {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
 			})
 		})
 	},
@@ -417,6 +393,42 @@ const actions = {
 			.catch((err) => {
 				commit('SET_LOADING', false, { root: true })
 				reject(err.response.data)
+			})
+		})
+	},
+	getResultBanksoal({ state, commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async(resolve, reject) => {
+			try {
+				let network = await $axios.get(`ujians/${payload}/result/banksoal`)
+
+				commit('ASSIGN_DATA_BANKSOAL', network.data.data)
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	downloadExcel({ state, commit}, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise((resolve, reject) => {
+			$axios2.get(`/ujians/${payload.ujian}/banksoal/${payload.banksoal}/capaian-siswa/excel`)
+			.then((response) => {
+				const type = response.headers['content-type']
+			    const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' })
+			    const link = document.createElement('a')
+			    link.href = window.URL.createObjectURL(blob)
+			    link.download = 'Capaiansiswa.xlsx'
+			    link.click()
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(response.data)
+			})
+			.catch((error) => {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
 			})
 		})
 	}
