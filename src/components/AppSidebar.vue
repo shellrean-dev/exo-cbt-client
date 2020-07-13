@@ -1,6 +1,6 @@
 <template>
       <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/img/logo.ico" height="46" alt="Logo"><img class="c-sidebar-brand-minimized" src="/img/logo.ico" height="46" alt="Logo"></div>
+      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 46px" alt="Logo"><img class="c-sidebar-brand-minimized" v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 46px" alt="Logo"></div>
       <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" to="/"
@@ -125,6 +125,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      baseURL: process.env.VUE_APP_API_SERVER,
       activeClass: 'c-active'
     }
   },
@@ -144,6 +145,9 @@ export default {
     }
   },
   computed: {
+    ...mapState('setting',{
+      sekolah: state => state.set_sekolah
+    }),
     currentPage() {
       return this.$route.name ? this.$route.name : [];
     }

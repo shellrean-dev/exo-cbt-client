@@ -73,12 +73,14 @@ new Vue({
     ...mapGetters(['isAuth'])
   },
   methods: {
-    ...mapActions('user', ['getUserLogin'])
+    ...mapActions('user', ['getUserLogin']),
+    ...mapActions('setting',['getSettingSekolah'])
   },
   async created() {
     if (this.isAuth) {
       try {
         await this.getUserLogin()
+        this.getSettingSekolah()
       } catch (error) {
         this.$bvToast.toast(error.message, {
           title: "Error",

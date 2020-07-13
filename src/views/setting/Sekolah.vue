@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex mb-3">
-                        <img src="/img/logo.ico" height="66">
+                        <img :src="data.logo != '' ? baseURL+'/storage/'+data.logo : '/img/logo.ico'" style="max-height: 66px">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -15,11 +15,13 @@
                                 <label>Logo sekolah</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                      <input type="file" class="custom-file-input" @change="handleFileUpload">
-                                      <label class="custom-file-label">{{ labelAudio ? labelAudio : 'Pilih File...' }}</label>
+                                      <input type="file" class="custom-file-input" @change="onFileChange">
+                                      <label class="custom-file-label">{{ label ? label : 'Pilih File...' }}</label>
                                     </div>
                                     <div class="input-group-append">
-                                      <b-button variant="primary"><i class="cil-cloud-upload"></i> Upload</b-button>
+                                      <b-button variant="primary" @click="storeLogo">
+                                        <i class="cil-cloud-upload"></i> 
+                                        Upload</b-button>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +51,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <b-button variant="primary" @click="store" :disabled="isLoading"><i class="cil-save"></i> Simpan </b-button>
+                        <b-button variant="primary" @click="store" :disabled="isLoading">
+                            <i class="cil-save"></i> {{ isLoading ? 'Processing..' : 'Simpan' }} 
+                        </b-button>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -68,13 +72,16 @@ export default {
     data() {
         return {
             file: '',
+            label: '',
             data: {
+                logo: '',
                 nama_sekolah: '',
                 email: '',
                 alamat: '',
                 kepala_sekolah: '',
                 nip_kepsek: ''
-            }
+            },
+            baseURL: process.env.VUE_APP_API_SERVER
         }
     },
     computed: {
@@ -82,12 +89,41 @@ export default {
         ...mapState('setting', { sekolah: state => state.set_sekolah })
     },
     methods: {
-        ...mapActions('setting',['getSettingSekolah','storeSettingSekolah']),
+        ...mapActions('setting',['getSettingSekolah','storeSettingSekolah', 'changeLogoSekolah']),
+        changeData(provider) {
+            this.data = {
+                logo: provider.value.logo,
+                nama_sekolah : provider.value.nama_sekolah,
+                email: provider.value.email,
+                alamat: provider.value.alamat,
+                kepala_sekolah: provider.value.kepala_sekolah,
+                nip_kepsek: provider.value.nip_kepsek
+            }
+        },
         async store() {
             try {
                 await this.storeSettingSekolah(this.data)
                 this.getSettingSekolah()
                 this.$bvToast.toast('Data sekolah berhasil disimpan', successToas())
+            } catch (error) {
+                this.$bvToast.toast(error.message, errorToas())
+            }
+        },
+        onFileChange(e) {
+          this.label = e.target.files[0].name
+          this.file = e.target.files[0]
+        },
+        async storeLogo() {
+            try {
+                let formData = new FormData()
+                formData.append('image',this.file)
+                
+                await this.changeLogoSekolah(formData)
+                let provider = await this.getSettingSekolah()
+                if(provider) {
+                    this.changeData(provider)
+                }
+                this.$bvToast.toast('Logo sekolah berhasil disimpan', successToas())
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
@@ -97,12 +133,7 @@ export default {
         try {
             let provider = await this.getSettingSekolah()
             if(provider) {
-                this.data = {
-                    nama_sekolah : provider.value.nama_sekolah,
-                    email: provider.value.email,
-                    alamat: provider.value.alamat,
-                    kepala_sekolah: provider.value.kepala_sekolah
-                }
+                this.changeData(provider)
             }
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
