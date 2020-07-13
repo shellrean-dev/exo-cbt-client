@@ -10,6 +10,7 @@ const state = () => ({
         agama_id: '',
         correctors: ''
     },
+    uploadPercentage: 0,
 	page: 1,
     from: 1
 })
@@ -44,6 +45,9 @@ const mutations = {
     },
     SET_FROM_DATA(state, payload) {
         state.from = payload
+    },
+    UPLOAD_PROGRESS_BAR(state, payload) {
+        state.uploadPercentage = payload
     }
 }
 
@@ -136,6 +140,25 @@ const actions = {
                 commit('SET_LOADING',false, { root: true })
                 resolve(network.data)
             } catch (error) {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    uploadMatpel({ commit }, payload) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async (resolve, reject) => {
+            try {
+                let network = await $axios.post(`/matpels/upload`, payload, {
+                    onUploadProgress: function( progressEvent ) {
+                        commit('UPLOAD_PROGRESS_BAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+                    }.bind(this)
+                })
+                commit('UPLOAD_PROGRESS_BAR', 0);
+                commit('SET_LOADING',false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('UPLOAD_PROGRESS_BAR', 0);
                 commit('SET_LOADING',false, { root: true })
                 reject(error.response.data)
             }

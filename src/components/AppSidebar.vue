@@ -10,13 +10,13 @@
           </router-link>
         </li>
         <li class="c-sidebar-nav-title">Menu utama</li>
-        <li class="c-sidebar-nav-item" >
+        <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{  name: 'sekolah.setting' }"
           :class="[currentPage.includes('sekolah.setting') ? activeClass : '']">
             <i class="c-sidebar-nav-icon cil-info"></i> Informasi sekolah
           </router-link>
         </li>
-        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon cil-layers"></i> Data master
           </a>
@@ -41,6 +41,12 @@
                 <span class="c-sidebar-nav-icon"></span> Matpel
               </router-link>
             </li>
+            <li class="c-sidebar-nav-item" >
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'guru.data' }"
+              :class="[currentPage.includes('guru.data') ? activeClass : '']"> 
+                <span class="c-sidebar-nav-icon"></span> Guru
+              </router-link>
+            </li>
           </ul>
         </li>
         
@@ -57,7 +63,7 @@
           </router-link>
         </li>
         <li class="c-sidebar-nav-title">Menu ujian</li>
-        <li class="c-sidebar-nav-item">
+        <li class="c-sidebar-nav-item" >
           <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.status' }"
           :class="[currentPage.includes('ujian.status') ? activeClass : '']">
             <i class="c-sidebar-nav-icon cil-clipboard"></i>
@@ -78,14 +84,14 @@
             Reset login peserta
           </router-link>
         </li>
-        <li class="c-sidebar-nav-title">Menu pengolahan</li>
-        <li class="c-sidebar-nav-item">
+        <li class="c-sidebar-nav-title" v-if="user.role != 'guru'">Menu pengolahan</li>
+        <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
           :class="[currentPage.includes('kelola.koreksi.esay') ? activeClass : '']">
             <i class="c-sidebar-nav-icon cil-task"></i> Koreksi esay
           </router-link>
         </li>
-        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon cil-chart-line"></i>Reporting
           </a>
@@ -104,7 +110,7 @@
             </li>
           </ul>
         </li>
-        <li class="c-sidebar-nav-item">
+        <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.hasil.ujian' }"
           :class="[currentPage.includes('kelola.hasil.ujian') ? activeClass : '']">
             <i class="c-sidebar-nav-icon cil-chart"></i>Hasil ujian
@@ -145,6 +151,9 @@ export default {
     }
   },
   computed: {
+    ...mapState('user', {
+      user: state => state.authenticated
+    }),
     ...mapState('setting',{
       sekolah: state => state.set_sekolah
     }),

@@ -11,6 +11,12 @@
                             <h4 id="traffic" class="card-title mb-0">Manage Matpel</h4>
                             <div class="small text-muted">Buat edit dan hapus matpel</div>
                         </div>
+                         <div class="d-md-block col-sm-7">
+                            <router-link :to="{ name: 'matpel.upload' }" class="btn float-right btn-success btn-sm">
+                                <i class="cil-cloud-upload"></i>
+                                Import matpel
+                            </router-link>
+                        </div>
                     </div>
                     <br>
                     <div class="row">

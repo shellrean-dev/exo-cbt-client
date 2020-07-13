@@ -23,7 +23,14 @@ const KartuPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/pes
 import MatpelIndex from '@/views/matpel/Index'
 const DataMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Matpel')
 const AddMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Add')
+const UploadMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Upload')
 const EditMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Edit')
+
+import GuruIndex from '@/views/guru/Index'
+const DataGuru = () => import('@/views/guru/Guru')
+const AddGuru = () => import('@/views/guru/Add')
+const UploadGuru = () => import('@/views/guru/Upload')
+const EditGuru = () => import('@/views/guru/Edit')
 
 import BanksoalIndex from '@/views/banksoal/Index'
 const DataBanksoal = () => import(/* webpackChunkName: "banksoal" */ '@/views/banksoal/DataBanksoal')
@@ -40,13 +47,13 @@ const PesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/
 const ResetPesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/ResetPesertaUjian')
 
 import KelolaIndex from '@/views/kelola/Index'
-const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
-const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
-const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
-const AnalysKesulitanBanksoal = () => import('@/views/kelola/AnalysKesulitanBanksoal')
-const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
-const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa');
-const HasilUjian = () => import('@/views/kelola/HasilUjian')
+const KoreksiEsay = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/KoreksiEsay')
+const KoreksiNilaiEsay = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/KoreksiNilaiEsay')
+const AnalysBanksoal = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysBanksoal')
+const AnalysKesulitanBanksoal = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysKesulitanBanksoal')
+const AnalysSiswa = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysSiswa')
+const AnalysCapaianSiswa = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysCapaianSiswa');
+const HasilUjian = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/HasilUjian')
 
 Vue.use(VueRouter)
 
@@ -159,6 +166,43 @@ const routes = [
         name: 'matpel.edit',
         component: EditMatpel,
         meta: { title: 'Edit mata pelajaran' }
+      },
+      {
+        path: 'upload',
+        name: 'matpel.upload',
+        component: UploadMatpel,
+        meta: { title: 'Upload mata pelajaran' }
+      }
+    ]
+  },
+  {
+    path: '/pengguna',
+    component: GuruIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'guru.data',
+        component: DataGuru,
+        meta: { title: 'Manage pengguna' }
+      },
+      {
+        path: 'add',
+        name: 'guru.add',
+        component: AddGuru,
+        meta: { title: 'Tambah pengguna' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'guru.edit',
+        component: EditGuru,
+        meta: { title: 'Edit pengguna' }
+      },
+      {
+        path: 'upload',
+        name: 'guru.upload',
+        component: UploadGuru,
+        meta: { title: 'Upload pengguna' }
       }
     ]
   },
