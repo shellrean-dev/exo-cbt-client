@@ -60,7 +60,28 @@
                                 </b-button>
                             </template>
                         </b-table>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p v-if="banksoals.data"><i class="fa fa-bars"></i> {{ banksoals.data.length }} item dari {{ banksoals.total }} total data</p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="float-right">
+                                    <b-pagination
+                                        size="sm"
+                                        v-model="page"
+                                        :total-rows="banksoals.total"
+                                        :per-page="banksoals.per_page"
+                                        :disabled="isLoading"
+                                        ></b-pagination>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <template v-else>
+                        <div class="text-center my-2">
+                            Loading...
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
@@ -89,7 +110,15 @@ export default {
         ...mapGetters(['isLoading']),
         ...mapState('banksoal', {
             banksoals: state => state.banksoals
-        })
+        }),
+        page: {
+            get() {
+                return this.$store.state.banksoal.page
+            },
+            set(val) {
+                this.$store.commit('banksoal/SET_PAGE', val)
+            }
+        }
     },
     methods: {
         ...mapActions('banksoal',['getBanksoals'])
