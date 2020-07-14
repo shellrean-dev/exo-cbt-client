@@ -65,6 +65,9 @@
 								<b-form-checkbox v-model="row.item.status_ujian" @change="seterStatus(row.item.id,row.item.status_ujian)" value="1" switch>{{ row.item.status_ujian == 1 ? 'Diujikan' : 'Tidak aktif' }}</b-form-checkbox>
 								<b-badge v-if="row.item.server_id != 0" v-for="(server, index) in row.item.server_id" v-text="server" :key="index"></b-badge>
 							</template>
+							<template v-slot:cell(action)="row">
+								<b-button variant="danger" :disabled="isLoading" size="sm" @click="remove(row.item.id)">Hapus</b-button>
+							</template>
 	                    </b-table>
 	                    <div class="row">
 	                        <div class="col-md-6">
@@ -212,7 +215,8 @@ export default {
 				{ key: 'tanggal', label: 'Tanggal' },
 				{ key: 'mulai', label: 'Waktu mulai' },
 				{ key: 'lama', label: 'Durasi' },
-				{ key: 'status', label: 'Status jadwal' }
+				{ key: 'status', label: 'Status jadwal' },
+				{ key: 'action', label: 'Aksi' }
 			],
 			perPage: 20,
             pageOptions: [20, 50, 100],
@@ -255,7 +259,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken']),
+		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken', 'removeUjian']),
 		...mapActions('event',['addEvent','getAllEvents']),
 		...mapActions('banksoal', ['getAllBanksoals']),
 		postUjian() {
@@ -311,6 +315,28 @@ export default {
 			.catch((error) => {
 				this.$bvToast.toast(error.message, errorToas())
 			})
+		},
+		remove(id) {
+			this.$swal({
+                title: 'Informasi',
+                text: "Tindakan ini akan menghapus seluruh data ujian termasuk nilai, analys capaian siswa yang berkaitan dengan jadwal ujian ini",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c3c3c3',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+                if (result.value) {
+                    this.removeUjian(id)
+                    .then((res) => {
+                        this.getUjians({ perPage: this.perPage })
+                        this.$bvToast.toast('Jadwal ujian berhasil dihapus.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+                }
+            })
 		}
 	},
 	watch: {
