@@ -14,7 +14,7 @@
                     </div>
                     <br>
                     <div class="table-responsive-md">
-                        <b-table striped hover bordered :busy="isBusy" small :fields="fields" :items="banksoals" show-empty >
+                        <b-table striped hover bordered small :fields="fields" :items="banksoals" show-empty >
                             <template v-slot:cell(show_details)="row">
                                 <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
                             </template>

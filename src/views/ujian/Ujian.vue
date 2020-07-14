@@ -62,7 +62,7 @@
 								<b-badge variant="success" class="mr-1" v-for="(kode,index) in row.item.kode_banksoal" v-text="kode" :key="index"></b-badge>
 							</template>
 							<template v-slot:cell(status)="row">
-								<b-form-checkbox v-model="row.item.status_ujian" @change="seterStatus(row.item.id,row.item.status_ujian)" value="1" switch>{{ row.item.status_ujian == 1 ? 'Aktif' : 'Non aktif' }}</b-form-checkbox>
+								<b-form-checkbox v-model="row.item.status_ujian" @change="seterStatus(row.item.id,row.item.status_ujian)" value="1" switch>{{ row.item.status_ujian == 1 ? 'Diujikan' : 'Tidak aktif' }}</b-form-checkbox>
 								<b-badge v-if="row.item.server_id != 0" v-for="(server, index) in row.item.server_id" v-text="server" :key="index"></b-badge>
 							</template>
 	                    </b-table>
@@ -212,7 +212,7 @@ export default {
 				{ key: 'tanggal', label: 'Tanggal' },
 				{ key: 'mulai', label: 'Waktu mulai' },
 				{ key: 'lama', label: 'Durasi' },
-				{ key: 'status', label: 'Status ujian' }
+				{ key: 'status', label: 'Status jadwal' }
 			],
 			perPage: 20,
             pageOptions: [20, 50, 100],

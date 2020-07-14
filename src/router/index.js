@@ -39,6 +39,11 @@ const SoalBanksoalTambah = () => import(/* webpackChunkName: "banksoal" */'@/vie
 const SoalBanksoalTemplate = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalTemplate')
 const SoalBanksoalEdit = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalEdit')
 const SoalBanksoalPrev = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalPrev')
+const SoalBanksoalUpload = () => import(/* webpackChunkName: "banksoal" */ '@/views/banksoal/SoalBanksoalUpload')
+
+import FilemediaIndex from '@/views/filemedia/Index'
+const DataFilemedia = () => import('@/views/filemedia/Filemedia')
+const DataDirFilemedia = () => import('@/views/filemedia/DirFilemedia')
 
 import UjianIndex from '@/views/ujian/Index'
 const DataUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/Ujian')
@@ -236,6 +241,12 @@ const routes = [
         meta: { title: 'Tambah soal' }
       },
       {
+        path: ':banksoal_id/upload',
+        name: 'banksoal.upload',
+        component: SoalBanksoalUpload,
+        meta: { title: 'Upload soal banksoal' }
+      },
+      {
         path: ':banksoal_id/soal/:soal_id',
         name: 'banksoal.soal.edit',
         component : SoalBanksoalEdit,
@@ -246,6 +257,25 @@ const routes = [
         name: 'banksoal.prev',
         component: SoalBanksoalPrev,
         meta: { title: 'Preview soal banksoal' }
+      }
+    ]
+  },
+  {
+    path: '/filemedia',
+    component: FilemediaIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'filemedia.data',
+        component: DataFilemedia,
+        meta: { title: 'Manage filemedia' }
+      },
+      {
+        path: ':directory_id',
+        name: 'filemedia.directory',
+        component: DataDirFilemedia,
+        meta: { title: 'Manage directory filemedia' }
       }
     ]
   },

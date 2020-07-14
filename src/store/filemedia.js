@@ -3,7 +3,8 @@ import $axios from '@/services/api.js'
 const state = () => ({
 	directories: [],
 	contentFilemedia: [],
-	page: 1
+	page: 1,
+	dir_page: 1
 })
 
 const mutations = {
@@ -15,16 +16,22 @@ const mutations = {
     },
     ASSIGN_CONTENT_DIRECTORY(state, payload) {
     	state.contentFilemedia = payload
+    },
+    SET_PAGE_DIR(state, payload) {
+    	state.dir_page = payload
     }
 }
 
 const actions = {
 	getDirectories({ commit, state }, payload) {
 		return new Promise(( resolve, reject) => {
-			$axios.get(`/directory`)
+			$axios.get(`/directory?page?${state.dir_page}`)
 			.then((response) => {
-				commit('ASSIGN_DIRECTORY_DATA',response.data)
+				commit('ASSIGN_DIRECTORY_DATA',response.data.data)
 				resolve(response.data)
+			})
+			.catch((error) => {
+				reject(error.response.data)
 			})
 		})
 	},
@@ -34,6 +41,9 @@ const actions = {
 			.then((response) => {
 				commit('ASSIGN_DIRECTORY_DATA',response.data)
 				resolve(response.data)
+			})
+			.catch((error) => {
+				reject(error.response.data)
 			})
 		})
 	},
@@ -47,6 +57,7 @@ const actions = {
 				if (error.response.status == 422) {
 					commit('SET_ERRORS',error.response.status.data, { root: true })
 				}
+				reject(error.response.data)
 			})
 		})
 	},
@@ -59,9 +70,9 @@ const actions = {
 				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
 			})
-			.catch((err) => {
+			.catch((error) => {
 				commit('SET_LOADING', false, { root: true })
-				reject()
+				reject(error.response.data)
 			})
 		})
 	},
@@ -73,9 +84,9 @@ const actions = {
 				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
 			})
-			.catch((err) => {
+			.catch((error) => {
 				commit('SET_LOADING', false, { root: true })
-				reject(err)
+				reject(error.response.data)
 			})
 		})
 	},
@@ -84,6 +95,10 @@ const actions = {
 			$axios.post(`/upload/file-audio`,payload,{ headers: { 'Content-Type': 'multipart/form-data'} })
 			.then((response) => {
 				resolve(response.data)
+			})
+			.catch((error) => {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
 			})
 		})
 	},
@@ -95,9 +110,9 @@ const actions = {
 				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
 			})
-			.catch((err) => {
+			.catch((error) => {
 				commit('SET_LOADING', false, { root: true })
-				reject()
+				reject(error.response.data)
 			})
 		})
 	}

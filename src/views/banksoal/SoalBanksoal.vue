@@ -4,8 +4,8 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'banksoal.data' }" class="btn btn-light btn-sm mr-1 mt-1">Kembali</router-link>
-                    <router-link :to="{ name: 'banksoal.soal.tambah', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah pertanyaan</router-link>
-                    <router-link :to="{ name: 'banksoal.soal.paste', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary btn-sm  mt-1">Paste pertanyaan</router-link>
+                    <router-link :to="{ name: 'banksoal.soal.tambah', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah soal</router-link>
+                    <router-link :to="{ name: 'banksoal.soal.paste', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary btn-sm  mt-1">Paste soal</router-link>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -17,6 +17,10 @@
                             <router-link :to="{ name: 'banksoal.prev', params: { 'banksoal_id' : $route.params.banksoal_id }}" class="btn float-right btn-primary btn-sm mx-1">
                                 <i class="cil-print"></i>
                                 Preview banksoal
+                            </router-link>
+                            <router-link :to="{ name: 'banksoal.upload' }" class="btn float-right btn-success btn-sm">
+                                <i class="cil-cloud-upload"></i>
+                                Import soal
                             </router-link>
                         </div>
                     </div>
@@ -66,7 +70,9 @@
                         	<template v-slot:cell(index)="data">
     				        	{{ from+data.index }}
     				      	</template>
-
+                            <template v-slot:cell(tipe)="row">
+                               <b-badge variant="light"> {{ row.item.tipe_soal | tipeSoal }}</b-badge>
+                            </template>
                         	<template v-slot:cell(dibuat)="row">
                                 {{ row.item.created_at }}
                             </template>
@@ -157,6 +163,7 @@ export default {
 			fields: [
 				'index',
                 { key: 'show_details', label: 'Detail'},
+                { key: 'tipe', label: 'Tipe soal'},
 				{ key: 'dibuat', label: 'Dibuat pada'},
 				{ key: 'actions', label: 'Aksi'}
 			],
@@ -182,6 +189,12 @@ export default {
 			}
 		}
 	},
+    filters: {
+        tipeSoal(i) {
+            let index = ['Pilihan ganda','Esay','Listening']
+            return index[i-1]
+        }
+    },
 	methods: {
 		...mapActions('soal',['getSoals','removeSoal']),
 		getAllSoal(payload) {

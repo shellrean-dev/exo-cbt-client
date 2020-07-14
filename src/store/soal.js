@@ -5,7 +5,8 @@ const state = () => ({
 	allSoals: [],
 	soal: '',
 	page: 1,
-	from: 1
+	from: 1,
+	uploadPercentage: 0,
 })
 
 const mutations = {
@@ -23,7 +24,10 @@ const mutations = {
 	},
 	SET_FROM_DATA(state, payload) {
 		state.from = payload
-	}
+	},
+	UPLOAD_PROGRESS_BAR(state, payload) {
+        state.uploadPercentage = payload
+    }
 }
 
 const actions = {
@@ -85,7 +89,26 @@ const actions = {
 				reject(err.response.data)
 			})
 		})
-	}
+	},
+	uploadSoal({ commit }, payload) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async (resolve, reject) => {
+            try {
+                let network = await $axios.post(`/soals/banksoal/${payload.id}/upload`, payload.data, {
+                    onUploadProgress: function( progressEvent ) {
+                        commit('UPLOAD_PROGRESS_BAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+                    }.bind(this)
+                })
+                commit('UPLOAD_PROGRESS_BAR', 0);
+                commit('SET_LOADING',false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('UPLOAD_PROGRESS_BAR', 0);
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    }
 }
 
 export default {

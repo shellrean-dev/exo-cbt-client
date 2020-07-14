@@ -62,6 +62,12 @@
             <i class="c-sidebar-nav-icon cil-notes"></i>Jadwal ujian
           </router-link>
         </li>
+        <li class="c-sidebar-nav-item">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'filemedia.data' }"
+          :class="[currentPage.includes('filemedia.data') ? activeClass : '']">
+            <i class="c-sidebar-nav-icon cil-folder"></i>File media
+          </router-link>
+        </li>
         <li class="c-sidebar-nav-title">Menu ujian</li>
         <li class="c-sidebar-nav-item" >
           <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.status' }"
@@ -84,8 +90,8 @@
             Reset login peserta
           </router-link>
         </li>
-        <li class="c-sidebar-nav-title" v-if="user.role != 'guru'">Menu pengolahan</li>
-        <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
+        <li class="c-sidebar-nav-title">Menu pengolahan</li>
+        <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
           :class="[currentPage.includes('kelola.koreksi.esay') ? activeClass : '']">
             <i class="c-sidebar-nav-icon cil-task"></i> Koreksi esay

@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <router-link :to="{ name: 'analys.siswa' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
+                    <router-link :to="{ name: 'kelola.analys.capaian.siswa' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
                     <button class="btn float-right btn-primary btn-sm mx-1" @click="print">Print</button>
                     <b-button :disabled="isLoading" variant="success" class="float-right" size="sm" @click="download">
                         Download
