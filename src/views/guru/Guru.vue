@@ -115,6 +115,7 @@ export default {
               name: 'flip-list'
             },
             fields: [
+                { key: 'id', label: 'ID', sortable: true },
                 { key: 'name', label: 'Nama', sortable: true},
                 { key: 'email', label: 'Email', sortable: true},
                 { key: 'actions', label: 'Aksi' }
