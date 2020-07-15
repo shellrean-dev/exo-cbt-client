@@ -23,6 +23,7 @@
                             <div class="col-md-6">
                                 <div class="float-right">
                                     <b-pagination
+                                    	:disabled="isLoading"
                                         size="sm"
                                         v-model="page"
                                         :total-rows="directories.total"
@@ -63,12 +64,13 @@ export default {
 		}
 	},
 	computed: {
+		...mapState(['isLoading']),
 		...mapState('filemedia', {
 			directories: state => state.directories
 		}),
 		page: {
             get() {
-                return this.$store.state.filemedia.page
+                return this.$store.state.filemedia.dir_page
             },
             set(val) {
                 this.$store.commit('filemedia/SET_PAGE_DIR', val)

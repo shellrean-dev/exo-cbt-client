@@ -3,6 +3,23 @@
         <main class="c-main">
           <div class="container-fluid">
             <div class="fade-in">
+                <div class="row">
+                  <div class="col-md-4">
+                  <div class="card">
+                    <div class="list-group">
+                      <router-link :to="{ name: 'guru.upload' }" class="list-group-item list-group-item-action">
+                        <i class="cil-cloud-upload"></i> Import guru
+                      </router-link>
+                      <router-link :to="{ name: 'peserta.upload' }" class="list-group-item list-group-item-action">
+                        <i class="cil-cloud-upload"></i> Import peserta
+                      </router-link>
+                      <router-link :to="{ name: 'matpel.upload' }" class="list-group-item list-group-item-action">
+                        <i class="cil-cloud-upload"></i> Import matpel
+                      </router-link>
+                    </div>
+                  </div>
+                </div>
+                </div>     
             </div>
           </div>
         </main>

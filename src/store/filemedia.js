@@ -24,13 +24,16 @@ const mutations = {
 
 const actions = {
 	getDirectories({ commit, state }, payload) {
+		commit('SET_LOADING', true, { root: true })
 		return new Promise(( resolve, reject) => {
-			$axios.get(`/directory?page?${state.dir_page}`)
+			$axios.get(`/directory?page=${state.dir_page}`)
 			.then((response) => {
 				commit('ASSIGN_DIRECTORY_DATA',response.data.data)
+				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
 			})
 			.catch((error) => {
+				commit('SET_LOADING', false, { root: true })
 				reject(error.response.data)
 			})
 		})
