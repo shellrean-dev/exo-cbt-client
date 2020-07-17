@@ -100,6 +100,22 @@
 								</b-button>
 							</template>
 						</b-table>
+						<div class="row">
+                            <div class="col-md-6">
+                                <p><i class="fa fa-bars"></i> {{ pesertas.data.length }} data dari {{ pesertas.total }} total data</p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="float-right">
+                                    <b-pagination
+                                        size="sm"
+                                        v-model="page"
+                                        :total-rows="pesertas.total"
+                                        :per-page="pesertas.per_page"
+                                        :disabled="isLoading"
+                                        ></b-pagination>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 					<template v-else>
                         <div class="text-center my-2">

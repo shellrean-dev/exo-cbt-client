@@ -83,13 +83,6 @@
             Status peserta
           </router-link>
         </li>
-        <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.peserta-reset' }"
-          :class="[currentPage.includes('ujian.peserta-reset') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-sync"></i>
-            Reset login peserta
-          </router-link>
-        </li>
         <li class="c-sidebar-nav-title">Menu pengolahan</li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"

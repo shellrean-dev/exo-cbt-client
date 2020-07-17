@@ -1,126 +1,102 @@
 <template>
 	<div class="row">
-		<div class="col-lg-12">
-			<div class="card">
-				<div class="card-header">
-					<h1 class="border-primary text-primary" v-if="diujikan.status_token === 1" style="max-width: 220px; text-align: center;">
-						{{ diujikan.token }}
-					</h1>
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-6 col-lg-4">
+					<div class="card  mb-3">
+					  <div class="card-header">TOKEN UJIAN 
+					  	<span class="badge badge-light">{{ token.status == 0 ? 'Tidak aktif' :'Aktif' }}</span></div>
+					  <div class="card-body text-dark ">
+					    <h5 class="card-title">{{ token.token }}</h5>
+					    <p class="card-text">Token ini bersifat rahasia, berlaku untuk 15 menit.</p>
+					  </div>
+					  <div class="card-footer">
+					  	<button class="btn btn-sm btn-primary" v-if="token.status == 0" @click="rilis" :disabled="isLoading">Relese token</button>
+					  </div>
+					</div>
 				</div>
-				<div class="card-body">
-					<div class="row">
-                        <div class="col-sm-5">
-                            <h4 id="traffic" class="card-title mb-0">Status ujian</h4>
-                            <div class="small text-muted">Atur sesi dan banksoal aktif dan rilis token agar token dapat digunakan</div>
-                        </div>
-                    </div>
-                    <br>
-                    <template>
-                    	<div class="row">
-                    		<div class="col-md-5">
-		                    	<div class="form-group">
-		                    		<label>Sesi</label>
-		                    		<select class="form-control form-control" v-model="diujikan.sesi" required>
-		                    			<option v-for="(sesi,index) in sesis" :value="sesi.sesi" :key="'ses_'+index">{{ sesi.sesi }}</option>
-									</select>
-		                    	</div>
-		                    	<div class="form-group">
-		                    		<label>Ujian</label>
-		                    		<select class="form-control form-control" v-model="diujikan.jadwal">
-		                    			<option v-for="ujian in ujians" :value="ujian.id">
-											{{ ujian.alias }}
-										</option>
-									</select>
-		                    	</div>
-		                    	<div class="form-group">
-		                    		<label>Token</label>
-		                    		<div class="input-group">
-		                    			<input type="text" readonly="" class="form-control" 
-		                    			:value="((diujikan.status_token === 1) ? 
-		                    			diujikan.token + ' | 15 Menit' : '-')">
-		                    			<div class="input-group-append" v-show="diujikan.status_token === 0">
-						                    <b-button variant="dark" type="button" @click="ubahToken">Rilis token</b-button>
-						                </div>
-								    </div>
-		                    	</div>
-		                    	<div class="form-group">
-		                    		<b-button variant="primary" @click="postStatus" :disabled="isLoading"><i class="cil-save"></i> {{ isLoading ? 'Processing...' : 'Simpan' }}</b-button>
-		                    	</div>
-                    		</div>
-                    	</div>
-                    </template>
-                </div>
-                <div class="card-footer">
-                	
-                </div>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4" v-for="jadwal in jadwals">
+			<div class="card mb-3">
+			  <div class="card-header" v-text="jadwal.alias"></div>
+			  <div class="card-body">
+			  	<table class="table table-bordered">
+			  		<tr>
+			  			<td>Tanggal</td>
+			  			<td>{{ jadwal.tanggal }}</td>
+			  		</tr>
+			  		<tr>
+			  			<td>Mulai</td>
+			  			<td>{{ jadwal.mulai }}</td>
+			  		</tr>
+			  	</table>
+				<div class="input-group">
+				  <select class="custom-select" v-model="jadwal.sesi">
+				    <option value="1">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				  </select>
+				  <div class="input-group-append">
+				    <button class="btn btn-secondary" type="button" @click="sesiChange(jadwal.id)" :disabled="isLoading">
+				    	Simpan
+				    </button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		</div>
+
+	</div>
 </template>
 <script>
-import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
 
 export default {
-	name: 'UjianSatus',
+	name: 'StatusUjian',
 	data() {
 		return {
-			timeout: 0,
-		}
-	},
-	async created() {
-		try {
-			await this.getUjianDiujian()
-			this.getUjianActive()
-			this.getSesi()
 
-		} catch (error) {
-			this.$bvToast.toast(error.message, errorToas())
 		}
 	},
 	computed: {
 		...mapGetters(['isLoading']),
 		...mapState('ujian', {
-			diujikan: state => state.diujikan,
-			ujians: state => state.ujianActive,
-			sesis: state => state.sesis
+			jadwals: state => state.ujianActive,
+			token: state => state.token
 		})
 	},
 	methods: {
-		...mapActions('ujian', ['getUjianDiujian','getUjianActive', 'getSesi', 'saveStatus', 'rilisToken', 'changeToken']),
-		postStatus() {
-			this.saveStatus()
-			.then(async (res) => {
-				await this.getUjianDiujian()
-		        this.$bvToast.toast('Ujian aktif disimpan.', successToas())
-			})
-			.catch((error) => {
-				this.$bvToast.toast(error.message, errorToas())
-			})
-		},
-		async ubahToken() {
+		...mapActions('ujian' ,[
+			'getUjianActive', 'changeSesi', 'getToken', 'rilisToken'
+		]),
+		async rilis() {
 			try {
 				await this.rilisToken()
-				this.$bvToast.toast('Token berhasil dirilis.', successToas())
-				this.getUjianDiujian()
+				await this.getToken()
 			} catch (error) {
 				this.$bvToast.toast(error.message, errorToas())
 			}
-		}
-	},
-	watch: {
-		async timeout() {
+		},
+		async sesiChange(id) {
 			try {
-				await this.changeToken()
-
-				this.getUjianDiujian()
+				let index = this.jadwals.map(item => item.id).indexOf(id)
+				await this.changeSesi({ id: id, data: { sesi: this.jadwals[index].sesi } })
+				this.getUjianActive()
+				this.$bvToast.toast('Sesi berhasil diubah', successToas())
 			} catch (error) {
-				this.$bvToast.toast(error.message, errorToas())
+				this.$bvToast.toast(error.message, errorToas())	
 			}
 		}
 	},
-	mounted() {
-		setInterval(() => { this.timeout ++ }, 15 * 60000);
+	async created() {
+		try {
+			await this.getUjianActive()
+			await this.getToken()
+		} catch (error) {
+			this.$bvToast.toast(error.message, errorToas())
+		}
 	}
 }
 </script>

@@ -21,7 +21,8 @@ const state = () => ({
 		status_token: '',
 		token: ''
 	},
-	sesis: []
+	sesis: [],
+	token: {}
 })
 
 const mutations = {
@@ -77,6 +78,9 @@ const mutations = {
 	},
 	ASSIGN_CAPAIAN_SISWA(state, payload) {
 		state.capaians = payload
+	},
+	ASSIGN_TOKEN(state, payload) {
+		state.token = payload
 	}
 }
 
@@ -111,7 +115,7 @@ const actions = {
 		})
 	},
 	getUjianActive({ commit, state }, payload) {
-		return new Promise(async(resolve, rejet) => {
+		return new Promise(async(resolve, reject) => {
 			try {
 				let network = await $axios.get('ujians/active-status')
 
@@ -270,7 +274,7 @@ const actions = {
 		commit('SET_LOADING', true, { root: true })
 
 		return new Promise((resolve, reject) => {
-			$axios.get(`ujians/peserta`)
+			$axios.get(`ujians/${payload}/peserta`)
 			.then((response) => {
 				commit('ASSIGN_PESERTA_UJIAN', response.data.data)
 				commit('SET_LOADING', false, { root: true })
@@ -438,6 +442,35 @@ const actions = {
 			try {
 				let network = await $axios.delete(`ujians/${payload}`)
 
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	changeSesi({ state, commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async(resolve, reject) => {
+			try {
+				let network = await $axios.post(`ujians/${payload.id}/sesi-change`, payload.data)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	getToken({ commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async(resolve, reject) => {
+			try {
+				let network = await $axios.get('ujians/token-get')
+
+				commit('ASSIGN_TOKEN', network.data.data)
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
 			} catch (error) {
