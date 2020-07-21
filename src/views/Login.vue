@@ -31,9 +31,13 @@
               <input class="form-control" :class="{ 'is-invalid' : errors.password }" type="password" placeholder="Password" v-model="data.password">
               <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
             </div>
-            <b-button variant="dark" :disabled="isLoading" type="submit">
+            <b-button variant="dark" class="mr-1" :disabled="isLoading" type="submit">
               <b-spinner small type="grow" v-show="isLoading"></b-spinner>
               Login
+            </b-button>
+            <b-button variant="outline-dark" :disabled="isLoading" type="submit">
+              <b-spinner small type="grow" v-show="isLoading"></b-spinner>
+              Dinasti Sign On
             </b-button>
             </form>
           </div>

@@ -7,6 +7,9 @@ const Login = () => import('@/views/Login')
 
 import SettingIndex from '@/views/setting/Index'
 const SetSekolah = () => import(/* webpackChunkName: "sekolah" */ '@/views/setting/Sekolah')
+const SetSystem = () => import(/* webpackChunkName: "sekolah" */ '@/views/setting/System')
+const SetAirlock = () => import('@/views/setting/Airlock')
+const SetG2fk = () => import('@/views/setting/G2fk')
 
 import JurusanIndex from '@/views/jurusan/Index'
 const DataJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Jurusan')
@@ -84,6 +87,24 @@ const routes = [
         name: 'sekolah.setting',
         component: SetSekolah,
         meta: { title: 'Data sekolah' }
+      },
+      {
+        path: 'system',
+        name: 'system.setting',
+        component: SetSystem,
+        meta: { title: 'Setting system' }
+      },
+      {
+        path: 'airlock',
+        name: 'system.airlock',
+        component: SetAirlock,
+        meta: { title: 'Setting airlock authentication' }
+      },
+      {
+        path: 'g2fk',
+        name: 'system.g2fk',
+        component: SetG2fk,
+        meta: { title: 'Setting google 2 factor authentication' }
       }
     ]
   },

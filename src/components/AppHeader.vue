@@ -16,6 +16,9 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right pt-0">
                     <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+                    <router-link class="dropdown-item" :to="{ name: 'system.setting' }">
+                        <i class="cil-cog"></i> Setting
+                    </router-link>
                     <b-button class="dropdown-item" href="#" v-b-modal.modal-profile >
                         <i class="cil-lock-locked"></i> &nbsp; Ubah password
                     </b-button>
