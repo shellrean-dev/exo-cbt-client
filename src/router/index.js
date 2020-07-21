@@ -4,6 +4,7 @@ import store from '@/store'
 
 const Home = () => import('@/views/Home')
 const Login = () => import('@/views/Login')
+const Oauth = () => import('@/views/Oauth')
 
 import SettingIndex from '@/views/setting/Index'
 const SetSekolah = () => import(/* webpackChunkName: "sekolah" */ '@/views/setting/Sekolah')
@@ -70,6 +71,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/oauth/:token',
+    name: 'oauth',
+    component: Oauth
   },
   {
     path: '/',

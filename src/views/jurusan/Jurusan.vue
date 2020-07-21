@@ -52,14 +52,15 @@
                             </b-form-group>
                         </div>
                     </div>
-                    <template v-if="jurusans && typeof jurusans.data != 'undefined'">
+                    <template v-if="jurusans && typeof jurusans.data != 'undefined'" >
                         <div class="table-responsive-md">
                         <b-table 
                         id="table-transition-example"
                         primary-key="kode_mapel" :tbody-transition-props="transProps"
                         striped hover bordered small show-empty
                         :fields="fields" 
-                        :items="jurusans.data" 
+                        :items="jurusans.data"
+                        selectable
                         >
                         <template v-slot:cell(actions)="row">
                             <router-link :to="{ name: 'jurusan.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">

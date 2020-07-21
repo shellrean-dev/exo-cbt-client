@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row" style="height: 100vh">
       <div class="col-md-6">
-        <img src="/img/bg.svg" style="width: 100%;">
+        <img src="/img/bg2.svg" class="d-none d-sm-block" style="width: 100%; transform: translate(-0%, 50%);">
       </div> 
       <div class="col-md-6 bg-white" style="height: 100vh;">
         <div style="position: absolute;top: 30%; transform: translateY(-30%)">
@@ -35,10 +35,9 @@
               <b-spinner small type="grow" v-show="isLoading"></b-spinner>
               Login
             </b-button>
-            <b-button variant="outline-dark" :disabled="isLoading" type="submit">
-              <b-spinner small type="grow" v-show="isLoading"></b-spinner>
+            <a :href="baseURL+'/api/v1/login/sso'" class="btn btn-outline-dark" v-if="airlock">
               Dinasti Sign On
-            </b-button>
+            </a>
             </form>
           </div>
         </div>
@@ -58,21 +57,32 @@ export default {
         email: '',
         password: ''
       },
-      version: process.env.VUE_APP_VERSION
+      airlock: false,
+      version: process.env.VUE_APP_VERSION,
+      baseURL: process.env.VUE_APP_API_SERVER
     }
   },
-  created() {
+  async created() {
     if (this.isAuth) {
       this.$router.push({ name: 'home' })
+    }
+    try {
+      await this.getSetAuth()
+    } catch (error) {
+      this.$bvToast.toast(error.message, errorToas())
     }
   },
   computed: {
     ...mapGetters(['isAuth','isLoading']),
+    ...mapState('setting', {
+      auth: state => state.auth
+    }),
     ...mapState(['errors'])
   },
   methods: {
     ...mapActions('auth', ['submit']),
     ...mapActions('user',['getUserLogin']),
+    ...mapActions('setting', ['getSetAuth']),
     async postLogin() {
       try {
         let provider = await this.submit(this.data)
@@ -86,6 +96,14 @@ export default {
   },
   destroyed() {
     this.getUserLogin()
+  },
+  watch: {
+    auth() {
+      let name = this.auth.map(item => item.name);
+      if(name.includes('airlock')) {
+        this.airlock = true
+      }
+    }
   }
 }
 </script>

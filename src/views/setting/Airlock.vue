@@ -38,6 +38,10 @@
                                     <input type="text" class="form-control" v-model="airlock.value.user_url" required="">
                                 </div>
                                 <div class="form-group">
+                                    <label>Consumer URL</label>
+                                    <input type="text" class="form-control" v-model="airlock.value.consumer_url" required="">
+                                </div>
+                                <div class="form-group">
                                     <b-button variant="primary" type="submit" :disabled="isLoading">
                                         {{ isLoading ? 'Processing...' : 'Save configuration' }}
                                     </b-button>

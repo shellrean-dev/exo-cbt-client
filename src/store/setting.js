@@ -2,7 +2,8 @@ import $axios from '@/services/api.js'
 
 const state = () => ({
     set_sekolah: {},
-    set_airlock: {}
+    set_airlock: {},
+    auth: {}
 })
 
 const mutations = {
@@ -18,10 +19,14 @@ const mutations = {
                 client_secret: payload.value.client_secret,
                 server_url: payload.value.server_url,
                 token_url: payload.value.token_url,
-                user_url: payload.value.user_url
+                user_url: payload.value.user_url,
+                consumer_url: payload.value.consumer_url
             },
             type: 'auth'
         }
+    },
+    SET_ALLOWED_AUTH(state, payload) {
+        state.auth = payload
     }
 }
 
@@ -90,6 +95,21 @@ const actions = {
             try {
                 let network = await $axios.post('settings', state.set_airlock)
 
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    getSetAuth({ commit }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.get('settings/auth')
+
+                commit('SET_ALLOWED_AUTH', network.data.data)
                 commit('SET_LOADING', false, { root: true })
                 resolve(network.data)
             } catch (error) {
