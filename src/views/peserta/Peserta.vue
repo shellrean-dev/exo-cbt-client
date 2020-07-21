@@ -67,6 +67,10 @@
 						striped hover bordered small show-empty 
 						:fields="fields" 
 						:items="pesertas.data"
+                        selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger"
 						>
 							<template v-slot:cell(show_details)="row">
                             	<b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
@@ -100,9 +104,20 @@
 								</b-button>
 							</template>
 						</b-table>
-						<div class="row">
+						<div class="row mt-2">
                             <div class="col-md-6">
-                                <p><i class="fa fa-bars"></i> {{ pesertas.data.length }} data dari {{ pesertas.total }} total data</p>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="cil-check"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="cil-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkRemove">
+                                        <i class="cil-trash"></i> Bulk remove
+                                    </b-button>
+                                </div>
+                                <p><i class="fa fa-bars"></i> <b>{{ pesertas.data.length }}</b> peserta dari <b>{{ pesertas.total }}</b> total data peserta</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -153,7 +168,8 @@ export default {
 			isBusy: true,
 			perPage: 30,
             pageOptions: [30, 80, 160],
-			sekolah: 0
+			sekolah: 0,
+            selected: []
 		}
 	},
 	computed: {
@@ -172,11 +188,23 @@ export default {
 	},
 	methods: {
 		...mapActions('peserta', ['getPesertas','removePeserta']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
 		changeData() {
 			this.getPesertas({
 				search: this.search, perPage: this.perPage
 			})
 		},
+        bulkRemove() {
+
+        },
 		deletePeserta(id) {
 			this.$swal({
 				title: 'Informasi',

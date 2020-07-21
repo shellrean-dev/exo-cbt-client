@@ -61,20 +61,22 @@
 
                             <template v-slot:row-details="row">
                                 <b-card>
-                                    <table class="table table-borderless">
-                                        <tr>
-                                            <td width="150px">Pembuat</td><td v-text="row.item.user.name"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jumlah PG</td><td v-text="row.item.jumlah_soal+' ('+row.item.jumlah_pilihan+' opsi )'"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jumlah esay</td><td v-text="row.item.jumlah_soal_esay"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Soal terinput</td><td v-text="row.item.inputed"></td>
-                                        </tr>
-                                    </table>
+                                    <div class="table-responsive-md">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td width="150px">Pembuat</td><td v-text="row.item.user.name"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah PG</td><td v-text="row.item.jumlah_soal+' ('+row.item.jumlah_pilihan+' opsi )'"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah esay</td><td v-text="row.item.jumlah_soal_esay"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Soal terinput</td><td v-text="row.item.inputed"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </b-card>
                             </template>
                            <template v-slot:cell(actions)="row">
@@ -84,9 +86,9 @@
                             </template>
                         </b-table>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
-                                <p v-if="banksoals.data"><i class="fa fa-bars"></i> {{ banksoals.data.length }} item dari {{ banksoals.total }} total data</p>
+                                <p v-if="banksoals.data"><i class="fa fa-bars"></i> <b>{{ banksoals.data.length }}</b> banksoal dari <b>{{ banksoals.total }}</b> total data banksoal</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">

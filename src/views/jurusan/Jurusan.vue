@@ -61,6 +61,9 @@
                         :fields="fields" 
                         :items="jurusans.data"
                         selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger"
                         >
                         <template v-slot:cell(actions)="row">
                             <router-link :to="{ name: 'jurusan.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
@@ -71,9 +74,20 @@
                             </button>
                         </template>
                         </b-table>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
-                                <p><i class="fa fa-bars"></i> {{ jurusans.data.length }} item dari {{ jurusans.total }} total data</p>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="cil-check"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="cil-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkRemove">
+                                        <i class="cil-trash"></i> Bulk remove
+                                    </b-button>
+                                </div>
+                                <p><i class="fa fa-bars"></i> <b>{{ jurusans.data.length }}</b> jurusan dari <b>{{ jurusans.total }}</b> total data jurusan</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -95,6 +109,7 @@
                         </div>
                     </template>
                 </div>
+                <div class="card-footer"></div>
             </div>
         </div>
     </div>
@@ -115,14 +130,15 @@ export default {
               name: 'flip-list'
             },
             fields: [
-               { key: 'id', label: 'ID Jurusan' },
-               { key: 'nama', label: 'Nama' },
+               { key: 'id', label: 'ID Jurusan', sortable: true },
+               { key: 'nama', label: 'Nama', sortable: true },
                { key: 'actions', label: 'Aksi' } 
             ],
-            perPage: 30,
-            pageOptions: [30, 100, 200],
+            perPage: 10,
+            pageOptions: [10, 30, 100],
             search: '',
-            isBusy: true
+            isBusy: true,
+            selected: []
         }
     },
     computed: {
@@ -142,6 +158,18 @@ export default {
     },
     methods: {
         ...mapActions('jurusan', ['getJurusans', 'removeJurusan']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
+        bulkRemove() {
+
+        },
         deleteJurusan(id) {
             this.$swal({
                 title: 'Informasi',

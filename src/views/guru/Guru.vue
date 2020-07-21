@@ -65,6 +65,10 @@
                         striped hover bordered small show-empty
                         :fields="fields" 
                         :items="users.data" 
+                        selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger"
                         >
                             <template v-slot:cell(actions)="row">
                                 <router-link :to="{ name: 'guru.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
@@ -75,9 +79,20 @@
                                 </b-button>
                             </template>
                         </b-table>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
-                                <p><i class="fa fa-bars"></i> {{ users.data.length }} data dari {{ users.total }} total pengguna</p>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="cil-check"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="cil-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkRemove">
+                                        <i class="cil-trash"></i> Bulk remove
+                                    </b-button>
+                                </div>
+                                <p><i class="fa fa-bars"></i> {{ users.data.length }} user dari {{ users.total }} total data user</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -98,6 +113,7 @@
                         </div>
                     </template>
                 </div>
+                <div class="card-footer"></div>
             </div>
         </div>
     </div>
@@ -123,6 +139,7 @@ export default {
             perPage: 20,
             pageOptions: [20, 50, 100],
             search: '',
+            selected: []
         }
     },
     computed: {
@@ -141,6 +158,18 @@ export default {
     },
     methods: {
         ...mapActions('user',['getUsers', 'removeUser']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
+        bulkRemove() {
+
+        },
         deleteUser(id) {
             this.$swal({
                 title: 'Informasi',
