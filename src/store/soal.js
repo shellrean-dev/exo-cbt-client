@@ -94,7 +94,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.post(`/soals/banksoal/${payload.id}/upload`, payload.data, {
+                let network = await $axios.post(`/soals/import-word/${payload.id}`, payload.data, {
                     onUploadProgress: function( progressEvent ) {
                         commit('UPLOAD_PROGRESS_BAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
                     }.bind(this)

@@ -109,8 +109,7 @@
     </div>
 </template>
 <script>
-import Image from '@/entities/Image.js'
-import $axios from '@/services/api.js'
+import store from '@/store'
 import { successToas, errorToas} from '@/entities/notif'
 
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
@@ -330,6 +329,7 @@ export default {
     banksoal(val) {
       this.jmlh_pilihan = val.jumlah_pilihan
       this.getContentFilemedia(val.directory_id)
+      this.showEditor = true
     },
     data_soal() {
       this.initEditor()
@@ -338,6 +338,7 @@ export default {
       if(val != '') {
         this.getContentFilemedia(val)
         this.getContentFilemedia(val.directory_id)
+        this.editorConfig.filebrowserUploadUrl = process.env.VUE_APP_API_SERVER+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
         this.showEditor = true
       }
     },

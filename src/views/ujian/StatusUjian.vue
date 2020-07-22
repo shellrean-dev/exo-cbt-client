@@ -3,7 +3,7 @@
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-6 col-lg-4">
-					<div class="card  mb-3">
+					<div class="card  mb-3" v-if="jadwals.length > 0">
 					  <div class="card-header">TOKEN UJIAN 
 					  	<span class="badge badge-light">{{ token.status == 0 ? 'Tidak aktif' :'Aktif' }}</span></div>
 					  <div class="card-body text-dark ">
@@ -13,6 +13,14 @@
 					  <div class="card-footer">
 					  	<button class="btn btn-sm btn-primary" v-if="token.status == 0" @click="rilis" :disabled="isLoading">Relese token</button>
 					  </div>
+					</div>
+					<div class="card" v-else>
+						<div class="card-header bg-info text-white">
+							<strong>Informasi: </strong>
+						</div>
+						<div class="card-body">
+						 Tidak ada ujian yang diaktifkan, aktifkan ujian pada menu jadwal ujian
+						</div>
 					</div>
 				</div>
 			</div>

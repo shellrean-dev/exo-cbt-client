@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'banksoal.soal', params: { banksoal_id: $route.params.banksoal_id } }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-                    <a :href="baseURL+'/download/format-input-soal-exc.xlsx'" class="btn btn-primary btn-sm" download>
+                    <a :href="baseURL+'/download/format-input-soal-doc.docx'" class="btn btn-primary btn-sm" download>
                         <i class="cil-cloud-download"></i> Download format
                     </a>
                 </div>
@@ -14,7 +14,7 @@
                             <div class="input-group">
                               <div class="custom-file">
                                 <input type="file" class="custom-file-input" @change="onFileChange">
-                                <label class="custom-file-label">{{ label ? label : 'Pilih file excel...' }}</label>
+                                <label class="custom-file-label">{{ label ? label : 'Pilih file docx...' }}</label>
                               </div>
                               <div class="input-group-append">
                                 <button class="btn btn-primary" type="button" :disabled="isLoading" @click="uploadFile">{{ isLoading ? 'Processing...' : 'Upload' }}</button>
@@ -39,7 +39,7 @@ export default {
     name: 'UploadGuru',
     data() {
         return {
-            allow: ['xlsx','xls'],
+            allow: ['docx'],
             label: '',
             file: '',
             baseURL: process.env.VUE_APP_API_SERVER
@@ -60,7 +60,7 @@ export default {
         uploadFile() {
             let exten = this.label.substring(this.label.lastIndexOf('.') + 1); 
             if(!this.allow.includes(exten)) {
-                this.$bvToast.toast('Hanya format excel yang diizinkan', errorToas())
+                this.$bvToast.toast('Hanya format docx yang diizinkan', errorToas())
                 return
             }
 

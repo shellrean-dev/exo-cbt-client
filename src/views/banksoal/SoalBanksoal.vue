@@ -5,7 +5,6 @@
                 <div class="card-header">
                     <router-link :to="{ name: 'banksoal.data' }" class="btn btn-light btn-sm mr-1 mt-1">Kembali</router-link>
                     <router-link :to="{ name: 'banksoal.soal.tambah', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah soal</router-link>
-                    <router-link :to="{ name: 'banksoal.soal.paste', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary btn-sm  mt-1">Paste soal</router-link>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -21,6 +20,9 @@
                             <router-link :to="{ name: 'banksoal.upload' }" class="btn float-right btn-success btn-sm">
                                 <i class="cil-cloud-upload"></i>
                                 Import soal
+                            </router-link>
+                            <router-link :to="{ name: 'banksoal.soal.paste', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary btn-sm  mx-1 float-right">
+                                <i class="cil-description"></i> Paste soal
                             </router-link>
                         </div>
                     </div>
