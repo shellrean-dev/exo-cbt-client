@@ -187,7 +187,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('peserta', ['getPesertas','removePeserta']),
+		...mapActions('peserta', ['getPesertas','removePeserta', 'removePesertaMultiple']),
         onRowSelected(items) {
             this.selected = items
         },
@@ -203,12 +203,37 @@ export default {
 			})
 		},
         bulkRemove() {
+            if(this.selected == '') {
+                return
+            }
+            this.$swal({
+                title: 'Informasi',
+                text: 'Peserta yang dipilih akan dihapus beserta dengan data yang terkait',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c7c7c7',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+                if (result.value) {
+                    let ids = this.selected.map(item => item.id)
+                    this.removePesertaMultiple({ peserta_id: ids })
+                    .then((provider) => {
+                        this.getPesertas({
 
+                        });
+                        this.$bvToast.toast('Data peserta berhasil dihapus.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+                }
+            })
         },
 		deletePeserta(id) {
 			this.$swal({
 				title: 'Informasi',
-				text: 'Tindakan ini akan menghapus secara permanent!',
+				text: 'Peserta yang dipilih akan dihapus beserta dengan data yang terkait',
 				icon: 'warning',
 				showCancelButton: true,
                 confirmButtonColor: '#3085d6',

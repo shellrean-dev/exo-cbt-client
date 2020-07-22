@@ -198,7 +198,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('matpel', ['getMatpels','removeMatpel']),
+        ...mapActions('matpel', ['getMatpels','removeMatpel', 'removeMatpelMultiple']),
         onRowSelected(items) {
             this.selected = items
         },
@@ -209,12 +209,35 @@ export default {
             this.$refs.selectableTable.clearSelected()
         },
         bulkRemove() {
-
+            if(this.selected == '') {
+                return
+            }
+            this.$swal({
+                title: 'Informasi',
+                text: "Matpel yang dipilih akan dihapus beserta data yang terkait",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c7c7c7',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+                if (result.value) {
+                    let ids = this.selected.map(item => item.id)
+                    this.removeMatpelMultiple({ matpel_id: ids })
+                    .then(() => {
+                        this.getMatpels({ search: this.search, perPage : this.perPage });
+                        this.$bvToast.toast('Data matpel berhasil dihapus.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+                }
+            })
         },
         deleteMatpel(id) {
             this.$swal({
                 title: 'Informasi',
-                text: "Tindakan ini akan menghapus secara permanent!, serta menghapus seluruh data yang terkait dengan matpel ini",
+                text: "Matpel yang dipilih akan dihapus beserta data yang terkait",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

@@ -163,6 +163,21 @@ const actions = {
                 reject(error.response.data)
             }
         })
+    },
+    removeMatpelMultiple({ commit }, payload) {
+        commit('SET_LOADING', true, { root: true })
+
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.post('matpels/delete-multiple', payload)
+
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
     }
 }
 

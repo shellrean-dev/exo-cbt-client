@@ -157,7 +157,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('jurusan', ['getJurusans', 'removeJurusan']),
+        ...mapActions('jurusan', ['getJurusans', 'removeJurusan', 'removeJurusanMultiple']),
         onRowSelected(items) {
             this.selected = items
         },
@@ -168,12 +168,34 @@ export default {
             this.$refs.selectableTable.clearSelected()
         },
         bulkRemove() {
-
+            if(this.selected == '') {
+                return
+            }
+            this.$swal({
+                title: 'Informasi',
+                text: "Jurusan yang dipilih akan dihapus beserta data yang terkait dengan table jurusan",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c7c7c7',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then(async (result) => {
+                if (result.value) {
+                    try {
+                        let ids = this.selected.map(item => item.id)
+                        await this.removeJurusanMultiple({ jurusan_id: ids })
+                        this.getJurusans({ perPage : this.perPage });
+                        this.$bvToast.toast('Data jurusan berhasil dihapus', successToas())
+                    } catch (error) {
+                        this.$bvToast.toast(error.message, errorToas())
+                    }
+                }
+            })
         },
         deleteJurusan(id) {
             this.$swal({
                 title: 'Informasi',
-                text: "Tindakan ini akan menghapus secara permanent!",
+                text: "Jurusan yang dipilih akan dihapus beserta data yang terkait dengan table jurusan",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

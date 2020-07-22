@@ -44,7 +44,7 @@
             <li class="c-sidebar-nav-item" >
               <router-link class="c-sidebar-nav-link" :to="{ name: 'guru.data' }"
               :class="[currentPage.includes('guru.data') ? activeClass : '']"> 
-                <span class="c-sidebar-nav-icon"></span> Guru
+                <span class="c-sidebar-nav-icon"></span> User
               </router-link>
             </li>
           </ul>

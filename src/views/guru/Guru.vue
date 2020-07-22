@@ -157,7 +157,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('user',['getUsers', 'removeUser']),
+        ...mapActions('user',['getUsers', 'removeUser', 'removeUserMultiple']),
         onRowSelected(items) {
             this.selected = items
         },
@@ -168,12 +168,35 @@ export default {
             this.$refs.selectableTable.clearSelected()
         },
         bulkRemove() {
-
+            if(this.selected == '') {
+                return
+            }
+            this.$swal({
+                title: 'Informasi',
+                text: "User yang dipilih akan dihapus berserta data yang terkait",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c7c7c7',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+                if (result.value) {
+                    let ids = this.selected.map(item => item.id)
+                    this.removeUserMultiple({ user_id: ids })
+                    .then(() => {
+                        this.getUsers({ search: this.search, perPage : this.perPage });
+                        this.$bvToast.toast('Data user berhasil dihapus.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+                }
+            })
         },
         deleteUser(id) {
             this.$swal({
                 title: 'Informasi',
-                text: "Tindakan ini akan menghapus secara permanent!, serta menghapus seluruh data yang terkait dengan pengguna ini",
+                text: "User yang dipilih akan dihapus berserta data yang terkait",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -184,7 +207,7 @@ export default {
                     this.removeUser(id)
                     .then(() => {
                         this.getUsers({ search: this.search, perPage : this.perPage });
-                        this.$bvToast.toast('Data pengguna berhasil dihapus.', successToas())
+                        this.$bvToast.toast('Data user berhasil dihapus.', successToas())
                     })
                     .catch((error) => {
                         this.$bvToast.toast(error.message, errorToas())
