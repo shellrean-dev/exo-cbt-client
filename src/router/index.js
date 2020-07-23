@@ -54,6 +54,7 @@ const DataUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/Uji
 const StatusUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/StatusUjian')
 const PesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/PesertaUjian')
 const ResetPesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/ResetPesertaUjian')
+const DataEvent = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/Event')
 
 import KelolaIndex from '@/views/kelola/Index'
 const KoreksiEsay = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/KoreksiEsay')
@@ -334,6 +335,12 @@ const routes = [
         name: 'ujian.peserta-reset',
         component: ResetPesertaUjian,
         meta: { title: 'Reset peserta ujian' }
+      },
+      {
+        path: 'event',
+        name: 'ujian.event.data',
+        component: DataEvent,
+        meta: { title: 'Manage event ujian'}
       }
     ]
   },

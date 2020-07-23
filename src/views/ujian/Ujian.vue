@@ -69,7 +69,7 @@
 								<b-button variant="danger" :disabled="isLoading" size="sm" @click="remove(row.item.id)">Hapus</b-button>
 							</template>
 	                    </b-table>
-	                    <div class="row">
+	                    <div class="row mt-2">
 	                        <div class="col-md-6">
 	                            <p><i class="fa fa-bars"></i> {{ ujians.data.length }} item dari {{ ujians.total }} total data</p>
 	                        </div>

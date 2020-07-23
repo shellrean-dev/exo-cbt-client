@@ -56,11 +56,24 @@
             <i class="c-sidebar-nav-icon cil-briefcase"></i>Banksoal
           </router-link>
         </li>
-        <li class="c-sidebar-nav-item" >
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.data' }"
-          :class="[currentPage.includes('ujian.data') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-notes"></i>Jadwal ujian
-          </router-link>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <i class="c-sidebar-nav-icon cil-notes"></i> Ujian
+          </a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.event.data' }"
+              :class="[currentPage.includes('ujian.event.data') ? activeClass : '']">
+                <i class="c-sidebar-nav-icon"></i>Event ujian
+              </router-link>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.data' }"
+              :class="[currentPage.includes('ujian.data') ? activeClass : '']">
+                <i class="c-sidebar-nav-icon"></i>Jadwal ujian
+              </router-link>
+            </li>
+          </ul>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'filemedia.data' }"
