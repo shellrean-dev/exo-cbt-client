@@ -10,57 +10,38 @@
                     <br>
                     <div class="row justify-content-center">
                     	<div class="col-md-4">
-                    		<b-form-group
-                              label="Event"
-                              label-cols-sm="6"
-                              label-cols-md="4"
-                              label-cols-lg="3"
-                              label-align-sm="right"
-                              label-size="sm"
-                              label-for="perPageSelect"
-                            >
-			            	<b-form-select
-			                    v-model="event"
-			                    id="perPageSelect"
-			                    size="sm"
-			                    :options="pageOptions"
-			                ></b-form-select>
-			            	</b-form-group>
-		                </div>
+                    		<input type="text" v-model="event" class="form-control">
+                    	</div>
 		            </div>
                 </div>
                 <div class="card-body back" >
                 	<div class="table-responsive-md">
                 	<div class="paper" id="printKartu">
                 		<div class="page">
-							<center>
-								<table align="center" width="100%">
-						        	<tr>
-						        		<td style="padding:3px; display: flex; flex-wrap: wrap;" v-for="peserta in pesertas.data">
-											<table style="width:10.4cm;border:1px solid #666; " class="kartu" >
+                			<div class="row">
+                				<div class="col-md-6" v-for="peserta in pesertas.data">
+                					<table class="table table-borderless table-sm" style="border: 1px solid #000">
+										<tr>
+											<td colspan="3" style="border-bottom:1px solid #666; padding: 0;">
+												<table width="100%" class="kartu">
 												<tr>
-													<td colspan="3" style="border-bottom:1px solid #666; padding: 0;">
-														<table width="100%" class="kartu">
-														<tr>
-															<td style="width: 30px"><img src="/img/logo.ico" height="40"></td>
-															<td align="center" style="font-weight:bold; padding: 4px;">
-																<span class="upper">Kartu Login</span><br> 
-																<span class="upper">{{ event }}</span>
-															</td>
-															<td style="width: 30px">&nbsp;</td>
-														</tr>
-														</table>
+													<td style="width: 30px"><img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 46px" height="40"></td>
+													<td align="center" style="font-weight:bold; padding: 4px;">
+														<span class="upper">Kartu Login</span><br> 
+														<span class="upper">{{ event }}</span>
 													</td>
+													<td style="width: 30px">&nbsp;</td>
 												</tr>
-												<tr><td>No ujian</td><td>:</td><td style="font-size:12px;font-weight:bold;" v-text="peserta.no_ujian"></td></tr>
-												<tr><td>Sesi</td><td>:</td><td v-text="peserta.sesi"></td></tr>
-												<tr><td width="125">Nama Peserta</td><td width="1">:</td><td v-text="peserta.nama"></td></tr>
-												<tr><td>Password</td><td>:</td><td style="font-size:12px;font-weight:bold;" v-text="peserta.password"></td></tr>
-											</table>
-										</td>
-						    		</tr>
-						   		</table>
-							</center>
+												</table>
+											</td>
+										</tr>
+										<tr><td>No ujian</td><td width="5px">:</td><td style="font-size:12px;font-weight:bold;" v-text="peserta.no_ujian"></td></tr>
+										<tr><td>Sesi</td><td>:</td><td v-text="peserta.sesi"></td></tr>
+										<tr><td width="125">Nama Peserta</td><td width="1">:</td><td v-text="peserta.nama"></td></tr>
+										<tr><td>Password</td><td>:</td><td style="font-size:12px;font-weight:bold;" v-text="peserta.password"></td></tr>
+                					</table>
+                				</div>
+                			</div>
 						</div>
                 	</div>
                 	</div>
@@ -94,11 +75,14 @@
 	},
 	data() {
 		return {
-			pageOptions: ['UNBK','USBN'],
-			event: 'UNBK'
+			baseURL: process.env.VUE_APP_API_SERVER,
+			event: 'UJIAN SEKOLAH 2020'
 		}
 	},
 	computed: {
+		...mapState('setting',{
+	      sekolah: state => state.set_sekolah
+	    }),
 		...mapGetters(['isLoading']),
 		...mapState('peserta', {
 			pesertas: state => state.pesertas
