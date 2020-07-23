@@ -5,7 +5,7 @@
         <img src="/img/bg2.svg" class="d-none d-sm-block" style="width: 100%; transform: translate(-0%, 50%);">
       </div> 
       <div class="col-md-6 bg-white" style="height: 100vh;">
-        <div >
+        <div style="transform: translateY(-50%);margin-top: 50%;">
           <div >
             <h4>Extraordinary-CBT Login</h4>
           </div>
