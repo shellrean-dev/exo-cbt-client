@@ -139,11 +139,10 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      baseURL: process.env.VUE_APP_API_SERVER,
       activeClass: 'c-active'
     }
   },
@@ -163,6 +162,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['baseURL']),
     ...mapState('user', {
       user: state => state.authenticated
     }),
