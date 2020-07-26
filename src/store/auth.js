@@ -8,7 +8,7 @@ const actions = {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.post('/login', payload)
+                let network = await $axios.post('login', payload)
 
                 if (network.data.status == 'success') {
                     localStorage.setItem('token',network.data.token)
@@ -35,7 +35,7 @@ const actions = {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.get(`/login/oauth?token=${payload}`)
+                let network = await $axios.get(`login/oauth?token=${payload}`)
 
                 if (network.data.status == 'success') {
                     localStorage.setItem('token',network.data.token)

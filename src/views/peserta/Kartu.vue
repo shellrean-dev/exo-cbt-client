@@ -75,7 +75,6 @@
 	},
 	data() {
 		return {
-			baseURL: process.env.VUE_APP_API_SERVER,
 			event: 'UJIAN SEKOLAH 2020'
 		}
 	},
@@ -83,7 +82,7 @@
 		...mapState('setting',{
 	      sekolah: state => state.set_sekolah
 	    }),
-		...mapGetters(['isLoading']),
+		...mapGetters(['isLoading','baseURL']),
 		...mapState('peserta', {
 			pesertas: state => state.pesertas
 		}),

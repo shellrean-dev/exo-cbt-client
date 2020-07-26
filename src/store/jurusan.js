@@ -39,7 +39,7 @@ const actions = {
 	allJurusan({ commit }) {
         return new Promise(async ( resolve, reject) => {
         	try {
-        		let network = await $axios.get(`/jurusans/all`)
+        		let network = await $axios.get(`jurusans/all`)
 
         		commit('ASSIGN_ALL_DATA', network.data.data)
      			commit('SET_LOADING', false, { root: true })
@@ -57,7 +57,7 @@ const actions = {
 
         return new Promise(async ( resolve, reject) => {
         	try {
-        		let network = await $axios.get(`/jurusans?page=${state.page}&q=${search}&perPage=${perPage}`)
+        		let network = await $axios.get(`jurusans?page=${state.page}&q=${search}&perPage=${perPage}`)
 
         		commit('ASSIGN_DATA', network.data.data)
      			commit('SET_FROM_DATA', network.data.data.from)

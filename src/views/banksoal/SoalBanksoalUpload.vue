@@ -42,11 +42,10 @@ export default {
             allow: ['docx'],
             label: '',
             file: '',
-            baseURL: process.env.VUE_APP_API_SERVER
         }
     },
     computed: {
-        ...mapGetters(['isLoading']),
+        ...mapGetters(['isLoading','baseURL']),
         ...mapState('soal', {
             percent: state => state.uploadPercentage
         })

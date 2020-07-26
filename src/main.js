@@ -74,9 +74,10 @@ new Vue({
   },
   methods: {
     ...mapActions('user', ['getUserLogin']),
-    ...mapActions('setting',['getSettingSekolah'])
+    ...mapActions('setting',['getConfig','getSettingSekolah'])
   },
   async created() {
+    await this.getConfig()
     if (this.isAuth) {
       try {
         await this.getUserLogin()

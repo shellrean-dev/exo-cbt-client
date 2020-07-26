@@ -34,7 +34,7 @@ const actions = {
 		
         return new Promise(async ( resolve, reject ) =>  {
             try {
-                let network = await $axios.get(`/banksoals?page=${state.page}&q=${search}&perPage=${perPage}`)
+                let network = await $axios.get(`banksoals?page=${state.page}&q=${search}&perPage=${perPage}`)
 				
                 commit('ASSIGN_DATA', network.data.data)
                 commit('SET_LOADING', false, { root: true })
@@ -49,7 +49,7 @@ const actions = {
 		let search = typeof payload != 'undefined' ? payload : ''
 		return new Promise(async ( resolve, reject ) =>  {
             try {
-                let network = await $axios.get(`/banksoals/all`)
+                let network = await $axios.get(`banksoals/all`)
 
 				commit('ASSIGN_ALL_DATA', network.data.data)
 				resolve(network.data)
@@ -63,7 +63,7 @@ const actions = {
         
         return new Promise(async ( resolve, reject ) => {
             try {
-                let network = await $axios.get(`/banksoals/${payload}`)
+                let network = await $axios.get(`banksoals/${payload}`)
 
                 commit('ASSIGN_FORM', network.data.data)
                 commit('SET_LOADING', false, { root: true })
@@ -78,7 +78,7 @@ const actions = {
         
         return new Promise(async (resolve, reject) => {
             try{
-                let network = await $axios.post(`/banksoals`, payload)
+                let network = await $axios.post(`banksoals`, payload)
 
                 commit('CLEAR_ERRORS', '', { root: true })
                 commit('SET_LOADING',false, { root: true })
@@ -97,7 +97,7 @@ const actions = {
         
         return new Promise(async (resolve, reject) => {
             try{
-                let network = await $axios.put(`/banksoals/${payload.id}`, payload.data)
+                let network = await $axios.put(`banksoals/${payload.id}`, payload.data)
 
                 commit('SET_LOADING',false, { root: true })
                 resolve(network.data)
@@ -112,7 +112,7 @@ const actions = {
         
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.delete(`/banksoals/${payload}`)
+                let network = await $axios.delete(`banksoals/${payload}`)
 
                 commit('SET_LOADING',false, { root: true })
                 resolve(network.data)
@@ -126,7 +126,7 @@ const actions = {
         commit('SET_LOADING',true, { root: true })
         
         return new Promise((resolve, reject) => {
-            $axios.post(`/soals`, payload) 
+            $axios.post(`soals`, payload) 
             .then((response) => {
                 commit('SET_LOADING', false, { root: true})
                 resolve(response.data)
@@ -157,7 +157,7 @@ const actions = {
     updateSoalBanksoal({ commit }, payload) {
         return new Promise((resolve, reject) => {
             commit('SET_LOADING',true, { root: true })
-            $axios.post(`/soals/${payload.id}/edit`, payload.data) 
+            $axios.post(`soals/${payload.id}/edit`, payload.data) 
             .then((response) => {
                 commit('CLEAR_ERRORS','', { root: true })
                 commit('SET_LOADING',false, { root: true })
@@ -175,7 +175,7 @@ const actions = {
     getAllSoalAnalys({ commit, state }, payload) {
         commit('SET_LOADING',true, { root: true })
         return new Promise(( resolve, reject ) =>  {
-            $axios.get(`/banksoals/${payload}/analys`)
+            $axios.get(`banksoals/${payload}/analys`)
             .then((response) => {
                 commit('ASSIGN_DATA_ANALYS', response.data.data)
                 commit('SET_LOADING',false, { root: true })
@@ -186,21 +186,7 @@ const actions = {
                 reject(err.response.data)
             })
         })  
-    },
-    // getMyBanksoal({ commit }, payload) {
-    //     return new Promise((resolve, reject) => {
-    //         commit('SET_LOADING',true, { root: true })
-    //         $axios.get('/banksoal/active')
-    //         .then((response) => {
-    //             commit('ASSIGN_ALL_DATA', response.data)
-    //             commit('SET_LOADING',false, { root: true })
-				// resolve(response.data)
-    //         })
-    //         .catch((err) => {
-    //             commit('SET_LOADING',false, { root: true })
-    //         })
-    //     })
-    // }
+    }
 }
 
 export default {

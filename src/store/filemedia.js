@@ -26,7 +26,7 @@ const actions = {
 	getDirectories({ commit, state }, payload) {
 		commit('SET_LOADING', true, { root: true })
 		return new Promise(( resolve, reject) => {
-			$axios.get(`/directory?page=${state.dir_page}`)
+			$axios.get(`directory?page=${state.dir_page}`)
 			.then((response) => {
 				commit('ASSIGN_DIRECTORY_DATA',response.data.data)
 				commit('SET_LOADING', false, { root: true })
@@ -40,7 +40,7 @@ const actions = {
 	},
 	getDirectory({ commit, state }, payload) {
 		return new Promise(( resolve, reject) => {
-			$axios.get(`/directory/banksoal/`, payload)
+			$axios.get(`directory/banksoal/`, payload)
 			.then((response) => {
 				commit('ASSIGN_DIRECTORY_DATA',response.data)
 				resolve(response.data)
@@ -67,7 +67,7 @@ const actions = {
 	getContentFilemedia({ commit, state }, payload) {
 		return new Promise(( resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.get(`/directory/banksoal/${payload}?page=${state.page}`)
+			$axios.get(`directory/banksoal/${payload}?page=${state.page}`)
 			.then((response) => {
 				commit('ASSIGN_CONTENT_DIRECTORY', response.data.data)
 				commit('SET_LOADING', false, { root: true })
@@ -82,7 +82,7 @@ const actions = {
 	addFilemedia({ commit, state }, payload) {
 		return new Promise ((resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.post(`/directory/filemedia`, payload) 
+			$axios.post(`directory/filemedia`, payload) 
 			.then((response) => {
 				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
@@ -95,7 +95,7 @@ const actions = {
 	},
 	uploadFileAudio({ commit, state }, payload) {
 		return new Promise(( resolve, reject) => {
-			$axios.post(`/upload/file-audio`,payload,{ headers: { 'Content-Type': 'multipart/form-data'} })
+			$axios.post(`upload/file-audio`,payload,{ headers: { 'Content-Type': 'multipart/form-data'} })
 			.then((response) => {
 				resolve(response.data)
 			})
@@ -108,7 +108,7 @@ const actions = {
 	removeFilemedia({ commit, state }, payload) {
 		return new Promise ((resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.delete(`/directory/filemedia/${payload}`) 
+			$axios.delete(`directory/filemedia/${payload}`) 
 			.then((response) => {
 				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)

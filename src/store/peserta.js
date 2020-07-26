@@ -62,7 +62,7 @@ const actions = {
         
         return new Promise(async ( resolve, reject ) => {
             try {
-                let network = await $axios.get(`/pesertas?page=${state.page}&perPage=${perPage}&q=${search}`)
+                let network = await $axios.get(`pesertas?page=${state.page}&perPage=${perPage}&q=${search}`)
 
                 commit('ASSIGN_DATA', network.data.data)
                 commit('SET_LOADING', false, { root: true })
@@ -77,7 +77,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.post(`/pesertas`, state.peserta)
+                let network = await $axios.post(`pesertas`, state.peserta)
 
                 commit('CLEAR_FORM')
                 commit('SET_LOADING',false, { root: true })
@@ -95,7 +95,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.get(`/pesertas/${payload}`)
+                let network = await $axios.get(`pesertas/${payload}`)
 
                 commit('ASSIGN_FORM', network.data.data)
                 commit('SET_LOADING',false, { root: true })
@@ -111,7 +111,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.put(`/pesertas/${payload}`, state.peserta)
+                let network = await $axios.put(`pesertas/${payload}`, state.peserta)
 
                 commit('CLEAR_FORM')
                 commit('SET_LOADING',false, { root: true })
@@ -129,7 +129,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.delete(`/pesertas/${payload}`)
+                let network = await $axios.delete(`pesertas/${payload}`)
 
                 commit('SET_LOADING',false, { root: true })
                 resolve(network.data)
@@ -143,7 +143,7 @@ const actions = {
         commit('SET_LOADING',true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.post(`/pesertas/upload`, payload, {
+                let network = await $axios.post(`pesertas/upload`, payload, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -166,7 +166,7 @@ const actions = {
         commit('SET_LOADING',true, { root: true })
 
         return new Promise(( resolve, reject ) => {
-            $axios.get(`/pesertas/login?page=${state.page}&q=${search}`)
+            $axios.get(`pesertas/login?page=${state.page}&q=${search}`)
             .then((response) => {
                 commit('ASSIGN_PESERTA_LOGIN', response.data.data)
                 commit('SET_LOADING',false, { root: true })
@@ -182,7 +182,7 @@ const actions = {
         commit('SET_LOADING',true, { root: true })
 
         return new Promise(( resolve, reject ) => {
-            $axios.delete(`/pesertas/${payload}/login`)
+            $axios.delete(`pesertas/${payload}/login`)
             .then((response) => {
                 commit('SET_LOADING',false, { root: true })
                 resolve(response.data)

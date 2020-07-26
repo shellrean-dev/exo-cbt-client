@@ -36,6 +36,7 @@ export default new Vuex.Store({
     isLoading: false,
     loadPage: false,
     token: localStorage.getItem('token'),
+    baseURL: ''
   },
   getters: {
     isAuth: state => {
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     isLoading: state => {
       return state.isLoading
+    },
+    baseURL: state => {
+      return state.baseURL
     }
   },
   mutations: {
@@ -60,6 +64,9 @@ export default new Vuex.Store({
     },
     LOADING_PAGE(state, payload) {
       state.loadPage = payload
+    },
+    SET_BASEURL(state, payload) {
+      state.baseURL = payload
     }
   }
 })

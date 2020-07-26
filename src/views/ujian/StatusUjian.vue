@@ -14,13 +14,9 @@
 					  	<button class="btn btn-sm btn-primary" v-if="token.status == 0" @click="rilis" :disabled="isLoading">Relese token</button>
 					  </div>
 					</div>
-					<div class="card" v-else>
-						<div class="card-header bg-info text-white">
-							<strong>Informasi: </strong>
-						</div>
-						<div class="card-body">
+					<div class="alert alert-warning" v-else>
+						<strong>Informasi:</strong><br>
 						 Tidak ada ujian yang diaktifkan, aktifkan ujian pada menu jadwal ujian
-						</div>
 					</div>
 				</div>
 			</div>

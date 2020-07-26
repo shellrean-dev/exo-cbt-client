@@ -78,12 +78,11 @@ export default {
 		return {
 			label: '',
 			image: '',
-			isBusy: true,
-			baseURL: process.env.VUE_APP_API_SERVER
+			isBusy: true
 		}
 	},
 	computed: {
-		...mapGetters(['isLoading']),
+		...mapGetters(['isLoading','baseURL']),
 		...mapState('filemedia', {
 			contentDirectory: state => state.contentFilemedia
 		}),

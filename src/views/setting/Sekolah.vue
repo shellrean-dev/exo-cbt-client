@@ -80,12 +80,11 @@ export default {
                 alamat: '',
                 kepala_sekolah: '',
                 nip_kepsek: ''
-            },
-            baseURL: process.env.VUE_APP_API_SERVER
+            }
         }
     },
     computed: {
-        ...mapGetters(['isLoading']),
+        ...mapGetters(['isLoading', 'baseURL']),
         ...mapState('setting', { sekolah: state => state.set_sekolah })
     },
     methods: {

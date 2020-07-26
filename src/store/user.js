@@ -48,7 +48,7 @@ const actions = {
     getUserLists({ commit }) {
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.get(`/user-lists`)
+                let network = await $axios.get(`user-lists`)
 
                 commit('ASSIGN_USER', network.data.data)
                 resolve(network.data)

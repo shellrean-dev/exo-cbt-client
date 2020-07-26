@@ -172,12 +172,11 @@ export default {
             perPage: 10,
             pageOptions: [10, 25, 50],
 			search: '',
-            isBusy: true,
-            baseURL: process.env.VUE_APP_API_SERVER
+            isBusy: true
 		}
 	},
 	computed: {
-        ...mapGetters(['isLoading']),
+        ...mapGetters(['isLoading', 'baseURL']),
 		...mapState('soal', {
             soals: state => state.soals,
             from: state => state.from

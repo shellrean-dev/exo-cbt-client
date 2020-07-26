@@ -40,7 +40,7 @@ const actions = {
 	getAllEvents({ commit, state }, payload) {
 		let search = typeof payload != 'undefined' ? payload: ''
 		return new Promise((resolve, reject) => {
-			$axios.get(`/events/all`)
+			$axios.get(`events/all`)
 			.then((response) => {
 				commit('ASSIGN_DATA_ALL', response.data.data)
 				resolve(response.data)
@@ -53,7 +53,7 @@ const actions = {
 	addEvent({ commit, state }, payload) {
 		return new Promise((resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.post('/events', payload)
+			$axios.post('events', payload)
 			.then((response) => {
 				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)

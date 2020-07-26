@@ -67,8 +67,6 @@ export default {
                     ujian: this.$route.params.jadwal,
                     banksoal: this.$route.params.banksoal 
                 })
-
-                // createLinkDownload(network, 'Capaian_siswa.xlsx');
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }

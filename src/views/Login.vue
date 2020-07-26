@@ -58,8 +58,7 @@ export default {
         password: ''
       },
       airlock: false,
-      version: process.env.VUE_APP_VERSION,
-      baseURL: process.env.VUE_APP_API_SERVER
+      version: process.env.VUE_APP_VERSION
     }
   },
   async created() {
@@ -73,7 +72,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuth','isLoading']),
+    ...mapGetters(['isAuth','isLoading','baseURL']),
     ...mapState('setting', {
       auth: state => state.auth
     }),

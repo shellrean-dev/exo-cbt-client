@@ -144,11 +144,10 @@ export default {
       direction: '',
       label: '',
       image: '',
-      baseURL: process.env.VUE_APP_API_SERVER,
       editorConfig: {
         extraPlugins: 'sourcedialog',
         allowedContent: true,
-        filebrowserUploadUrl: process.env.VUE_APP_API_SERVER+'/api/v1/file/upload?',
+        filebrowserUploadUrl: '/api/v1/file/upload?',
         fileTools_requestHeaders: {
           'Accept': 'application/json',
           'Authorization' : 'Bearer '+store.state.token
@@ -162,7 +161,7 @@ export default {
         }
     },
   computed: {
-    ...mapGetters(['isLoading']),
+    ...mapGetters(['isLoading', 'baseURL']),
     ...mapState(['errors']),
     ...mapState('banksoal',{
       banksoal: state => state.banksoal
@@ -338,7 +337,7 @@ export default {
       if(val != '') {
         this.getContentFilemedia(val)
         this.getContentFilemedia(val.directory_id)
-        this.editorConfig.filebrowserUploadUrl = process.env.VUE_APP_API_SERVER+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
+        this.editorConfig.filebrowserUploadUrl = this.baseURL+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
         this.showEditor = true
       }
     },

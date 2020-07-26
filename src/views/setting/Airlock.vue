@@ -62,11 +62,11 @@ export default {
     name: 'Airlock',
     data() {
         return {
-            baseURL: process.env.VUE_APP_API_SERVER
+
         }
     },
     computed: {
-        ...mapGetters(['isLoading']),
+        ...mapGetters(['isLoading','baseURL']),
         ...mapState('setting', {
             airlock: state => state.set_airlock
         })

@@ -59,7 +59,7 @@ const actions = {
 		
         return new Promise(async ( resolve, reject ) =>  {
 			try {
-                let network = await $axios.get(`/matpels?page=${state.page}&q=${search}&perPage=${perPage}`)
+                let network = await $axios.get(`matpels?page=${state.page}&q=${search}&perPage=${perPage}`)
 
 				commit('ASSIGN_DATA', network.data.data)
                 commit('SET_FROM_DATA', network.data.data.from)
@@ -74,7 +74,7 @@ const actions = {
     getAllMatpels({ commit, state }, payload) {
         return new Promise(async ( resolve, reject ) =>  {
             try {
-                let network = await $axios.get(`/matpels/all`)
+                let network = await $axios.get(`matpels/all`)
 
                 commit('ASSIGN_ALL_DATA', network.data.data)
                 resolve(network.data)
@@ -87,7 +87,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.post(`/matpels`, state.matpel)
+                let network = await $axios.post(`matpels`, state.matpel)
 
                 commit('CLEAR_FORM')
                 commit('SET_LOADING',false, { root: true })
@@ -105,7 +105,7 @@ const actions = {
         commit('SET_LOADING',true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.get(`/matpels/${payload}`)
+                let network = await $axios.get(`matpels/${payload}`)
 
                 commit('SET_LOADING',false, { root: true })
                 commit('ASSIGN_FORM', network.data.data)
@@ -120,7 +120,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.put(`/matpels/${payload}`, state.matpel)
+                let network = await $axios.put(`matpels/${payload}`, state.matpel)
 
                 commit('CLEAR_FORM')
                 commit('SET_LOADING',false, { root: true })
@@ -135,7 +135,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.delete(`/matpels/${payload}`)
+                let network = await $axios.delete(`matpels/${payload}`)
 
                 commit('SET_LOADING',false, { root: true })
                 resolve(network.data)
@@ -149,7 +149,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.post(`/matpels/upload`, payload, {
+                let network = await $axios.post(`matpels/upload`, payload, {
                     onUploadProgress: function( progressEvent ) {
                         commit('UPLOAD_PROGRESS_BAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
                     }.bind(this)

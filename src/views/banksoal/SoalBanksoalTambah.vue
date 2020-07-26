@@ -142,7 +142,6 @@ export default {
       labelDirection: '',
       label: '',
       image: '',
-      baseURL: process.env.VUE_APP_API_SERVER,
       editorConfig: {
         extraPlugins: 'sourcedialog',
         allowedContent: true,
@@ -155,7 +154,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLoading']),
+    ...mapGetters(['isLoading','baseURL']),
     ...mapState(['errors']),
     ...mapState('banksoal',{
       banksoal: state => state.banksoal
@@ -323,7 +322,7 @@ export default {
       this.jmlh_pilihan = val.jumlah_pilihan
       this.initEditor()
       this.getContentFilemedia(val.directory_id)
-      this.editorConfig.filebrowserUploadUrl = process.env.VUE_APP_API_SERVER+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
+      this.editorConfig.filebrowserUploadUrl = this.baseURL+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
       this.showEditor = true
     },
     direktory(val) {
