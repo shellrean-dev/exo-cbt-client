@@ -108,8 +108,16 @@ export default {
     methods: {
         ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive']),
         async resetPeserta(id) {
+            if(this.jadwal == 0) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih jadwal dulu",
+                  icon: 'error',
+                })
+                return
+            }
             try {
-                await this.resetUjianPeserta(id)
+                await this.resetUjianPeserta({id: id, jadwal: this.jadwal})
                 this.getPesertas(this.jadwal)
                 this.$bvToast.toast('Ujian peserta berhasil direset', successToas())
             } catch (error) {
@@ -117,8 +125,16 @@ export default {
             }
         },
         async forceClose(id) {
+            if(this.jadwal == 0) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih jadwal dulu",
+                  icon: 'error',
+                })
+                return
+            }
             try {
-                await this.selesaiUjianPeserta(id)
+                await this.selesaiUjianPeserta({id: id, jadwal: this.jadwal })
                 this.getPesertas(this.jadwal)
                 this.$bvToast.toast('Ujian peserta berhasil ditutup paksa', successToas())
             } catch (error) {

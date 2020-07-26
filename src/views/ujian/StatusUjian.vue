@@ -36,6 +36,7 @@
 			  		</tr>
 			  	</table>
 				<div class="input-group">
+					<label>Sesi</label>
 				  <select class="custom-select" v-model="jadwal.sesi">
 				    <option value="1">1</option>
 				    <option value="2">2</option>
