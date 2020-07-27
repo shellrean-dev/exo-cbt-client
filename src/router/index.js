@@ -7,64 +7,64 @@ const Login = () => import('@/views/Login')
 const Oauth = () => import('@/views/Oauth')
 
 import SettingIndex from '@/views/setting/Index'
-const SetSekolah = () => import(/* webpackChunkName: "A0" */ '@/views/setting/Sekolah')
-const SetSystem = () => import(/* webpackChunkName: "A0" */ '@/views/setting/System')
-const SetAirlock = () => import(/* webpackChunkName: "A0" */ '@/views/setting/Airlock')
-const SetG2fk = () => import(/* webpackChunkName: "A0" */ '@/views/setting/G2fk')
-const SetUjian = () => import(/* webpackChunkName: "A0" */ '@/views/setting/Ujian')
+const SetSekolah = () => import( '@/views/setting/Sekolah')
+const SetSystem = () => import( '@/views/setting/System')
+const SetAirlock = () => import( '@/views/setting/Airlock')
+const SetG2fk = () => import( '@/views/setting/G2fk')
+const SetUjian = () => import( '@/views/setting/Ujian')
 
 import JurusanIndex from '@/views/jurusan/Index'
-const DataJurusan = () => import(/* webpackChunkName: "A1" */ '@/views/jurusan/Jurusan')
-const EditJurusan = () => import(/* webpackChunkName: "A1" */ '@/views/jurusan/Edit')
-const AddJurusan = () => import(/* webpackChunkName: "A1" */ '@/views/jurusan/Add')
+const DataJurusan = () => import( '@/views/jurusan/Jurusan')
+const EditJurusan = () => import( '@/views/jurusan/Edit')
+const AddJurusan = () => import( '@/views/jurusan/Add')
 
 import PesertaIndex from '@/views/peserta/Index'
-const DataPeserta = () => import(/* webpackChunkName: "A2" */ '@/views/peserta/Peserta')
-const AddPeserta = () => import(/* webpackChunkName: "A2" */ '@/views/peserta/Add')
-const EditPeserta = () => import(/* webpackChunkName: "A2" */ '@/views/peserta/Edit')
-const UploadPeserta = () => import(/* webpackChunkName: "A2" */ '@/views/peserta/Upload')
-const KartuPeserta = () => import(/* webpackChunkName: "A2" */ '@/views/peserta/Kartu')
+const DataPeserta = () => import( '@/views/peserta/Peserta')
+const AddPeserta = () => import( '@/views/peserta/Add')
+const EditPeserta = () => import( '@/views/peserta/Edit')
+const UploadPeserta = () => import( '@/views/peserta/Upload')
+const KartuPeserta = () => import( '@/views/peserta/Kartu')
 
 import MatpelIndex from '@/views/matpel/Index'
-const DataMatpel = () => import(/* webpackChunkName: "A3" */ '@/views/matpel/Matpel')
-const AddMatpel = () => import(/* webpackChunkName: "A3" */ '@/views/matpel/Add')
-const UploadMatpel = () => import(/* webpackChunkName: "A3" */ '@/views/matpel/Upload')
-const EditMatpel = () => import(/* webpackChunkName: "A3" */ '@/views/matpel/Edit')
+const DataMatpel = () => import( '@/views/matpel/Matpel')
+const AddMatpel = () => import( '@/views/matpel/Add')
+const UploadMatpel = () => import( '@/views/matpel/Upload')
+const EditMatpel = () => import( '@/views/matpel/Edit')
 
 import GuruIndex from '@/views/guru/Index'
-const DataGuru = () => import(/* webpackChunkName: "A7" */'@/views/guru/Guru')
-const AddGuru = () => import(/* webpackChunkName: "A7" */'@/views/guru/Add')
-const UploadGuru = () => import(/* webpackChunkName: "A7" */'@/views/guru/Upload')
-const EditGuru = () => import(/* webpackChunkName: "A7" */'@/views/guru/Edit')
+const DataGuru = () => import('@/views/guru/Guru')
+const AddGuru = () => import('@/views/guru/Add')
+const UploadGuru = () => import('@/views/guru/Upload')
+const EditGuru = () => import('@/views/guru/Edit')
 
 import BanksoalIndex from '@/views/banksoal/Index'
-const DataBanksoal = () => import(/* webpackChunkName: "A4" */ '@/views/banksoal/DataBanksoal')
-const SoalBanksoal = () => import(/* webpackChunkName: "A4" */'@/views/banksoal/SoalBanksoal')
-const SoalBanksoalTambah = () => import(/* webpackChunkName: "A4" */'@/views/banksoal/SoalBanksoalTambah')
-const SoalBanksoalTemplate = () => import(/* webpackChunkName: "A4" */'@/views/banksoal/SoalBanksoalTemplate')
-const SoalBanksoalEdit = () => import(/* webpackChunkName: "A4" */'@/views/banksoal/SoalBanksoalEdit')
-const SoalBanksoalPrev = () => import(/* webpackChunkName: "A4" */'@/views/banksoal/SoalBanksoalPrev')
-const SoalBanksoalUpload = () => import(/* webpackChunkName: "A4" */ '@/views/banksoal/SoalBanksoalUpload')
+const DataBanksoal = () => import( '@/views/banksoal/DataBanksoal')
+const SoalBanksoal = () => import('@/views/banksoal/SoalBanksoal')
+const SoalBanksoalTambah = () => import('@/views/banksoal/SoalBanksoalTambah')
+const SoalBanksoalTemplate = () => import('@/views/banksoal/SoalBanksoalTemplate')
+const SoalBanksoalEdit = () => import('@/views/banksoal/SoalBanksoalEdit')
+const SoalBanksoalPrev = () => import('@/views/banksoal/SoalBanksoalPrev')
+const SoalBanksoalUpload = () => import( '@/views/banksoal/SoalBanksoalUpload')
 
 import FilemediaIndex from '@/views/filemedia/Index'
-const DataFilemedia = () => import(/* webpackChunkName: "A8" */'@/views/filemedia/Filemedia')
-const DataDirFilemedia = () => import(/* webpackChunkName: "A8" */'@/views/filemedia/DirFilemedia')
+const DataFilemedia = () => import('@/views/filemedia/Filemedia')
+const DataDirFilemedia = () => import('@/views/filemedia/DirFilemedia')
 
 import UjianIndex from '@/views/ujian/Index'
-const DataUjian = () => import(/* webpackChunkName: "A5" */'@/views/ujian/Ujian')
-const StatusUjian = () => import(/* webpackChunkName: "A5" */'@/views/ujian/StatusUjian')
-const PesertaUjian = () => import(/* webpackChunkName: "A5" */'@/views/ujian/PesertaUjian')
-const ResetPesertaUjian = () => import(/* webpackChunkName: "A5" */'@/views/ujian/ResetPesertaUjian')
-const DataEvent = () => import(/* webpackChunkName: "A5" */'@/views/ujian/Event')
+const DataUjian = () => import('@/views/ujian/Ujian')
+const StatusUjian = () => import('@/views/ujian/StatusUjian')
+const PesertaUjian = () => import('@/views/ujian/PesertaUjian')
+const ResetPesertaUjian = () => import('@/views/ujian/ResetPesertaUjian')
+const DataEvent = () => import('@/views/ujian/Event')
 
 import KelolaIndex from '@/views/kelola/Index'
-const KoreksiEsay = () => import(/* webpackChunkName: "A6" */ '@/views/kelola/KoreksiEsay')
-const KoreksiNilaiEsay = () => import(/* webpackChunkName: "A6" */ '@/views/kelola/KoreksiNilaiEsay')
-const AnalysBanksoal = () => import(/* webpackChunkName: "A6" */ '@/views/kelola/AnalysBanksoal')
-const AnalysKesulitanBanksoal = () => import(/* webpackChunkName: "A6" */ '@/views/kelola/AnalysKesulitanBanksoal')
-const AnalysSiswa = () => import(/* webpackChunkName: "A6" */ '@/views/kelola/AnalysSiswa')
-const AnalysCapaianSiswa = () => import(/* webpackChunkName: "A6" */ '@/views/kelola/AnalysCapaianSiswa');
-const HasilUjian = () => import(/* webpackChunkName: "A6" */ '@/views/kelola/HasilUjian')
+const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
+const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
+const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
+const AnalysKesulitanBanksoal = () => import('@/views/kelola/AnalysKesulitanBanksoal')
+const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
+const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa');
+const HasilUjian = () => import('@/views/kelola/HasilUjian')
 
 Vue.use(VueRouter)
 
@@ -339,7 +339,7 @@ const routes = [
       },
       {
         path: 'reset/peserta',
-        name: 'ujian.peserta-reset',
+        name: 'peserta.reset',
         component: ResetPesertaUjian,
         meta: { title: 'Reset peserta ujian' }
       },

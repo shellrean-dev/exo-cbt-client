@@ -96,6 +96,13 @@
             Status peserta
           </router-link>
         </li>
+        <li class="c-sidebar-nav-item" v-if="typeof ujian.value != 'undefined' && ujian.value.reset">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.reset' }"
+          :class="[currentPage.includes('peserta.reset') ? activeClass : '']">
+            <i class="c-sidebar-nav-icon cil-reload"></i>
+            Reset login peserta
+          </router-link>
+        </li>
         <li class="c-sidebar-nav-title">Menu pengolahan</li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
@@ -167,7 +174,8 @@ export default {
       user: state => state.authenticated
     }),
     ...mapState('setting',{
-      sekolah: state => state.set_sekolah
+      sekolah: state => state.set_sekolah,
+      ujian: state => state.set_ujian
     }),
     currentPage() {
       return this.$route.name ? this.$route.name : [];

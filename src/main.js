@@ -74,7 +74,7 @@ new Vue({
   },
   methods: {
     ...mapActions('user', ['getUserLogin']),
-    ...mapActions('setting',['getConfig','getSettingSekolah'])
+    ...mapActions('setting',['getConfig','getSettingSekolah', 'getSettingUjian'])
   },
   async created() {
     await this.getConfig()
@@ -82,6 +82,7 @@ new Vue({
       try {
         await this.getUserLogin()
         this.getSettingSekolah()
+        this.getSettingUjian()
       } catch (error) {
         this.$bvToast.toast(error.message, {
           title: "Error",
