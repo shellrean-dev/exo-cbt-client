@@ -4,6 +4,7 @@ import axios from 'axios'
 const state = () => ({
     set_sekolah: {},
     set_airlock: {},
+    set_ujian: {},
     auth: {}
 })
 
@@ -24,6 +25,17 @@ const mutations = {
                 consumer_url: payload.value.consumer_url
             },
             type: 'auth'
+        }
+    },
+    ASSIGN_SETTING_UJIAN(state, payload) {
+        state.set_ujian = {
+            name: 'ujian',
+            value: {
+                reset: payload.value.reset,
+                text_welcome: payload.value.text_welcome,
+                text_finish: payload.value.text_finish
+            },
+            type: 'general'
         }
     },
     SET_ALLOWED_AUTH(state, payload) {
@@ -110,6 +122,35 @@ const actions = {
         return new Promise(async(resolve, reject) => {
             try {
                 let network = await $axios.post('settings', state.set_airlock)
+
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    getSettingUjian({ commit }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.get(`settings?setting=ujian`)
+
+                commit('ASSIGN_SETTING_UJIAN', network.data.data)
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+     setSettingUjian({ commit, state }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.post('settings', state.set_ujian)
 
                 commit('SET_LOADING', false, { root: true })
                 resolve(network.data)

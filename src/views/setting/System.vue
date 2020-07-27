@@ -16,8 +16,8 @@
 		                        Login Dinasti Airlock
 		                        <span class="badge badge-success badge-pill">Fitur aktif</span>
 		                      </router-link>
-		                      <router-link :to="{ name: 'system.g2fk' }" class="list-group-item list-group-item-action d-flex justify-content-between">
-		                        Login Google 2FK
+		                      <router-link :to="{ name: 'system.g2fa' }" class="list-group-item list-group-item-action d-flex justify-content-between">
+		                        Login Google 2FA
 		                        <span class="badge badge-danger badge-pill">Fitur tidak aktif</span>
 		                      </router-link>
 		                    </div>
@@ -29,9 +29,9 @@
 		                        Penginputan Soal
 		                        <span class="badge badge-danger badge-pill">Fitur tidak aktif</span>
 		                      </router-link>
-		                      <router-link :to="{ }" class="list-group-item list-group-item-action d-flex justify-content-between">
+		                      <router-link :to="{ name: 'system.ujian' }" class="list-group-item list-group-item-action d-flex justify-content-between">
 		                        Ujian
-		                        <span class="badge badge-danger badge-pill">Fitur tidak aktif</span>
+		                        <span class="badge badge-success badge-pill">Fitur aktif</span>
 		                      </router-link>
 		                      <router-link :to="{ }" class="list-group-item list-group-item-action d-flex justify-content-between">
 		                        Role & Permission
