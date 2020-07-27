@@ -35,19 +35,22 @@
 			  			<td>{{ jadwal.mulai }}</td>
 			  		</tr>
 			  	</table>
-				<div class="input-group">
+			  	<div class="form-group">
 					<label>Sesi</label>
-				  <select class="custom-select" v-model="jadwal.sesi">
-				    <option value="1">1</option>
-				    <option value="2">2</option>
-				    <option value="3">3</option>
-				  </select>
-				  <div class="input-group-append">
-				    <button class="btn btn-secondary" type="button" @click="sesiChange(jadwal.id)" :disabled="isLoading">
-				    	Simpan
-				    </button>
-				  </div>
-				</div>
+			  		
+					<div class="input-group">
+					  <select class="custom-select" v-model="jadwal.sesi">
+					    <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					  </select>
+					  <div class="input-group-append">
+					    <button class="btn btn-secondary" type="button" @click="sesiChange(jadwal.id)" :disabled="isLoading">
+					    	Simpan
+					    </button>
+					  </div>
+					</div>
+			  	</div>
 			  </div>
 			</div>
 		</div>

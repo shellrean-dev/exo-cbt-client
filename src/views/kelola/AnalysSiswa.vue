@@ -32,8 +32,8 @@
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="banksoals" show-empty>
                             <template v-slot:cell(actions)="row">
-                                <b-button size="sm" variant="primary" :disabled="isLoading" @click="capaian(jadwal,row.item.id)">
-                                    <i class="cil-badge"></i> Capaian siswa
+                                <b-button :disabled="isLoading" variant="success" size="sm" @click="download(row.item.id)">
+                                    <i class="cil-cloud-download"></i> Download
                                 </b-button>
                             </template>
                         </b-table>
@@ -73,7 +73,7 @@ export default {
         }),
     },
     methods: {
-        ...mapActions('ujian',['getAllUjians','getResultBanksoal']),
+        ...mapActions('ujian',['getAllUjians','getResultBanksoal', 'downloadExcel']),
         capaian(jadwal, banksoal) {
             if(!jadwal || !banksoal) {
                 this.$swal({
@@ -92,6 +92,24 @@ export default {
                 },
                 name: 'kelola.analys.capaian.siswa.data' 
             })
+        },
+        async download(id) {
+            if(!this.jadwal) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih ujian terlebih dahulu",
+                  icon: 'error',
+                })
+                return;
+            }
+            try {
+                let network = await this.downloadExcel({ 
+                    ujian: this.jadwal,
+                    banksoal: id
+                })
+            } catch (error) {
+                this.$bvToast.toast(error.message, errorToas())
+            }
         }
     },
     async created() {
