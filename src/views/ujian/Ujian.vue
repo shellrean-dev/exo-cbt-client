@@ -73,9 +73,9 @@
                                         	<tr>
                                         		<td>Setting</td>
                                         		<td>
-                                        			<b-badge variant="success" class="mr-1">Acak soal</b-badge>
-                                        			<b-badge variant="dark" class="mr-1">Acak opsi</b-badge>
-                                        			<b-badge variant="dark" class="mr-1">Token aktif</b-badge>
+                                        			<b-badge :variant="row.item.setting.acak_soal == '1' ? 'success' : 'dark' " class="mr-1">Acak soal</b-badge>
+                                        			<b-badge :variant="row.item.setting.acak_opsi == '1' ? 'success' : 'dark'" class="mr-1">Acak opsi</b-badge>
+                                        			<b-badge :variant="row.item.setting.token == '1' ? 'success' : 'dark'" class="mr-1">Token aktif</b-badge>
                                         		</td>
                                         	</tr>
                                         </table>
@@ -428,7 +428,7 @@ export default {
 				this.data.tanggal = provider.tanggal,
 				this.data.event_id = provider.event_id,
 				this.data.alias = provider.alias
-				this.setting = provider.setting
+				this.data.setting = provider.setting
 				this.update = id,
 
 				this.$bvModal.show('modal-scoped')

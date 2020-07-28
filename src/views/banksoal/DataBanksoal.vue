@@ -212,9 +212,39 @@
                 </div>
                 <p class="text-danger" v-if="errors.jumlah_soal_esay">{{ errors.jumlah_soal_esay[0] }}</p>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>% Pilihan ganda</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.pilihan_ganda" placeholder="Jumlah soal listening" @input="checkTotal()">
+                        </div>
+                        <p class="text-danger" v-if="errors.persen">{{ errors.persen[0] }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>% Listening</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.listening" placeholder="Jumlah soal listening" @input="checkTotal()">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>% Esay</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.esay" placeholder="Jumlah soal listening" @input="checkTotal()">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" v-show="error_total">
+                    <span class="text-danger">Total harus 100 !!!</span>
+                </div>
+            </div>
             <template v-slot:modal-footer="{ ok, cancel}">
 
-              <b-button variant="primary" size="sm" :disabled="isLoading" @click="!update ? postBanksoal() : updateData()">
+              <b-button variant="primary" size="sm" :disabled="isLoading" @click="!update ? postBanksoal() : updateData()" v-if="!error_total">
                     <b-spinner small type="grow" v-show="isLoading"></b-spinner> Simpan
                 </b-button>
               <b-button variant="secondary" size="sm" @click="cancel()" :disabled="isLoading" >
@@ -263,11 +293,17 @@ export default {
                 jumlah_pilihan: 5,
                 jumlah_soal_esay: 0,
                 jumlah_soal_listening: 0,
-                jumlah_pilihan_listening: 4
+                jumlah_pilihan_listening: 4,
+                persen: {
+                    pilihan_ganda: 100,
+                    listening: 0,
+                    esay: 0
+                }
             },
             selected: '',
             isBusy: true,
-            update: 0
+            update: 0,
+            error_total: false
         }
     },
     computed: {
@@ -304,7 +340,8 @@ export default {
                     jumlah_pilihan: this.data.jumlah_pilihan,
                     jumlah_soal_esay: this.data.jumlah_soal_esay,
                     jumlah_soal_listening: this.data.jumlah_soal_listening,
-                    jumlah_pilihan_listening: this.data.jumlah_pilihan_listening
+                    jumlah_pilihan_listening: this.data.jumlah_pilihan_listening,
+                    persen: this.data.persen
                 })
 
                 this.$bvToast.toast('Banksoal berhasil ditambah.', successToas())
@@ -359,7 +396,12 @@ export default {
                 matpel_id: '',
                 jumlah_soal : 0,
                 jumlah_pilihan: 5,
-                jumlah_soal_esay: 0
+                jumlah_soal_esay: 0,
+                persen: {
+                    pilihan_ganda: 100,
+                    listening: 0,
+                    esay: 0
+                }
             }
         },
         getDataId(id) {
@@ -373,7 +415,8 @@ export default {
                     server_name: response.server_name,
                     jumlah_soal_esay: response.jumlah_soal_esay,
                     jumlah_soal_listening: response.jumlah_soal_listening,
-                    jumlah_pilihan_listening: response.jumlah_pilihan_listening
+                    jumlah_pilihan_listening: response.jumlah_pilihan_listening,
+                    persen: response.persen
                 }
                 this.update = response.id
                 this.$bvModal.show('modal-scoped')
@@ -382,6 +425,14 @@ export default {
                 this.$bvToast.toast(error.message, errorToas())
             })
         },
+        checkTotal() {
+            let total = this.data.persen.pilihan_ganda+this.data.persen.listening+this.data.persen.esay
+            if(total != 100) {
+                this.error_total = true
+            } else {
+                this.error_total = false
+            }
+        }
     },
     watch: {
         page() {
