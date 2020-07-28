@@ -130,6 +130,7 @@ export default {
       rujukan : '',
       pilihan: [],
       jmlh_pilihan: '',
+      jmlh_pilihan_listening: '',
       gambar_pilih: '',
       command: '',
       direktory: '',
@@ -254,8 +255,15 @@ export default {
       this.fileAudio = ''
     },
     initEditor() {
+      this.pilihan = []
       let i
-      for(i=0; i<this.jmlh_pilihan; i++) {
+      let jml = 0
+      if(this.tipe_soal == 1) {
+        jml = this.jmlh_pilihan
+      } else if(this.tipe_soal == 3) {
+        jml = this.jmlh_pilihan_listening
+      }
+      for(i=0; i<jml; i++) {
         let pilihan = ''
 
         this.pilihan.push(pilihan)
@@ -320,6 +328,7 @@ export default {
   watch: {
     banksoal(val) {
       this.jmlh_pilihan = val.jumlah_pilihan
+      this.jmlh_pilihan_listening = val.jumlah_pilihan_listening
       this.initEditor()
       this.getContentFilemedia(val.directory_id)
       this.editorConfig.filebrowserUploadUrl = this.baseURL+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
@@ -332,6 +341,9 @@ export default {
     },
     page() {
       this.getContentFilemedia(this.banksoal.directory_id)
+    },
+    tipe_soal() {
+      this.initEditor()
     }
   }
 }

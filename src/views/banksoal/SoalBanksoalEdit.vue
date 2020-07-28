@@ -130,6 +130,7 @@ export default {
       rujukan : '',
       pilihan: [],
       jmlh_pilihan: '',
+      jmlh_pilihan_listening: '',
       gambar_pilih: '',
       command: '',
       direktory: '',
@@ -260,6 +261,7 @@ export default {
       })
     },
     initEditor() {
+      this.pilihan = []
       this.data_soal.forEach((item,index) => {
         let pilihan = item.text_jawaban
         if(item.correct == "1") {
@@ -327,6 +329,7 @@ export default {
   watch: {
     banksoal(val) {
       this.jmlh_pilihan = val.jumlah_pilihan
+      this.jmlh_pilihan_listening = val.jumlah_pilihan_listening
       this.getContentFilemedia(val.directory_id)
       this.showEditor = true
     },
@@ -343,6 +346,9 @@ export default {
     },
     page() {
       this.getContentFilemedia(this.banksoal.directory_id)
+    },
+    tipe_soal() {
+      this.initEditor()
     }
   }
 }

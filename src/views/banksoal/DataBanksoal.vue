@@ -70,6 +70,9 @@
                                                 <td>Jumlah PG</td><td v-text="row.item.jumlah_soal+' ('+row.item.jumlah_pilihan+' opsi )'"></td>
                                             </tr>
                                             <tr>
+                                                <td>Jumlah Listening</td><td v-text="row.item.jumlah_soal_listening+' ('+row.item.jumlah_pilihan_listening+' opsi )'"></td>
+                                            </tr>
+                                            <tr>
                                                 <td>Jumlah esay</td><td v-text="row.item.jumlah_soal_esay"></td>
                                             </tr>
                                             <tr>
@@ -129,17 +132,72 @@
                 <p class="text-danger" v-if="errors.kode_banksoal">{{ errors.kode_banksoal[0] }}</p>
             </div>
             <div class="form-group">
-                <label>Jumlah soal pilihan ganda</label>
-                <div class="input-group">
-                    <div class="input-group-prepend" v-show="data.jumlah_soal > 0">
-                        <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal -= 1"><b>-</b></button>
+                <div class="row">
+                    <div class="col-md-6"> 
+                        <div class="form-group">
+                            <label>Jumlah soal pilihan ganda</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal }" v-model.number="data.jumlah_soal" placeholder="Jumlah soal pilihan ganda">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_soal">{{ errors.jumlah_soal[0] }}</p>
+                        </div>
                     </div>
-                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal }" v-model.number="data.jumlah_soal" placeholder="Jumlah soal pilihan ganda">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" @click="data.jumlah_soal += 1"><b>+</b></button>
+                    <div class="col-md-6"> 
+                        <div class="form-group">
+                            <label>Jumlah opsi pilihan ganda</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_pilihan > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan }" v-model.number="data.jumlah_pilihan" placeholder="Jumlah opsi">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_pilihan">{{ errors.jumlah_pilihan[0] }}</p>
+                        </div>
                     </div>
                 </div>
-                <p class="text-danger" v-if="errors.jumlah_soal">{{ errors.jumlah_soal[0] }}</p>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Jumlah soal listening</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal_listening > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_listening -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_listening }" v-model.number="data.jumlah_soal_listening" placeholder="Jumlah soal listening">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_listening += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_soal_listening">{{ errors.jumlah_soal_listening[0] }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Jumlah opsi listening</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_pilihan_listening > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan_listening -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan_listening }" v-model.number="data.jumlah_pilihan_listening" placeholder="Jumlah opsi listening">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan_listening += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_pilihan_listening">{{ errors.jumlah_pilihan_listening[0] }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label>Jumlah soal esay</label>
@@ -153,19 +211,6 @@
                     </div>
                 </div>
                 <p class="text-danger" v-if="errors.jumlah_soal_esay">{{ errors.jumlah_soal_esay[0] }}</p>
-            </div>
-            <div class="form-group">
-                <label>Jumlah opsi</label>
-                <div class="input-group">
-                    <div class="input-group-prepend" v-show="data.jumlah_pilihan > 0">
-                        <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan -= 1"><b>-</b></button>
-                    </div>
-                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan }" v-model.number="data.jumlah_pilihan" placeholder="Jumlah opsi">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan += 1"><b>+</b></button>
-                    </div>
-                </div>
-                <p class="text-danger" v-if="errors.jumlah_pilihan">{{ errors.jumlah_pilihan[0] }}</p>
             </div>
             <template v-slot:modal-footer="{ ok, cancel}">
 
@@ -216,7 +261,9 @@ export default {
                 matpel_id: '',
                 jumlah_soal : 0,
                 jumlah_pilihan: 5,
-                jumlah_soal_esay: 0
+                jumlah_soal_esay: 0,
+                jumlah_soal_listening: 0,
+                jumlah_pilihan_listening: 4
             },
             selected: '',
             isBusy: true,
@@ -255,7 +302,9 @@ export default {
                     matpel_id : this.data.matpel_id.id,
                     jumlah_soal: this.data.jumlah_soal,
                     jumlah_pilihan: this.data.jumlah_pilihan,
-                    jumlah_soal_esay: this.data.jumlah_soal_esay
+                    jumlah_soal_esay: this.data.jumlah_soal_esay,
+                    jumlah_soal_listening: this.data.jumlah_soal_listening,
+                    jumlah_pilihan_listening: this.data.jumlah_pilihan_listening
                 })
 
                 this.$bvToast.toast('Banksoal berhasil ditambah.', successToas())
@@ -322,7 +371,9 @@ export default {
                     jumlah_soal : response.jumlah_soal,
                     jumlah_pilihan: response.jumlah_pilihan,
                     server_name: response.server_name,
-                    jumlah_soal_esay: response.jumlah_soal_esay
+                    jumlah_soal_esay: response.jumlah_soal_esay,
+                    jumlah_soal_listening: response.jumlah_soal_listening,
+                    jumlah_pilihan_listening: response.jumlah_pilihan_listening
                 }
                 this.update = response.id
                 this.$bvModal.show('modal-scoped')
