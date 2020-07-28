@@ -55,18 +55,47 @@
                     </div>
                     <div class="table-responsive-md" v-if="ujians && typeof ujians.data != 'undefined'">
 						<b-table striped hover bordered small :fields="fields" :items="ujians.data" show-empty>
+							<template v-slot:cell(show_details)="row">
+                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
+                            </template>
+                            <template v-slot:row-details="row">
+                                <b-card>
+                                    <div class="table-responsive-md">
+                                        <table class="table table-bordered">
+                                        	<tr>
+                                        		<td width="150px">Event</td>
+                                        		<td>{{ typeof row.item.event != 'undefined' ? row.item.event.name : '-' }}</td>
+                                        	</tr>
+                                        	<tr>
+                                        		<td >Banksoal</td>
+                                        		<td><b-badge variant="success" class="mr-1" v-for="(kode,index) in row.item.kode_banksoal" v-text="kode" :key="index"></b-badge></td>
+                                        	</tr>
+                                        	<tr>
+                                        		<td>Setting</td>
+                                        		<td>
+                                        			<b-badge variant="success" class="mr-1">Acak soal</b-badge>
+                                        			<b-badge variant="dark" class="mr-1">Acak opsi</b-badge>
+                                        			<b-badge variant="dark" class="mr-1">Token aktif</b-badge>
+                                        		</td>
+                                        	</tr>
+                                        </table>
+                                    </div>
+                                </b-card>
+                            </template>
 							<template v-slot:cell(lama)="row">
 								{{ parseInt(row.item.lama)/60+ " Menit" }}
-							</template>
-							<template v-slot:cell(banksoals)="row">
-								<b-badge variant="success" class="mr-1" v-for="(kode,index) in row.item.kode_banksoal" v-text="kode" :key="index"></b-badge>
 							</template>
 							<template v-slot:cell(status)="row">
 								<b-form-checkbox v-model="row.item.status_ujian" @change="seterStatus(row.item.id,row.item.status_ujian)" value="1" switch>{{ row.item.status_ujian == 1 ? 'Diujikan' : 'Tidak aktif' }}</b-form-checkbox>
 								<b-badge v-if="row.item.server_id != 0" v-for="(server, index) in row.item.server_id" v-text="server" :key="index"></b-badge>
 							</template>
 							<template v-slot:cell(action)="row">
-								<b-button variant="danger" :disabled="isLoading" size="sm" @click="remove(row.item.id)">Hapus</b-button>
+								<b-button variant="warning" :disabled="isLoading" size="sm" @click="getData(row.item.id)" class="mr-1">
+									<i class="cil-pencil"></i> Edit
+								</b-button>
+								<b-button variant="danger" :disabled="isLoading" size="sm" @click="remove(row.item.id)">
+									<i class="cil-trash"></i> Hapus
+								</b-button>
 							</template>
 	                    </b-table>
 	                    <div class="row mt-2">
@@ -98,13 +127,14 @@
 				</div>
 			</div>
 		</div>
-		 <b-modal id="modal-scoped">
+		 <b-modal id="modal-scoped" noCloseOnBackdrop>
 		    <template v-slot:modal-header="{ close }">
 		      <h5>Setting ujian</h5>
 		    </template>
 		    <div class="form-group">
 				<label>Event</label>
 				<v-select label="name" :options="events" v-model="data.event_id" :reduce="name => name.id"></v-select>
+				<small class="text-danger" v-if="errors.event_id">{{ errors.event_id[0] }}</small>
 			</div>
 		    <div class="form-group">
 		    	<label>Banksoal</label>
@@ -120,23 +150,24 @@
 				:multiple="true" 
 				:taggable="true"
 				v-if="banksoals"></multiselect>
-		    	<div class="invalid-feedback" v-if="errors.banksoal_id">{{ errors.banksoal_id[0] }}</div>
+		    	<small class="text-danger" v-if="errors.banksoal_id">{{ errors.banksoal_id[0] }}</small>
 		    </div>
 		    <div class="form-group">
                 <label>Nama ujian</label>
-                <input type="text" class="form-control" v-model="data.alias" required>
+                <input type="text" class="form-control" v-model="data.alias" required :class="{ 'is-invalid' : errors.alias }">
+                <div class="invalid-feedback" v-if="errors.alias">{{ errors.alias[0] }}</div>
             </div>
 		    <div class="form-group">
 		    	<label>Tanggal ujian</label>
-		    	<datetime inputId="ujian" v-model="data.tanggal" input-class="form-control" :class="{ 'is-invalid' : errors.tanggal }"></datetime>
-		    	<div class="invalid-feedback" v-if="errors.tanggal">{{ errors.tanggal[0] }}</div>
+		    	<datetime inputId="ujian" v-model="data.tanggal" input-class="form-control"></datetime>
+		    	<small class="text-danger" v-if="errors.tanggal">{{ errors.tanggal[0] }}</small>
 		    </div>
 		    <div class="row">
 		    	<div class="col-md-6">
 		    		<div class="form-group">
 				    	<label>Jam mulai</label>
-				    	<datetime inputId="mulai" v-model="data.mulai" input-class="form-control" :class="{ 'is-invalid' : errors.mulai }" type="time"></datetime>
-				    	<div class="invalid-feedback" v-if="errors.mulai">{{ errors.mulai[0] }}</div>
+				    	<datetime inputId="mulai" v-model="data.mulai" input-class="form-control" type="time"></datetime>
+				    	<small class="text-danger" v-if="errors.mulai">{{ errors.mulai[0] }}</small>
 				    </div>
 		    	</div>
 		    	<div class="col-md-6">
@@ -155,11 +186,28 @@
 				    </div>
 		    	</div>
 		    </div>
+		    <div class="row">
+		    	<div class="col-md-4">
+		    		<div class="form-group">
+		    			<b-form-checkbox switch value="1" v-model="data.setting.acak_soal">Acak Soal</b-form-checkbox>
+		    		</div>
+		    	</div>
+		    	<div class="col-md-4">
+		    		<div class="form-group">
+		    			<b-form-checkbox switch value="1" v-model="data.setting.acak_opsi">Acak Opsi</b-form-checkbox>
+		    		</div>
+		    	</div>
+		    	<div class="col-md-4">
+		    		<div class="form-group">
+		    			<b-form-checkbox switch value="1" v-model="data.setting.token">Aktifkan Token</b-form-checkbox>
+		    		</div>
+		    	</div>
+		    </div>
 		    <template v-slot:modal-footer="{ cancel }">
 		      <b-button size="sm" variant="primary" @click="postUjian" :disabled="isLoading">
 		        {{ isLoading ? 'Processing...' : 'Simpan' }}
 		      </b-button>
-		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		      <b-button size="sm" variant="secondary" @click="close()" :disabled="isLoading">
 		        Cancel
 		      </b-button>
 		    </template>
@@ -209,8 +257,7 @@ export default {
 	data() {
 		return {
 			fields: [
-				{ key: 'banksoals', label: 'Kode banksoal' },
-				{ key: 'event.name', label: 'Event' },
+				{ key: 'show_details', label: 'Detail' },
 				{ key: 'alias', label: 'Nama ujian' },
 				{ key: 'tanggal', label: 'Tanggal' },
 				{ key: 'mulai', label: 'Waktu mulai' },
@@ -228,7 +275,12 @@ export default {
 				banksoal_id: '',
 				server_id: '',
 				alias: '',
-				event_id: ''
+				event_id: '',
+				setting: {
+					acak_opsi: false,
+					acak_soal: false,
+					token: false
+				}
 			},
 			event: {
 				name: ''
@@ -236,7 +288,8 @@ export default {
 			spesifik_server: false,
 			isActive: '',
 			isBusy: true,
-			timeout: 0
+			timeout: 0,
+			update: 0
 		}
 	},
 	computed: {
@@ -259,29 +312,42 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken', 'removeUjian']),
+		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken', 'removeUjian', 'getUjianById', 'updateUjian']),
 		...mapActions('event',['addEvent','getAllEvents']),
 		...mapActions('banksoal', ['getAllBanksoals']),
-		postUjian() {
-			this.addUjian({
-				banksoal_id: this.data.banksoal_id,
-				server_id: this.data.server_id,
-				alias: this.data.alias,
-				mulai: this.data.mulai,
-				berakhir: this.data.berakhir,
-				lama: this.data.lama,
-				tanggal: this.data.tanggal,
-				event_id: this.data.event_id
-			})
-			.then((response) => {
-		        this.$bvToast.toast('Jadwal berhasil ditambahkan.', successToas())
-				this.getUjians({ perPage: this.perPage })
-				this.clearForm()
-				this.$bvModal.hide('modal-scoped')
-			})
-			.catch((error) => {
-				this.$bvToast.toast(error.message, errorToas())
-			})
+		async postUjian() {
+			if(this.update != 0) {
+				try {
+					await this.updateUjian({ id: this.update, data: this.data })
+					this.getUjians({ perPage: this.perPage })
+					this.$bvModal.hide('modal-scoped')
+					this.update = 0
+					this.clearForm()
+				} catch (error) {
+					this.$bvToast.toast(error.message, errorToas())
+				}
+			}else {
+				try {
+					await this.addUjian({
+						banksoal_id: this.data.banksoal_id,
+						alias: this.data.alias,
+						mulai: this.data.mulai,
+						berakhir: this.data.berakhir,
+						lama: this.data.lama,
+						tanggal: this.data.tanggal,
+						event_id: this.data.event_id,
+						setting: this.data.setting
+					})
+
+					this.$bvToast.toast('Jadwal berhasil ditambahkan.', successToas())
+					this.getUjians({ perPage: this.perPage })
+					this.clearForm()
+					this.$bvModal.hide('modal-scoped')
+				} catch (error) {
+					this.$bvToast.toast(error.message, errorToas())
+				}
+			}
+			this.$store.commit('CLEAR_ERRORS')
 		},
 		postEvent() {
 			this.addEvent(this.event)
@@ -303,6 +369,12 @@ export default {
 			this.data.tanggal = '',
 			this.data.server_id = ''
 			this.data.event_id = ''
+			this.data.alias = '',
+			this.data.setting = {
+				acak_opsi: false,
+				acak_soal: false,
+				token: false,
+			}
 		},
 		seterStatus(id,status) {
 			this.setStatus({
@@ -337,6 +409,32 @@ export default {
                     })
                 }
             })
+		},
+		close() {
+			this.$bvModal.hide('modal-scoped')
+			this.update = 0
+			this.clearForm()
+			this.$store.commit('CLEAR_ERRORS')
+		},
+		async getData(id) {
+			try {
+				let provider = await this.getUjianById(id)
+				let dara = provider.banksoal_id.map((item) => {
+					return this.banksoals.find(x => x.id == item.id)
+				})
+				this.data.banksoal_id = dara,
+				this.data.mulai = provider.mulai,
+				this.data.lama = provider.lama / 60,
+				this.data.tanggal = provider.tanggal,
+				this.data.event_id = provider.event_id,
+				this.data.alias = provider.alias
+				this.setting = provider.setting
+				this.update = id,
+
+				this.$bvModal.show('modal-scoped')
+			} catch (error) {
+				this.$bvToast.toast(error.message, errorToas())
+			}
 		}
 	},
 	watch: {

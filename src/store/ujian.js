@@ -102,6 +102,20 @@ const actions = {
 			})
 		})
 	},
+	getUjianById({ commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async(resolve, reject) => {
+			try {
+				let network = await $axios.get(`ujians/${payload}`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
 	getEvents({ commit, state }, payload) {
 		return new Promise((resolve, reject) => {
 			$axios.get(`event-ujian`)
@@ -257,6 +271,20 @@ const actions = {
 				commit('SET_LOADING', false, { root: true })
 				reject(error.response.data)
 			})
+		})
+	},
+	updateUjian({ commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async(resolve, reject) => {
+			try {
+				let network = await $axios.put(`ujians/${payload.id}`, payload.data)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
 		})
 	},
 	setStatus({ state }, payload) {
