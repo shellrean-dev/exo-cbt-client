@@ -67,13 +67,28 @@
                                                 <td width="150px">Pembuat</td><td v-text="row.item.user.name"></td>
                                             </tr>
                                             <tr>
-                                                <td>Jumlah PG</td><td v-text="row.item.jumlah_soal+' ('+row.item.jumlah_pilihan+' opsi )'"></td>
+                                                <td>Jumlah PG</td>
+                                                <td> 
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>{{ row.item.jumlah_soal+' ('+row.item.jumlah_pilihan+' opsi )' }}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda }} %</b-badge>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Jumlah Listening</td><td v-text="row.item.jumlah_soal_listening+' ('+row.item.jumlah_pilihan_listening+' opsi )'"></td>
+                                                <td>Jumlah Listening</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">    
+                                                        <span>{{ row.item.jumlah_soal_listening+' ('+row.item.jumlah_pilihan_listening+' opsi )' }}</span><b-badge variant="success">{{ row.item.persen.listening }} %</b-badge>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Jumlah esay</td><td v-text="row.item.jumlah_soal_esay"></td>
+                                                <td>Jumlah esay</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>{{ row.item.jumlah_soal_esay }}</span><b-badge variant="success">{{ row.item.persen.esay }} %</b-badge>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Soal terinput</td><td v-text="row.item.inputed"></td>

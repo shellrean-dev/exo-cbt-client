@@ -78,6 +78,14 @@
                                         			<b-badge :variant="row.item.setting.token == '1' ? 'success' : 'dark'" class="mr-1">Token aktif</b-badge>
                                         		</td>
                                         	</tr>
+                                        	<tr>
+                                        		<td>Urutan</td>
+                                        		<td>
+                                        			<b-badge variant="primary" class="mr-1" v-for="list in row.item.setting.list" :key="'list_'+list.id">
+                                        				{{ list.name }} 
+                                        			</b-badge>
+                                        		</td>
+                                        	</tr>
                                         </table>
                                     </div>
                                 </b-card>
@@ -186,7 +194,10 @@
 				    </div>
 		    	</div>
 		    </div>
-		    <div class="row">
+		    <div class="form-group">
+		    	<b-form-checkbox  value="1" v-model="advance">Show setting advance</b-form-checkbox>
+		    </div>
+		    <div class="row" v-if="advance == '1'">
 		    	<div class="col-md-4">
 		    		<div class="form-group">
 		    			<b-form-checkbox switch value="1" v-model="data.setting.acak_soal">Acak Soal</b-form-checkbox>
@@ -203,6 +214,28 @@
 		    		</div>
 		    	</div>
 		    </div>
+		    <div class="row" v-if="advance == '1'">
+		    	<div class="col-md-12">
+		    		<label>Urutan ujian tipe</label>
+		    	</div>
+		    	<div class="col-md-12">	
+	               <draggable
+	                :list="data.setting.list"
+	                class="list-group"
+	                ghost-class="ghost"
+	                @start="dragging = true"
+	                @end="dragging = false"
+	              >
+	                <div
+	                  class="list-group-item"
+	                  v-for="element in data.setting.list"
+	                  :key="element.name"
+	                >
+	                  {{ element.name }}
+	                </div>
+	              </draggable>
+		    	</div>
+            </div>
 		    <template v-slot:modal-footer="{ cancel }">
 		      <b-button size="sm" variant="primary" @click="postUjian" :disabled="isLoading">
 		        {{ isLoading ? 'Processing...' : 'Simpan' }}
@@ -236,6 +269,7 @@
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
 import vSelect from 'vue-select'
+import draggable from 'vuedraggable'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 import Multiselect from 'vue-multiselect'
@@ -247,7 +281,8 @@ export default {
 	components: {
 	    datetime: Datetime,
 	    Multiselect,
-	    vSelect
+	    vSelect,
+	    draggable
 	},
 	created() {
 		this.getUjians({ perPage: this.perPage })
@@ -279,7 +314,12 @@ export default {
 				setting: {
 					acak_opsi: false,
 					acak_soal: false,
-					token: false
+					token: false,
+					list: [
+		                { name: "Listening", id: 3 },
+		                { name: "Pilihan ganda", id: 1 },
+		                { name: "Esay", id: 2 }
+		            ],
 				}
 			},
 			event: {
@@ -289,7 +329,9 @@ export default {
 			isActive: '',
 			isBusy: true,
 			timeout: 0,
-			update: 0
+			update: 0,
+            dragging: false,
+            advance: false
 		}
 	},
 	computed: {
@@ -453,4 +495,10 @@ export default {
 	}
 }
 </script>
+<style scoped>
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+</style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
