@@ -22,7 +22,8 @@ const state = () => ({
 		token: ''
 	},
 	sesis: [],
-	token: {}
+	token: {},
+	detailJawabanSiswa: {}
 })
 
 const mutations = {
@@ -78,6 +79,9 @@ const mutations = {
 	},
 	ASSIGN_CAPAIAN_SISWA(state, payload) {
 		state.capaians = payload
+	},
+	ASSIGN_JAWABAN_SISWA(state, payload) {
+		state.detailJawabanSiswa = payload
 	},
 	ASSIGN_TOKEN(state, payload) {
 		state.token = payload
@@ -499,6 +503,21 @@ const actions = {
 				let network = await $axios.get('ujians/token-get')
 
 				commit('ASSIGN_TOKEN', network.data.data)
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	getDetailJawabanSiswa({ commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async(resolve, reject) => {
+			try {
+				let network = await $axios.get(`ujians/hasil/${payload}`)
+
+				commit('ASSIGN_JAWABAN_SISWA', network.data.data)
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
 			} catch (error) {

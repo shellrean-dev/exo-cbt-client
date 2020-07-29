@@ -12,7 +12,7 @@
                             <div class="small text-muted">Reset dan force close ujian peserta</div>
                         </div>
                         <div class="d-md-block col-sm-7">
-                            <b-button variant="primary" class="float-right" size="sm" @click="getPesertas" :disabled="isLoading" >
+                            <b-button variant="primary" class="float-right" size="sm" @click="refresh" :disabled="isLoading" >
                                 <i class="cil-reload"></i> Refresh data
                             </b-button>
                         </div>
@@ -140,6 +140,12 @@ export default {
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
+        },
+        refresh() {
+            if(this.jadwal == 0) {
+                return;
+            }
+            this.getPesertas(this.jadwal)
         }
     },
     async created() {

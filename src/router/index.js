@@ -63,8 +63,9 @@ const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
 const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
 const AnalysKesulitanBanksoal = () => import('@/views/kelola/AnalysKesulitanBanksoal')
 const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
-const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa');
+const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa')
 const HasilUjian = () => import('@/views/kelola/HasilUjian')
+const DetailJawabanSiswa = () => import('@/views/kelola/DetailJawabanSiswa')
 
 Vue.use(VueRouter)
 
@@ -397,6 +398,12 @@ const routes = [
         name: 'kelola.hasil.ujian',
         component: HasilUjian,
         meta: { title: 'Hasil ujian' }
+      },
+      {
+        path: 'hasil-ujian/:id',
+        name: 'kelola.hasil.ujian.siswa',
+        component: DetailJawabanSiswa,
+        meta: { title: 'Detail jawaban siswa'}
       }
     ]
   }

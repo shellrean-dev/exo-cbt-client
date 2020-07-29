@@ -93,6 +93,11 @@
                                     </table>
                                 </b-card>
                             </template>
+                            <template v-slot:cell(action)="row">
+                                <b-button size="sm" variant="primary" :to="{ name: 'kelola.hasil.ujian.siswa', params: { id: row.item.id }}">
+                                    Detail jawaban
+                                </b-button>
+                            </template>
                         </b-table>
                     </div>
                     <div class="row" v-if="typeof hasils.data != 'undefined'">
@@ -138,7 +143,8 @@ export default {
             fields: [
                 { key: 'show_details', label: 'Detail' },
                 { key: 'peserta.no_ujian', label: 'No ujian' },
-                { key: 'peserta.nama', label: 'Nama peserta' }
+                { key: 'peserta.nama', label: 'Nama peserta' },
+                { key: 'action', label: 'Aksi' },
             ],
             json_fields: {
                 'No ujian' : 'peserta.no_ujian',
