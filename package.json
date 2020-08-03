@@ -7,7 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@coreui/coreui": "^3.0.0-beta.3",
+    "@popperjs/core": "^2.4.4",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
@@ -16,8 +16,6 @@
     "luxon": "^1.24.1",
     "perfect-scrollbar": "^1.5.0",
     "register-service-worker": "^1.7.1",
-    "tiptap": "^1.29.0",
-    "tiptap-extensions": "^1.31.0",
     "vue": "^2.6.11",
     "vue-datetime": "^1.0.0-beta.13",
     "vue-google-charts": "^0.3.3",
@@ -25,14 +23,12 @@
     "vue-json-excel": "^0.2.98",
     "vue-loading-overlay": "^3.3.2",
     "vue-multiselect": "^2.1.6",
-    "vue-password-strength-meter": "^1.7.2",
     "vue-router": "^3.2.0",
     "vue-select": "^3.10.7",
     "vue-sweetalert2": "^3.0.6",
     "vuedraggable": "^2.24.0",
     "vuex": "^3.4.0",
-    "weekstart": "^1.0.1",
-    "zxcvbn": "^4.4.2"
+    "weekstart": "^1.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -41,6 +37,7 @@
     "@vue/cli-plugin-vuex": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
     "compression-webpack-plugin": "^4.0.0",
+    "node-sass": "^4.14.1",
     "sass": "^1.26.10",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"

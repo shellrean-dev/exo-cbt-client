@@ -37,7 +37,6 @@
                 <input type="password" v-model="password" class="form-control" placeholder="Password" name="">
                 <b-progress :value="score" :max="4" height="2px" class="mb-3" autofocus></b-progress>
             </div>
-            <password @score="showScore" :showStrengthMeter="false" v-model="password" :strength-meter-only="true"/>
             <div class="form-group">
                 <label>Re-password</label>
                 <input type="password" v-model="password2" class="form-control" placeholder="Re password" name="">
@@ -55,7 +54,6 @@
     </header>
 </template>
 <script>
-import Password from 'vue-password-strength-meter'
 import Breadcrumb from './Breadcrumb.vue'
 import { mapState, mapActions } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
@@ -69,8 +67,7 @@ export default {
         }
     },
     components: {
-      'breadcrumb' : Breadcrumb,
-      Password
+      'breadcrumb' : Breadcrumb
     },
     methods: {
         ...mapActions('auth', ['loggedOut']),
@@ -86,9 +83,6 @@ export default {
               this.$store.state.token = localStorage.getItem('token')
               this.$router.push('/login')
             }
-        },
-        showScore (score) {
-            this.score = score
         },
         async changePass() {
             if(this.error) {

@@ -4,7 +4,6 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-import CoreuiVue from '@coreui/coreui'
 import VueSweetalert2 from 'vue-sweetalert2'
 import {
  TablePlugin,
@@ -59,7 +58,6 @@ const options = {
 }
 
 Vue.use(VueHtmlToPaper, options);
-Vue.use(CoreuiVue)
 Vue.use(VueSweetalert2)
 Vue.use(CKEditor);
 
