@@ -7,14 +7,23 @@
                   <div class="col-md-4">
                   <div class="card">
                     <div class="list-group">
-                      <router-link :to="{ name: 'guru.upload' }" class="list-group-item list-group-item-action">
-                        <i class="cil-cloud-upload"></i> Import guru
+                      <router-link :to="{ name: 'guru.upload' }" class="list-group-item list-group-item-action d-flex justify-content-between">
+                        <span>
+                          <i class="cil-cloud-upload"></i> Import guru
+                        </span>
+                        <span class="badge badge-success badge-pill">Excel</span>
                       </router-link>
-                      <router-link :to="{ name: 'peserta.upload' }" class="list-group-item list-group-item-action">
-                        <i class="cil-cloud-upload"></i> Import peserta
+                      <router-link :to="{ name: 'peserta.upload' }" class="list-group-item list-group-item-action d-flex justify-content-between">
+                        <span>
+                          <i class="cil-cloud-upload"></i> Import peserta
+                        </span>
+                        <span class="badge badge-success badge-pill">Excel</span>
                       </router-link>
-                      <router-link :to="{ name: 'matpel.upload' }" class="list-group-item list-group-item-action">
-                        <i class="cil-cloud-upload"></i> Import matpel
+                      <router-link :to="{ name: 'matpel.upload' }" class="list-group-item list-group-item-action d-flex justify-content-between">
+                        <span>
+                          <i class="cil-cloud-upload"></i> Import matpel
+                        </span>
+                        <span class="badge badge-success badge-pill">Excel</span>
                       </router-link>
                     </div>
                   </div>

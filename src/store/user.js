@@ -48,7 +48,7 @@ const actions = {
     getUserLists({ commit }) {
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.get(`/user-lists`)
+                let network = await $axios.get(`user-lists`)
 
                 commit('ASSIGN_USER', network.data.data)
                 resolve(network.data)
@@ -177,6 +177,21 @@ const actions = {
                 resolve(network.data)
             } catch (error) {
                 commit('UPLOAD_PROGRESS_BAR', 0);
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    removeUserMultiple({ commit }, payload) {
+        commit('SET_LOADING', true, { root: true })
+
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.post('users/delete-multiple', payload) 
+
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
                 commit('SET_LOADING', false, { root: true })
                 reject(error.response.data)
             }

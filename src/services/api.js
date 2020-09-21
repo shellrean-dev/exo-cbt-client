@@ -3,14 +3,12 @@ import store from '@/store'
 import router from '@/router';
 
 const $axios = axios.create({
-    baseURL: process.env.VUE_APP_API_SERVER+'/api/v1',
     headers: {
         'Accept': 'application/json'
     },
 })
 
 const $axios2 = axios.create({
-    baseURL: process.env.VUE_APP_API_SERVER+'/api/v1',
     headers: {
         'Accept': 'application/vnd.openxmlformats-officedocument'
         + '.spreadsheetml.sheet',
@@ -21,6 +19,7 @@ const $axios2 = axios.create({
 $axios.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
+        config.url = store.state.baseURL+'/api/v1/' + config.url
         return config;
     },
     function ( error ) {
@@ -31,6 +30,7 @@ $axios.interceptors.request.use (
 $axios2.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
+        config.url = store.state.baseURL+'/api/v1/' + config.url
         return config;
     },
     function ( error ) {

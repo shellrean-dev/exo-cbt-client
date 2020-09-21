@@ -65,20 +65,35 @@
                         striped hover bordered small show-empty
                         :fields="fields" 
                         :items="matpels.data" 
+                        selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger"
                         >
                             <template v-slot:cell(show_details)="row">
                                 <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
                             </template>
                             <template v-slot:row-details="row">
                                 <b-card>
-                                    <b-badge variant="success" class="mr-1" v-show="row.item.jurusans == 0 && row.item.agama == 0">umum</b-badge>
-                                    <b-badge variant="success" class="mr-1" v-show="row.item.jurusans != 0">khusus</b-badge>
-                                    <b-badge variant="success" class="mr-1" v-show="row.item.agama != 0">agama</b-badge>
-                                    <b-badge variant="info" class="mr-1" v-if="row.item.agama != 0" v-text="row.item.agama">agama</b-badge>
-                                    <b-badge variant="info" class="mr-1" v-if="row.item.jurusans != 0" v-for="(jur, index) in row.item.jurusans" v-text="jur.nama" :key="index"></b-badge>
-                                    <hr>
-                                    <b-badge variant="info" class="mr-1">Pengoreksi</b-badge>
-                                    <b-badge variant="success" class="mr-1" v-if="row.item.correctors_name != 0" v-for="(corector, index) in row.item.correctors_name" v-text="corector.name" :key="index"></b-badge>
+                                    <div class="table-responsive-md">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td width="230">Type</td>
+                                                <td>
+                                                    <b-badge variant="success" class="mr-1" v-show="row.item.jurusans == 0 && row.item.agama == 0">umum</b-badge>
+                                                    <b-badge variant="success" class="mr-1" v-show="row.item.jurusans != 0">khusus</b-badge>
+                                                    <b-badge variant="success" class="mr-1" v-show="row.item.agama != 0">agama</b-badge>
+                                                    <b-badge variant="info" class="mr-1" v-if="row.item.jurusans != 0" v-for="(jur, index) in row.item.jurusans" v-text="jur.nama" :key="index"></b-badge>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tim pengoreksi</td>
+                                                <td>
+                                                    <b-badge variant="success" class="mr-1" v-if="row.item.correctors_name != 0" v-for="(corector, index) in row.item.correctors_name" v-text="corector.name" :key="index"></b-badge>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </b-card>
                             </template>
                             <template v-slot:cell(nama)="row">
@@ -93,9 +108,20 @@
                                 </button>
                             </template>
                         </b-table>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
-                                <p><i class="fa fa-bars"></i> {{ matpels.data.length }} item dari {{ matpels.total }} total data</p>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="cil-check"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="cil-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkRemove">
+                                        <i class="cil-trash"></i> Bulk remove
+                                    </b-button>
+                                </div>
+                                <p><i class="fa fa-bars"></i> <b>{{ matpels.data.length }}</b> matpel dari <b>{{ matpels.total }}</b> total data matpel</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -151,7 +177,8 @@ export default {
                 nama: '',
                 kode_mapel: ''
             },
-            isBusy: true
+            isBusy: true,
+            selected: []
         }
     },
     computed: {
@@ -171,11 +198,46 @@ export default {
         }
     },
     methods: {
-        ...mapActions('matpel', ['getMatpels','removeMatpel']),
+        ...mapActions('matpel', ['getMatpels','removeMatpel', 'removeMatpelMultiple']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
+        bulkRemove() {
+            if(this.selected == '') {
+                return
+            }
+            this.$swal({
+                title: 'Informasi',
+                text: "Matpel yang dipilih akan dihapus beserta data yang terkait",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c7c7c7',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+                if (result.value) {
+                    let ids = this.selected.map(item => item.id)
+                    this.removeMatpelMultiple({ matpel_id: ids })
+                    .then(() => {
+                        this.getMatpels({ search: this.search, perPage : this.perPage });
+                        this.$bvToast.toast('Data matpel berhasil dihapus.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+                }
+            })
+        },
         deleteMatpel(id) {
             this.$swal({
                 title: 'Informasi',
-                text: "Tindakan ini akan menghapus secara permanent!, serta menghapus seluruh data yang terkait dengan matpel ini",
+                text: "Matpel yang dipilih akan dihapus beserta data yang terkait",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

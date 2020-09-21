@@ -67,12 +67,16 @@
                                 <b-card>
                                     <table class="table table-bordered">
                                         <tr>
-                                            <td width="200px">Salah</td>
-                                            <td v-text="row.item.jumlah_salah"></td>
+                                            <td width="200px">Listening</td>
+                                            <td>
+                                                Salah {{ row.item.jumlah_salah_listening }} : Benar {{ row.item.jumlah_benar_listening }}
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Benar</td>
-                                            <td v-text="row.item.jumlah_benar"></td>
+                                            <td>Pilihan ganda</td>
+                                            <td>
+                                                Salah {{ row.item.jumlah_salah }} : Benar {{ row.item.jumlah_benar }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Kosong</td>
@@ -88,6 +92,11 @@
                                         </tr>
                                     </table>
                                 </b-card>
+                            </template>
+                            <template v-slot:cell(action)="row">
+                                <b-button size="sm" variant="primary" :to="{ name: 'kelola.hasil.ujian.siswa', params: { id: row.item.id }}">
+                                    Detail jawaban
+                                </b-button>
                             </template>
                         </b-table>
                     </div>
@@ -134,13 +143,16 @@ export default {
             fields: [
                 { key: 'show_details', label: 'Detail' },
                 { key: 'peserta.no_ujian', label: 'No ujian' },
-                { key: 'peserta.nama', label: 'Nama peserta' }
+                { key: 'peserta.nama', label: 'Nama peserta' },
+                { key: 'action', label: 'Aksi' },
             ],
             json_fields: {
                 'No ujian' : 'peserta.no_ujian',
                 'Nama peserta' : 'peserta.nama',
-                'Salah' : 'jumlah_salah',
-                'Benar' : 'jumlah_benar',
+                'PG Salah' : 'jumlah_salah',
+                'PG Benar' : 'jumlah_benar',
+                'Listening Salah' : 'jumlah_salah_listening',
+                'Listening Benar' : 'jumlah_benar_listening',
                 'Kosong' : 'tidak_diisi',
                 'Point esay' : 'point_esay',
                 'Hasil akhir' : 'hasil'

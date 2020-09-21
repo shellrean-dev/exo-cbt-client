@@ -4,27 +4,32 @@ import store from '@/store'
 
 const Home = () => import('@/views/Home')
 const Login = () => import('@/views/Login')
+const Oauth = () => import('@/views/Oauth')
 
 import SettingIndex from '@/views/setting/Index'
-const SetSekolah = () => import(/* webpackChunkName: "sekolah" */ '@/views/setting/Sekolah')
+const SetSekolah = () => import( '@/views/setting/Sekolah')
+const SetSystem = () => import( '@/views/setting/System')
+const SetAirlock = () => import( '@/views/setting/Airlock')
+const SetG2fk = () => import( '@/views/setting/G2fk')
+const SetUjian = () => import( '@/views/setting/Ujian')
 
 import JurusanIndex from '@/views/jurusan/Index'
-const DataJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Jurusan')
-const EditJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Edit')
-const AddJurusan = () => import(/* webpackChunkName: "jurusan" */ '@/views/jurusan/Add')
+const DataJurusan = () => import( '@/views/jurusan/Jurusan')
+const EditJurusan = () => import( '@/views/jurusan/Edit')
+const AddJurusan = () => import( '@/views/jurusan/Add')
 
 import PesertaIndex from '@/views/peserta/Index'
-const DataPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Peserta')
-const AddPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Add')
-const EditPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Edit')
-const UploadPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Upload')
-const KartuPeserta = () => import(/* webpackChunkName: "peserta" */ '@/views/peserta/Kartu')
+const DataPeserta = () => import( '@/views/peserta/Peserta')
+const AddPeserta = () => import( '@/views/peserta/Add')
+const EditPeserta = () => import( '@/views/peserta/Edit')
+const UploadPeserta = () => import( '@/views/peserta/Upload')
+const KartuPeserta = () => import( '@/views/peserta/Kartu')
 
 import MatpelIndex from '@/views/matpel/Index'
-const DataMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Matpel')
-const AddMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Add')
-const UploadMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Upload')
-const EditMatpel = () => import(/* webpackChunkName: "matpel" */ '@/views/matpel/Edit')
+const DataMatpel = () => import( '@/views/matpel/Matpel')
+const AddMatpel = () => import( '@/views/matpel/Add')
+const UploadMatpel = () => import( '@/views/matpel/Upload')
+const EditMatpel = () => import( '@/views/matpel/Edit')
 
 import GuruIndex from '@/views/guru/Index'
 const DataGuru = () => import('@/views/guru/Guru')
@@ -33,32 +38,34 @@ const UploadGuru = () => import('@/views/guru/Upload')
 const EditGuru = () => import('@/views/guru/Edit')
 
 import BanksoalIndex from '@/views/banksoal/Index'
-const DataBanksoal = () => import(/* webpackChunkName: "banksoal" */ '@/views/banksoal/DataBanksoal')
-const SoalBanksoal = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoal')
-const SoalBanksoalTambah = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalTambah')
-const SoalBanksoalTemplate = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalTemplate')
-const SoalBanksoalEdit = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalEdit')
-const SoalBanksoalPrev = () => import(/* webpackChunkName: "banksoal" */'@/views/banksoal/SoalBanksoalPrev')
-const SoalBanksoalUpload = () => import(/* webpackChunkName: "banksoal" */ '@/views/banksoal/SoalBanksoalUpload')
+const DataBanksoal = () => import( '@/views/banksoal/DataBanksoal')
+const SoalBanksoal = () => import('@/views/banksoal/SoalBanksoal')
+const SoalBanksoalTambah = () => import('@/views/banksoal/SoalBanksoalTambah')
+const SoalBanksoalTemplate = () => import('@/views/banksoal/SoalBanksoalTemplate')
+const SoalBanksoalEdit = () => import('@/views/banksoal/SoalBanksoalEdit')
+const SoalBanksoalPrev = () => import('@/views/banksoal/SoalBanksoalPrev')
+const SoalBanksoalUpload = () => import( '@/views/banksoal/SoalBanksoalUpload')
 
 import FilemediaIndex from '@/views/filemedia/Index'
 const DataFilemedia = () => import('@/views/filemedia/Filemedia')
 const DataDirFilemedia = () => import('@/views/filemedia/DirFilemedia')
 
 import UjianIndex from '@/views/ujian/Index'
-const DataUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/Ujian')
-const StatusUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/StatusUjian')
-const PesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/PesertaUjian')
-const ResetPesertaUjian = () => import(/* webpackChunkName: "ujian" */'@/views/ujian/ResetPesertaUjian')
+const DataUjian = () => import('@/views/ujian/Ujian')
+const StatusUjian = () => import('@/views/ujian/StatusUjian')
+const PesertaUjian = () => import('@/views/ujian/PesertaUjian')
+const ResetPesertaUjian = () => import('@/views/ujian/ResetPesertaUjian')
+const DataEvent = () => import('@/views/ujian/Event')
 
 import KelolaIndex from '@/views/kelola/Index'
-const KoreksiEsay = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/KoreksiEsay')
-const KoreksiNilaiEsay = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/KoreksiNilaiEsay')
-const AnalysBanksoal = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysBanksoal')
-const AnalysKesulitanBanksoal = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysKesulitanBanksoal')
-const AnalysSiswa = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysSiswa')
-const AnalysCapaianSiswa = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/AnalysCapaianSiswa');
-const HasilUjian = () => import(/* webpackChunkName: "kelola" */ '@/views/kelola/HasilUjian')
+const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
+const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
+const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
+const AnalysKesulitanBanksoal = () => import('@/views/kelola/AnalysKesulitanBanksoal')
+const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
+const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa')
+const HasilUjian = () => import('@/views/kelola/HasilUjian')
+const DetailJawabanSiswa = () => import('@/views/kelola/DetailJawabanSiswa')
 
 Vue.use(VueRouter)
 
@@ -67,6 +74,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/oauth/:token',
+    name: 'oauth',
+    component: Oauth
   },
   {
     path: '/',
@@ -84,6 +96,30 @@ const routes = [
         name: 'sekolah.setting',
         component: SetSekolah,
         meta: { title: 'Data sekolah' }
+      },
+      {
+        path: 'system',
+        name: 'system.setting',
+        component: SetSystem,
+        meta: { title: 'Setting system' }
+      },
+      {
+        path: 'airlock',
+        name: 'system.airlock',
+        component: SetAirlock,
+        meta: { title: 'Setting airlock authentication' }
+      },
+      {
+        path: 'g2fa',
+        name: 'system.g2fa',
+        component: SetG2fk,
+        meta: { title: 'Setting google 2 factor authentication' }
+      },
+      {
+        path: 'ujian',
+        name: 'system.ujian',
+        component: SetUjian,
+        meta: { title: 'Setting ujian' }
       }
     ]
   },
@@ -304,9 +340,15 @@ const routes = [
       },
       {
         path: 'reset/peserta',
-        name: 'ujian.peserta-reset',
+        name: 'peserta.reset',
         component: ResetPesertaUjian,
         meta: { title: 'Reset peserta ujian' }
+      },
+      {
+        path: 'event',
+        name: 'ujian.event.data',
+        component: DataEvent,
+        meta: { title: 'Manage event ujian'}
       }
     ]
   },
@@ -356,6 +398,12 @@ const routes = [
         name: 'kelola.hasil.ujian',
         component: HasilUjian,
         meta: { title: 'Hasil ujian' }
+      },
+      {
+        path: 'hasil-ujian/:id',
+        name: 'kelola.hasil.ujian.siswa',
+        component: DetailJawabanSiswa,
+        meta: { title: 'Detail jawaban siswa'}
       }
     ]
   }

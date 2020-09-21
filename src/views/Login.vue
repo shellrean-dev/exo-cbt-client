@@ -2,10 +2,10 @@
   <div class="container-fluid">
     <div class="row" style="height: 100vh">
       <div class="col-md-6">
-        <img src="/img/bg.svg" style="width: 100%;">
+        <img src="/img/bg2.svg" class="d-none d-sm-block" style="width: 100%; transform: translate(-0%, 50%);">
       </div> 
       <div class="col-md-6 bg-white" style="height: 100vh;">
-        <div style="position: absolute;top: 30%; transform: translateY(-30%)">
+        <div style="transform: translateY(-50%);margin-top: 50%;">
           <div >
             <h4>Extraordinary-CBT Login</h4>
           </div>
@@ -31,10 +31,13 @@
               <input class="form-control" :class="{ 'is-invalid' : errors.password }" type="password" placeholder="Password" v-model="data.password">
               <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
             </div>
-            <b-button variant="dark" :disabled="isLoading" type="submit">
+            <b-button variant="dark" class="mr-1" :disabled="isLoading" type="submit">
               <b-spinner small type="grow" v-show="isLoading"></b-spinner>
               Login
             </b-button>
+            <a :href="baseURL+'/api/v1/login/sso'" class="btn btn-outline-dark" v-if="airlock">
+              Dinasti Sign On
+            </a>
             </form>
           </div>
         </div>
@@ -54,21 +57,31 @@ export default {
         email: '',
         password: ''
       },
+      airlock: false,
       version: process.env.VUE_APP_VERSION
     }
   },
-  created() {
+  async created() {
     if (this.isAuth) {
       this.$router.push({ name: 'home' })
     }
+    try {
+      await this.getSetAuth()
+    } catch (error) {
+      this.$bvToast.toast(error.message, errorToas())
+    }
   },
   computed: {
-    ...mapGetters(['isAuth','isLoading']),
+    ...mapGetters(['isAuth','isLoading','baseURL']),
+    ...mapState('setting', {
+      auth: state => state.auth
+    }),
     ...mapState(['errors'])
   },
   methods: {
     ...mapActions('auth', ['submit']),
     ...mapActions('user',['getUserLogin']),
+    ...mapActions('setting', ['getSetAuth']),
     async postLogin() {
       try {
         let provider = await this.submit(this.data)
@@ -82,6 +95,14 @@ export default {
   },
   destroyed() {
     this.getUserLogin()
+  },
+  watch: {
+    auth() {
+      let name = this.auth.map(item => item.name);
+      if(name.includes('airlock')) {
+        this.airlock = true
+      }
+    }
   }
 }
 </script>

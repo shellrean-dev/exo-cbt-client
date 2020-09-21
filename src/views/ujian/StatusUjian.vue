@@ -3,7 +3,7 @@
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-6 col-lg-4">
-					<div class="card  mb-3">
+					<div class="card  mb-3" v-if="jadwals.length > 0">
 					  <div class="card-header">TOKEN UJIAN 
 					  	<span class="badge badge-light">{{ token.status == 0 ? 'Tidak aktif' :'Aktif' }}</span></div>
 					  <div class="card-body text-dark ">
@@ -13,6 +13,10 @@
 					  <div class="card-footer">
 					  	<button class="btn btn-sm btn-primary" v-if="token.status == 0" @click="rilis" :disabled="isLoading">Relese token</button>
 					  </div>
+					</div>
+					<div class="alert alert-warning" v-else>
+						<strong>Informasi:</strong><br>
+						 Tidak ada ujian yang diaktifkan, aktifkan ujian pada menu jadwal ujian
 					</div>
 				</div>
 			</div>
@@ -31,18 +35,22 @@
 			  			<td>{{ jadwal.mulai }}</td>
 			  		</tr>
 			  	</table>
-				<div class="input-group">
-				  <select class="custom-select" v-model="jadwal.sesi">
-				    <option value="1">1</option>
-				    <option value="2">2</option>
-				    <option value="3">3</option>
-				  </select>
-				  <div class="input-group-append">
-				    <button class="btn btn-secondary" type="button" @click="sesiChange(jadwal.id)" :disabled="isLoading">
-				    	Simpan
-				    </button>
-				  </div>
-				</div>
+			  	<div class="form-group">
+					<label>Sesi</label>
+			  		
+					<div class="input-group">
+					  <select class="custom-select" v-model="jadwal.sesi">
+					    <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					  </select>
+					  <div class="input-group-append">
+					    <button class="btn btn-secondary" type="button" @click="sesiChange(jadwal.id)" :disabled="isLoading">
+					    	Simpan
+					    </button>
+					  </div>
+					</div>
+			  	</div>
 			  </div>
 			</div>
 		</div>

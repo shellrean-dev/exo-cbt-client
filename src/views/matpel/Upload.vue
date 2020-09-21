@@ -41,12 +41,11 @@ export default {
 		return {
 			allow: ['xlsx','xls'],
 			label: '',
-			file: '',
-			baseURL: process.env.VUE_APP_API_SERVER
+			file: ''
 		}
 	},
 	computed: {
-		...mapGetters(['isLoading']),
+		...mapGetters(['isLoading','baseURL']),
 		...mapState('matpel', {
 			percent: state => state.uploadPercentage
 		})

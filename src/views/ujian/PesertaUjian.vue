@@ -12,7 +12,7 @@
                             <div class="small text-muted">Reset dan force close ujian peserta</div>
                         </div>
                         <div class="d-md-block col-sm-7">
-                            <b-button variant="primary" class="float-right" size="sm" @click="getPesertas" :disabled="isLoading" >
+                            <b-button variant="primary" class="float-right" size="sm" @click="refresh" :disabled="isLoading" >
                                 <i class="cil-reload"></i> Refresh data
                             </b-button>
                         </div>
@@ -108,8 +108,16 @@ export default {
     methods: {
         ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive']),
         async resetPeserta(id) {
+            if(this.jadwal == 0) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih jadwal dulu",
+                  icon: 'error',
+                })
+                return
+            }
             try {
-                await this.resetUjianPeserta(id)
+                await this.resetUjianPeserta({id: id, jadwal: this.jadwal})
                 this.getPesertas(this.jadwal)
                 this.$bvToast.toast('Ujian peserta berhasil direset', successToas())
             } catch (error) {
@@ -117,13 +125,27 @@ export default {
             }
         },
         async forceClose(id) {
+            if(this.jadwal == 0) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih jadwal dulu",
+                  icon: 'error',
+                })
+                return
+            }
             try {
-                await this.selesaiUjianPeserta(id)
+                await this.selesaiUjianPeserta({id: id, jadwal: this.jadwal })
                 this.getPesertas(this.jadwal)
                 this.$bvToast.toast('Ujian peserta berhasil ditutup paksa', successToas())
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
+        },
+        refresh() {
+            if(this.jadwal == 0) {
+                return;
+            }
+            this.getPesertas(this.jadwal)
         }
     },
     async created() {

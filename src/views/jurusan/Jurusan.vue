@@ -52,14 +52,18 @@
                             </b-form-group>
                         </div>
                     </div>
-                    <template v-if="jurusans && typeof jurusans.data != 'undefined'">
+                    <template v-if="jurusans && typeof jurusans.data != 'undefined'" >
                         <div class="table-responsive-md">
                         <b-table 
                         id="table-transition-example"
                         primary-key="kode_mapel" :tbody-transition-props="transProps"
                         striped hover bordered small show-empty
                         :fields="fields" 
-                        :items="jurusans.data" 
+                        :items="jurusans.data"
+                        selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger"
                         >
                         <template v-slot:cell(actions)="row">
                             <router-link :to="{ name: 'jurusan.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
@@ -70,9 +74,20 @@
                             </button>
                         </template>
                         </b-table>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
-                                <p><i class="fa fa-bars"></i> {{ jurusans.data.length }} item dari {{ jurusans.total }} total data</p>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="cil-check"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="cil-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkRemove">
+                                        <i class="cil-trash"></i> Bulk remove
+                                    </b-button>
+                                </div>
+                                <p><i class="fa fa-bars"></i> <b>{{ jurusans.data.length }}</b> jurusan dari <b>{{ jurusans.total }}</b> total data jurusan</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -94,6 +109,7 @@
                         </div>
                     </template>
                 </div>
+                <div class="card-footer"></div>
             </div>
         </div>
     </div>
@@ -114,14 +130,15 @@ export default {
               name: 'flip-list'
             },
             fields: [
-               { key: 'id', label: 'ID Jurusan' },
-               { key: 'nama', label: 'Nama' },
+               { key: 'id', label: 'ID Jurusan', sortable: true },
+               { key: 'nama', label: 'Nama', sortable: true },
                { key: 'actions', label: 'Aksi' } 
             ],
-            perPage: 30,
-            pageOptions: [30, 100, 200],
+            perPage: 10,
+            pageOptions: [10, 30, 100],
             search: '',
-            isBusy: true
+            isBusy: true,
+            selected: []
         }
     },
     computed: {
@@ -140,11 +157,45 @@ export default {
         }
     },
     methods: {
-        ...mapActions('jurusan', ['getJurusans', 'removeJurusan']),
+        ...mapActions('jurusan', ['getJurusans', 'removeJurusan', 'removeJurusanMultiple']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
+        bulkRemove() {
+            if(this.selected == '') {
+                return
+            }
+            this.$swal({
+                title: 'Informasi',
+                text: "Jurusan yang dipilih akan dihapus beserta data yang terkait dengan table jurusan",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c7c7c7',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then(async (result) => {
+                if (result.value) {
+                    try {
+                        let ids = this.selected.map(item => item.id)
+                        await this.removeJurusanMultiple({ jurusan_id: ids })
+                        this.getJurusans({ perPage : this.perPage });
+                        this.$bvToast.toast('Data jurusan berhasil dihapus', successToas())
+                    } catch (error) {
+                        this.$bvToast.toast(error.message, errorToas())
+                    }
+                }
+            })
+        },
         deleteJurusan(id) {
             this.$swal({
                 title: 'Informasi',
-                text: "Tindakan ini akan menghapus secara permanent!",
+                text: "Jurusan yang dipilih akan dihapus beserta data yang terkait dengan table jurusan",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

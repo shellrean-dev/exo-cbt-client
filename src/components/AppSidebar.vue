@@ -44,7 +44,7 @@
             <li class="c-sidebar-nav-item" >
               <router-link class="c-sidebar-nav-link" :to="{ name: 'guru.data' }"
               :class="[currentPage.includes('guru.data') ? activeClass : '']"> 
-                <span class="c-sidebar-nav-icon"></span> Guru
+                <span class="c-sidebar-nav-icon"></span> User
               </router-link>
             </li>
           </ul>
@@ -56,11 +56,24 @@
             <i class="c-sidebar-nav-icon cil-briefcase"></i>Banksoal
           </router-link>
         </li>
-        <li class="c-sidebar-nav-item" >
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.data' }"
-          :class="[currentPage.includes('ujian.data') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-notes"></i>Jadwal ujian
-          </router-link>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <i class="c-sidebar-nav-icon cil-notes"></i> Ujian
+          </a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.event.data' }"
+              :class="[currentPage.includes('ujian.event.data') ? activeClass : '']">
+                <i class="c-sidebar-nav-icon"></i>Event ujian
+              </router-link>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.data' }"
+              :class="[currentPage.includes('ujian.data') ? activeClass : '']">
+                <i class="c-sidebar-nav-icon"></i>Jadwal ujian
+              </router-link>
+            </li>
+          </ul>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'filemedia.data' }"
@@ -81,6 +94,13 @@
           :class="[currentPage.includes('ujian.peserta') ? activeClass : '']">
             <i class="c-sidebar-nav-icon cil-task"></i>
             Status peserta
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-item" v-if="typeof ujian.value != 'undefined' && ujian.value.reset">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.reset' }"
+          :class="[currentPage.includes('peserta.reset') ? activeClass : '']">
+            <i class="c-sidebar-nav-icon cil-reload"></i>
+            Reset login peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-title">Menu pengolahan</li>
@@ -126,11 +146,10 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      baseURL: process.env.VUE_APP_API_SERVER,
       activeClass: 'c-active'
     }
   },
@@ -150,11 +169,13 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['baseURL']),
     ...mapState('user', {
       user: state => state.authenticated
     }),
     ...mapState('setting',{
-      sekolah: state => state.set_sekolah
+      sekolah: state => state.set_sekolah,
+      ujian: state => state.set_ujian
     }),
     currentPage() {
       return this.$route.name ? this.$route.name : [];

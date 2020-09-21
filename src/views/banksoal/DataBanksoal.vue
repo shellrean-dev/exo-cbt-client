@@ -61,20 +61,40 @@
 
                             <template v-slot:row-details="row">
                                 <b-card>
-                                    <table class="table table-borderless">
-                                        <tr>
-                                            <td width="150px">Pembuat</td><td v-text="row.item.user.name"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jumlah PG</td><td v-text="row.item.jumlah_soal+' ('+row.item.jumlah_pilihan+' opsi )'"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jumlah esay</td><td v-text="row.item.jumlah_soal_esay"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Soal terinput</td><td v-text="row.item.inputed"></td>
-                                        </tr>
-                                    </table>
+                                    <div class="table-responsive-md">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td width="150px">Pembuat</td><td v-text="row.item.user.name"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah PG</td>
+                                                <td> 
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>{{ row.item.jumlah_soal+' ('+row.item.jumlah_pilihan+' opsi )' }}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda }} %</b-badge>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah Listening</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">    
+                                                        <span>{{ row.item.jumlah_soal_listening+' ('+row.item.jumlah_pilihan_listening+' opsi )' }}</span><b-badge variant="success">{{ row.item.persen.listening }} %</b-badge>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah esay</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>{{ row.item.jumlah_soal_esay }}</span><b-badge variant="success">{{ row.item.persen.esay }} %</b-badge>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Soal terinput</td><td v-text="row.item.inputed"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </b-card>
                             </template>
                            <template v-slot:cell(actions)="row">
@@ -84,9 +104,9 @@
                             </template>
                         </b-table>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
-                                <p v-if="banksoals.data"><i class="fa fa-bars"></i> {{ banksoals.data.length }} item dari {{ banksoals.total }} total data</p>
+                                <p v-if="banksoals.data"><i class="fa fa-bars"></i> <b>{{ banksoals.data.length }}</b> banksoal dari <b>{{ banksoals.total }}</b> total data banksoal</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -127,17 +147,72 @@
                 <p class="text-danger" v-if="errors.kode_banksoal">{{ errors.kode_banksoal[0] }}</p>
             </div>
             <div class="form-group">
-                <label>Jumlah soal pilihan ganda</label>
-                <div class="input-group">
-                    <div class="input-group-prepend" v-show="data.jumlah_soal > 0">
-                        <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal -= 1"><b>-</b></button>
+                <div class="row">
+                    <div class="col-md-6"> 
+                        <div class="form-group">
+                            <label>Jumlah soal pilihan ganda</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal }" v-model.number="data.jumlah_soal" placeholder="Jumlah soal pilihan ganda">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_soal">{{ errors.jumlah_soal[0] }}</p>
+                        </div>
                     </div>
-                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal }" v-model.number="data.jumlah_soal" placeholder="Jumlah soal pilihan ganda">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" @click="data.jumlah_soal += 1"><b>+</b></button>
+                    <div class="col-md-6"> 
+                        <div class="form-group">
+                            <label>Jumlah opsi pilihan ganda</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_pilihan > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan }" v-model.number="data.jumlah_pilihan" placeholder="Jumlah opsi">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_pilihan">{{ errors.jumlah_pilihan[0] }}</p>
+                        </div>
                     </div>
                 </div>
-                <p class="text-danger" v-if="errors.jumlah_soal">{{ errors.jumlah_soal[0] }}</p>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Jumlah soal listening</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal_listening > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_listening -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_listening }" v-model.number="data.jumlah_soal_listening" placeholder="Jumlah soal listening">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_listening += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_soal_listening">{{ errors.jumlah_soal_listening[0] }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Jumlah opsi listening</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_pilihan_listening > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan_listening -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan_listening }" v-model.number="data.jumlah_pilihan_listening" placeholder="Jumlah opsi listening">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan_listening += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_pilihan_listening">{{ errors.jumlah_pilihan_listening[0] }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label>Jumlah soal esay</label>
@@ -152,22 +227,39 @@
                 </div>
                 <p class="text-danger" v-if="errors.jumlah_soal_esay">{{ errors.jumlah_soal_esay[0] }}</p>
             </div>
-            <div class="form-group">
-                <label>Jumlah opsi</label>
-                <div class="input-group">
-                    <div class="input-group-prepend" v-show="data.jumlah_pilihan > 0">
-                        <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan -= 1"><b>-</b></button>
-                    </div>
-                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan }" v-model.number="data.jumlah_pilihan" placeholder="Jumlah opsi">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan += 1"><b>+</b></button>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>% Pilihan ganda</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.pilihan_ganda" placeholder="Jumlah soal listening" @input="checkTotal()">
+                        </div>
+                        <p class="text-danger" v-if="errors.persen">{{ errors.persen[0] }}</p>
                     </div>
                 </div>
-                <p class="text-danger" v-if="errors.jumlah_pilihan">{{ errors.jumlah_pilihan[0] }}</p>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>% Listening</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.listening" placeholder="Jumlah soal listening" @input="checkTotal()">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>% Esay</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.esay" placeholder="Jumlah soal listening" @input="checkTotal()">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" v-show="error_total">
+                    <span class="text-danger">Total harus 100 !!!</span>
+                </div>
             </div>
             <template v-slot:modal-footer="{ ok, cancel}">
 
-              <b-button variant="primary" size="sm" :disabled="isLoading" @click="!update ? postBanksoal() : updateData()">
+              <b-button variant="primary" size="sm" :disabled="isLoading" @click="!update ? postBanksoal() : updateData()" v-if="!error_total">
                     <b-spinner small type="grow" v-show="isLoading"></b-spinner> Simpan
                 </b-button>
               <b-button variant="secondary" size="sm" @click="cancel()" :disabled="isLoading" >
@@ -214,11 +306,19 @@ export default {
                 matpel_id: '',
                 jumlah_soal : 0,
                 jumlah_pilihan: 5,
-                jumlah_soal_esay: 0
+                jumlah_soal_esay: 0,
+                jumlah_soal_listening: 0,
+                jumlah_pilihan_listening: 4,
+                persen: {
+                    pilihan_ganda: 100,
+                    listening: 0,
+                    esay: 0
+                }
             },
             selected: '',
             isBusy: true,
-            update: 0
+            update: 0,
+            error_total: false
         }
     },
     computed: {
@@ -253,7 +353,10 @@ export default {
                     matpel_id : this.data.matpel_id.id,
                     jumlah_soal: this.data.jumlah_soal,
                     jumlah_pilihan: this.data.jumlah_pilihan,
-                    jumlah_soal_esay: this.data.jumlah_soal_esay
+                    jumlah_soal_esay: this.data.jumlah_soal_esay,
+                    jumlah_soal_listening: this.data.jumlah_soal_listening,
+                    jumlah_pilihan_listening: this.data.jumlah_pilihan_listening,
+                    persen: this.data.persen
                 })
 
                 this.$bvToast.toast('Banksoal berhasil ditambah.', successToas())
@@ -308,7 +411,12 @@ export default {
                 matpel_id: '',
                 jumlah_soal : 0,
                 jumlah_pilihan: 5,
-                jumlah_soal_esay: 0
+                jumlah_soal_esay: 0,
+                persen: {
+                    pilihan_ganda: 100,
+                    listening: 0,
+                    esay: 0
+                }
             }
         },
         getDataId(id) {
@@ -320,7 +428,10 @@ export default {
                     jumlah_soal : response.jumlah_soal,
                     jumlah_pilihan: response.jumlah_pilihan,
                     server_name: response.server_name,
-                    jumlah_soal_esay: response.jumlah_soal_esay
+                    jumlah_soal_esay: response.jumlah_soal_esay,
+                    jumlah_soal_listening: response.jumlah_soal_listening,
+                    jumlah_pilihan_listening: response.jumlah_pilihan_listening,
+                    persen: response.persen
                 }
                 this.update = response.id
                 this.$bvModal.show('modal-scoped')
@@ -329,6 +440,14 @@ export default {
                 this.$bvToast.toast(error.message, errorToas())
             })
         },
+        checkTotal() {
+            let total = this.data.persen.pilihan_ganda+this.data.persen.listening+this.data.persen.esay
+            if(total != 100) {
+                this.error_total = true
+            } else {
+                this.error_total = false
+            }
+        }
     },
     watch: {
         page() {

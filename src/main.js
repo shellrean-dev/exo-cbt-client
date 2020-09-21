@@ -4,7 +4,6 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-import CoreuiVue from '@coreui/coreui'
 import VueSweetalert2 from 'vue-sweetalert2'
 import {
  TablePlugin,
@@ -59,7 +58,6 @@ const options = {
 }
 
 Vue.use(VueHtmlToPaper, options);
-Vue.use(CoreuiVue)
 Vue.use(VueSweetalert2)
 Vue.use(CKEditor);
 
@@ -74,13 +72,15 @@ new Vue({
   },
   methods: {
     ...mapActions('user', ['getUserLogin']),
-    ...mapActions('setting',['getSettingSekolah'])
+    ...mapActions('setting',['getConfig','getSettingSekolah', 'getSettingUjian'])
   },
   async created() {
+    await this.getConfig()
     if (this.isAuth) {
       try {
         await this.getUserLogin()
         this.getSettingSekolah()
+        this.getSettingUjian()
       } catch (error) {
         this.$bvToast.toast(error.message, {
           title: "Error",

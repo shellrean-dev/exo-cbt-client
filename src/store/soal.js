@@ -36,7 +36,7 @@ const actions = {
         let perPage = typeof payload.perPage != 'undefined' ? payload.perPage : ''
 		return new Promise(( resolve, reject ) =>  {
 			commit('SET_LOADING',true, { root: true })
-			$axios.get(`/soals/banksoal/${payload.banksoal_id}?page=${state.page}&q=${search}&perPage=${perPage}`)
+			$axios.get(`soals/banksoal/${payload.banksoal_id}?page=${state.page}&q=${search}&perPage=${perPage}`)
 			.then((response) => {
 				commit('ASSIGN_DATA', response.data.data)
 				commit('SET_FROM_DATA', response.data.data.from)
@@ -51,7 +51,7 @@ const actions = {
 	},
 	getAllSoal({ commit, state }, payload) {
 		return new Promise(( resolve, reject ) =>  {
-			$axios.get(`/soals/banksoal/${payload.banksoal_id}/all`)
+			$axios.get(`soals/banksoal/${payload.banksoal_id}/all`)
 			.then((response) => {
 				commit('ASSIGN_DATA_ALL', response.data.data)
 				resolve(response.data)
@@ -64,7 +64,7 @@ const actions = {
 	editSoalBanksoal({ commit, state }, payload ) {
 		return new Promise(( resolve, reject) => {
 			commit('SET_LOADING',true, { root: true })
-			$axios.get(`/soals/${payload}`)
+			$axios.get(`soals/${payload}`)
 			.then((response) => {
 				commit('ASSIGN_FORM', response.data.data)
 				commit('SET_LOADING',false, { root: true })
@@ -79,7 +79,7 @@ const actions = {
 	removeSoal({ commit }, payload) {
 		return new Promise((resolve, reject) => {
 			commit('SET_LOADING',true, { root: true })
-			$axios.delete(`/soals/${payload}`)
+			$axios.delete(`soals/${payload}`)
 			.then((response) => {
 				commit('SET_LOADING',false, { root: true })
 				resolve(response.data)
@@ -94,7 +94,7 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.post(`/soals/banksoal/${payload.id}/upload`, payload.data, {
+                let network = await $axios.post(`soals/import-word/${payload.id}`, payload.data, {
                     onUploadProgress: function( progressEvent ) {
                         commit('UPLOAD_PROGRESS_BAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
                     }.bind(this)

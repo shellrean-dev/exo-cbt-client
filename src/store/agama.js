@@ -14,7 +14,7 @@ const actions = {
     getAgamas({ commit }) {
         return new Promise(async ( resolve, reject) => {
             try {
-                let network = await $axios.get(`/agamas`)
+                let network = await $axios.get(`agamas`)
 
                 commit('ASSIGN_DATA', network.data.data)
                 commit('SET_LOADING', false, { root: true })
