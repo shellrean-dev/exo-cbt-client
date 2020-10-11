@@ -194,7 +194,10 @@
 				    </div>
 		    	</div>
 		    </div>
-		    <div class="row">
+		    <div class="form-group">
+		    	<b-form-checkbox  value="1" v-model="advance">Show setting advance</b-form-checkbox>
+		    </div>
+		    <div class="row" v-if="advance == '1'">
 		    	<div class="col-md-4">
 		    		<div class="form-group">
 		    			<b-form-checkbox switch value="1" v-model="data.setting.acak_soal">Acak Soal</b-form-checkbox>
@@ -211,7 +214,7 @@
 		    		</div>
 		    	</div>
 		    </div>
-		    <div class="row">
+		    <div class="row" v-if="advance == '1'">
 		    	<div class="col-md-12">
 		    		<label>Urutan ujian tipe</label>
 		    	</div>
@@ -413,6 +416,11 @@ export default {
 				acak_opsi: false,
 				acak_soal: false,
 				token: false,
+				list: [
+		      { name: "Listening", id: 3 },
+		      { name: "Pilihan ganda", id: 1 },
+		      { name: "Esay", id: 2 }
+		    ],
 			}
 		},
 		seterStatus(id,status) {
