@@ -34,5 +34,6 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "@/assets/scss/app.scss";
+    @import "~@coreui/coreui/scss/coreui";
+    @import 'node_modules/bootstrap-vue/src/index.scss';    
 </style>
