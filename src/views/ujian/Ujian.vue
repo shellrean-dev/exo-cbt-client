@@ -194,10 +194,7 @@
 				    </div>
 		    	</div>
 		    </div>
-		    <div class="form-group">
-		    	<b-form-checkbox  value="1" v-model="advance">Show setting advance</b-form-checkbox>
-		    </div>
-		    <div class="row" v-if="advance == '1'">
+		    <div class="row">
 		    	<div class="col-md-4">
 		    		<div class="form-group">
 		    			<b-form-checkbox switch value="1" v-model="data.setting.acak_soal">Acak Soal</b-form-checkbox>
@@ -214,7 +211,7 @@
 		    		</div>
 		    	</div>
 		    </div>
-		    <div class="row" v-if="advance == '1'">
+		    <div class="row">
 		    	<div class="col-md-12">
 		    		<label>Urutan ujian tipe</label>
 		    	</div>
@@ -229,7 +226,7 @@
 	                <div
 	                  class="list-group-item"
 	                  v-for="element in data.setting.list"
-	                  :key="element.name"
+	                  :key="element.id"
 	                >
 	                  {{ element.name }}
 	                </div>
