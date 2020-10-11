@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@coreui/coreui": "3.0.0-beta.3",
     "@popperjs/core": "^2.4.4",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
@@ -36,7 +37,7 @@
     "@vue/cli-plugin-router": "~4.4.0",
     "@vue/cli-plugin-vuex": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
-    "compression-webpack-plugin": "^4.0.0",
+    "compression-webpack-plugin": "^6.0.3",
     "node-sass": "^4.14.1",
     "sass": "^1.26.10",
     "sass-loader": "^8.0.2",

@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 
 import VueSweetalert2 from 'vue-sweetalert2'
+import CoreuiVue from '@coreui/coreui'
 import {
  TablePlugin,
  ButtonPlugin,
@@ -58,8 +59,10 @@ const options = {
 }
 
 Vue.use(VueHtmlToPaper, options);
+Vue.use(CoreuiVue)
 Vue.use(VueSweetalert2)
 Vue.use(CKEditor);
+
 
 import { mapActions, mapGetters } from 'vuex'
 
