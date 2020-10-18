@@ -58,6 +58,34 @@
 					</div>
 					<div class="table-responsive-md" v-if="events && typeof events.data != 'undefined'">
 						<b-table striped hover bordered small :fields="fields" :items="events.data" show-empty>
+							<template v-slot:cell(show_details)="row">
+                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
+                            </template>
+							<template v-slot:row-details="row">
+								<b-card>
+									<div class="table-responsive-md">
+										<table class="table table-bordered">
+											<tr>
+												<th>No</th>
+												<th>Nama ujian</th>
+												<th>Tanggal</th>
+												<th>Mulai</th>
+												<th>Aksi</th>
+											</tr>
+											<tr v-for="(ujian,nomer) in row.item.ujians" :key="ujian.id">
+												<td>{{ nomer + 1 }}</td>
+												<td>{{ ujian.alias }}</td>
+												<td>{{ ujian.tanggal }}</td>
+												<td>{{ ujian.mulai }}</td>
+												<td>
+													<b-button variant="primary" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
+													<b-button variant="success" size="sm"><i class="flaticon-upload-1"></i> Import sesi</b-button>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</b-card>
+							</template>
 							<template v-slot:cell(action)="row">
 								<b-button variant="warning" size="sm" class="mr-1" @click="getData(row.item.id)" :disabled="isLoading">
 									<i class="flaticon-edit"></i> Edit
@@ -112,18 +140,42 @@
 		      </b-button>
 		    </template>
 		</b-modal>
+		<b-modal id="modal-sesi" noCloseOnBackdrop :title="current.name" size="lg">
+			<div>
+				<b-tabs content-class="mt-3">
+					<b-tab title="Sesi 1" active lazy>
+						<EventSesi sesi="1" :jadwal="current.ujian_id"/>
+					</b-tab>
+					<b-tab title="Sesi 2" lazy><EventSesi sesi="2" :jadwal="current.ujian_id" /></b-tab>
+					<b-tab title="Sesi 3" lazy><EventSesi sesi="3" :jadwal="current.ujian_id" /></b-tab>
+					<b-tab title="Sesi 4" lazy><EventSesi sesi="4" :jadwal="current.ujian_id" /></b-tab>
+				</b-tabs>
+			</div>
+			<template v-slot:modal-footer="{ cancel }">
+				<b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        	Tutup
+		      	</b-button>
+		    </template>
+		</b-modal>
 	</div>
 </template>
 <script>
+import EventSesi from '@/components/ujian/EventSesi'
+
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
+import { BTabs, BTab } from 'bootstrap-vue'
 import _ from 'lodash'
 
 export default {
 	name: 'DataEventUjian',
+	components: {
+		BTabs, BTab,EventSesi
+	},
 	data() {
 		return {
 			fields: [
+				{ key: 'show_details', label: 'Detail' },
 				{ key: 'name', label: 'Nama event' },
 				{ key: 'action', label: 'Aksi' }
 			],
@@ -133,7 +185,10 @@ export default {
             update: 0,
             event: {
             	name: ''
-            }
+            },
+			current: {
+				ujian_id: ''
+			}
 		}
 	},
 	computed: {
@@ -210,6 +265,11 @@ export default {
                     })
                 }
             })
+		},
+		aturSesi(id,name){
+			this.current.ujian_id = id
+			this.current.name = name
+			this.$bvModal.show('modal-sesi');
 		}
 	},
 	async created() {

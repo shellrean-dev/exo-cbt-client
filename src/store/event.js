@@ -3,12 +3,16 @@ import $axios from '@/services/api.js'
 const state = () => ({
 	events_all: [],
 	events: [],
+	peserta_sesi: [],
 	page: 1
 })
 
 const mutations = {
 	ASSIGN_DATA_ALL(state, payload) {
 		state.events_all = payload
+	},
+	ASSIGN_DATA_PESERTA_SESI(state, payload) {
+		state.peserta_sesi = payload
 	},
 	ASSIGN_DATA(state, payload) {
 		state.events = payload
@@ -100,6 +104,49 @@ const actions = {
 		return new Promise(async(resolve, reject) => {
 			try {
 				let network = await $axios.delete(`events/${payload}`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	studentBySesi({ commit }, payload) {
+		return new Promise(async(resolve , reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`sesi?s=${payload.s}&j=${payload.j}`)
+
+				commit('SET_LOADING', false, { root: true })
+				commit('ASSIGN_DATA_PESERTA_SESI', network.data.data)
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	pushToSesi({ commit }, payload) {
+		return new Promise(async(resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.post(`sesi`, payload)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	removeFromSesi({ commit }, payload) {
+		return new Promise(async(resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.delete(`sesi?s=${payload.s}&j=${payload.j}&p=${payload.p}`)
 
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)

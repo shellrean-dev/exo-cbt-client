@@ -26,6 +26,7 @@
     "vue-json-excel": "^0.2.98",
     "vue-loading-overlay": "^3.3.2",
     "vue-multiselect": "^2.1.6",
+    "vue-perfect-scrollbar": "^0.2.1",
     "vue-router": "^3.2.0",
     "vue-select": "^3.10.7",
     "vue-sweetalert2": "^3.0.6",
