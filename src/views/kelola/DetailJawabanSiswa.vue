@@ -44,6 +44,10 @@
 						</div>
                 	</div>
                 </div>
+				<div class="card-footer">
+					<span><i class="flaticon-star text-warning"></i> Kunci jawaban</span><br />
+					<span><i class="flaticon-add-label-button text-info"></i> Jawaban siswa</span>
+				</div>
             </div>
         </div>
     </div>

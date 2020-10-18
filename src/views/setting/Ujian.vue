@@ -14,11 +14,11 @@
                         </b-form-checkbox>
                         <div class="form-group mt-4">
                             <label>Text Welcome / Peraturan Ujian</label>
-                            <ckeditor v-model="ujian.value.text_welcome"></ckeditor>
+                            <ckeditor v-model="ujian.value.text_welcome"  type="inline"></ckeditor>
                         </div>
                         <div class="form-group mt-4">
                             <label>Text Finish Ujian</label>
-                            <ckeditor v-model="ujian.value.text_finish"></ckeditor>
+                            <ckeditor v-model="ujian.value.text_finish"  type="inline"></ckeditor>
                         </div>
                         <div class="form-group">
                             <b-button variant="primary" type="submit" :disabled="isLoading">
@@ -69,3 +69,8 @@ export default {
     }
 }
 </script>
+<style >
+	div[contenteditable] {
+    outline:1px solid #d8dbe0
+}
+</style>
