@@ -16,7 +16,7 @@
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="banksoals" show-empty >
                             <template v-slot:cell(show_details)="row">
-                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
+                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
                             <template v-slot:row-details="row">
                                 <b-card>
@@ -40,7 +40,7 @@
                                 {{ row.item.kode_banksoal }}
                             </template>
                             <template v-slot:cell(aksi)="row">
-                                <router-link :to="{ name: 'kelola.koreksi.nilai.esay', params: { banksoal: row.item.id } }" class="btn btn-sm btn-primary"><i class="cil-task"></i> Koreksi banksoal ini</router-link>
+                                <router-link :to="{ name: 'kelola.koreksi.nilai.esay', params: { banksoal: row.item.id } }" class="btn btn-sm btn-primary"><i class="flaticon-list"></i> Koreksi banksoal ini</router-link>
                             </template>
                         </b-table>
                     </div>

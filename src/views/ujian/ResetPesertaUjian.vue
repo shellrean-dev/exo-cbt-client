@@ -16,7 +16,7 @@
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="pesertas.data"  show-empty>
                             <template v-slot:cell(reset)="row">
-                                <b-button :disabled="isLoading" size="sm" variant="danger" @click="resetPeserta(row.item.id)"><i class="cil-sync"></i> reset api token</b-button>
+                                <b-button :disabled="isLoading" size="sm" variant="danger" @click="resetPeserta(row.item.id)"><i class="flaticon-refresh"></i> reset api token</b-button>
                             </template>
                         </b-table>
                         <div class="row mt-2" v-if="typeof pesertas.data != 'undefined' ">

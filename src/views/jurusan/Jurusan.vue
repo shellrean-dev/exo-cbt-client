@@ -66,11 +66,11 @@
                         selected-variant="danger"
                         >
                         <template v-slot:cell(actions)="row">
-                            <router-link :to="{ name: 'jurusan.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
-                                <i class="cil-pencil"></i> Edit
-                            </router-link>
+                            <b-button variant="warning" size="sm" class="mr-1" :to="{ name: 'jurusan.edit', params: { id: row.item.id } }" :disabled="isLoading">
+                                <i class="flaticon-edit"></i> Edit
+                            </b-button>
                             <button class="btn btn-danger btn-sm" @click="deleteJurusan(row.item.id)" :disabled="isLoading">
-                                <i class="cil-trash"></i> Hapus
+                                <i class="flaticon2-trash"></i> Hapus
                             </button>
                         </template>
                         </b-table>
@@ -78,13 +78,13 @@
                             <div class="col-md-6">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <b-button variant="outline-dark" size="sm" @click="selectAllRows">
-                                        <i class="cil-check"></i> Select all
+                                        <i class="flaticon-list-3"></i> Select all
                                     </b-button>
                                     <b-button variant="outline-dark" size="sm" @click="clearSelected">
-                                        <i class="cil-reload"></i> Clear selected
+                                        <i class="flaticon2-reload"></i> Clear selected
                                     </b-button>
                                     <b-button variant="outline-danger" size="sm" @click="bulkRemove">
-                                        <i class="cil-trash"></i> Bulk remove
+                                        <i class="flaticon2-trash"></i> Bulk remove
                                     </b-button>
                                 </div>
                                 <p><i class="fa fa-bars"></i> <b>{{ jurusans.data.length }}</b> jurusan dari <b>{{ jurusans.total }}</b> total data jurusan</p>

@@ -6,13 +6,51 @@
                     <router-link :to="{ name: 'banksoal.soal', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-light btn-sm">Kembali</router-link>
                 </div>
                 <div class="card-body">
-                    <div class="card">
-                        <div class="card-header">
+                    
+                      <div class="row">
+                        <div class="col-md-8">
+                                  <div class="card">
+                                      <div class="card-header bg-light">
+                                          <b>Pertanyaan</b>
+                                      </div>
+                                      <div class="card-body">
+                                      <ckeditor v-model="question" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                      </div>
+                                  </div>
+                                  <div class="card" v-if="tipe_soal == 2">
+                                      <div class="card-header bg-light">
+                                          <b>Jawaban rujukan</b>
+                                      </div>
+                                      <div class="card-body">
+                                        <ckeditor v-model="rujukan" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                      </div>
+                                  </div>
+                                  <div class="card" v-if="tipe_soal != 2">
+                                      <div class="card-header bg-light">
+                                          <b>Pilihan</b>
+                                      </div>
+                                      <div class="card-body">
+                                          <div class="table-responsive-md">
+                                              <table class="table table-borderless">
+                                                  <tr v-for="(pilih, index) in pilihan">
+                                                      <td width="10px">
+                                                          <b-form-radio name="correct" size="lg" :value="index" v-model="correct"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
+                                                      </td>
+                                                      <td>
+                                                          <ckeditor v-model="pilihan[index]" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                      </td>
+                                                  </tr>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="card">
+                        <div class="card-header bg-light">
                             <b>Setting soal</b>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tipe soal</label>
                                         <select class="form-control" v-model="tipe_soal">
@@ -37,7 +75,7 @@
                                         <label>File direction</label>
                                         <div class="input-group">
                                             <audio-player :file="'/storage/audio/'+direction"></audio-player>
-                                            <b-button size="sm" variant="danger" @click="removeDirection"><i class="cil-x"></i></b-button>
+                                            <b-button size="sm" variant="danger" @click="removeDirection" class="btn-icon"><i class="flaticon-circle"></i></b-button>
                                         </div>
                                     </div>
                                     <div class="form-group" v-if="audio == ''">
@@ -56,46 +94,12 @@
                                         <label>File audio</label>
                                         <div class="input-group">
                                             <audio-player :file="'/storage/audio/'+audio"></audio-player>
-                                            <b-button size="sm" variant="danger" @click="removeAudio"><i class="cil-x"></i></b-button>
+                                            <b-button size="sm" variant="danger" @click="removeAudio" class="btn-icon"><i class="flaticon-circle"></i></b-button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                               
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header bg-light">
-                            <b>Pertanyaan</b>
-                        </div>
-                        <ckeditor v-model="question" v-if="showEditor" :config="editorConfig"></ckeditor>
                     </div>
-                    <div class="card" v-if="tipe_soal == 2">
-                        <div class="card-header bg-light">
-                            <b>Jawaban rujukan</b>
-                        </div>
-                        <ckeditor v-model="rujukan" v-if="showEditor" :config="editorConfig"></ckeditor>
-                    </div>
-                    <div class="card" v-if="tipe_soal != 2">
-                        <div class="card-header bg-light">
-                            <b>Pilihan</b>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive-md">
-                                <table class="table table-borderless">
-                                    <tr v-for="(pilih, index) in pilihan">
-                                        <td width="10px">
-                                            <b-form-radio name="correct" size="lg" :value="index" v-model="correct"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
-                                        </td>
-                                        <td>
-                                            <ckeditor v-model="pilihan[index]" v-if="showEditor" :config="editorConfig"></ckeditor>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -353,3 +357,8 @@ export default {
   }
 }
 </script>
+<style >
+	div[contenteditable] {
+    outline:1px solid #d8dbe0
+}
+</style>

@@ -14,15 +14,15 @@
                         </div>
                         <div class="d-md-block col-sm-7">
                             <router-link :to="{ name: 'banksoal.prev', params: { 'banksoal_id' : $route.params.banksoal_id }}" class="btn float-right btn-primary btn-sm mx-1">
-                                <i class="cil-print"></i>
+                                <i class="flaticon-suitcase"></i>
                                 Preview banksoal
                             </router-link>
                             <router-link :to="{ name: 'banksoal.upload' }" class="btn float-right btn-success btn-sm">
-                                <i class="cil-cloud-upload"></i>
+                                <i class="flaticon-upload-1"></i>
                                 Import soal
                             </router-link>
                             <router-link :to="{ name: 'banksoal.soal.paste', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary btn-sm  mx-1 float-right">
-                                <i class="cil-description"></i> Paste soal
+                                <i class="flaticon-file-2"></i> Paste soal
                             </router-link>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                 {{ row.item.created_at }}
                             </template>
                             <template v-slot:cell(show_details)="row">
-                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
+                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
             				<template v-slot:row-details="row">
     					        <b-card>
@@ -94,7 +94,7 @@
     					          <table class="table" v-if="row.item.jawabans != ''">
     					          	<tr v-for="(jawab, index) in row.item.jawabans" :key="index">
                                         <td width="20px">
-                                            <i class="cil-bookmark text-warning" v-show="jawab.correct == '1'"></i>
+                                            <i class="flaticon-star text-warning" v-show="jawab.correct == '1'"></i>
                                         </td>
     					          		<td>
     					          			<div v-html="jawab.text_jawaban"></div>
@@ -111,9 +111,9 @@
 
                            <template v-slot:cell(actions)="row">
                                 <router-link :to="{ name: 'banksoal.soal.edit', params: {soal_id: row.item.id, banksoal_id: row.item.banksoal_id} }" class="btn btn-sm btn-warning mr-1" >
-                                	<i class="cil-pencil"></i> Edit
+                                	<i class="flaticon-edit"></i> Edit
                                 </router-link>
-                                <button class="btn btn-danger btn-sm  " @click="deleteBanksoal(row.item.id)" :disabled="isLoading"><i class="cil-trash"></i> Hapus</button>
+                                <button class="btn btn-danger btn-sm  " @click="deleteBanksoal(row.item.id)" :disabled="isLoading"><i class="flaticon2-trash"></i> Hapus</button>
                             </template>
                         </b-table>
                         </div>
@@ -163,7 +163,7 @@ export default {
 	data() {
 		return {
 			fields: [
-				'index',
+				{ key: 'index', label: 'Nomor' },
                 { key: 'show_details', label: 'Detail'},
                 { key: 'tipe', label: 'Tipe soal'},
 				{ key: 'dibuat', label: 'Dibuat pada'},

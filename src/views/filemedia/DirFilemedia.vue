@@ -39,7 +39,7 @@
 	  										<code>{{ baseURL+'/storage/'+content.dirname+'/'+content.filename }}</code>
 	  									</td>
 	  									<td>
-	  										<b-button @click="removeFilemediaa(content.id)" variant="danger" size="sm" :disabled="isLoading" ><i class="cil-trash"></i> Hapus</b-button>
+	  										<b-button @click="removeFilemediaa(content.id)" variant="danger" size="sm" :disabled="isLoading" ><i class="flaticon2-trash"></i> Hapus</b-button>
 	  									</td>
 	  								</tr>
 	  							</table>

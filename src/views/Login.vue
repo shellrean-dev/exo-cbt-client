@@ -16,7 +16,7 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <i class="cil-mood-good"></i>
+                  <i class="flaticon-email"></i>
                 </span>
               </div>
               <input class="form-control" :class="{ 'is-invalid' : errors.email }" type="email" placeholder="Email" v-model="data.email">
@@ -25,15 +25,14 @@
             <div class="input-group mb-4">
               <div class="input-group-prepend ">
                 <span class="input-group-text ">
-                  <i class="cil-lock-locked"></i>
+                  <i class="flaticon-lock"></i>
                 </span>
               </div>
               <input class="form-control" :class="{ 'is-invalid' : errors.password }" type="password" placeholder="Password" v-model="data.password">
               <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
             </div>
-            <b-button variant="dark" class="mr-1" :disabled="isLoading" type="submit">
-              <b-spinner small type="grow" v-show="isLoading"></b-spinner>
-              Login
+            <b-button :variant="isLoading ? 'secondary' : 'dark'" class="mr-1" :disabled="isLoading" type="submit">
+              {{ isLoading ? 'Processing...' : 'Login' }}
             </b-button>
             <a :href="baseURL+'/api/v1/login/sso'" class="btn btn-outline-dark" v-if="airlock">
               Dinasti Sign On
@@ -49,8 +48,11 @@
 <script>
 import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
-
+import { BAlert, BToast } from 'bootstrap-vue'
 export default {
+  components: {
+    BAlert,BToast
+  },
   data() {
     return {
       data: {

@@ -20,7 +20,7 @@
                                     </div>
                                     <div class="input-group-append">
                                       <b-button variant="primary" @click="storeLogo">
-                                        <i class="cil-cloud-upload"></i> 
+                                        <i class="flaticon-upload-1"></i> 
                                         Upload</b-button>
                                     </div>
                                 </div>

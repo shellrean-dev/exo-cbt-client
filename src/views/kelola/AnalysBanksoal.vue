@@ -56,7 +56,7 @@
                         <b-table striped hover bordered small :fields="fields" :items="banksoals.data" show-empty>
                             <template v-slot:cell(actions)="row">
                                 <b-button :to="{ name: 'kelola.analys.kesulitan.banksoal', params: {banksoal: row.item.id} }" variant="primary" size="sm">
-                                    <i class="cil-chart-pie"></i> Hasil analisa
+                                    <i class="flaticon-graphic"></i> Hasil analisa
                                 </b-button>
                             </template>
                         </b-table>

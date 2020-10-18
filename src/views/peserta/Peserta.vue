@@ -13,11 +13,11 @@
                         </div>
                         <div class="d-md-block col-sm-7">
                             <router-link :to="{ name: 'peserta.kartu', params: { 'id': sekolah } }" class="btn float-right btn-primary btn-sm mx-1">
-                                <i class="cil-print"></i>
+                                <i class="flaticon2-print"></i>
                                 Cetak kartu peserta
                             </router-link>
                             <router-link :to="{ name: 'peserta.upload' }" class="btn float-right btn-success btn-sm">
-                            	<i class="cil-cloud-upload"></i>
+                            	<i class="flaticon-upload-1"></i>
                             	Import peserta
                             </router-link>
                         </div>
@@ -73,7 +73,7 @@
                         selected-variant="danger"
 						>
 							<template v-slot:cell(show_details)="row">
-                            	<b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
+                            	<b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
                             <template v-slot:row-details="row">
                                 <b-card>
@@ -97,10 +97,10 @@
                             </template>
 							<template v-slot:cell(actions)="row">
                                 <b-button variant="warning" class="mr-1" size="sm" :to="{ name: 'peserta.edit', params: { id: row.item.id } }">
-                                	<i class="cil-pencil"></i> Edit
+                                	<i class="flaticon-edit"></i> Edit
                                 </b-button>
 								<b-button variant="danger" size="sm" @click="deletePeserta(row.item.id)" :disabled="isLoading">
-									<i class="cil-trash"></i> Hapus
+									<i class="flaticon2-trash"></i> Hapus
 								</b-button>
 							</template>
 						</b-table>
@@ -108,13 +108,13 @@
                             <div class="col-md-6">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <b-button variant="outline-dark" size="sm" @click="selectAllRows">
-                                        <i class="cil-check"></i> Select all
+                                        <i class="flaticon-list-3"></i> Select all
                                     </b-button>
                                     <b-button variant="outline-dark" size="sm" @click="clearSelected">
-                                        <i class="cil-reload"></i> Clear selected
+                                        <i class="flaticon2-reload"></i> Clear selected
                                     </b-button>
                                     <b-button variant="outline-danger" size="sm" @click="bulkRemove">
-                                        <i class="cil-trash"></i> Bulk remove
+                                        <i class="flaticon2-trash"></i> Bulk remove
                                     </b-button>
                                 </div>
                                 <p><i class="fa fa-bars"></i> <b>{{ pesertas.data.length }}</b> peserta dari <b>{{ pesertas.total }}</b> total data peserta</p>

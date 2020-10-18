@@ -33,7 +33,7 @@
                         <b-table striped hover bordered small :fields="fields" :items="banksoals" show-empty>
                             <template v-slot:cell(actions)="row">
                                 <b-button :disabled="isLoading" variant="success" size="sm" @click="download(row.item.id)">
-                                    <i class="cil-cloud-download"></i> Download
+                                    <i class="flaticon-download"></i> Download
                                 </b-button>
                             </template>
                         </b-table>

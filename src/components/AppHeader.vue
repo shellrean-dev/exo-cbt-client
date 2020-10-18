@@ -15,15 +15,15 @@
                     <div class="c-avatar"><img class="c-avatar-img" src="/img/user.png" alt="user@email.com"></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right pt-0">
-                    <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+                    <div class="dropdown-header bg-light py-2"><strong>{{ authenticated.name }}</strong></div>
                     <router-link class="dropdown-item" :to="{ name: 'system.setting' }">
-                        <i class="cil-cog"></i> Setting
+                        <i class="flaticon-settings-1"></i>&nbsp;&nbsp;Setting
                     </router-link>
-                    <b-button class="dropdown-item" href="#" v-b-modal.modal-profile >
-                        <i class="cil-lock-locked"></i> &nbsp; Ubah password
-                    </b-button>
+                    <a class="dropdown-item" href="#" v-b-modal.modal-profile >
+                        <i class="flaticon-lock"></i> &nbsp; Ubah password
+                    </a>
                     <a class="dropdown-item" href="#" @click.prevent="logout">
-                        <i class="cil-account-logout"></i> &nbsp; Logout
+                        <i class="flaticon-logout"></i> &nbsp; Logout
                     </a>
                 </div>
             </li>
@@ -35,9 +35,7 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" v-model="password" class="form-control" placeholder="Password" name="">
-                <b-progress :value="score" :max="4" height="2px" class="mb-3" autofocus></b-progress>
             </div>
-            <password @score="showScore" :showStrengthMeter="false" v-model="password" :strength-meter-only="true"/>
             <div class="form-group">
                 <label>Re-password</label>
                 <input type="password" v-model="password2" class="form-control" placeholder="Re password" name="">
@@ -55,7 +53,6 @@
     </header>
 </template>
 <script>
-import Password from 'vue-password-strength-meter'
 import Breadcrumb from './Breadcrumb.vue'
 import { mapState, mapActions } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
@@ -68,9 +65,11 @@ export default {
             error: false
         }
     },
+    computed: {
+        ...mapState('user', ['authenticated'])
+    },
     components: {
       'breadcrumb' : Breadcrumb,
-      Password
     },
     methods: {
         ...mapActions('auth', ['loggedOut']),

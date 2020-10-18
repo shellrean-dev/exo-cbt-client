@@ -5,7 +5,7 @@
 				<div class="card-header">
 					<router-link :to="{ name: 'peserta.data' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
 					<a :href="baseURL+'/download/format-peserta-import.xlsx'" class="btn btn-primary btn-sm" download>
-						<i class="cil-cloud-download"></i> Download format
+						<i class="flaticon-download"></i> Download format
 					</a>
 				</div>
 				<div class="card-body">

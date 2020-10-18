@@ -13,7 +13,7 @@
                         </div>
                          <div class="d-md-block col-sm-7">
                             <router-link :to="{ name: 'matpel.upload' }" class="btn float-right btn-success btn-sm">
-                                <i class="cil-cloud-upload"></i>
+                                <i class="flaticon-upload-1"></i>
                                 Import matpel
                             </router-link>
                         </div>
@@ -71,7 +71,7 @@
                         selected-variant="danger"
                         >
                             <template v-slot:cell(show_details)="row">
-                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
+                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
                             <template v-slot:row-details="row">
                                 <b-card>
@@ -101,10 +101,10 @@
                             </template>
                             <template v-slot:cell(actions)="row">
                                 <router-link :to="{ name: 'matpel.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
-                                    <i class="cil-pencil"></i> Edit
+                                    <i class="flaticon-edit"></i> Edit
                                 </router-link>
                                 <button class="btn btn-danger btn-sm" @click="deleteMatpel(row.item.id)" :disabled="isLoading">
-                                    <i class="cil-trash"></i> Hapus
+                                    <i class="flaticon2-trash"></i> Hapus
                                 </button>
                             </template>
                         </b-table>
@@ -112,13 +112,13 @@
                             <div class="col-md-6">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <b-button variant="outline-dark" size="sm" @click="selectAllRows">
-                                        <i class="cil-check"></i> Select all
+                                        <i class="flaticon-list-3"></i> Select all
                                     </b-button>
                                     <b-button variant="outline-dark" size="sm" @click="clearSelected">
-                                        <i class="cil-reload"></i> Clear selected
+                                        <i class="flaticon2-reload"></i> Clear selected
                                     </b-button>
                                     <b-button variant="outline-danger" size="sm" @click="bulkRemove">
-                                        <i class="cil-trash"></i> Bulk remove
+                                        <i class="flaticon2-trash"></i> Bulk remove
                                     </b-button>
                                 </div>
                                 <p><i class="fa fa-bars"></i> <b>{{ matpels.data.length }}</b> matpel dari <b>{{ matpels.total }}</b> total data matpel</p>

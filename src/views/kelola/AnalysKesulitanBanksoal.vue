@@ -20,7 +20,7 @@
                                                 </tr>
                                                 <tr v-for="jawaban in soal.jawaban">
                                                     <td>
-                                                        <i class="cil-star text-warning" v-show="jawaban.iscorrect == 1"></i>
+                                                        <i class="flaticon-star text-warning" v-show="jawaban.iscorrect == 1"></i>
                                                     </td>
                                                     <td>
                                                         <div v-html="jawaban.text"></div>

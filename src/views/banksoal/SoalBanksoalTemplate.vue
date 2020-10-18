@@ -4,35 +4,39 @@
       <div class="card">
         <div class="card-header">
           <router-link :to="{ name: 'banksoal.soal', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-          <a :href="baseURL+'/download/format-input-soal-pg.docx'" class="btn btn-primary btn-sm mr-1" download>Download format PG</a>
-          <a :href="baseURL+'/download/format-input-soal-esay.docx'" class="btn btn-primary btn-sm" download>Download format Esay</a>        
+          <a :href="baseURL+'/download/format-input-soal-pg.docx'" class="btn btn-primary btn-sm mr-1" download><i class="flaticon-download"></i> Download format PG</a>
+          <a :href="baseURL+'/download/format-input-soal-esay.docx'" class="btn btn-primary btn-sm" download><i class="flaticon-download"></i> Download format Esay</a>        
         </div>
         <div class="card-body">
-            <div class="card">
-              <div class="card-header">
-                <b>Setting soal</b>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header bg-light">
+                  <b>Soal</b>
+                </div>
+                <div class="card-body">
+                  <ckeditor v-if="showEditor" v-model="editorData" :config="editorConfig" type="inline"></ckeditor>
+                </div>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Tipe soal</label>
-                      <select class="form-control" v-model="tipe_soal">
-                        <option value="1">Pilihan ganda</option>
-                        <option value="2">Essai</option>
-                      </select>
-                    </div>
+                <div class="alert alert-info">Tekan <code>enter</code> pada akhir baris setelah gambar terload</div>
+              </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header bg-light">
+                  <b>Setting soal</b>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Tipe soal</label>
+                    <select class="form-control" v-model="tipe_soal">
+                      <option value="1">Pilihan ganda</option>
+                      <option value="2">Essai</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
-          <div class="card">
-            <div class="card-header">
-              <b>Soal</b>
-            </div>
-            <ckeditor v-if="showEditor" v-model="editorData" :config="editorConfig"></ckeditor>
           </div>
-            <div class="alert alert-info">Tekan <code>enter</code> pada akhir baris setelah gambar terload</div>
         </div>
         <div class="card-footer">
           <b-button variant="primary" size="sm" :disabled="isLoading" @click.prevent="simpan">
@@ -106,3 +110,8 @@ export default {
   }
 }
 </script>
+<style >
+	div[contenteditable] {
+    outline:1px solid #d8dbe0
+}
+</style>

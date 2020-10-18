@@ -56,7 +56,7 @@
                         <div class="table-responsive-md">
                         <b-table striped id="table-transition-example" primary-key="kode_banksoal" :tbody-transition-props="transProps" hover bordered small :fields="fields" :items="banksoals.data" show-empty>
                              <template v-slot:cell(show_details)="row">
-                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
+                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
 
                             <template v-slot:row-details="row">
@@ -98,9 +98,9 @@
                                 </b-card>
                             </template>
                            <template v-slot:cell(actions)="row">
-                                <router-link :to="{ name: 'banksoal.soal', params: {banksoal_id: row.item.id} }" class="btn btn-success btn-sm mr-1"><i class="cil-notes"></i> Soal</router-link>
-                                <b-button class="mr-1" @click="getDataId(row.item.id)" size="sm" variant="warning" :disabled="isLoading"><i class="cil-pencil"></i> Edit</b-button>
-                                <button :disabled="isLoading" class="btn btn-danger btn-sm" @click="deleteBanksoal(row.item.id)"><i class="cil-trash"></i> Hapus</button>
+                                <router-link :to="{ name: 'banksoal.soal', params: {banksoal_id: row.item.id} }" class="btn btn-success btn-sm mr-1"><i class="flaticon-list-2"></i> Soal</router-link>
+                                <b-button class="mr-1" @click="getDataId(row.item.id)" size="sm" variant="warning" :disabled="isLoading"><i class="flaticon-edit"></i> Edit</b-button>
+                                <button :disabled="isLoading" class="btn btn-danger btn-sm" @click="deleteBanksoal(row.item.id)"><i class="flaticon2-trash"></i> Hapus</button>
                             </template>
                         </b-table>
                         </div>

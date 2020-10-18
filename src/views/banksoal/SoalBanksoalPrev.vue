@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'banksoal.soal', params: { banksoal_id: $route.params.banksoal_id } }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-                    <button class="btn float-right btn-primary btn-sm mx-1" @click="print">Print</button>
+                    <button class="btn float-right btn-primary btn-sm mx-1" @click="print"><i class="flaticon2-print"></i> Print</button>
                 </div>
                 <div class="card-body back" id="printSoal">
                 	<div class="paper">
@@ -24,7 +24,7 @@
 												<table class="table-sm">
 													<tr v-for="(jawaban, index) in soal.jawabans">
 														<td width="20px"></td>
-														<td style="text-transform: uppercase;" :class="{ 'corect' : jawaban.correct == '1' }"> {{ index | charIndex }} ) <i v-show="jawaban.correct == '1'"  class="cil-star text-warning"></i> </td>
+														<td style="text-transform: uppercase;" :class="{ 'corect' : jawaban.correct == '1' }"> {{ index | charIndex }} ) <i v-show="jawaban.correct == '1'"  class="flaticon-star text-warning"></i> </td>
 														<td v-html="jawaban.text_jawaban"></td>
 													</tr>
 												</table>

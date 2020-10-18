@@ -60,10 +60,10 @@
 						<b-table striped hover bordered small :fields="fields" :items="events.data" show-empty>
 							<template v-slot:cell(action)="row">
 								<b-button variant="warning" size="sm" class="mr-1" @click="getData(row.item.id)" :disabled="isLoading">
-									<i class="cil-pencil"></i> Edit
+									<i class="flaticon-edit"></i> Edit
 								</b-button>
 								<b-button variant="danger" size="sm" @click="remove(row.item.id)" :disabled="isLoading">
-									<i class="cil-trash"></i> Hapus
+									<i class="flaticon2-trash"></i> Hapus
 								</b-button>
 							</template>
 						</b-table>

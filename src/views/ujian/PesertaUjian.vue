@@ -13,7 +13,7 @@
                         </div>
                         <div class="d-md-block col-sm-7">
                             <b-button variant="primary" class="float-right" size="sm" @click="refresh" :disabled="isLoading" >
-                                <i class="cil-reload"></i> Refresh data
+                                <i class="flaticon-refresh"></i> Refresh data
                             </b-button>
                         </div>
                     </div>

@@ -5,7 +5,7 @@
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" to="/"
           :class="[currentPage.includes('home') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-speedometer"></i>
+            <i class="mr-3 flaticon-squares-4"></i>
             Dashboard
           </router-link>
         </li>
@@ -13,12 +13,12 @@
         <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{  name: 'sekolah.setting' }"
           :class="[currentPage.includes('sekolah.setting') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-info"></i> Informasi sekolah
+            <i class="mr-3 flaticon-home-2"></i> Informasi sekolah
           </router-link>
         </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon cil-layers"></i> Data master
+            <i class="mr-3 flaticon-folder"></i> Data master
           </a>
 
           <ul class="c-sidebar-nav-dropdown-items">
@@ -53,12 +53,12 @@
          <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }"
           :class="[currentPage.includes('banksoal.data') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-briefcase"></i>Banksoal
+            <i class="mr-3 flaticon-folder"></i>Banksoal
           </router-link>
         </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon cil-notes"></i> Ujian
+            <i class="mr-3 flaticon-folder"></i> Ujian
           </a>
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
@@ -78,28 +78,28 @@
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'filemedia.data' }"
           :class="[currentPage.includes('filemedia.data') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-folder"></i>File media
+            <i class="mr-3 flaticon-folder"></i>File media
           </router-link>
         </li>
         <li class="c-sidebar-nav-title">Menu ujian</li>
         <li class="c-sidebar-nav-item" >
           <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.status' }"
           :class="[currentPage.includes('ujian.status') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-clipboard"></i>
+            <i class="mr-3 flaticon-folder"></i>
             Status ujian
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.peserta' }"
           :class="[currentPage.includes('ujian.peserta') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-task"></i>
+            <i class="mr-3 flaticon-folder"></i>
             Status peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item" v-if="typeof ujian.value != 'undefined' && ujian.value.reset">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.reset' }"
           :class="[currentPage.includes('peserta.reset') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-reload"></i>
+            <i class="mr-3 flaticon-folder"></i>
             Reset login peserta
           </router-link>
         </li>
@@ -107,12 +107,12 @@
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
           :class="[currentPage.includes('kelola.koreksi.esay') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-task"></i> Koreksi esay
+            <i class="mr-3 flaticon-folder"></i> Koreksi esay
           </router-link>
         </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon cil-chart-line"></i>Reporting
+            <i class="mr-3 flaticon-graphic-2"></i>Reporting
           </a>
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
@@ -132,12 +132,12 @@
         <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.hasil.ujian' }"
           :class="[currentPage.includes('kelola.hasil.ujian') ? activeClass : '']">
-            <i class="c-sidebar-nav-icon cil-chart"></i>Hasil ujian
+            <i class="mr-3 flaticon-folder"></i>Hasil ujian
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <a class="c-sidebar-nav-link" href="#" @click.prevent="logout">
-            <i class="c-sidebar-nav-icon cil-account-logout"></i> 
+            <i class="mr-3 flaticon-logout"></i> 
             Logout
           </a>
         </li>

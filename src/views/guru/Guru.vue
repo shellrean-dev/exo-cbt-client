@@ -13,7 +13,7 @@
                         </div>
                          <div class="d-md-block col-sm-7">
                             <router-link :to="{ name: 'guru.upload' }" class="btn float-right btn-success btn-sm">
-                                <i class="cil-cloud-upload"></i>
+                                <i class="flaticon-upload-1"></i>
                                 Import user
                             </router-link>
                         </div>
@@ -72,10 +72,10 @@
                         >
                             <template v-slot:cell(actions)="row">
                                 <router-link :to="{ name: 'guru.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
-                                    <i class="cil-pencil"></i> Edit
+                                    <i class="flaticon-edit"></i> Edit
                                 </router-link>
                                 <b-button variant="danger" size="sm" @click="deleteUser(row.item.id)" :disabled="isLoading">
-                                    <i class="cil-trash"></i> Hapus
+                                    <i class="flaticon2-trash"></i> Hapus
                                 </b-button>
                             </template>
                         </b-table>
@@ -83,13 +83,13 @@
                             <div class="col-md-6">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <b-button variant="outline-dark" size="sm" @click="selectAllRows">
-                                        <i class="cil-check"></i> Select all
+                                        <i class="flaticon-list-3"></i> Select all
                                     </b-button>
                                     <b-button variant="outline-dark" size="sm" @click="clearSelected">
-                                        <i class="cil-reload"></i> Clear selected
+                                        <i class="flaticon2-reload"></i> Clear selected
                                     </b-button>
                                     <b-button variant="outline-danger" size="sm" @click="bulkRemove">
-                                        <i class="cil-trash"></i> Bulk remove
+                                        <i class="flaticon2-trash"></i> Bulk remove
                                     </b-button>
                                 </div>
                                 <p><i class="fa fa-bars"></i> {{ users.data.length }} user dari {{ users.total }} total data user</p>

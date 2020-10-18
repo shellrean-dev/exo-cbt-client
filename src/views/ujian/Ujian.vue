@@ -56,7 +56,7 @@
                     <div class="table-responsive-md" v-if="ujians && typeof ujians.data != 'undefined'">
 						<b-table striped hover bordered small :fields="fields" :items="ujians.data" show-empty>
 							<template v-slot:cell(show_details)="row">
-                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'cil-chevron-top' : 'cil-chevron-bottom'" /></b-button>
+                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
                             <template v-slot:row-details="row">
                                 <b-card>
@@ -99,10 +99,10 @@
 							</template>
 							<template v-slot:cell(action)="row">
 								<b-button variant="warning" :disabled="isLoading" size="sm" @click="getData(row.item.id)" class="mr-1">
-									<i class="cil-pencil"></i> Edit
+									<i class="flaticon-edit"></i> Edit
 								</b-button>
 								<b-button variant="danger" :disabled="isLoading" size="sm" @click="remove(row.item.id)">
-									<i class="cil-trash"></i> Hapus
+									<i class="flaticon2-trash"></i> Hapus
 								</b-button>
 							</template>
 	                    </b-table>
