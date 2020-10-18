@@ -238,5 +238,8 @@ export default {
             this.getAllSoal({ search: this.search, perPage: this.perPage })
         }
     },
+    destroyed() {
+        this.$store.state.soal.soals = {}
+    }
 }
 </script>

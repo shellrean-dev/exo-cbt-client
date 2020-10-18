@@ -186,6 +186,20 @@ const actions = {
                 reject(err.response.data)
             })
         })  
+    },
+    duplicateBanksoal({ commit }, payload) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(( resolve, reject) => {
+            $axios.get(`banksoals/${payload}/duplikat`)
+            .then((response) => {
+                commit('SET_LOADING',false, { root: true })
+                resolve(response.data) 
+            })
+            .catch((error) => {
+                commit('SET_LOADING',false, { root: true })
+                reject(err.response.data)
+            })
+        })
     }
 }
 

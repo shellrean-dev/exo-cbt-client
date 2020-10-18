@@ -99,6 +99,7 @@
                             </template>
                            <template v-slot:cell(actions)="row">
                                 <router-link :to="{ name: 'banksoal.soal', params: {banksoal_id: row.item.id} }" class="btn btn-success btn-sm mr-1"><i class="flaticon-list-2"></i> Soal</router-link>
+                                <b-button class="mr-1" @click="duplikatBanksoal(row.item.id)" size="sm" variant="info" :disabled="isLoading"><i class="flaticon-background"></i> Duplikat</b-button>
                                 <b-button class="mr-1" @click="getDataId(row.item.id)" size="sm" variant="warning" :disabled="isLoading"><i class="flaticon-edit"></i> Edit</b-button>
                                 <button :disabled="isLoading" class="btn btn-danger btn-sm" @click="deleteBanksoal(row.item.id)"><i class="flaticon2-trash"></i> Hapus</button>
                             </template>
@@ -340,7 +341,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('banksoal', ['getBanksoals','addBanksoal','removeBanksoal','getBanksoalById','updateBanksoal']),
+        ...mapActions('banksoal', ['getBanksoals','addBanksoal','removeBanksoal','getBanksoalById','updateBanksoal','duplicateBanksoal']),
         ...mapActions('matpel',['getAllMatpels']),
         showModalCreate() {
             this.data.kode_banksoal = generateBanksoalCode()
@@ -447,6 +448,28 @@ export default {
             } else {
                 this.error_total = false
             }
+        },
+        duplikatBanksoal(id) {
+            this.$swal({
+                title: 'Informasi',
+                text: "Banksoal ini akan digandakan",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c3c3c3',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+                if (result.value) {
+                    this.duplicateBanksoal(id)
+                    .then((response) => {
+                        this.getBanksoals({ perPage: this.perPage })
+                        this.$bvToast.toast('Banksoal berhasil digandakan.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+                }
+            })
         }
     },
     watch: {
