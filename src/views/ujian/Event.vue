@@ -79,7 +79,7 @@
 												<td>{{ ujian.mulai }}</td>
 												<td>
 													<b-button variant="primary" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
-													<b-button variant="success" size="sm"><i class="flaticon-upload-1"></i> Import sesi</b-button>
+													<b-button variant="success" size="sm" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
 												</td>
 											</tr>
 										</table>
@@ -157,6 +157,25 @@
 		      	</b-button>
 		    </template>
 		</b-modal>
+		<b-modal id="modal-import-sesi" :title="current.name" noCloseOnBackdrop>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="custom-file">
+						<input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
+						<label class="custom-file-label" for="inputGroupFile04">{{ label ? label : 'Pilih file excel...' }}</label>
+					</div>
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" :disabled="isLoading" @click="submitImportSesi">{{ isLoading ? 'Processing...' : 'Upload' }}</button>
+					</div>
+				</div>
+				<a :href="baseURL+`/download/format-sesi-import.xlsx`" download>Download format</a>
+			</div>
+			<template v-slot:modal-footer="{ cancel }">
+				<b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        	Tutup
+		      	</b-button>
+		    </template>
+		</b-modal>
 	</div>
 </template>
 <script>
@@ -188,11 +207,13 @@ export default {
             },
 			current: {
 				ujian_id: ''
-			}
+			},
+			file: '',
+			label: ''
 		}
 	},
 	computed: {
-		...mapState(['isLoading']),
+		...mapState(['isLoading','baseURL']),
 		...mapState('event', {
 			events: state => state.events
 		}),
@@ -206,7 +227,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent']),
+		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi']),
 		close() {
 			this.$bvModal.hide('modal-scoped-event')
 			this.update = 0
@@ -270,6 +291,32 @@ export default {
 			this.current.ujian_id = id
 			this.current.name = name
 			this.$bvModal.show('modal-sesi');
+		},
+		importSesi(id,name) {
+			this.current.ujian_id = id
+			this.current.name = name
+			this.$bvModal.show('modal-import-sesi')
+		},
+		onFileChange(e) {
+			this.label = e.target.files[0].name
+			this.file = e.target.files[0]
+		},
+		submitImportSesi() {
+			let formData = new FormData()
+			formData.append('file',this.file)
+			this.importToSesi({
+				j: this.current.ujian_id,
+				data: formData
+			})
+			.then((res) => {
+				this.file = ''
+				this.label = ''
+				this.$bvModal.hide('modal-import-sesi')
+				this.$bvToast.toast('Sesi ujian siswa berhasil diimport.', successToas())
+			})
+			.catch((error) => {
+				this.$bvToast.toast(error.message, errorToas())
+			})
 		}
 	},
 	async created() {
