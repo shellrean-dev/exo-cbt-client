@@ -47,13 +47,18 @@ const actions = {
     getConfig({ commit }) {
         return new Promise(async(resolve, reject) => { 
             try {
-                let netowrk = await axios.get('/static/config.json', {
-                    headers: {
-                        'Accept': 'application/json'
-                    },
-                })
-                commit('SET_BASEURL',netowrk.data.URL, { root: true })
-                resolve(netowrk.data)
+                if(process.env.VUE_APP_DYNAMIC_URL == true) {
+                    let netowrk = await axios.get('/static/config.json', {
+                        headers: {
+                            'Accept': 'application/json'
+                        },
+                    })
+                    commit('SET_BASEURL',netowrk.data.URL, { root: true })
+                    resolve(netowrk.data)    
+                } else {
+                    commit('SET_BASEURL', process.env.VUE_APP_URL, { root: true })
+                    resolve({})
+                }
             } catch (error) {
                 reject(error.response.data)
             }

@@ -90,6 +90,9 @@
 								<b-button variant="warning" size="sm" class="mr-1" @click="getData(row.item.id)" :disabled="isLoading">
 									<i class="flaticon-edit"></i> Edit
 								</b-button>
+								<b-button variant="info" size="sm" class="mr-1" :to="{ name: 'ujian.event.peserta', params: { event_id: row.item.id} }" :disabled="isLoading">
+									<i class="flaticon-profile-1"></i> Kartu Peserta
+								</b-button>
 								<b-button variant="danger" size="sm" @click="remove(row.item.id)" :disabled="isLoading">
 									<i class="flaticon2-trash"></i> Hapus
 								</b-button>

@@ -56,6 +56,7 @@ const StatusUjian = () => import('@/views/ujian/StatusUjian')
 const PesertaUjian = () => import('@/views/ujian/PesertaUjian')
 const ResetPesertaUjian = () => import('@/views/ujian/ResetPesertaUjian')
 const DataEvent = () => import('@/views/ujian/Event')
+const EventPeserta = () => import('@/views/ujian/KartuPeserta');
 
 import KelolaIndex from '@/views/kelola/Index'
 const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
@@ -349,6 +350,12 @@ const routes = [
         name: 'ujian.event.data',
         component: DataEvent,
         meta: { title: 'Manage event ujian'}
+      },
+      {
+        path: 'event/:event_id/peserta',
+        name: 'ujian.event.peserta',
+        component: EventPeserta,
+        meta: { title: 'Kartu Event Peserta' }
       }
     ]
   },

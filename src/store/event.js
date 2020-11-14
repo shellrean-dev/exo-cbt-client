@@ -4,6 +4,7 @@ const state = () => ({
 	events_all: [],
 	events: [],
 	peserta_sesi: [],
+	event_jadwal: {},
 	page: 1
 })
 
@@ -16,6 +17,9 @@ const mutations = {
 	},
 	ASSIGN_DATA(state, payload) {
 		state.events = payload
+	},
+	ASSIGN_DATA_EVENT_JADWAL(status, payload) {
+		status.event_jadwal = payload
 	},
 	SET_PAGE(state, payload) {
 		state.page = payload
@@ -162,6 +166,21 @@ const actions = {
 				commit('SET_LOADING', true, { root: true })
 				let network = await $axios.post(`sesi/import?j=${payload.j}`, payload.data)
 
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	getDataEventUjianSesi({ commit }, payload) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`events/${payload}/ujian`)
+
+				commit('ASSIGN_DATA_EVENT_JADWAL', network.data.data)
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
 			} catch (error) {
