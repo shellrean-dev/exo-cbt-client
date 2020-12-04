@@ -133,7 +133,7 @@
                 </div>
             </div>
         </div>
-        <b-modal id="modal-scoped" size="md">
+        <b-modal id="modal-scoped" size="lg">
             <template v-slot:modal-header="{ close }">
               <h5>Tambah banksoal</h5>
             </template>
@@ -147,11 +147,23 @@
                 <input type="text" class="form-control" :class="{ 'is-invalid' : errors.kode_banksoal }"  placeholder="Kode banksoal" v-model="data.kode_banksoal">
                 <p class="text-danger" v-if="errors.kode_banksoal">{{ errors.kode_banksoal[0] }}</p>
             </div>
-            <div class="form-group">
+            <b-button size="sm" variant="primary" class="mr-1" v-b-toggle.collapse-a>
+                <span class="when-opened">
+                    <i class="flaticon-circle"></i>
+                </span>
+                <span class="when-closed">
+                    <i class="flaticon2-add"></i>
+                </span>
+                Pilihan ganda
+            </b-button>
+            <b-collapse id="collapse-a" class="mt-2">
                 <div class="row">
-                    <div class="col-md-6"> 
+                    <div class="col-md-12">
+                        <strong>Pilihan Ganda</strong>
+                    </div>
+                    <div class="col-md-7">
                         <div class="form-group">
-                            <label>Jumlah soal pilihan ganda</label>
+                            <label>Jumlah soal</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.jumlah_soal > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal -= 1"><b>-</b></button>
@@ -164,28 +176,74 @@
                             <p class="text-danger" v-if="errors.jumlah_soal">{{ errors.jumlah_soal[0] }}</p>
                         </div>
                     </div>
-                    <div class="col-md-6"> 
+                    <div class="col-md-5">
                         <div class="form-group">
-                            <label>Jumlah opsi pilihan ganda</label>
+                            <label>Point max</label>
                             <div class="input-group">
-                                <div class="input-group-prepend" v-show="data.jumlah_pilihan > 0">
-                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan -= 1"><b>-</b></button>
-                                </div>
-                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan }" v-model.number="data.jumlah_pilihan" placeholder="Jumlah opsi">
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan += 1"><b>+</b></button>
-                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.pilihan_ganda" placeholder="Jumlah soal listening" @input="checkTotal()">
                             </div>
-                            <p class="text-danger" v-if="errors.jumlah_pilihan">{{ errors.jumlah_pilihan[0] }}</p>
+                            <p class="text-danger" v-if="errors.persen">{{ errors.persen[0] }}</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
+            </b-collapse>
+            <b-button size="sm" variant="primary" class="mr-1" v-b-toggle.collapse-b>
+                <span class="when-opened">
+                    <i class="flaticon-circle"></i>
+                </span>
+                <span class="when-closed">
+                    <i class="flaticon2-add"></i>
+                </span>
+                Pilihan ganda kompleks
+            </b-button>
+            <b-collapse id="collapse-b" class="mt-2">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        <strong>Pilihan Ganda Kompleks</strong>
+                    </div>
+                    <div class="col-md-7">
                         <div class="form-group">
-                            <label>Jumlah soal listening</label>
+                            <label>Jumlah soal</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal_ganda_komplek > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_ganda_komplek -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_ganda_komplek }" v-model.number="data.jumlah_soal_ganda_komplek" placeholder="Jumlah soal pilihan ganda">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_ganda_komplek += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_soal_ganda_komplek">{{ errors.jumlah_soal_ganda_komplek[0] }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Point max</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.pilihan_ganda_komplek" placeholder="Jumlah soal listening" @input="checkTotal()">
+                            </div>
+                            <p class="text-danger" v-if="errors.persen">{{ errors.persen[0] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </b-collapse>
+            <b-button size="sm" variant="primary" class="mr-1" v-b-toggle.collapse-c>
+                <span class="when-opened">
+                    <i class="flaticon-circle"></i>
+                </span>
+                <span class="when-closed">
+                    <i class="flaticon2-add"></i>
+                </span>
+                Listening
+            </b-button>
+            <b-collapse id="collapse-c" class="mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Listening</strong>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Jumlah soal</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.jumlah_soal_listening > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_listening -= 1"><b>-</b></button>
@@ -198,66 +256,133 @@
                             <p class="text-danger" v-if="errors.jumlah_soal_listening">{{ errors.jumlah_soal_listening[0] }}</p>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
-                            <label>Jumlah opsi listening</label>
+                            <label>Point max</label>
                             <div class="input-group">
-                                <div class="input-group-prepend" v-show="data.jumlah_pilihan_listening > 0">
-                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_pilihan_listening -= 1"><b>-</b></button>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.listening" placeholder="Jumlah soal listening" @input="checkTotal()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </b-collapse>
+            <b-button size="sm" variant="primary" class="mr-1" v-b-toggle.collapse-d>
+                <span class="when-opened">
+                    <i class="flaticon-circle"></i>
+                </span>
+                <span class="when-closed">
+                    <i class="flaticon2-add"></i>
+                </span>
+                Menjodohkan
+            </b-button>
+            <b-collapse id="collapse-d" class="mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Menjodohkan</strong>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Jumlah soal</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal_menjodohkan > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_menjodohkan -= 1"><b>-</b></button>
                                 </div>
-                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_pilihan_listening }" v-model.number="data.jumlah_pilihan_listening" placeholder="Jumlah opsi listening">
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_menjodohkan }" v-model.number="data.jumlah_soal_menjodohkan" placeholder="Jumlah soal listening">
                                 <div class="input-group-append">
-                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_pilihan_listening += 1"><b>+</b></button>
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_menjodohkan += 1"><b>+</b></button>
                                 </div>
                             </div>
-                            <p class="text-danger" v-if="errors.jumlah_pilihan_listening">{{ errors.jumlah_pilihan_listening[0] }}</p>
+                            <p class="text-danger" v-if="errors.jumlah_soal_menjodohkan">{{ errors.jumlah_soal_menjodohkan[0] }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Point max</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.menjodohkan" placeholder="Jumlah soal listening" @input="checkTotal()">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Jumlah soal esay</label>
-                <div class="input-group">
-                    <div class="input-group-prepend" v-show="data.jumlah_soal_esay > 0">
-                        <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_esay -= 1"><b>-</b></button>
+            </b-collapse>
+            <b-button size="sm" variant="primary" class="mr-1" v-b-toggle.collapse-e>
+                <span class="when-opened">
+                    <i class="flaticon-circle"></i>
+                </span>
+                <span class="when-closed">
+                    <i class="flaticon2-add"></i>
+                </span>
+                Isian singkat
+            </b-button>
+            <b-collapse id="collapse-e" class="mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Isian Singkat</strong>
                     </div>
-                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_esay }" v-model.number="data.jumlah_soal_esay" placeholder="Jumlah soal esay">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_esay += 1"><b>+</b></button>
-                    </div>
-                </div>
-                <p class="text-danger" v-if="errors.jumlah_soal_esay">{{ errors.jumlah_soal_esay[0] }}</p>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>% Pilihan ganda</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.pilihan_ganda" placeholder="Jumlah soal listening" @input="checkTotal()">
-                        </div>
-                        <p class="text-danger" v-if="errors.persen">{{ errors.persen[0] }}</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>% Listening</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.listening" placeholder="Jumlah soal listening" @input="checkTotal()">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>% Esay</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.esay" placeholder="Jumlah soal listening" @input="checkTotal()">
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Jumlah soal</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal_isian_singkat > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_isian_singkat -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_isian_singkat }" v-model.number="data.jumlah_soal_isian_singkat" placeholder="Jumlah soal listening">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_isian_singkat += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_soal_isian_singkat">{{ errors.jumlah_soal_isian_singkat[0] }}</p>
                         </div>
                     </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Point max</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.isian_singkat" placeholder="Jumlah soal listening" @input="checkTotal()">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-12" v-show="error_total">
-                    <span class="text-danger">Total harus 100 !!!</span>
+            </b-collapse>
+            <b-button size="sm" variant="primary" class="mr-1" v-b-toggle.collapse-f>
+                <span class="when-opened">
+                    <i class="flaticon-circle"></i>
+                </span>
+                <span class="when-closed">
+                    <i class="flaticon2-add"></i>
+                </span>
+                Uraian
+            </b-button>
+            <b-collapse id="collapse-f" class="mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Uraian</strong>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Jumlah soal esay</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" v-show="data.jumlah_soal_esay > 0">
+                                    <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_esay -= 1"><b>-</b></button>
+                                </div>
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_esay }" v-model.number="data.jumlah_soal_esay" placeholder="Jumlah soal esay">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_esay += 1"><b>+</b></button>
+                                </div>
+                            </div>
+                            <p class="text-danger" v-if="errors.jumlah_soal_esay">{{ errors.jumlah_soal_esay[0] }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Point max</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.esay" placeholder="Jumlah soal listening" @input="checkTotal()">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </b-collapse>
             <template v-slot:modal-footer="{ ok, cancel}">
 
               <b-button variant="primary" size="sm" :disabled="isLoading" @click="!update ? postBanksoal() : updateData()" v-if="!error_total">
@@ -278,11 +403,10 @@ import 'vue-select/dist/vue-select.css';
 import _ from 'lodash'
 import { generateBanksoalCode } from '@/entities/generate'
 import { successToas, errorToas} from '@/entities/notif'
-
 export default {
     name: 'DataBanksoal',
     components: {
-        'v-select': vSelect
+        'v-select': vSelect,
     },
     created() {
         this.getBanksoals({ perPage: this.perPage })
@@ -310,8 +434,14 @@ export default {
                 jumlah_soal_esay: 0,
                 jumlah_soal_listening: 0,
                 jumlah_pilihan_listening: 4,
+                jumlah_soal_ganda_komplek: 0,
+                jumlah_soal_menjodohkan: 0,
+                jumlah_soal_isian_singkat: 0,
                 persen: {
                     pilihan_ganda: 100,
+                    pilihan_ganda_komplek: 0,
+                    menjodohkan: 0,
+                    isian_singkat: 0,
                     listening: 0,
                     esay: 0
                 }
@@ -488,5 +618,9 @@ export default {
 <style type="text/css">
     table#table-transition-example .flip-list-move {
       transition: transform 1s;
+    }
+    .collapsed > .when-opened,
+    :not(.collapsed) > .when-closed {
+        display: none;
     }
 </style>

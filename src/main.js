@@ -21,13 +21,14 @@ import {
  FormInputPlugin,
  ModalPlugin,
  ToastPlugin,
- FormRadioPlugin 
+ FormRadioPlugin,
+ CollapsePlugin,
 } from 'bootstrap-vue';
 
 [TablePlugin, ButtonPlugin, CardPlugin, SpinnerPlugin, FormGroupPlugin, 
 InputGroupPlugin, PaginationPlugin, FormCheckboxPlugin, BadgePlugin,
 FormSelectPlugin,ProgressPlugin, FormInputPlugin, ModalPlugin, ToastPlugin,
-FormRadioPlugin ].forEach(comp => {
+FormRadioPlugin, CollapsePlugin ].forEach(comp => {
   Vue.use(comp);
 });
 
