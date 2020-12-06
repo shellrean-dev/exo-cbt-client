@@ -9,59 +9,86 @@
                     
                       <div class="row">
                         <div class="col-md-8">
-                                  <div class="card">
-                                      <div class="card-header bg-light">
-                                          <b>Pertanyaan</b>
+                                  <div class="card rounded-0" style="border:1px dashed #00f;">
+                                      <div class="card-header bg-white">
+                                          <b><i class="flaticon2-sheet"></i> Pertanyaan</b>
                                       </div>
                                       <div class="card-body">
                                       <ckeditor v-model="question" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                                       </div>
                                   </div>
-                                  <div class="card" v-if="tipe_soal == 2">
-                                      <div class="card-header bg-light">
-                                          <b>Jawaban rujukan</b>
+                                  <div class="card rounded-0" v-if="tipe_soal == 2" style="border:1px dashed #00f;">
+                                      <div class="card-header bg-white">
+                                          <b><i class="flaticon2-paper"></i> Jawaban rujukan</b>
                                       </div>
                                       <div class="card-body">
                                         <ckeditor v-model="rujukan" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                                       </div>
                                   </div>
-                                  <div class="card" v-if="tipe_soal != 2">
-                                      <div class="card-header bg-light">
-                                          <b>Pilihan</b>
+                                  <div class="card rounded-0" v-if="[1,3,4].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
+                                      <div class="card-header bg-white">
+                                          <b><i class="flaticon-signs-1"></i> Pilihan</b>
                                       </div>
                                       <div class="card-body">
                                           <div class="table-responsive-md">
-                                              <table class="table table-borderless">
+                                              <table class="table table-borderless" v-if="show_opsi">
                                                   <tr v-for="(pilih, index) in pilihan">
                                                       <td width="10px">
-                                                          <b-form-radio name="correct" size="lg" :value="index" v-model="correct"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
+                                                          <b-form-radio name="correct" size="lg" :value="index" v-if="[1,3].includes(parseInt(tipe_soal))" v-model="correct"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
+                                                          <div class="form-check" v-if="4 == parseInt(tipe_soal)">
+                                                            <input :checked="selected.includes(index)" :value="index" type="checkbox" class="form-check-input" @change="changeCheckbox($event, index)">
+                                                            <label class="form-check-label">
+                                                              <span class="text-uppercase">{{ index | charIndex }}</span>
+                                                            </label>
+                                                          </div>
                                                       </td>
                                                       <td>
                                                           <ckeditor v-model="pilihan[index]" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                                                       </td>
+                                                      <td width="60px">
+                                                <button v-if="pilihan.length > 2" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
+                                                  <i class="flaticon-circle"></i>
+                                                </button>
+                                              </td>
                                                   </tr>
+                                                  <tr>
+                                            <td colspan="3">
+                                              <button class="btn btn-sm btn-outline-primary rounded-0" title="Tambah pilihan" @click="addOpsi">
+                                                <i class="flaticon-add"></i> tambah
+                                              </button>
+                                            </td>
+                                          </tr>
                                               </table>
                                           </div>
                                       </div>
                                   </div>
                         </div>
                         <div class="col-md-4">
-                        <div class="card">
-                        <div class="card-header bg-light">
-                            <b>Setting soal</b>
+                        <div class="card rounded-0" style="border:1px dashed #00f;">
+                        <div class="card-header bg-white">
+                            <b><i class="flaticon-settings-1"></i> Setting soal</b>
                         </div>
                         <div class="card-body">
                                     <div class="form-group">
                                         <label>Tipe soal</label>
-                                        <select class="form-control" v-model="tipe_soal">
-                                            <option value="1">Pilihan ganda</option>
-                                            <option value="2">Essai</option>
-                                            <option value="3">Listening</option>
-                                        </select>
+                                        <div class="input-group">
+                                          <div class="input-group-prepend">
+                                            <label class="input-group-text"><i class="flaticon2-layers"></i></label>
+                                          </div>
+                                          <select class="form-control" v-model="tipe_soal">
+                                              <option value="1">Pilihan ganda</option>
+                                              <option value="4">Pilihan ganda kompleks</option>
+                                              <option value="2">Essai</option>
+                                              <option value="3">Listening</option>
+                                          </select>
+                                        </div>
                                     </div>
                                     <div class="form-group" v-if="direction == '' && tipe_soal == 3">
                                         <label>File direction</label>
                                         <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="flaticon-sound"></i></span>
+                                            </div>
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" @change="handleFileUploadDirection">
                                                 <label class="custom-file-label">{{ labelDirection ? labelDirection : 'Pilih File...' }}</label>
@@ -81,6 +108,9 @@
                                     <div class="form-group" v-if="audio == ''">
                                         <label>File audio</label>
                                         <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="flaticon-sound"></i></span>
+                                            </div>
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" @change="handleFileUpload">
                                                 <label class="custom-file-label">{{ labelAudio ? labelAudio : 'Pilih File...' }}</label>
@@ -132,6 +162,7 @@ export default {
       correct: '',
       question : '',
       rujukan : '',
+      selected: [],
       pilihan: [],
       jmlh_pilihan: '',
       jmlh_pilihan_listening: '',
@@ -149,6 +180,7 @@ export default {
       direction: '',
       label: '',
       image: '',
+      show_opsi: true,
       editorConfig: {
         extraPlugins: 'sourcedialog',
         allowedContent: true,
@@ -195,9 +227,16 @@ export default {
         this.question = response.data.pertanyaan
         this.rujukan = response.data.rujukan
         this.tipe_soal = response.data.tipe_soal
-        this.data_soal = response.data.jawabans,
-        this.audio = (response.data.audio != null ? response.data.audio : ''),
+        this.data_soal = response.data.jawabans
+        this.audio = (response.data.audio != null ? response.data.audio : '')
         this.direction = (response.data.direction != null ? response.data.direction : '')
+        if(this.tipe_soal == 4) {
+          response.data.jawabans.map((item, index) => {
+            if(item.correct == "1") {
+              this.selected.push(index)
+            }
+          })
+        }
       })
     },
     postSoalBanksoal() {
@@ -226,6 +265,7 @@ export default {
             soal_id: this.$route.params.soal_id,
             audio: this.audio,
             rujukan: this.rujukan,
+            selected: this.selected,
             direction: this.direction
           }
         })
@@ -243,6 +283,41 @@ export default {
       this.label = e.target.files[0].name
       this.image = e.target.files[0]
     },
+    changeCheckbox(e, val) {
+      if (e.target.checked === false) {
+        let index = this.selected.indexOf(val)
+        if (index !== -1) {
+          this.selected.splice(index, 1)
+        }
+      } else {
+        this.selected.push(parseInt(e.target.value))
+      }
+    },
+    async removeOpsi(index){
+      this.show_opsi = false
+      const newdata = [...this.pilihan]
+      await newdata.splice(index,1)
+      this.pilihan = []
+      await this.pilihan.push(...newdata)
+      if(parseInt(this.tipe_soal) === 4) {
+        let idx = this.selected.indexOf(index)
+        if(idx > -1) {
+          this.selected.splice(idx, 1)
+        }
+        this.selected = this.selected.map((item) => {
+          if (item > index) {
+            return item-1
+          }
+          return item
+        })
+      }
+      this.show_opsi = true
+    },
+    addOpsi() {
+      this.pilihan.push("")
+      this.show_opsi = false
+      this.show_opsi = true
+    },
     uploadFile() {
       let formData = new FormData()
       formData.append('directory_id', this.banksoal.directory_id)
@@ -257,9 +332,10 @@ export default {
       })
     },
     clearForm() {
-      this.question.setContent(''),
-      this.rujukan.setContent(''),
-      this.correct = '',
+      this.question.setContent('')
+      this.rujukan.setContent('')
+      this.correct = ''
+      this.selected = []
       this.pilihan.forEach(function(item, index) {
         this.pilihan[index] = ''
       })

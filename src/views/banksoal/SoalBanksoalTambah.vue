@@ -30,15 +30,34 @@
                               </div>
                               <div class="card-body">
                                   <div class="table-responsive-md">
-                                      <table class="table table-borderless">
-                                          <tr v-for="(pilih, index) in pilihan">
+                                      <table class="table table-borderless" v-if="show_opsi">
+                                          <tr v-for="(pilih, index) in pilihan" :key="index">
                                               <td width="10px">
-                                                  <b-form-radio name="correct" size="lg" :value="index" v-model="correct" v-if="[1,3].includes(parseInt(tipe_soal))"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
-                                                  <b-form-checkbox size="lg" :value="index" v-if="4 == parseInt(tipe_soal)" @change="changeCheckbox($event, index)"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-checkbox>
+                                                  <b-form-radio name="correct" size="md" :value="index" v-model="correct" v-if="[1,3].includes(parseInt(tipe_soal))"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
+                                                  <div class="form-check" v-if="4 == parseInt(tipe_soal)">
+                                                    <input :checked="selected.includes(index)" :value="index" type="checkbox" class="form-check-input" @change="changeCheckbox($event, index)">
+                                                    <label class="form-check-label">
+                                                      <span class="text-uppercase">{{ index | charIndex }}</span>
+                                                    </label>
+                                                  </div>
                                               </td>
                                               <td>
-                                                  <ckeditor v-model="pilihan[index]" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                  <transition name="fade">
+                                                    <ckeditor v-model="pilihan[index]" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                  </transition>
                                               </td>
+                                              <td width="60px">
+                                                <button v-if="pilihan.length > 2" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
+                                                  <i class="flaticon-circle"></i>
+                                                </button>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="3">
+                                              <button class="btn btn-sm btn-outline-primary rounded-0" title="Tambah pilihan" @click="addOpsi">
+                                                <i class="flaticon-add"></i> tambah
+                                              </button>
+                                            </td>
                                           </tr>
                                       </table>
                                   </div>
@@ -160,7 +179,9 @@ export default {
       labelDirection: '',
       label: '',
       image: '',
+      show_opsi: true,
       editorConfig: {
+        autoGrow_maxHeight: 600,
         extraPlugins: 'sourcedialog',
         allowedContent: true,
         filebrowserUploadUrl: process.env.VUE_APP_API_SERVER+'/api/v1/file/upload?',
@@ -241,8 +262,11 @@ export default {
           direction: this.direction
         })
         .then((data) => {
-          this.$bvToast.toast('Soal berhasil disimpan.', successToas())
+          this.pilihan = this.pilihan.map((item) => {
+            return "<p></p>\n"
+          })
           this.clearForm()
+          this.$bvToast.toast('Soal berhasil disimpan.', successToas())
         })
         .catch((error) => {
           this.$bvToast.toast(error.message, errorToas())
@@ -254,13 +278,13 @@ export default {
       this.image = e.target.files[0]
     },
     changeCheckbox(e, val) {
-      if (e === false) {
+      if (e.target.checked === false) {
         let index = this.selected.indexOf(val)
         if (index !== -1) {
           this.selected.splice(index, 1)
         }
       } else {
-        this.selected.push(e)
+        this.selected.push(parseInt(e.target.value))
       }
     },
     uploadFile() {
@@ -275,14 +299,16 @@ export default {
       .catch((err) => {
         this.$bvToast.toast('Terjadi kesalahan saat upload file', errorToas())
       })
-    },    
+    },
+    addOpsi() {
+      this.pilihan.push("")
+      this.show_opsi = false
+      this.show_opsi = true
+    },
     clearForm() {
       this.question = ''
       this.rujukan = ''
       this.correct = ''
-      this.pilihan.forEach((item, index) => {
-        this.pilihan[index] = ''
-      })
       this.audio = ''
       this.labelAudio = ''
       this.fileAudio = ''
@@ -305,6 +331,26 @@ export default {
 
         this.pilihan.push(pilihan)
       }
+    },
+    async removeOpsi(index){
+      this.show_opsi = false
+      const newdata = [...this.pilihan]
+      await newdata.splice(index,1)
+      this.pilihan = []
+      await this.pilihan.push(...newdata)
+      if(parseInt(this.tipe_soal) === 4) {
+        let idx = this.selected.indexOf(index)
+        if(idx > -1) {
+          this.selected.splice(idx, 1)
+        }
+        this.selected = this.selected.map((item) => {
+          if (item > index) {
+            return item-1
+          }
+          return item
+        })
+      }
+      this.show_opsi = true
     },
     showImagePrompt(command) {
       this.$bvModal.show('modal-scoped')
