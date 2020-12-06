@@ -39,6 +39,6 @@ export default {
     @import "assets/plugins/flaticon2/flaticon.css";
 	@import "assets/plugins/flaticon/flaticon.css";
     .swal2-popup {
-        font-size: 0.7rem;
+        font-size: 0.7rem !important;
     }
 </style>
