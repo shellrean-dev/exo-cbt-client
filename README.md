@@ -70,7 +70,7 @@ For production environments...
 $ yarn build
 ```
 
-![Kumpulan soal](/screenshoot/1.png?raw=true "Tampilan kumpulan soal")
+![Kumpulan soal](/screenshoot/soal-banksoal.png?raw=true "Tampilan kumpulan soal")
 
 ### Development
 
