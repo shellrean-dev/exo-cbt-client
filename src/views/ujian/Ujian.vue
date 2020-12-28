@@ -316,9 +316,10 @@ export default {
 					acak_soal: false,
 					token: false,
 					list: [
-		                { name: "Listening", id: 3 },
 		                { name: "Pilihan ganda", id: 1 },
-		                { name: "Esay", id: 2 }
+		                { name: "Listening", id: 3 },
+                        { name: "Pilihan ganda kompleks", id: 4},
+		                { name: "Uraian", id: 2 },
 		            ],
 				}
 			},
@@ -417,9 +418,10 @@ export default {
 				acak_soal: false,
 				token: false,
 				list: [
-		      { name: "Listening", id: 3 },
-		      { name: "Pilihan ganda", id: 1 },
-		      { name: "Esay", id: 2 }
+    		        { name: "Pilihan ganda", id: 1 },
+                    { name: "Listening", id: 3 },
+                    { name: "Pilihan ganda kompleks", id: 4},
+                    { name: "Uraian", id: 2 },
 		    ],
 			}
 		},
