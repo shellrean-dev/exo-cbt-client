@@ -468,6 +468,34 @@ const actions = {
 			})
 		})
 	},
+	getLinkExcelCapaianSiswa({ commit }, payload) {
+		return new Promise(async(resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`ujians/${payload.ujian}/banksoal/${payload.banksoal}/capaian-siswa/link`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	getLinkExcelHasilUjian({ commit }, payload) {
+		return new Promise(async(resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`ujians/${payload.ujian}/result/link`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
 	removeUjian({ state, commit }, payload) {
 		commit('SET_LOADING', true, { root: true })
 		return new Promise(async(resolve, reject) => {
