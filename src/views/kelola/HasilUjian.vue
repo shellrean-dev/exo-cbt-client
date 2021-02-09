@@ -12,16 +12,10 @@
                             <div class="small text-muted">Filter dengan jadwal</div>
                         </div>
                         <div class="d-none d-md-block col-sm-7">
-                            <download-excel
-                                v-if="typeof hasils.data != 'undefined'"
-                                class="btn float-right btn-success btn-sm mx-1"
-                                :data = "hasils.data"
-                                :fields="json_fields"
-                                :name="'Hasil ujian_page_'+$store.state.ujian.page_hasil+'.xls'"
-                            >
+                            <button :disabled="isLoading" v-if="jadwal != 0" class="btn float-right btn-success btn-sm mx-1" @click="download">
                                 <i class="flaticon-download"></i>
                                 Download hasil ujian
-                            </download-excel>
+                            </button>
                         </div>
                     </div>
                     <div class="row" v-if="ujians">
@@ -76,6 +70,24 @@
                                             <td>Pilihan ganda</td>
                                             <td>
                                                 Salah {{ row.item.jumlah_salah }} : Benar {{ row.item.jumlah_benar }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pilihan ganda komplek</td>
+                                            <td>
+                                                Salah {{ row.item.jumlah_salah_complek }} : Benar {{ row.item.jumlah_benar_complek }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Isian singkat</td>
+                                            <td>
+                                                Salah {{ row.item.jumlah_salah_isian_singkat }} : Benar {{ row.item.jumlah_benar_isian_singkat }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Menjodohkan</td>
+                                            <td>
+                                                Salah {{ row.item.jumlah_salah_menjodohkan }} : Benar {{ row.item.jumlah_benar_menjodohkan }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -160,6 +172,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['isLoading']),
         ...mapState('ujian', { 
             ujians: state => state.ujianAll,
             hasils: state => state.hasilUjian
@@ -174,7 +187,27 @@ export default {
         }
     },
     methods: {
-        ...mapActions('ujian',['getAllUjians', 'getHasilUjian'])
+        ...mapActions('ujian',['getAllUjians', 'getHasilUjian','getLinkExcelHasilUjian']),
+        async download() {
+            if(!this.jadwal) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih ujian terlebih dahulu",
+                  icon: 'error',
+                })
+                return;
+            }
+
+            try {
+                let provider = await this.getLinkExcelHasilUjian({
+                    ujian: this.jadwal
+                })
+
+                window.open(provider.data, '_self')
+            } catch (error) {
+                this.$bvToast.toast(error.message, errorToas())
+            }
+        }
     },
     async created() {
         try {
