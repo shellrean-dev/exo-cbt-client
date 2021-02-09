@@ -23,7 +23,10 @@
 												<table class="table-sm">
 													<tr v-for="(opsi, index) in jawab.soal.jawabans">
 														<td width="20px"></td>
-														<td style="text-transform: uppercase;" :class="{ 'corect' : opsi.correct == '1' }"> {{ index | charIndex }} ) <i v-show="opsi.correct == '1'"  class="flaticon-star text-warning"></i> <i v-show="opsi.id == jawab.jawab" class="flaticon-add-label-button text-info"></i></td>
+														<td style="text-transform: uppercase;" :class="{ 'corect' : opsi.correct == '1' }"> {{ index | charIndex }} ) 
+															<i v-show="opsi.correct == '1'"  class="flaticon-star text-warning"></i> 
+															<i v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)" class="flaticon-add-label-button text-info"></i>
+														</td>
 														<td v-html="opsi.text_jawaban"></td>
 													</tr>
 													<tr v-if="jawab.soal.tipe_soal == '2'">
