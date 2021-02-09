@@ -57,16 +57,18 @@ export default {
         }),
     },
     methods: {
-        ...mapActions('ujian',['getCapaianSiswa', 'downloadExcel']),
+        ...mapActions('ujian',['getCapaianSiswa', 'downloadExcel', 'getLinkExcelCapaianSiswa']),
         print() {
             this.$htmlToPaper('printSoal');
         },
         async download() {
             try {
-                let network = await this.downloadExcel({ 
+                let provider = await this.getLinkExcelCapaianSiswa({
                     ujian: this.$route.params.jadwal,
                     banksoal: this.$route.params.banksoal 
                 })
+
+                console.log(provider)
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
