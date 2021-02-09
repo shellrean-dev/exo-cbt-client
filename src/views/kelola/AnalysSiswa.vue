@@ -73,7 +73,7 @@ export default {
         }),
     },
     methods: {
-        ...mapActions('ujian',['getAllUjians','getResultBanksoal', 'downloadExcel']),
+        ...mapActions('ujian',['getAllUjians','getResultBanksoal', 'downloadExcel','getLinkExcelCapaianSiswa']),
         capaian(jadwal, banksoal) {
             if(!jadwal || !banksoal) {
                 this.$swal({
@@ -103,10 +103,12 @@ export default {
                 return;
             }
             try {
-                let network = await this.downloadExcel({ 
+                let provider = await this.getLinkExcelCapaianSiswa({
                     ujian: this.jadwal,
                     banksoal: id
                 })
+
+                window.open(provider.data, '_self')
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
