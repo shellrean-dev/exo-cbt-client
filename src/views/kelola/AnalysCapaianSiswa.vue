@@ -68,7 +68,7 @@ export default {
                     banksoal: this.$route.params.banksoal 
                 })
 
-                console.log(provider)
+                window.open(provider.data, '_self')
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
