@@ -319,6 +319,8 @@ export default {
 		                { name: "Pilihan ganda", id: 1 },
 		                { name: "Listening", id: 3 },
                         { name: "Pilihan ganda kompleks", id: 4},
+                        { name: "Menjodohkan", id: 5},
+                        { name: "Isian Singkat", id: 6},
 		                { name: "Uraian", id: 2 },
 		            ],
 				}

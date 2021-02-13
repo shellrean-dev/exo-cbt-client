@@ -61,13 +61,14 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="flaticon-questions-circular-button"></i></span>
                                 </div>
-                                <select class="custom-select">
-                                    <option :value.int="10" selected>Pilihan ganda</option>
-                                    <option :value.int="30">Pilihan ganda kompleks</option>
-                                    <option :value.int="50">Listening</option>
-                                    <option :value.int="100">Menjodohkan</option>
-                                    <option :value.int="100">Isian singkat</option>
-                                    <option :value.int="100">Uraian</option>
+                                <select class="custom-select" v-model="tipe_soal">
+                                    <option value="" selected>Semua</option>
+                                    <option :value.int="1">Pilihan ganda</option>
+                                    <option :value.int="4">Pilihan ganda kompleks</option>
+                                    <option :value.int="3">Listening</option>
+                                    <option :value.int="5">Menjodohkan</option>
+                                    <option :value.int="6">Isian singkat</option>
+                                    <option :value.int="2">Uraian</option>
                                 </select>
                             </div>
                         </div>
@@ -100,13 +101,19 @@
                                 </div>
     					          <table class="table" v-if="row.item.jawabans != ''">
     					          	<tr v-for="(jawab, index) in row.item.jawabans" :key="index">
-                                        <td width="20px">
+                                        <td width="20px" v-if="[1,3,4].includes(row.item.tipe_soal)">
                                             <i class="flaticon2-correct text-success" v-show="jawab.correct == '1'"></i>
                                             <i class="flaticon2-hexagonal text-danger" v-show="jawab.correct == '0'"></i>
                                         </td>
-    					          		<td>
+    					          		<td v-if="[1,3,4].includes(row.item.tipe_soal)" >
     					          			<div v-html="jawab.text_jawaban"></div>
     					          		</td> 
+                                        <td v-if="row.item.tipe_soal == 5">
+                                            <div v-html="getTextParse(jawab.text_jawaban, 'a')"></div>
+                                        </td>
+                                        <td v-if="row.item.tipe_soal == 5">
+                                            <div v-html="getTextParse(jawab.text_jawaban, 'b')"></div>
+                                        </td>
     					          	</tr>
     					          </table>
                                   <table v-show="row.item.tipe_soal == 2 && row.item.rujukan != '<p></p>'">
@@ -180,7 +187,8 @@ export default {
             perPage: 10,
             pageOptions: [10, 25, 50],
 			search: '',
-            isBusy: true
+            isBusy: true,
+            tipe_soal: '',
 		}
 	},
 	computed: {
@@ -201,7 +209,7 @@ export default {
 	methods: {
 		...mapActions('soal',['getSoals','removeSoal']),
 		getAllSoal(payload) {
-			this.getSoals({ search: payload.search, perPage: payload.perPage, banksoal_id: this.$route.params.banksoal_id })
+			this.getSoals({ search: payload.search, perPage: payload.perPage, banksoal_id: this.$route.params.banksoal_id, type: payload.type })
             .then(() => {
                 this.isBusy = false
             })
@@ -229,19 +237,26 @@ export default {
             })
 		},
         tipeSoal(i) {
-            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks']
+            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan']
             return index[i-1]
+        },
+        getTextParse(text, v) {
+            const data = JSON.parse(text)
+            return data[v].text
         }
 	},
 	watch: {
         page() {
-            this.getAllSoal({ search: this.search, perPage: this.perPage })
+            this.getAllSoal({ search: this.search, perPage: this.perPage, type: this.tipe_soal })
         },
         search: _.debounce(function (value) {
-            this.getAllSoal({ search: this.search, perPage: this.perPage })
+            this.getAllSoal({ search: this.search, perPage: this.perPage, type: this.tipe_soal })
         }, 500),
         perPage() {
-            this.getAllSoal({ search: this.search, perPage: this.perPage })
+            this.getAllSoal({ search: this.search, perPage: this.perPage, type: this.tipe_soal })
+        },
+        tipe_soal() {
+            this.getAllSoal({ search: this.search, perPage: this.perPage, type: this.tipe_soal })
         }
     },
     destroyed() {

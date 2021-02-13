@@ -24,15 +24,15 @@
                                 <ckeditor v-model="rujukan" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                               </div>
                           </div>
-                          <div class="card rounded-0" v-if="[1,3,4].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
+                          <div class="card rounded-0" v-if="[1,3,4,5].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
                               <div class="card-header bg-white">
                                   <b><i class="flaticon-signs-1"></i> Pilihan</b>
                               </div>
                               <div class="card-body">
                                   <div class="table-responsive-md">
                                       <table class="table table-borderless" v-if="show_opsi">
-                                          <tr v-for="(pilih, index) in pilihan" :key="index">
-                                              <td width="10px">
+                                          <tr v-for="(pilih, index) in pilihan" :key="index" v-if="[1,2,3,4].includes(parseInt(tipe_soal))">
+                                              <td width="10px" v-if="[1,2,3,4].includes(parseInt(tipe_soal))">
                                                   <b-form-radio name="correct" size="md" :value="index" v-model="correct" v-if="[1,3].includes(parseInt(tipe_soal))"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
                                                   <div class="form-check" v-if="4 == parseInt(tipe_soal)">
                                                     <input :checked="selected.includes(index)" :value="index" type="checkbox" class="form-check-input" @change="changeCheckbox($event, index)">
@@ -48,6 +48,23 @@
                                               </td>
                                               <td width="60px">
                                                 <button v-if="pilihan.length > 2" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
+                                                  <i class="flaticon-circle"></i>
+                                                </button>
+                                              </td>
+                                          </tr>
+                                          <tr v-for="(pilih, index) in pairs" :key="index" v-if="tipe_soal == 5">
+                                              <td>
+                                                  <transition name="fade">
+                                                    <ckeditor v-model="pairs[index]['a']" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                  </transition>
+                                              </td>
+                                              <td>
+                                                  <transition name="fade">
+                                                    <ckeditor v-model="pairs[index]['b']" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                  </transition>
+                                              </td>
+                                              <td width="60px">
+                                                <button v-if="pairs.length > 2" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
                                                   <i class="flaticon-circle"></i>
                                                 </button>
                                               </td>
@@ -79,6 +96,7 @@
                                       <select class="form-control" v-model="tipe_soal">
                                           <option value="1">Pilihan ganda</option>
                                           <option value="4">Pilihan ganda kompleks</option>
+                                          <option value="5">Menjodohkan</option>
                                           <option value="2">Essai</option>
                                           <option value="3">Listening</option>
                                       </select>
@@ -164,6 +182,7 @@ export default {
       question : '',
       rujukan : '',
       pilihan: [],
+      pairs: [],
       selected: [],
       jmlh_pilihan: '',
       jmlh_pilihan_listening: '',
@@ -247,9 +266,15 @@ export default {
       else {
         this.SET_LOADING(true)
         let sender = []
-        this.pilihan.forEach(function(item) {
-          sender.push(item)
-        })
+        if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+          this.pilihan.forEach(function(item) {
+            sender.push(item)
+          })
+        } else if (this.tipe_soal == 5) {
+          this.pairs.forEach(function(item) {
+            sender.push(item)
+          })
+        }
         this.addSoalBanksoal({
           pertanyaan: this.question,
           rujukan: this.rujukan,
@@ -264,6 +289,9 @@ export default {
         .then((data) => {
           this.pilihan = this.pilihan.map((item) => {
             return "<p></p>\n"
+          })
+          this.pairs = this.pairs.map((item) => {
+            return {"a": "<p></p>\n", "b": "<p></p>\n"}
           })
           this.clearForm()
           this.$bvToast.toast('Soal berhasil disimpan.', successToas())
@@ -301,9 +329,14 @@ export default {
       })
     },
     addOpsi() {
-      this.pilihan.push("")
-      this.show_opsi = false
-      this.show_opsi = true
+      if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+        this.pilihan.push("")
+        this.show_opsi = false
+        this.show_opsi = true
+      } else if (this.tipe_soal == 5) {
+        let pair = {"a": "", "b": ""}
+        this.pairs.push(pair)
+      }
     },
     clearForm() {
       this.question = ''
@@ -321,36 +354,50 @@ export default {
       this.pilihan = []
       let i
       let jml = 0
-      if([1,4].includes(parseInt(this.tipe_soal))) {
+      if([1,4,5].includes(parseInt(this.tipe_soal))) {
         jml = this.jmlh_pilihan
       } else if(this.tipe_soal == 3) {
         jml = this.jmlh_pilihan_listening
       }
       for(i=0; i<jml; i++) {
         let pilihan = ''
-
-        this.pilihan.push(pilihan)
+        if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+          this.pilihan.push(pilihan)
+        } else if(this.tipe_soal == 5) {
+          let pair = {"a": "", "b": ""}
+          this.pairs.push(pair)
+        }
       }
     },
     async removeOpsi(index){
-      this.show_opsi = false
-      const newdata = [...this.pilihan]
-      await newdata.splice(index,1)
-      this.pilihan = []
-      await this.pilihan.push(...newdata)
-      if(parseInt(this.tipe_soal) === 4) {
-        let idx = this.selected.indexOf(index)
-        if(idx > -1) {
-          this.selected.splice(idx, 1)
-        }
-        this.selected = this.selected.map((item) => {
-          if (item > index) {
-            return item-1
+      if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+        this.show_opsi = false
+        const newdata = [...this.pilihan]
+        await newdata.splice(index,1)
+        this.pilihan = []
+        await this.pilihan.push(...newdata)
+        if(parseInt(this.tipe_soal) === 4) {
+          let idx = this.selected.indexOf(index)
+          if(idx > -1) {
+            this.selected.splice(idx, 1)
           }
-          return item
-        })
+          this.selected = this.selected.map((item) => {
+            if (item > index) {
+              return item-1
+            }
+            return item
+          })
+        }
+        this.show_opsi = true
+      } else if(this.tipe_soal == 5) {
+        this.show_opsi = false
+        const newdata = [...this.pairs]
+        await newdata.splice(index,1)
+        this.pairs = []
+        await this.pairs.push(...newdata)
+        
+        this.show_opsi = true
       }
-      this.show_opsi = true
     },
     showImagePrompt(command) {
       this.$bvModal.show('modal-scoped')

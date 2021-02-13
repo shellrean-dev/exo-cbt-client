@@ -25,14 +25,14 @@
                                         <ckeditor v-model="rujukan" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                                       </div>
                                   </div>
-                                  <div class="card rounded-0" v-if="[1,3,4].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
+                                  <div class="card rounded-0" v-if="[1,3,4,5].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
                                       <div class="card-header bg-white">
                                           <b><i class="flaticon-signs-1"></i> Pilihan</b>
                                       </div>
                                       <div class="card-body">
                                           <div class="table-responsive-md">
                                               <table class="table table-borderless" v-if="show_opsi">
-                                                  <tr v-for="(pilih, index) in pilihan">
+                                                  <tr v-for="(pilih, index) in pilihan" :key="index" v-if="[1,2,3,4].includes(parseInt(tipe_soal))">
                                                       <td width="10px">
                                                           <b-form-radio name="correct" size="lg" :value="index" v-if="[1,3].includes(parseInt(tipe_soal))" v-model="correct"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
                                                           <div class="form-check" v-if="4 == parseInt(tipe_soal)">
@@ -51,6 +51,23 @@
                                                 </button>
                                               </td>
                                                   </tr>
+                                                  <tr v-for="(pilih, index) in pairs" :key="index" v-if="tipe_soal == 5">
+                                              <td>
+                                                  <transition name="fade">
+                                                    <ckeditor v-model="pairs[index]['a']" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                  </transition>
+                                              </td>
+                                              <td>
+                                                  <transition name="fade">
+                                                    <ckeditor v-model="pairs[index]['b']" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                  </transition>
+                                              </td>
+                                              <td width="60px">
+                                                <button v-if="pairs.length > 2" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
+                                                  <i class="flaticon-circle"></i>
+                                                </button>
+                                              </td>
+                                          </tr>
                                                   <tr>
                                             <td colspan="3">
                                               <button class="btn btn-sm btn-outline-primary rounded-0" title="Tambah pilihan" @click="addOpsi">
@@ -78,6 +95,7 @@
                                           <select class="form-control" v-model="tipe_soal">
                                               <option value="1">Pilihan ganda</option>
                                               <option value="4">Pilihan ganda kompleks</option>
+                                              <option value="5">Menjodohkan</option>
                                               <option value="2">Essai</option>
                                               <option value="3">Listening</option>
                                           </select>
@@ -164,6 +182,7 @@ export default {
       rujukan : '',
       selected: [],
       pilihan: [],
+      pairs: [],
       jmlh_pilihan: '',
       jmlh_pilihan_listening: '',
       gambar_pilih: '',
@@ -251,9 +270,15 @@ export default {
       else {
         this.SET_LOADING(true)
         let sender = []
-        this.pilihan.forEach(function(item) {
-          sender.push(item)
-        })
+        if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+          this.pilihan.forEach(function(item) {
+            sender.push(item)
+          })
+        } else if (this.tipe_soal == 5) {
+          this.pairs.forEach(function(item) {
+            sender.push(item)
+          })
+        }
         this.updateSoalBanksoal({
           id: this.$route.params.soal_id,
           data: {
@@ -294,29 +319,44 @@ export default {
       }
     },
     async removeOpsi(index){
-      this.show_opsi = false
-      const newdata = [...this.pilihan]
-      await newdata.splice(index,1)
-      this.pilihan = []
-      await this.pilihan.push(...newdata)
-      if(parseInt(this.tipe_soal) === 4) {
-        let idx = this.selected.indexOf(index)
-        if(idx > -1) {
-          this.selected.splice(idx, 1)
-        }
-        this.selected = this.selected.map((item) => {
-          if (item > index) {
-            return item-1
+      if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+        this.show_opsi = false
+        const newdata = [...this.pilihan]
+        await newdata.splice(index,1)
+        this.pilihan = []
+        await this.pilihan.push(...newdata)
+        if(parseInt(this.tipe_soal) === 4) {
+          let idx = this.selected.indexOf(index)
+          if(idx > -1) {
+            this.selected.splice(idx, 1)
           }
-          return item
-        })
+          this.selected = this.selected.map((item) => {
+            if (item > index) {
+              return item-1
+            }
+            return item
+          })
+        }
+        this.show_opsi = true
+      } else if(this.tipe_soal == 5) {
+        this.show_opsi = false
+        const newdata = [...this.pairs]
+        await newdata.splice(index,1)
+        this.pairs = []
+        await this.pairs.push(...newdata)
+        
+        this.show_opsi = true
       }
-      this.show_opsi = true
     },
     addOpsi() {
-      this.pilihan.push("")
-      this.show_opsi = false
-      this.show_opsi = true
+      if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+        this.pilihan.push("")
+        this.show_opsi = false
+        this.show_opsi = true
+      } else if (this.tipe_soal == 5) {
+        let pair = {"a": "", "b": ""}
+        this.pairs.push(pair)
+      }
     },
     uploadFile() {
       let formData = new FormData()
@@ -342,12 +382,19 @@ export default {
     },
     initEditor() {
       this.pilihan = []
+      this.pairs = []
+
       this.data_soal.forEach((item,index) => {
-        let pilihan = item.text_jawaban
-        if(item.correct == "1") {
-          this.correct = index
+        if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+          let pilihan = item.text_jawaban
+          if(item.correct == "1") {
+            this.correct = index
+          }
+          this.pilihan.push(pilihan)
+        } else if(this.tipe_soal == 5) {
+          let pair = JSON.parse(item.text_jawaban)
+          this.pairs.push({"a": pair['a'].text, "b": pair['b'].text})
         }
-        this.pilihan.push(pilihan)
       })
     },
     showImagePrompt(command) {
