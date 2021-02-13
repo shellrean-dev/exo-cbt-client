@@ -105,7 +105,7 @@
                                             <i class="flaticon2-correct text-success" v-show="jawab.correct == '1'"></i>
                                             <i class="flaticon2-hexagonal text-danger" v-show="jawab.correct == '0'"></i>
                                         </td>
-    					          		<td v-if="[1,3,4].includes(row.item.tipe_soal)" >
+    					          		<td v-if="[1,3,4,6].includes(row.item.tipe_soal)" >
     					          			<div v-html="jawab.text_jawaban"></div>
     					          		</td> 
                                         <td v-if="row.item.tipe_soal == 5">
@@ -237,7 +237,7 @@ export default {
             })
 		},
         tipeSoal(i) {
-            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan']
+            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan', 'Isian singkat']
             return index[i-1]
         },
         getTextParse(text, v) {

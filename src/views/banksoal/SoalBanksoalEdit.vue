@@ -25,9 +25,10 @@
                                         <ckeditor v-model="rujukan" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                                       </div>
                                   </div>
-                                  <div class="card rounded-0" v-if="[1,3,4,5].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
+                                  <div class="card rounded-0" v-if="[1,3,4,5,6].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
                                       <div class="card-header bg-white">
-                                          <b><i class="flaticon-signs-1"></i> Pilihan</b>
+                                          <b v-if="[1,3,4,5].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Pilihan</b>
+                                          <b v-if="[6].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Jawaban</b>
                                       </div>
                                       <div class="card-body">
                                           <div class="table-responsive-md">
@@ -68,6 +69,18 @@
                                                 </button>
                                               </td>
                                           </tr>
+                                          <tr v-for="(pilih, index) in options" :key="index" v-if="tipe_soal == 6">
+                                              <td>
+                                                  <transition name="fade">
+                                                    <ckeditor v-model="options[index]" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
+                                                  </transition>
+                                              </td>
+                                              <td width="60px">
+                                                <button v-if="pairs.length > 1" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
+                                                  <i class="flaticon-circle"></i>
+                                                </button>
+                                              </td>
+                                          </tr>
                                                   <tr>
                                             <td colspan="3">
                                               <button class="btn btn-sm btn-outline-primary rounded-0" title="Tambah pilihan" @click="addOpsi">
@@ -96,6 +109,7 @@
                                               <option value="1">Pilihan ganda</option>
                                               <option value="4">Pilihan ganda kompleks</option>
                                               <option value="5">Menjodohkan</option>
+                                              <option value="6">Isian singkat</option>
                                               <option value="2">Essai</option>
                                               <option value="3">Listening</option>
                                           </select>
@@ -182,6 +196,7 @@ export default {
       rujukan : '',
       selected: [],
       pilihan: [],
+      options: [],
       pairs: [],
       jmlh_pilihan: '',
       jmlh_pilihan_listening: '',
@@ -278,6 +293,10 @@ export default {
           this.pairs.forEach(function(item) {
             sender.push(item)
           })
+        } else if (this.tipe_soal == 6) {
+          this.options.forEach(function(item) {
+            sender.push(item)
+          })
         }
         this.updateSoalBanksoal({
           id: this.$route.params.soal_id,
@@ -346,6 +365,14 @@ export default {
         await this.pairs.push(...newdata)
         
         this.show_opsi = true
+      } else if(this.tipe_soal == 6) {
+        this.show_opsi = false
+        const newdata = [...this.options]
+        await newdata.splice(index,1)
+        this.options = []
+        await this.options.push(...newdata)
+        
+        this.show_opsi = true
       }
     },
     addOpsi() {
@@ -356,6 +383,8 @@ export default {
       } else if (this.tipe_soal == 5) {
         let pair = {"a": "", "b": ""}
         this.pairs.push(pair)
+      } else if (this.tipe_soal == 6) {
+        this.options.push("")
       }
     },
     uploadFile() {
@@ -383,6 +412,7 @@ export default {
     initEditor() {
       this.pilihan = []
       this.pairs = []
+      this.options = []
 
       this.data_soal.forEach((item,index) => {
         if ([1,3,4].includes(parseInt(this.tipe_soal))) {
@@ -394,6 +424,8 @@ export default {
         } else if(this.tipe_soal == 5) {
           let pair = JSON.parse(item.text_jawaban)
           this.pairs.push({"a": pair['a'].text, "b": pair['b'].text})
+        } else if(this.tipe_soal == 6) {
+          this.options.push(item.text_jawaban)
         }
       })
     },
