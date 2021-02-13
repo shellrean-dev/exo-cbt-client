@@ -147,6 +147,8 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import { successToas, errorToas} from '@/entities/notif'
+
 export default {
   data() {
     return {
@@ -155,6 +157,7 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['loggedOut']),
+    ...mapActions('setting', ['getSettingSekolah']),
     async logout() {
       try {
         await this.loggedOut()
@@ -180,6 +183,13 @@ export default {
     currentPage() {
       return this.$route.name ? this.$route.name : [];
     }
+  },
+  async created() {
+    try {
+      await this.getSettingSekolah()
+    } catch (error) {
+      this.$bvToast.toast(error.message, errorToas())
+    }  
   }
 }
 </script>
