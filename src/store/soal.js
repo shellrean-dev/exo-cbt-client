@@ -34,9 +34,10 @@ const actions = {
 	getSoals({ commit, state }, payload) {
 		let search = typeof payload.search != 'undefined' ? payload.search : ''
         let perPage = typeof payload.perPage != 'undefined' ? payload.perPage : ''
+        let type = typeof payload.type != 'undefined' ? payload.type : ''
 		return new Promise(( resolve, reject ) =>  {
 			commit('SET_LOADING',true, { root: true })
-			$axios.get(`soals/banksoal/${payload.banksoal_id}?page=${state.page}&q=${search}&perPage=${perPage}`)
+			$axios.get(`soals/banksoal/${payload.banksoal_id}?page=${state.page}&q=${search}&perPage=${perPage}&t=${type}`)
 			.then((response) => {
 				commit('ASSIGN_DATA', response.data.data)
 				commit('SET_FROM_DATA', response.data.data.from)
