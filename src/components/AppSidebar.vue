@@ -172,7 +172,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['baseURL']),
+    ...mapGetters(['isAuth','baseURL']),
     ...mapState('user', {
       user: state => state.authenticated
     }),
@@ -185,11 +185,13 @@ export default {
     }
   },
   async created() {
-    try {
-      await this.getSettingSekolah()
-    } catch (error) {
-      this.$bvToast.toast(error.message, errorToas())
-    }  
+    if(this.isAuth) {
+      try {
+        await this.getSettingSekolah()
+      } catch (error) {
+        this.$bvToast.toast(error.message, errorToas())
+      }  
+    }
   }
 }
 </script>

@@ -60,7 +60,7 @@
                                                   </transition>
                                               </td>
                                               <td width="60px">
-                                                <button v-if="pairs.length > 1" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
+                                                <button v-if="options.length > 1" class="btn btn-sm btn-light rounded-0" title="Hapus pilihan" @click="removeOpsi(index)">
                                                   <i class="flaticon-circle"></i>
                                                 </button>
                                               </td>

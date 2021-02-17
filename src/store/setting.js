@@ -47,7 +47,7 @@ const actions = {
     getConfig({ commit }) {
         return new Promise(async(resolve, reject) => { 
             try {
-                if(process.env.VUE_APP_DYNAMIC_URL == true) {
+                if(process.env.VUE_APP_DYNAMIC_URL == "true") {
                     let netowrk = await axios.get('/static/config.json', {
                         headers: {
                             'Accept': 'application/json'

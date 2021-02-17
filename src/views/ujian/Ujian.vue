@@ -421,9 +421,11 @@ export default {
 				token: false,
 				list: [
     		        { name: "Pilihan ganda", id: 1 },
-                    { name: "Listening", id: 3 },
+		            { name: "Listening", id: 3 },
                     { name: "Pilihan ganda kompleks", id: 4},
-                    { name: "Uraian", id: 2 },
+                    { name: "Menjodohkan", id: 5},
+                    { name: "Isian Singkat", id: 6},
+		            { name: "Uraian", id: 2 },
 		    ],
 			}
 		},

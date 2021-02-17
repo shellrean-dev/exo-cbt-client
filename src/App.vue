@@ -14,7 +14,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import AppSidebar from '@/components/AppSidebar.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
@@ -31,6 +31,12 @@ export default {
         ...mapState(['token', 'loadPage']),
         ...mapGetters(['isAuth']),
     },
+    methods: {
+        ...mapActions('setting',['getConfig'])
+    },
+    async created() {
+        await this.getConfig()
+    }
 }
 </script>
 <style lang="scss">
