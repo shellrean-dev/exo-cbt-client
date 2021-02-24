@@ -120,7 +120,16 @@ const actions = {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {
             try {
-                let network = await $axios.put(`matpels/${payload}`, state.matpel)
+                const jurusan = (typeof state.matpel.jurusan_id == 'object' && state.matpel.jurusan_id.length == 0) ? 0 : state.matpel.jurusan_id
+                const matpel = {
+                    agama_id: state.matpel.agama_id,
+                    correctors: state.matpel.correctors,
+                    jurusan_id: jurusan,
+                    kode_mapel: state.matpel.kode_mapel,
+                    nama: state.matpel.nama,
+                }
+
+                let network = await $axios.put(`matpels/${payload}`, matpel)
 
                 commit('CLEAR_FORM')
                 commit('SET_LOADING',false, { root: true })
