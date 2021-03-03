@@ -1,6 +1,6 @@
 <template>
       <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 46px" alt="Logo"><img class="c-sidebar-brand-minimized" v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 46px" alt="Logo"></div>
+      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-height: 46px" alt="Logo"><img class="c-sidebar-brand-minimized" v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-height: 46px" alt="Logo"></div>
       <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" to="/"
