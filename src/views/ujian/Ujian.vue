@@ -64,7 +64,7 @@
                                         <table class="table table-bordered">
                                         	<tr>
                                         		<td width="150px">Event</td>
-                                        		<td>{{ typeof row.item.event != 'undefined' ? row.item.event.name : '-' }}</td>
+                                        		<td>{{ (typeof row.item.event != 'undefined' && row.item.event != null && row.item.event != '' ) ? row.item.event.name : '-' }}</td>
                                         	</tr>
                                         	<tr>
                                         		<td >Banksoal</td>
