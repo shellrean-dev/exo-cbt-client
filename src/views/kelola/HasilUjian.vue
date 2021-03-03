@@ -12,7 +12,7 @@
                             <div class="small text-muted">Filter dengan jadwal</div>
                         </div>
                         <div class="d-none d-md-block col-sm-7">
-                            <button :disabled="isLoading" v-if="jadwal != 0" class="btn float-right btn-success btn-sm mx-1" @click="download">
+                            <button :disabled="isLoading" v-if="jadwal != 0" class="btn float-right btn-success btn-sm mx-1" @click="$bvModal.show('modal-scoped-download-hasil-ujian')">
                                 <i class="flaticon-download"></i>
                                 Download hasil ujian
                             </button>
@@ -29,6 +29,20 @@
                               label-size="sm"
                             >
                                 <v-select label="alias" :options="ujians" v-model="jadwal" :reduce="nama => nama.id"></v-select>
+                            </b-form-group>
+                        </div>
+                    </div>
+                    <div class="row" v-if="jurusands">
+                        <div class="col-md-5">
+                            <b-form-group
+                              label="Jurusan"
+                              label-cols-sm="6"
+                              label-cols-md="4"
+                              label-cols-lg="3"
+                              label-align-sm="right"
+                              label-size="sm"
+                            >
+                                <v-select label="nama" :options="jurusands" v-model="jurusan_select" :reduce="nama => nama.id"></v-select>
                             </b-form-group>
                         </div>
                     </div>
@@ -132,6 +146,20 @@
                 </div>
             </div>
         </div>
+        <b-modal id="modal-scoped-download-hasil-ujian" hide-header>
+		    <div class="form-group">
+                <label>Jurusan</label>
+                <v-select label="nama" :options="jurusans" multiple v-model="jurusan_download" :reduce="nama => nama.id"></v-select>
+            </div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="primary" @click="download" :disabled="isLoading || jurusan_download == 0 || jurusan_download == '' || jurusan_download == null">
+		        {{ isLoading ? 'Processing...' : 'Download' }}
+		      </b-button>
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
     </div>
 </template>
 <script>
@@ -169,6 +197,8 @@ export default {
                 'Point esay' : 'point_esay',
                 'Hasil akhir' : 'hasil'
             },
+            jurusan_download: 0,
+            jurusan_select: 0
         }
     },
     computed: {
@@ -177,6 +207,7 @@ export default {
             ujians: state => state.ujianAll,
             hasils: state => state.hasilUjian
         }),
+        ...mapState('jurusan', { jurusans: state => state.all_jurusan }),
         page: {
             get() {
                 return this.$store.state.ujian.page_hasil
@@ -184,10 +215,19 @@ export default {
             set(val) {
                 this.$store.commit('ujian/SET_PAGE_HASIL', val)
             }
+        },
+        jurusands() {
+            if (this.jurusans == '') {
+                return []
+            }
+            const jurusan = this.jurusans;
+            jurusan.push({id: 0, nama: 'Semua'})
+            return jurusan
         }
     },
     methods: {
         ...mapActions('ujian',['getAllUjians', 'getHasilUjian','getLinkExcelHasilUjian']),
+        ...mapActions('jurusan',['allJurusan']),
         async download() {
             if(!this.jadwal) {
                 this.$swal({
@@ -200,9 +240,9 @@ export default {
 
             try {
                 let provider = await this.getLinkExcelHasilUjian({
-                    ujian: this.jadwal
+                    ujian: this.jadwal,
+                    jurusan: this.jurusan_download.join(',')
                 })
-
                 window.open(provider.data, '_self')
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
@@ -215,13 +255,29 @@ export default {
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
         }
+        this.allJurusan()
     },
     watch: {
         async jadwal(val) {
             if(val != 0) {
                 try {
                     await this.getHasilUjian({ 
-                        id: val, perPage: this.perPage 
+                        id: val, 
+                        jurusan: this.jurusan_select != '' ? this.jurusan_select : 0,
+                        perPage: this.perPage 
+                    })
+                } catch (error) {
+                    this.$bvToast.toast(error.message, errorToas())
+                }
+            }
+        },
+        async jurusan_select(v) {
+            if(v !== '' && v != null) {
+                try {
+                    await this.getHasilUjian({ 
+                        id: this.jadwal, 
+                        jurusan: v,
+                        perPage: this.perPage 
                     })
                 } catch (error) {
                     this.$bvToast.toast(error.message, errorToas())
@@ -231,6 +287,7 @@ export default {
         page() {
             this.getHasilUjian({
                 id: this.jadwal,
+                jurusan: this.jurusan_select,
                 perPage: this.perPage
             })
         }
