@@ -205,7 +205,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label>Point max</label>
+                            <label>Persen</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.persen.pilihan_ganda > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.persen.pilihan_ganda -= 1"><b>-</b></button>
@@ -251,7 +251,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label>Point max</label>
+                            <label>Persen</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.persen.pilihan_ganda_komplek > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.persen.pilihan_ganda_komplek -= 1"><b>-</b></button>
@@ -297,7 +297,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label>Point max</label>
+                            <label>Persen</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.persen.listening > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.persen.listening -= 1"><b>-</b></button>
@@ -342,7 +342,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label>Point max</label>
+                            <label>Persen</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.persen.menjodohkan > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.persen.menjodohkan -= 1"><b>-</b></button>
@@ -387,7 +387,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label>Point max</label>
+                            <label>Persen</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.persen.isian_singkat > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.persen.isian_singkat -= 1"><b>-</b></button>
@@ -432,7 +432,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label>Point max</label>
+                            <label>Persen</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" v-show="data.persen.esay > 0">
                                     <button class="btn btn-outline-secondary" type="button" @click="data.persen.esay -= 1"><b>-</b></button>
