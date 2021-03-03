@@ -144,6 +144,9 @@
 		    </template>
 		</b-modal>
 		<b-modal id="modal-sesi" noCloseOnBackdrop :title="current.name" size="lg">
+			<b-button size="sm" class="mb-2" variant="success" @click="copySesi" :disabled="isLoading">
+				Copy sesi dari default
+		    </b-button>
 			<div>
 				<b-tabs content-class="mt-3">
 					<b-tab title="Sesi 1" active lazy>
@@ -230,7 +233,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi']),
+		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi', 'copySesiFromDefault']),
 		close() {
 			this.$bvModal.hide('modal-scoped-event')
 			this.update = 0
@@ -289,6 +292,28 @@ export default {
                     })
                 }
             })
+		},
+		copySesi() {
+			this.$swal({
+                title: 'Informasi',
+                text: "Sesi yang telah di set akan digantikan oleh sesi default, anda masih bisa merubah sesi ini setelah penyalinan selesai.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c3c3c3',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+				if (result.value) {
+					this.copySesiFromDefault(this.current.ujian_id)
+					.then((res) => {
+                        this.$bvModal.hide('modal-sesi');
+                        this.$bvToast.toast('Sesi telah berhasil disalin dari default.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+				}
+			})	
 		},
 		aturSesi(id,name){
 			this.current.ujian_id = id
