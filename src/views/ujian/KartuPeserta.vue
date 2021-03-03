@@ -26,7 +26,7 @@
 													<tr>
 														<td style="width: 30px">
 															<img v-if="typeof sekolah.value != 'undefined'" 
-															:src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 46px" height="40">
+															:src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-height: 46px" height="40">
 														</td>
 														<td align="center">
 															<span class="upper"><b>KARTU LOGIN PESERTA</b></span><br> 
