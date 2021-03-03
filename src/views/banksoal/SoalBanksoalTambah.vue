@@ -160,11 +160,22 @@
                                         <b-button size="sm" variant="danger" @click="removeAudio" class="btn-icon"><i class="flaticon-circle"></i></b-button>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label>Tipe layout</label>
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <label class="input-group-text"><i class="flaticon2-layers"></i></label>
+                                      </div>
+                                      <select class="form-control" v-model="layout">
+                                          <option value="1">Jawaban kebawah</option>
+                                          <option value="2">Jawaban 2 kolom</option>
+                                      </select>
+                                    </div>
+                                </div>
                               </div>
                           </div>
                       </div>
                     </div>
-        
                 </div>
                 <div class="card-footer">
                     <b-button variant="primary" size="sm" :disabled="isLoading" @click.prevent="postSoalBanksoal">
@@ -214,6 +225,7 @@ export default {
       label: '',
       image: '',
       show_opsi: true,
+      layout: 1,
       editorConfig: {
         autoGrow_maxHeight: 600,
         extraPlugins: 'sourcedialog',
@@ -303,7 +315,8 @@ export default {
           selected: this.selected,
           tipe_soal: this.tipe_soal,
           audio: this.audio,
-          direction: this.direction
+          direction: this.direction,
+          layout: this.layout,
         })
         .then((data) => {
           this.pilihan = this.pilihan.map((item) => {

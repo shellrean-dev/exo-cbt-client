@@ -159,6 +159,18 @@
                                             <b-button size="sm" variant="danger" @click="removeAudio" class="btn-icon"><i class="flaticon-circle"></i></b-button>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                      <label>Tipe layout</label>
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <label class="input-group-text"><i class="flaticon2-layers"></i></label>
+                                        </div>
+                                        <select class="form-control" v-model="layout">
+                                            <option value="1">Jawaban kebawah</option>
+                                            <option value="2">Jawaban 2 kolom</option>
+                                        </select>
+                                      </div>
+                                  </div>
                         </div>
                     </div>
                     </div>
@@ -215,6 +227,7 @@ export default {
       label: '',
       image: '',
       show_opsi: true,
+      layout: 1,
       editorConfig: {
         extraPlugins: 'sourcedialog',
         allowedContent: true,
@@ -264,6 +277,7 @@ export default {
         this.data_soal = response.data.jawabans
         this.audio = (response.data.audio != null ? response.data.audio : '')
         this.direction = (response.data.direction != null ? response.data.direction : '')
+        this.layout = response.data.layout
         if(this.tipe_soal == 4) {
           response.data.jawabans.map((item, index) => {
             if(item.correct == "1") {
@@ -310,7 +324,8 @@ export default {
             audio: this.audio,
             rujukan: this.rujukan,
             selected: this.selected,
-            direction: this.direction
+            direction: this.direction,
+            layout: this.layout
           }
         })
         .then((data) => {
