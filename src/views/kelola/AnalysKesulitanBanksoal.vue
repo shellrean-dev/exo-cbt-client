@@ -18,9 +18,10 @@
                                                     <td width="20px">{{ index+1 }}.</td>
                                                     <td v-html="soal.soal"></td>
                                                 </tr>
-                                                <tr v-for="jawaban in soal.jawaban">
+                                                <tr v-for="jawaban in soal.jawaban" :key="jawaban.id">
                                                     <td>
-                                                        <i class="flaticon-star text-warning" v-show="jawaban.iscorrect == 1"></i>
+                                                        <!-- <i class="flaticon-star text-warning" v-show="jawaban.iscorrect == 1"></i> -->
+                                                        <StarFillineYellow style="height:15px;" v-show="jawaban.iscorrect == 1"></StarFillineYellow>
                                                     </td>
                                                     <td>
                                                         <div v-html="jawaban.text"></div>
@@ -66,11 +67,13 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 import { GChart } from 'vue-google-charts'
 import { successToas, errorToas} from '@/entities/notif'
+import StarFillineYellow from '@/components/icon/StarFillineYellow'
 
 export default {
     name: 'SoalBanksoal',
     components: {
-        GChart
+        GChart,
+        StarFillineYellow
     },
     computed: {
         ...mapGetters(['isLoading']),
