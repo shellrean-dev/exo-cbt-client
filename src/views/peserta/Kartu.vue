@@ -25,7 +25,7 @@
 											<td colspan="3" style="border-bottom:1px solid #666; padding: 0;">
 												<table width="100%" class="kartu">
 												<tr>
-													<td style="width: 30px"><img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 46px" height="40"></td>
+													<td style="width: 30px"><img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-height: 46px" height="40"></td>
 													<td align="center" style="font-weight:bold; padding: 4px;">
 														<span class="upper">Kartu Login</span><br> 
 														<span class="upper">{{ event }}</span>
