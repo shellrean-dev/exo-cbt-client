@@ -420,7 +420,7 @@ const actions = {
 
 		return new Promise((resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.get(`ujians/${payload.id}/result?page=${state.page_hasil}&perPage=${perPage}`)
+			$axios.get(`ujians/${payload.id}/result?jurusan=${payload.jurusan}&page=${state.page_hasil}&perPage=${perPage}`)
 			.then((response) => {
 				commit('ASSIGN_HASIL_UJIAN', response.data.data)
 				commit('SET_LOADING', false, { root: true })
@@ -486,7 +486,7 @@ const actions = {
 		return new Promise(async(resolve, reject) => {
 			try {
 				commit('SET_LOADING', true, { root: true })
-				let network = await $axios.get(`ujians/${payload.ujian}/result/link`)
+				let network = await $axios.get(`ujians/${payload.ujian}/result/link?q=${payload.jurusan}`)
 
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
@@ -546,6 +546,20 @@ const actions = {
 				let network = await $axios.get(`ujians/hasil/${payload}`)
 
 				commit('ASSIGN_JAWABAN_SISWA', network.data.data)
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	addMoreTimeUjianSiswa({ commit }, payload) {
+		return new Promise(async(resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.post(`ujians/peserta/add-more-time`, payload)
+
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
 			} catch (error) {
