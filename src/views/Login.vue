@@ -1,12 +1,12 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container-fluid mx-auto">
     <div class="row" style="height: 100vh">
-      <div class="col-md-6 h-100">
+      <div class="col-md-6 col-lg-8 h-100">
         <div class="row h-100 justify-content-center align-items-center  mx-auto">
-          <img src="/img/bg2.svg" class="d-none d-sm-block" style="width: 100%;">
+          <img src="/img/bg2.svg" class="d-none d-sm-block" style="width: 100%; max-width:400px;">
         </div>
       </div> 
-      <div class="col-md-6 bg-white shadow-sm h-100">
+      <div class="col-md-6 col-lg-4 bg-white shadow-sm h-100">
         <div class="row h-100 justify-content-center align-items-center">
           <div>
             <div >
