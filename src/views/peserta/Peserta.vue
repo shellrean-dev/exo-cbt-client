@@ -80,7 +80,7 @@
                                 	<div class="table-responsive-md">
                                 	<table class="table table-striped">
                                 		<tr>
-                                			<td>Password</td>
+                                			<td width="150px">Password</td>
                                 			<td>{{ row.item.password }}</td>
                                 		</tr>
                                 		<tr>
@@ -91,6 +91,10 @@
                                 			<td>Jurusan</td>
                                 			<td>{{ row.item.jurusan.nama }}</td>
                                 		</tr>
+                                        <tr>
+                                            <td>Sesi default</td>
+                                            <td>{{ row.item.sesi }}</td>
+                                        </tr>
                                 	</table>
                                 	</div>
                                 </b-card>
@@ -159,7 +163,6 @@ export default {
 		return {
 			fields: [
 				{ key: 'show_details', label: 'Detail' },
-				{ key: 'sesi', label: 'Sesi' },
 				{ key: 'no_ujian', label: 'No ujian' },
 				{ key: 'nama', label: 'Nama peserta' },
 				{ key: 'actions', label: 'Aksi' }
