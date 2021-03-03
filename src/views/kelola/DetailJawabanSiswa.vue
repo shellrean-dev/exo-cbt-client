@@ -4,12 +4,13 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'kelola.hasil.ujian' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
+					<button class="btn float-right btn-primary btn-sm mx-1" @click="print" :disabled="isLoading">Print</button>
                 </div>
-                <div class="card-body back" id="printSoal">
+                <div class="card-body back" id="printDetailJawaban">
                 	<div class="paper">
                 		<div class="table-responsive-md">
                 		<table class="table table-sm">
-							<tr v-for="(jawab, index) in jawaban">
+							<tr v-for="(jawab, index) in jawaban" :key="jawab.id">
 								<td>
 									<div class="table-responsive-md">
 									<table class="table-sm table-mx table-borderless">
@@ -21,11 +22,13 @@
 											<td colspan="2">
 												<div class="table-responsive-md">
 												<table class="table-sm">
-													<tr v-for="(opsi, index) in jawab.soal.jawabans">
+													<tr v-for="(opsi, index) in jawab.soal.jawabans" :key="opsi.id">
 														<td width="20px"></td>
 														<td style="text-transform: uppercase;" :class="{ 'corect' : opsi.correct == '1' }"> {{ index | charIndex }} ) 
-															<i v-show="opsi.correct == '1'"  class="flaticon-star text-warning"></i> 
-															<i v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)" class="flaticon-add-label-button text-info"></i>
+															<!-- <i v-show="opsi.correct == '1'"  class="flaticon-star text-warning"></i>  -->
+															<StarFillineYellow style="height:15px;" v-show="opsi.correct == '1'"></StarFillineYellow>
+															<!-- <i v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)" class="flaticon-add-label-button text-info"></i> -->
+															<TagIcon style="height:15px;" v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)"></TagIcon>
 														</td>
 														<td v-html="opsi.text_jawaban"></td>
 													</tr>
@@ -49,7 +52,7 @@
                 </div>
 				<div class="card-footer">
 					<span><i class="flaticon-star text-warning"></i> Kunci jawaban</span><br />
-					<span><i class="flaticon-add-label-button text-info"></i> Jawaban siswa</span>
+					<span><i class="flaticon-add-label-button text-success"></i> Jawaban siswa</span>
 				</div>
             </div>
         </div>
@@ -58,16 +61,26 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
+import StarFillineYellow from '@/components/icon/StarFillineYellow'
+import TagIcon from '@/components/icon/TagIcon'
 
 export default {
 	name: 'DetailJawabanSiswa',
+	components: {
+		StarFillineYellow,
+		TagIcon
+	},
 	computed: {
+		...mapGetters(['isLoading']),
 		...mapState('ujian', {
 			jawaban: state => state.detailJawabanSiswa
 		})
 	},
 	methods: {
-		...mapActions('ujian',['getDetailJawabanSiswa'])
+		...mapActions('ujian',['getDetailJawabanSiswa']),
+		print() {
+            this.$htmlToPaper('printDetailJawaban');
+        }
 	},
 	filters: {
         charIndex(i) {
