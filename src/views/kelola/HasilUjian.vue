@@ -220,7 +220,7 @@ export default {
             if (this.jurusans == '') {
                 return []
             }
-            const jurusan = this.jurusans;
+            const jurusan = this.jurusans.map((item) => item);
             jurusan.push({id: 0, nama: 'Semua'})
             return jurusan
         }
