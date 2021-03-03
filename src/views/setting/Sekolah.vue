@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex mb-3">
-                        <img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.ico'" style="max-height: 66px">
+                        <img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-height: 66px">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
