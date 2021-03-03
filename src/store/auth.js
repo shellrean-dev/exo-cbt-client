@@ -55,10 +55,12 @@ const actions = {
     loggedOut({ commit }, payload) {
         return new Promise(async (resolve, reject) => {
             try {
+                commit('LOADING_PAGE', true, { root: true })
                 let network = await $axios.get('logout')
-
+                commit('LOADING_PAGE', false, { root: true })
                 resolve(network.data)
             } catch (error) {
+                commit('LOADING_PAGE', false, { root: true })
                 reject(error.response.data)
             }
         })
