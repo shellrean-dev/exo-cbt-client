@@ -12,7 +12,6 @@
 						    <router-link :to="{ name: 'filemedia.directory', params: { 'directory_id' : directory.id } }">{{ directory.name }}</router-link> 
 						    <div>
 								<b-badge class="mr-1">{{ directory.file_count }}</b-badge>
-								<b-badge variant="primary">{{ bytesToSize(directory.size) }}</b-badge>
 						    </div>
 						  </b-list-group-item>
 						</b-list-group>
