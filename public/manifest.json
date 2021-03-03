@@ -1,28 +1,21 @@
 {
     "name":"ExtraordinaryCBT",
     "short_name":"ExtraordinaryCBT",
-    "theme_color":"#5800e7",
+    "theme_color":"#4263f5",
     "icons":[
-        {"src":"/img/icon/android-icon-192x192-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"192x192"},
-        {"src":"/img/icon/apple-icon-180x180-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"180x180"},
-        {"src":"/img/icon/apple-icon-152x152-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"152x152"},
-        {"src":"/img/icon/apple-icon-144x144-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"144x144"},
-        {"src":"/img/icon/apple-icon-120x120-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"120x120"},
-        {"src":"/img/icon/apple-icon-114x114-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"114x114"},
-        {"src":"/img/icon/favicon-96x96-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"96x96"},
-        {"src":"/img/icon/apple-icon-76x76-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"76x76"},
-        {"src":"/img/icon/apple-icon-72x72-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"72x72"},
-        {"src":"/img/icon/apple-icon-60x60-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"60x60"},
-        {"src":"/img/icon/apple-icon-57x57-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"57x57"},
-        {"src":"/img/icon/favicon-32x32-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"32x32"},
-        {"src":"/img/icon/favicon-16x16-dunplab-manifest-3413.ico","type":"image/x-icon","sizes":"16x16"}
+        {"src": "/img/icon/android-icon-36x36.png", "sizes": "36x36","type": "image/png","density": "0.75" },
+        {"src": "/img/icon/android-icon-48x48.png", "sizes": "48x48","type": "image/png","density": "1.0" },
+        {"src": "/img/icon/android-icon-72x72.png", "sizes": "72x72","type": "image/png","density": "1.5" },
+        {"src": "/img/icon/android-icon-96x96.png", "sizes": "96x96","type": "image/png","density": "2.0" },
+        {"src": "/img/icon/android-icon-144x144.png", "sizes": "144x144", "type": "image/png","density": "3.0" },
+        {"src": "/img/icon/android-icon-192x192.png", "sizes": "192x192", "type": "image/png", "density": "4.0" }
     ],
     "start_url":".",
     "display":"standalone",
-    "background_color":"#5800e7",
+    "background_color":"#ffffff",
     "lang":"en",
     "description":"Application for student's exam",
     "dir":"ltr",
-    "orientation":"any",
+    "orientation":"potrait",
     "prefer_related_applications":false
 }
