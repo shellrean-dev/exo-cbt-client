@@ -4,7 +4,7 @@
         :is-full-page="true" :loader="'bars'" :color="'#1f1498'"></loading>
 
         <app-sidebar v-show="isAuth"/>
-        <div class="c-wrapper">
+        <div :class="{ 'c-wrapper' : isAuth }">
             <app-header v-if="isAuth" />
             <transition name="fade" mode="out-in">
                 <router-view />
