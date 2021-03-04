@@ -32,7 +32,7 @@
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="banksoals" show-empty>
                             <template v-slot:cell(actions)="row">
-                                <b-button :disabled="isLoading" variant="success" size="sm" @click="download(row.item.id)">
+                                <b-button :disabled="isLoading" variant="success" size="sm" @click="banksoal_id = row.item.id; $bvModal.show('modal-scoped-download-capaian-ujian')">
                                     <i class="flaticon-download"></i> Download
                                 </b-button>
                             </template>
@@ -41,6 +41,20 @@
                 </div>
             </div>
         </div>
+        <b-modal id="modal-scoped-download-capaian-ujian" hide-header>
+		    <div class="form-group">
+                <label>Jurusan</label>
+                <v-select label="nama" :options="jurusans" multiple v-model="jurusan_download" :reduce="nama => nama.id"></v-select>
+            </div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="primary" @click="download" :disabled="isLoading || jurusan_download == 0 || jurusan_download == '' || jurusan_download == null">
+		        {{ isLoading ? 'Processing...' : 'Download' }}
+		      </b-button>
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
     </div>
 </template>
 <script>
@@ -62,7 +76,10 @@ export default {
                 { key: 'kode_banksoal', label: 'Kode banksoal' },
                 { key: 'actions', label: 'Aksi' }
             ],
-            jadwal: 0
+            jadwal: 0,
+            jurusan_download: 0,
+            jurusan_select: 0,
+            banksoal_id: 0,
         }
     },
     computed: {
@@ -71,9 +88,19 @@ export default {
             banksoals: state => state.banksoals,
             ujians: state => state.ujianAll
         }),
+        ...mapState('jurusan', { jurusans: state => state.all_jurusan }),
+        jurusands() {
+            if (this.jurusans == '') {
+                return []
+            }
+            const jurusan = this.jurusans.map((item) => item);
+            jurusan.push({id: 0, nama: 'Semua'})
+            return jurusan
+        }
     },
     methods: {
         ...mapActions('ujian',['getAllUjians','getResultBanksoal', 'downloadExcel','getLinkExcelCapaianSiswa']),
+        ...mapActions('jurusan',['allJurusan']),
         capaian(jadwal, banksoal) {
             if(!jadwal || !banksoal) {
                 this.$swal({
@@ -93,7 +120,7 @@ export default {
                 name: 'kelola.analys.capaian.siswa.data' 
             })
         },
-        async download(id) {
+        async download() {
             if(!this.jadwal) {
                 this.$swal({
                   title: 'Hei!!',
@@ -105,7 +132,8 @@ export default {
             try {
                 let provider = await this.getLinkExcelCapaianSiswa({
                     ujian: this.jadwal,
-                    banksoal: id
+                    banksoal: this.banksoal_id,
+                    jurusan: this.jurusan_download.join(',')
                 })
 
                 window.open(provider.data, '_self')
@@ -117,6 +145,7 @@ export default {
     async created() {
         try {
             await this.getAllUjians()
+            await this.allJurusan()
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
         }
