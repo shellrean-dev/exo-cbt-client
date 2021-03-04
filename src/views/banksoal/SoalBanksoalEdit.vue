@@ -171,6 +171,11 @@
                                         </select>
                                       </div>
                                   </div>
+                                  <div>
+                                  <img style="max-width:200px;" src="/img/layout/layout-1.svg" v-show="layout == 1" />
+                                  <img style="max-width:200px;" src="/img/layout/layout-2.svg" v-show="layout == 2" />
+                                  <img style="max-width:200px;" src="/img/layout/layout-3.svg" v-show="layout == 3" />
+                                </div>
                         </div>
                     </div>
                     </div>
