@@ -1,0 +1,13 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>Layer 1</title>
+  <rect rx="20" id="svg_1" height="146" width="749" y="52.5" x="27.5" opacity="undefined" stroke="#000" fill="#f4f9f9"/>
+  <rect stroke="#000" rx="9" id="svg_2" height="32" width="749" y="215.5" x="26.5" opacity="undefined" fill="#fff"/>
+  <rect rx="9" id="svg_3" height="29" width="749" y="264.5" x="27.5" opacity="undefined" stroke-opacity="null" stroke-dasharray="null" stroke-width="null" stroke="#000" fill="#f4f9f9"/>
+  <rect rx="9" id="svg_4" height="29" width="749" y="307.5" x="28.5" opacity="undefined" stroke-opacity="null" stroke-dasharray="null" stroke-width="null" stroke="#000" fill="#f4f9f9"/>
+  <rect rx="9" id="svg_5" height="29" width="749" y="349.5" x="27.5" opacity="undefined" stroke-opacity="null" stroke-dasharray="null" stroke-width="null" stroke="#000" fill="#f4f9f9"/>
+  <rect rx="9" id="svg_6" height="29" width="749" y="390.5" x="27.5" opacity="undefined" stroke-opacity="null" stroke-dasharray="null" stroke-width="null" stroke="#000" fill="#f4f9f9"/>
+  <rect rx="9" id="svg_7" height="29" width="749" y="437.5" x="27.5" opacity="undefined" stroke-opacity="null" stroke-dasharray="null" stroke-width="null" stroke="#000" fill="#f4f9f9"/>
+ </g>
+</svg>
