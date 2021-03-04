@@ -10,7 +10,7 @@
                 	<div class="paper">
                 		<div class="table-responsive-md">
                 		<table class="table table-sm">
-							<tr v-for="(soal, index) in soals">
+							<tr v-for="(soal, index) in soals" :key="soal.id">
 								<td>
 									<div class="table-responsive-md">
 									<table class="table-sm table-mx table-borderless">
@@ -22,9 +22,11 @@
 											<td colspan="2">
 												<div class="table-responsive-md">
 												<table class="table-sm">
-													<tr v-for="(jawaban, index) in soal.jawabans">
+													<tr v-for="(jawaban, index) in soal.jawabans" :key="jawaban.id">
 														<td width="20px"></td>
-														<td style="text-transform: uppercase;" :class="{ 'corect' : jawaban.correct == '1' }"> {{ index | charIndex }} ) <i v-show="jawaban.correct == '1'"  class="flaticon-star text-warning"></i> </td>
+														<td style="text-transform: uppercase;" :class="{ 'corect' : jawaban.correct == '1' }"> {{ index | charIndex }} )
+															<StarFillineYellow style="height:15px;" v-show="jawaban.correct == '1'"></StarFillineYellow>
+														</td>
 														<td v-html="jawaban.text_jawaban"></td>
 													</tr>
 												</table>
@@ -46,9 +48,13 @@
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex'
 	import { successToas, errorToas} from '@/entities/notif'
+	import StarFillineYellow from '@/components/icon/StarFillineYellow'
 
 	export default {
 		name: 'SoalBanksoal',
+		components: {
+			StarFillineYellow
+		},
 		created() {
 			this.getAllSoalPaper()
 		},
