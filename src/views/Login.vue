@@ -25,7 +25,7 @@
                           <i class="flaticon-email"></i>
                         </span>
                       </div>
-                      <input class="form-control" :class="{ 'is-invalid' : errors.email }" type="email" placeholder="Email" v-model="data.email">
+                      <input class="form-control" :class="{ 'is-invalid' : errors.email }" type="email" placeholder="Email" v-model="data.email" required>
                       <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
                     </div>
                     <div class="input-group mb-4">
@@ -34,7 +34,7 @@
                           <i class="flaticon-lock"></i>
                         </span>
                       </div>
-                      <input class="form-control" :class="{ 'is-invalid' : errors.password }" type="password" placeholder="Password" v-model="data.password">
+                      <input class="form-control" :class="{ 'is-invalid' : errors.password }" type="password" placeholder="Password" v-model="data.password" required>
                       <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
                     </div>
                     <b-button :variant="isLoading ? 'secondary' : 'dark'" class="mr-1" :disabled="isLoading" type="submit">
