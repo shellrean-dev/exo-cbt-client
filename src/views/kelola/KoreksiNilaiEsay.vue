@@ -32,13 +32,13 @@
                                             <tr>
                                                 <td width="150px">Pertanyaan</td>
                                                 <td>
-                                                    <div v-html="row.item.pertanyaan.pertanyaan"></div>
+                                                    <div v-html="row.item.pertanyaan"></div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td >Jawaban rujukan</td>
                                                 <td>
-                                                    <div v-html="row.item.pertanyaan.rujukan"></div>
+                                                    <div v-html="row.item.rujukan"></div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -51,7 +51,7 @@
                                                 <td>Point</td>
                                                 <td>
                                                     <div class="input-group" style="max-width: 240px">
-                                                        <input type="number" v-model.number="val" class="form-control border-primary" :class="{'is-invalid': val > 1 || val < 0 }" placeholder="Point" step="0.1" max="1" min="0">
+                                                        <input type="number" v-model.number="row.item.val" class="form-control border-primary" :class="{'is-invalid': row.item.val > 1 || row.item.val < 0 }" placeholder="Point" step="0.1" max="1" min="0">
                                                         <div class="input-group-append">
                                                             <button class="btn btn-primary" type="button" @click="submitNilai(row.item.id)" :disabled="isLoading">Submit</button>
                                                         </div>
@@ -96,7 +96,6 @@ export default {
         return {
             fields: [
                 { key: 'show_details', label: 'Detail' },
-                { key: 'akurasi', label: 'Akurasi jawaban' }
             ],
             val: 0
         }
@@ -116,27 +115,34 @@ export default {
     methods: {
         ...mapActions('ujian',['getExistsByBanksoal', 'submitNilaiEsay']),
         submitNilai(id) {
-            if(this.val > 1 ) {
-                this.$swal({
-                    title: 'Error',
-                    text: 'Point tidak boleh lebih dari 1 (0, 0.1, 0.2, 0.3 .... 1)',
-                    icon: 'error'
-                })
-                return;
+            const idx = this.esies.data.map((item) => item.id).indexOf(id)
+            if (idx == -1) {
+                return
             }
+            const data = this.esies.data[idx]
+            if (data) {
+                if(data.val > 1 ) {
+                    this.$swal({
+                        title: 'Error',
+                        text: 'Point tidak boleh lebih dari 1 (0, 0.1, 0.2, 0.3 .... 1)',
+                        icon: 'error'
+                    })
+                    return;
+                }
 
-            this.submitNilaiEsay({
-                id: id,
-                val: this.val
-            })
-            .then((res) => {
-                this.val = 0;
-                this.getExistsByBanksoal(this.$route.params.banksoal)
-                this.$bvToast.toast('Nilai berhasil disubmit.', successToas())
-            })
-            .catch((error) => {
-                this.$bvToast.toast(error.message, errorToas())
-            })
+                this.submitNilaiEsay({
+                    id: data.id,
+                    val: data.val
+                })
+                .then((res) => {
+                    this.val = 0;
+                    this.getExistsByBanksoal(this.$route.params.banksoal)
+                    this.$bvToast.toast('Nilai berhasil disubmit.', successToas())
+                })
+                .catch((error) => {
+                    this.$bvToast.toast(error.message, errorToas())
+                })
+            }
         }
     },
     async created() {
