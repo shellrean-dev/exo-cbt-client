@@ -68,6 +68,9 @@ const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa')
 const HasilUjian = () => import('@/views/kelola/HasilUjian')
 const DetailJawabanSiswa = () => import('@/views/kelola/DetailJawabanSiswa')
 
+import GroupIndex from '@/views/grup/Index'
+const DataGrup = () => import('@/views/grup/Grup')
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -411,6 +414,18 @@ const routes = [
         name: 'kelola.hasil.ujian.siswa',
         component: DetailJawabanSiswa,
         meta: { title: 'Detail jawaban siswa'}
+      }
+    ]
+  },
+  {
+    path: '/grup',
+    component: GroupIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'grup.data',
+        component: DataGrup
       }
     ]
   }
