@@ -143,7 +143,7 @@
 		      </b-button>
 		    </template>
 		</b-modal>
-		<b-modal id="modal-sesi" noCloseOnBackdrop :title="current.name" size="lg">
+		<b-modal id="modal-sesi" noCloseOnBackdrop :title="current.name" size="xl">
 			<b-button size="sm" class="mb-2" variant="success" @click="copySesi" :disabled="isLoading">
 				Copy sesi dari default
 		    </b-button>
