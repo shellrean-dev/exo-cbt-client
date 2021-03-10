@@ -47,6 +47,12 @@
                 <span class="c-sidebar-nav-icon"></span> User
               </router-link>
             </li>
+            <li class="c-sidebar-nav-item" >
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'grup.data' }"
+              :class="[currentPage.includes('grup.data') ? activeClass : '']"> 
+                <span class="c-sidebar-nav-icon"></span> Grup
+              </router-link>
+            </li>
           </ul>
         </li>
         
@@ -133,6 +139,12 @@
           <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.hasil.ujian' }"
           :class="[currentPage.includes('kelola.hasil.ujian') ? activeClass : '']">
             <i class="mr-3 flaticon-folder"></i>Hasil ujian
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'system.setting' }"
+          :class="[currentPage.includes('ksystem.setting') ? activeClass : '']">
+            <i class="mr-3 flaticon-settings-1"></i>Setting
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
