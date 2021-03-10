@@ -16,14 +16,11 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right pt-0">
                     <div class="dropdown-header bg-light py-2"><strong>{{ authenticated.name }}</strong></div>
-                    <router-link class="dropdown-item" :to="{ name: 'system.setting' }">
-                        <i class="flaticon-settings-1"></i>&nbsp;&nbsp;Setting
-                    </router-link>
-                    <a class="dropdown-item" href="#" v-b-modal.modal-profile >
-                        <i class="flaticon-lock"></i> &nbsp; Ubah password
+                    <a class="dropdown-item d-flex" href="#" v-b-modal.modal-profile >
+                        <i class="flaticon-lock mr-1"></i> &nbsp; Ubah password
                     </a>
-                    <a class="dropdown-item" href="#" @click.prevent="logout">
-                        <i class="flaticon-logout"></i> &nbsp; Logout
+                    <a class="dropdown-item d-flex" href="#" @click.prevent="logout">
+                        <i class="flaticon-logout mr-1"></i> &nbsp; Logout
                     </a>
                 </div>
             </li>
