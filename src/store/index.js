@@ -13,6 +13,7 @@ import filemedia from './filemedia'
 import ujian from './ujian'
 import event from './event'
 import setting from './setting'
+import grup from './grup'
 
 Vue.use(Vuex)
 
@@ -29,7 +30,8 @@ export default new Vuex.Store({
     filemedia,
     ujian,
     event,
-    setting
+    setting,
+    grup
   },
   state: {
     errors: [],
