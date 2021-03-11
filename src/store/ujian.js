@@ -472,7 +472,7 @@ const actions = {
 		return new Promise(async(resolve, reject) => {
 			try {
 				commit('SET_LOADING', true, { root: true })
-				let network = await $axios.get(`ujians/${payload.ujian}/banksoal/${payload.banksoal}/capaian-siswa/link?q=${payload.jurusan}`)
+				let network = await $axios.get(`ujians/${payload.ujian}/banksoal/${payload.banksoal}/capaian-siswa/link?q=${payload.jurusan}&group=${payload.group}`)
 
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)

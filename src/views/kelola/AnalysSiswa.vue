@@ -42,12 +42,41 @@
             </div>
         </div>
         <b-modal id="modal-scoped-download-capaian-ujian" hide-header>
-		    <div class="form-group">
+            <div class="mb-2">
+                <b-form-checkbox switch v-model="isGroup">Gunakan grup</b-form-checkbox>
+            </div>
+            <div class="row" v-if="isGroup">
+                <div class="col-12 col-md-6" v-if="isGroup">
+                    <label><small>Grup</small></label>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                        </div>
+                        <select class="custom-select" v-model="groupParent">
+                            <option :value="gr.id" v-for="(gr, idx) in groupping" :key="idx">{{ gr.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6" v-if="isGroup">
+                    <label><small>Sub-grup</small></label>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                        </div>
+                        <select class="custom-select" v-model="groupChild">
+                            <option :value="gr.id" v-for="(gr, idx) in childs" :key="idx">{{ gr.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+		    <div class="form-group" v-if="!isGroup">
                 <label>Jurusan</label>
                 <v-select label="nama" :options="jurusans" multiple v-model="jurusan_download" :reduce="nama => nama.id"></v-select>
             </div>
             <template v-slot:modal-footer="{ cancel }">
-		      <b-button size="sm" variant="primary" @click="download" :disabled="isLoading || jurusan_download == 0 || jurusan_download == '' || jurusan_download == null">
+		      <b-button size="sm" variant="primary" 
+              @click="download" 
+              :disabled="isLoading || ((jurusan_download == 0 || jurusan_download == '' || jurusan_download == null) && !isGroup)">
 		        {{ isLoading ? 'Processing...' : 'Download' }}
 		      </b-button>
 		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
@@ -80,6 +109,9 @@ export default {
             jurusan_download: 0,
             jurusan_select: 0,
             banksoal_id: 0,
+            isGroup: false,
+            groupParent: 0,
+            groupChild: 0
         }
     },
     computed: {
@@ -88,6 +120,7 @@ export default {
             banksoals: state => state.banksoals,
             ujians: state => state.ujianAll
         }),
+        ...mapState('grup', ['groups']),
         ...mapState('jurusan', { jurusans: state => state.all_jurusan }),
         jurusands() {
             if (this.jurusans == '') {
@@ -96,11 +129,26 @@ export default {
             const jurusan = this.jurusans.map((item) => item);
             jurusan.push({id: 0, nama: 'Semua'})
             return jurusan
-        }
+        },
+        groupping() {
+            if (!this.groups) {
+                return []
+            }
+            return this.groups.filter((item) => item.parent_id == 0)
+        },
+        childs() {
+            if (!this.groups || this.groupParent == 0) {
+                return []
+            }
+            let data = this.groups.filter((item) => item.parent_id == this.groupParent)
+            data.push({id: 0, name: 'Semua sub-grup'})
+            return data
+        },
     },
     methods: {
         ...mapActions('ujian',['getAllUjians','getResultBanksoal', 'downloadExcel','getLinkExcelCapaianSiswa']),
         ...mapActions('jurusan',['allJurusan']),
+        ...mapActions('grup', ['getAllGroup']),
         capaian(jadwal, banksoal) {
             if(!jadwal || !banksoal) {
                 this.$swal({
@@ -130,10 +178,25 @@ export default {
                 return;
             }
             try {
+                let group = 0;
+                let jurusan = 0;
+                if (this.isGroup) {
+                    if (this.groupChild == 0) {
+                        group = this.groupParent
+                    } else {
+                        group = this.groupChild
+                    }
+                    jurusan = ""
+                } else {
+                    jurusan = this.jurusan_download.join(",")
+                    group = ""
+                }
+
                 let provider = await this.getLinkExcelCapaianSiswa({
                     ujian: this.jadwal,
                     banksoal: this.banksoal_id,
-                    jurusan: this.jurusan_download.join(',')
+                    jurusan: jurusan,
+                    group: group
                 })
 
                 window.open(provider.data, '_self')
@@ -146,6 +209,7 @@ export default {
         try {
             await this.getAllUjians()
             await this.allJurusan()
+            this.getAllGroup()
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
         }
