@@ -8,11 +8,17 @@
                 <div class="card-body">
                 	<div class="row">
                 		<div class="col-md-4">
+							<table class="table table-bordered table-sm">
+								<tr>
+									<td>
+										<router-link :to="{ name: 'system.ujian' }" class="link">
+		                       				Ujian
+		                      			</router-link>
+									</td>
+								</tr>
+							</table>
 		                	<div class="list-group">
-		                      <router-link :to="{ name: 'system.ujian' }" class="list-group-item list-group-item-action d-flex justify-content-between">
-		                        Ujian
-		                        <span class="badge badge-success badge-pill">Fitur aktif</span>
-		                      </router-link>
+		                      
 		                    </div>
                 		</div>
                 		<div class="col-md-4">
