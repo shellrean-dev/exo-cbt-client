@@ -15,7 +15,7 @@ const actions = {
                     commit('SET_TOKEN',network.data.token, { root: true })
                 }
                 else {
-                    commit('SET_ERRORS', { invalid: 'Username/password salah' } , { root: true })
+                    commit('SET_ERRORS', { invalid: 'Email/password salah' } , { root: true })
                 }
                 commit('SET_LOADING',false, { root: true })
                 resolve(network.data)
