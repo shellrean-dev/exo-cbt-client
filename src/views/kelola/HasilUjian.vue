@@ -3,10 +3,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Hasil ujian
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row mb-4">
                         <div class="col-sm-5">
                             <h4 id="traffic" class="card-title mb-0">Hasil ujian</h4>
                             <div class="small text-muted">Filter dengan jadwal</div>
@@ -18,54 +17,70 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row" v-if="ujians">
-                        <div class="col-md-5">
-                            <b-form-group
-                              label="Ujian"
-                              label-cols-sm="6"
-                              label-cols-md="4"
-                              label-cols-lg="3"
-                              label-align-sm="right"
-                              label-size="sm"
-                            >
-                                <v-select label="alias" :options="ujians" v-model="jadwal" :reduce="nama => nama.id"></v-select>
-                            </b-form-group>
-                        </div>
-                    </div>
-                    <div class="row" v-if="jurusands">
-                        <div class="col-md-5">
-                            <b-form-group
-                              label="Jurusan"
-                              label-cols-sm="6"
-                              label-cols-md="4"
-                              label-cols-lg="3"
-                              label-align-sm="right"
-                              label-size="sm"
-                            >
-                                <v-select label="nama" :options="jurusands" v-model="jurusan_select" :reduce="nama => nama.id"></v-select>
-                            </b-form-group>
-                        </div>
+                    <div class="mb-2">
+                        <b-form-checkbox switch v-model="isGroup">Gunakan grup</b-form-checkbox>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
-                            <b-form-group
-                              label="Per page"
-                              label-cols-sm="6"
-                              label-cols-md="4"
-                              label-cols-lg="3"
-                              label-align-sm="right"
-                              label-size="sm"
-                              label-for="perPageSelect"
-                            >
-                              <b-form-select
-                                v-model="perPage"
-                                id="perPageSelect"
-                                size="sm"
-                                :options="pageOptions"
-                              ></b-form-select>
-                            </b-form-group>
+                        <div class="col-sm-6 col-md-3" v-if="ujians">
+                            <label><small>Jadwal ujian</small></label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="flaticon-browser"></i></span>
+                                </div>
+                                <select class="custom-select" v-model="jadwal">
+                                    <option :value="uj.id" v-for="(uj, idx) in ujians" :key="idx">{{ uj.alias }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3" v-if="jurusands && !isGroup">
+                            <label><small>Jurusan</small></label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                                </div>
+                                <select class="custom-select" v-model="jurusan_select">
+                                    <option :value="jur.id" v-for="(jur, idx) in jurusands" :key="idx">{{ jur.nama }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3" v-if="isGroup">
+                            <label><small>Grup</small></label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                                </div>
+                                <select class="custom-select" v-model="groupParent">
+                                    <option :value="gr.id" v-for="(gr, idx) in groupping" :key="idx">{{ gr.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3" v-if="isGroup">
+                            <label><small>Sub-grup</small></label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                                </div>
+                                <select class="custom-select" v-model="groupChild">
+                                    <option :value="gr.id" v-for="(gr, idx) in childs" :key="idx">{{ gr.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <label><small>Per page</small></label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3"><i class="flaticon-browser"></i></span>
+                                </div>
+                                <select class="custom-select" v-model="perPage">
+                                    <option :value="10" selected>10 /halaman</option>
+                                    <option :value="30">30 /halaman</option>
+                                    <option :value="50">50 /halaman</option>
+                                    <option :value="100">100 /halaman</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    <hr style="border-top: 1.9px dashed #ccc">
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="hasils.data" show-empty>
                             <template v-slot:cell(show_details)="row">
@@ -144,15 +159,46 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                </div>
             </div>
         </div>
         <b-modal id="modal-scoped-download-hasil-ujian" hide-header>
-		    <div class="form-group">
+            <div class="mb-2">
+                <b-form-checkbox switch v-model="isGroup">Gunakan grup</b-form-checkbox>
+            </div>
+            <div class="row" v-if="isGroup">
+                <div class="col-12 col-md-6" v-if="isGroup">
+                    <label><small>Grup</small></label>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                        </div>
+                        <select class="custom-select" v-model="groupParent">
+                            <option :value="gr.id" v-for="(gr, idx) in groupping" :key="idx">{{ gr.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6" v-if="isGroup">
+                    <label><small>Sub-grup</small></label>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                        </div>
+                        <select class="custom-select" v-model="groupChild">
+                            <option :value="gr.id" v-for="(gr, idx) in childs" :key="idx">{{ gr.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+		    <div class="form-group" v-if="!isGroup">
                 <label>Jurusan</label>
                 <v-select label="nama" :options="jurusans" multiple v-model="jurusan_download" :reduce="nama => nama.id"></v-select>
             </div>
             <template v-slot:modal-footer="{ cancel }">
-		      <b-button size="sm" variant="primary" @click="download" :disabled="isLoading || jurusan_download == 0 || jurusan_download == '' || jurusan_download == null">
+		      <b-button size="sm" variant="primary" 
+              @click="download" 
+              :disabled="isLoading || ((jurusan_download == 0 || jurusan_download == '' || jurusan_download == null) && !isGroup)">
 		        {{ isLoading ? 'Processing...' : 'Download' }}
 		      </b-button>
 		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
@@ -168,6 +214,7 @@ import { successToas, errorToas} from '@/entities/notif'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 import downloadExcel from 'vue-json-excel';
+import { BIconChatLeftText } from 'bootstrap-vue';
 
 export default {
     name: 'DataHasilUjian',
@@ -178,7 +225,7 @@ export default {
     data() {
         return {
             jadwal: 0,
-            perPage: 40,
+            perPage: 10,
             pageOptions: [40, 100, 200],
             fields: [
                 { key: 'show_details', label: 'Detail' },
@@ -198,16 +245,17 @@ export default {
                 'Hasil akhir' : 'hasil'
             },
             jurusan_download: 0,
-            jurusan_select: 0
+            jurusan_select: 0,
+            isGroup: false,
+            groupParent: 0,
+            groupChild: 0
         }
     },
     computed: {
         ...mapGetters(['isLoading']),
-        ...mapState('ujian', { 
-            ujians: state => state.ujianAll,
-            hasils: state => state.hasilUjian
-        }),
+        ...mapState('ujian', ['ujianAll','hasilUjian']),
         ...mapState('jurusan', { jurusans: state => state.all_jurusan }),
+        ...mapState('grup', ['groups']),
         page: {
             get() {
                 return this.$store.state.ujian.page_hasil
@@ -221,12 +269,39 @@ export default {
                 return []
             }
             const jurusan = this.jurusans.map((item) => item);
-            jurusan.push({id: 0, nama: 'Semua'})
+            jurusan.push({id: 0, nama: 'Semua Jurusan'})
             return jurusan
+        },
+        groupping() {
+            if (!this.groups) {
+                return []
+            }
+            return this.groups.filter((item) => item.parent_id == 0)
+        },
+        childs() {
+            if (!this.groups || this.groupParent == 0) {
+                return []
+            }
+            let data = this.groups.filter((item) => item.parent_id == this.groupParent)
+            data.push({id: 0, name: 'Semua sub-grup'})
+            return data
+        },
+        ujians() {
+            if(!this.ujianAll) {
+                return []
+            }
+            return this.ujianAll
+        },
+        hasils() {
+            if(!this.hasilUjian) {
+                return {data: []}
+            }
+            return this.hasilUjian
         }
     },
     methods: {
         ...mapActions('ujian',['getAllUjians', 'getHasilUjian','getLinkExcelHasilUjian']),
+        ...mapActions('grup', ['getAllGroup']),
         ...mapActions('jurusan',['allJurusan']),
         async download() {
             if(!this.jadwal) {
@@ -239,9 +314,23 @@ export default {
             }
 
             try {
+                let group = 0;
+                let jurusan = 0;
+                if (this.isGroup) {
+                    if (this.groupChild == 0) {
+                        group = this.groupParent
+                    } else {
+                        group = this.groupChild
+                    }
+                    jurusan = ""
+                } else {
+                    jurusan = this.jurusan_download.join(",")
+                    group = ""
+                }
                 let provider = await this.getLinkExcelHasilUjian({
                     ujian: this.jadwal,
-                    jurusan: this.jurusan_download.join(',')
+                    jurusan: jurusan,
+                    group: group,
                 })
                 window.open(provider.data, '_self')
             } catch (error) {
@@ -256,14 +345,26 @@ export default {
             this.$bvToast.toast(error.message, errorToas())
         }
         this.allJurusan()
+        this.getAllGroup()
     },
     watch: {
         async jadwal(val) {
             if(val != 0) {
                 try {
+                    let group = 0;
+                    if (this.isGroup) {
+                        if (this.groupChild == 0) {
+                            group = this.groupParent
+                        } else {
+                            group = this.groupChild
+                        }
+                    } else [
+                        group = ""
+                    ]
                     await this.getHasilUjian({ 
                         id: val, 
                         jurusan: this.jurusan_select != '' ? this.jurusan_select : 0,
+                        group: group,
                         perPage: this.perPage 
                     })
                 } catch (error) {
@@ -285,9 +386,56 @@ export default {
             }
         },
         page() {
+            let group = 0;
+            if (this.isGroup) {
+                if (this.groupChild == 0) {
+                    group = this.groupParent
+                } else {
+                    group = this.groupChild
+                }
+            } else {
+                group = ""
+            }
             this.getHasilUjian({
                 id: this.jadwal,
                 jurusan: this.jurusan_select,
+                group: group,
+                perPage: this.perPage
+            })
+        },
+        groupParent(v) {
+            let group = 0;
+            if (this.isGroup) {
+                if (this.groupChild == 0) {
+                    group = this.groupParent
+                } else {
+                    group = this.groupChild
+                }
+            } else {
+                group = ""
+            }
+            this.getHasilUjian({
+                id: this.jadwal,
+                jurusan: "",
+                group: group,
+                perPage: this.perPage
+            })
+        },
+        groupChild(v) {
+            let group = 0;
+            if (this.isGroup) {
+                if (this.groupChild == 0) {
+                    group = this.groupParent
+                } else {
+                    group = this.groupChild
+                }
+            } else {
+                group = ""
+            }
+            this.getHasilUjian({
+                id: this.jadwal,
+                jurusan: "",
+                group: group,
                 perPage: this.perPage
             })
         }

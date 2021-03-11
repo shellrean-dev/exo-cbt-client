@@ -420,7 +420,7 @@ const actions = {
 
 		return new Promise((resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.get(`ujians/${payload.id}/result?jurusan=${payload.jurusan}&page=${state.page_hasil}&perPage=${perPage}`)
+			$axios.get(`ujians/${payload.id}/result?jurusan=${payload.jurusan}&group=${payload.group}&page=${state.page_hasil}&perPage=${perPage}`)
 			.then((response) => {
 				commit('ASSIGN_HASIL_UJIAN', response.data.data)
 				commit('SET_LOADING', false, { root: true })
@@ -486,7 +486,7 @@ const actions = {
 		return new Promise(async(resolve, reject) => {
 			try {
 				commit('SET_LOADING', true, { root: true })
-				let network = await $axios.get(`ujians/${payload.ujian}/result/link?q=${payload.jurusan}`)
+				let network = await $axios.get(`ujians/${payload.ujian}/result/link?q=${payload.jurusan}&group=${payload.group}`)
 
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
