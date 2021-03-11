@@ -40,6 +40,7 @@ const actions = {
     deleteGroupById,
     getGroupMemberById,
     createMultipleGroupMember,
+    importMultipleGroupMember,
     deleteGroupMemberById,
     deleteMultipleGroupMember
 }
@@ -217,6 +218,26 @@ function createMultipleGroupMember({ commit }, payload) {
         try {
             commit('SET_LOADING', true, { root: true })
             const network = await $axios.post(`group_members/multiple`, payload)
+
+            commit('SET_LOADING', false, { root: true })
+            v(network.data)
+        } catch (e) {
+            commit('SET_LOADING', false, { root: true })
+            r(e.response.data)
+        }
+    })
+}
+
+/**
+ * import multiple group's member
+ * @param object store
+ * @param object payload
+ */
+function importMultipleGroupMember({ commit }, payload) {
+    return new Promise(async(v, r) => {
+        try {
+            commit('SET_LOADING', true, { root: true })
+            const network = await $axios.post(`group_members/import`, payload)
 
             commit('SET_LOADING', false, { root: true })
             v(network.data)
