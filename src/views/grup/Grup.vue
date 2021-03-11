@@ -115,6 +115,7 @@
 		  </template>
     </b-modal>
     <b-modal id="modal-group-member" noCloseOnBackdrop title="Anggota grup" size="xl">
+      <b-button @click="$bvModal.show('modal-import-group-member')" variant="success" size="sm"><i class="flaticon-upload-1"></i> Import anggota</b-button>
       <div class="input-group mb-3 mt-2">
         <div class="input-group-prepend">
           <span class="input-group-text">
@@ -172,6 +173,25 @@
 		    </b-button>
 		  </template>
     </b-modal>
+    <b-modal id="modal-import-group-member" noCloseOnBackdrop title="Import Anggota grup">
+      <div class="form-group">
+				<div class="input-group">
+					<div class="custom-file">
+						<input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
+						<label class="custom-file-label" for="inputGroupFile04">{{ label ? label : 'Pilih file excel...' }}</label>
+					</div>
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" :disabled="isLoading" @click="submitImportGroupMember">{{ isLoading ? 'Processing...' : 'Upload' }}</button>
+					</div>
+				</div>
+				<a :href="baseURL+`/download/format-group-member-import.xlsx`" download>Download format</a>
+			</div>
+      <template v-slot:modal-footer="{ cancel }">
+			  <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		    	Tutup
+		    </b-button>
+		  </template>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -194,10 +214,13 @@ export default {
       ],
       current_group_id: 0,
       str_no_ujian: '',
-      selected: []
+      selected: [],
+      label: "",
+      file: {},
     }
   },
   computed: {
+    ...mapState(['baseURL']),
     ...mapGetters(['isLoading']),
     ...mapState('grup', ['group','groups','members']),
     groupping() {
@@ -222,6 +245,7 @@ export default {
       'deleteGroupById',
       'getGroupMemberById',
       'createMultipleGroupMember',
+      'importMultipleGroupMember',
       'deleteGroupMemberById',
       'deleteMultipleGroupMember'
     ]),
@@ -367,6 +391,26 @@ export default {
           }
         }
       })
+    },
+    onFileChange(e) {
+      this.label = e.target.files[0].name
+			this.file = e.target.files[0]
+    },
+    async submitImportGroupMember() {
+      try {
+        let formData = new FormData()
+        formData.append('file',this.file)
+        formData.append('group_id', this.current_group_id)
+
+        const network = await this.importMultipleGroupMember(formData)
+        this.label = ''
+        this.file = {}
+        this.$bvToast.toast('Peserta berhasil diimport kedalam grup', successToas())
+        this.$bvModal.hide('modal-import-group-member')
+        this.getDataMembers(this.current_group_id)
+      } catch (e) {
+        this.$bvToast.toast(e.message, errorToas())
+      }
     }
   },
   created() {
