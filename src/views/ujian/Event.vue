@@ -79,7 +79,10 @@
 												<td>{{ ujian.mulai }}</td>
 												<td>
 													<b-button variant="primary" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
-													<b-button variant="success" size="sm" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
+													<b-button variant="success" size="sm" class="mr-1" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
+													<b-button size="sm" variant="success" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
+														Download absensi
+													</b-button>
 												</td>
 											</tr>
 										</table>
@@ -147,7 +150,7 @@
 		    </template>
 		</b-modal>
 		<b-modal id="modal-sesi" noCloseOnBackdrop :title="current.name" size="xl">
-			<b-button size="sm" class="mb-2" variant="success" @click="copySesi" :disabled="isLoading">
+			<b-button size="sm" class="mb-2 mr-1" variant="success" @click="copySesi" :disabled="isLoading">
 				Copy sesi dari default
 		    </b-button>
 			<div>
@@ -178,6 +181,25 @@
 					</div>
 				</div>
 				<a :href="baseURL+`/download/format-sesi-import.xlsx`" download>Download format</a>
+			</div>
+			<template v-slot:modal-footer="{ cancel }">
+				<b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        	Tutup
+		      	</b-button>
+		    </template>
+		</b-modal>
+		<b-modal id="download-absensi" title="Download absensi" noCloseOnBackdrop>
+			<div class="form-group">
+				<a href="#" @click.prevent="downloadAbsensi(curr_id,1)">Download absensi peserta sesi 1</a>
+			</div>
+			<div class="form-group">
+				<a href="#" @click.prevent="downloadAbsensi(curr_id,2)">Download absensi peserta  sesi 2</a>
+			</div>
+			<div class="form-group">
+				<a href="#" @click.prevent="downloadAbsensi(curr_id,3)">Download absensi peserta  sesi 3</a>
+			</div>
+			<div class="form-group">
+				<a href="#" @click.prevent="downloadAbsensi(curr_id,4)">Download absensi peserta  sesi 4</a>
 			</div>
 			<template v-slot:modal-footer="{ cancel }">
 				<b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
@@ -218,7 +240,8 @@ export default {
 				ujian_id: ''
 			},
 			file: '',
-			label: ''
+			label: '',
+			curr_id: 0
 		}
 	},
 	computed: {
@@ -236,7 +259,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi', 'copySesiFromDefault', 'getLinkPDFBeritaAcara']),
+		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi', 'copySesiFromDefault', 'getLinkPDFBeritaAcara','getLinkPDFAbsensi']),
 		close() {
 			this.$bvModal.hide('modal-scoped-event')
 			this.update = 0
@@ -355,6 +378,17 @@ export default {
                 window.open(provider.data, '_self')
 			} catch(e) {
 				this.$bvToast.toast(error.message, errorToas())
+			}
+		},
+		async downloadAbsensi(id,sesi) {
+			try {
+				let provider = await this.getLinkPDFAbsensi({
+					ujian_id: id,
+					sesi: sesi
+				})
+                window.open(provider.data, '_self')
+			} catch(e) {
+				this.$bvToast.toast(e.message, errorToas())
 			}
 		}
 	},

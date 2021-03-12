@@ -218,6 +218,20 @@ const actions = {
 				reject(error.response.data)
 			}
 		})
+	},
+	getLinkPDFAbsensi({ commit }, payload) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`absensi-ujian/${payload.ujian_id}/link?q=${payload.sesi}`);
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
 	}
 }
 
