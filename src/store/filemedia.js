@@ -95,8 +95,10 @@ const actions = {
 	},
 	uploadFileAudio({ commit, state }, payload) {
 		return new Promise(( resolve, reject) => {
+			commit('SET_LOADING', true, { root: true })
 			$axios.post(`upload/file-audio`,payload,{ headers: { 'Content-Type': 'multipart/form-data'} })
 			.then((response) => {
+				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
 			})
 			.catch((error) => {

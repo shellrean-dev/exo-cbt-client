@@ -127,7 +127,9 @@
                                             <label class="custom-file-label">{{ labelDirection ? labelDirection : 'Pilih File...' }}</label>
                                         </div>
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" @click="submitFileDirection">Upload</button>
+                                            <button class="btn btn-primary" type="button" 
+                                            :disabled="isLoading"
+                                            @click="submitFileDirection">Upload</button>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +144,9 @@
                                           <label class="custom-file-label">{{ labelAudio ? labelAudio : 'Pilih File...' }}</label>
                                         </div>
                                         <div class="input-group-append">
-                                          <button class="btn btn-primary" type="button" @click="submitFile">Upload</button>
+                                          <button class="btn btn-primary" type="button" 
+                                          :disabled="isLoading"
+                                          @click="submitFile">Upload</button>
                                         </div>
                                     </div>
                                 </div>
