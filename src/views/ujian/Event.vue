@@ -87,6 +87,9 @@
 								</b-card>
 							</template>
 							<template v-slot:cell(action)="row">
+								<b-button variant="light" size="sm" class="mr-1" @click="downloadBeritaAcara(row.item.id)" :disabled="isLoading">
+									<i class="flaticon-download"></i> Berita acara
+								</b-button>
 								<b-button variant="warning" size="sm" class="mr-1" @click="getData(row.item.id)" :disabled="isLoading">
 									<i class="flaticon-edit"></i> Edit
 								</b-button>
@@ -233,7 +236,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi', 'copySesiFromDefault']),
+		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi', 'copySesiFromDefault', 'getLinkPDFBeritaAcara']),
 		close() {
 			this.$bvModal.hide('modal-scoped-event')
 			this.update = 0
@@ -345,6 +348,14 @@ export default {
 			.catch((error) => {
 				this.$bvToast.toast(error.message, errorToas())
 			})
+		},
+		async downloadBeritaAcara(id) {
+			try {
+				let provider = await this.getLinkPDFBeritaAcara(id)
+                window.open(provider.data, '_self')
+			} catch(e) {
+				this.$bvToast.toast(error.message, errorToas())
+			}
 		}
 	},
 	async created() {

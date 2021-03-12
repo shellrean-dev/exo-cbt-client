@@ -204,6 +204,20 @@ const actions = {
 				reject(error.response.data)
 			}
 		})
+	},
+	getLinkPDFBeritaAcara({ commit }, payload) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`berita-acara/${payload}/link`);
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
 	}
 }
 
