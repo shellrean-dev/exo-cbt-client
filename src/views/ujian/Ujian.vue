@@ -167,14 +167,14 @@
             </div>
 		    <div class="form-group">
 		    	<label>Tanggal ujian</label>
-		    	<datetime inputId="ujian" v-model="data.tanggal" input-class="form-control"></datetime>
+		    	<datetime inputId="ujian" v-model="data.tanggal" input-class="form-control" type="date" value-zone="Asia/Jakarta"></datetime>
 		    	<small class="text-danger" v-if="errors.tanggal">{{ errors.tanggal[0] }}</small>
 		    </div>
 		    <div class="row">
 		    	<div class="col-md-6">
 		    		<div class="form-group">
 				    	<label>Jam mulai</label>
-				    	<datetime inputId="mulai" v-model="data.mulai" input-class="form-control" type="time"></datetime>
+				    	<datetime inputId="mulai" v-model="data.mulai" input-class="form-control" type="time" value-zone="Asia/Jakarta"></datetime>
 				    	<small class="text-danger" v-if="errors.mulai">{{ errors.mulai[0] }}</small>
 				    </div>
 		    	</div>
