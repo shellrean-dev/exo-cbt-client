@@ -85,11 +85,11 @@
                                 		</tr>
                                 		<tr>
                                 			<td>Agama</td>
-                                			<td>{{ row.item.agama.nama }}</td>
+                                			<td>{{ row.item.agama }}</td>
                                 		</tr>
                                 		<tr>
                                 			<td>Jurusan</td>
-                                			<td>{{ row.item.jurusan.nama }}</td>
+                                			<td>{{ row.item.jurusan }}</td>
                                 		</tr>
                                         <tr>
                                             <td>Sesi default</td>
@@ -164,7 +164,7 @@ export default {
 			fields: [
 				{ key: 'show_details', label: 'Detail' },
 				{ key: 'no_ujian', label: 'No ujian' },
-				{ key: 'nama', label: 'Nama peserta' },
+				{ key: 'nama_peserta', label: 'Nama peserta' },
 				{ key: 'actions', label: 'Aksi' }
 			],
 			search: '',
