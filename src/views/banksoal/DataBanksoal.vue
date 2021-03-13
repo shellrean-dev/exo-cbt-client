@@ -622,6 +622,8 @@ export default {
                 jumlah_soal : 0,
                 jumlah_pilihan: 5,
                 jumlah_soal_esay: 0,
+                jumlah_soal_listening: 0,
+                jumlah_pilihan_listening: 4,
                 jumlah_soal_ganda_kompleks: 0,
                 jumlah_soal_menjodohkan: 0,
                 jumlah_soal_isian_singkat: 0,
