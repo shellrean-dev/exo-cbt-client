@@ -99,7 +99,7 @@ export default {
   methods: {
     ...mapActions('auth', ['submit']),
     ...mapActions('user',['getUserLogin']),
-    ...mapActions('setting', ['getSetAuth']),
+    ...mapActions('setting', ['getSetAuth','getSettingSekolah']),
     async postLogin() {
       try {
         let provider = await this.submit(this.data)
@@ -113,6 +113,7 @@ export default {
   },
   destroyed() {
     this.getUserLogin()
+    this.getSettingSekolah()
   },
   created() {
     let d = new Date()
