@@ -58,6 +58,9 @@ const ResetPesertaUjian = () => import('@/views/ujian/ResetPesertaUjian')
 const DataEvent = () => import('@/views/ujian/Event')
 const EventPeserta = () => import('@/views/ujian/KartuPeserta');
 
+import EventIndex from '@/views/event/Index'
+const BeritaAcara = () => import('@/views/event/BeritaAcara')
+
 import KelolaIndex from '@/views/kelola/Index'
 const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
 const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
@@ -359,6 +362,19 @@ const routes = [
         name: 'ujian.event.peserta',
         component: EventPeserta,
         meta: { title: 'Kartu Event Peserta' }
+      }
+    ]
+  },
+  {
+    path: '/event',
+    component: EventIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: ':id/berita-acara',
+        name: 'event.berita.acara',
+        component: BeritaAcara,
+        meta: { title: 'Berita Acara' }
       }
     ]
   },
