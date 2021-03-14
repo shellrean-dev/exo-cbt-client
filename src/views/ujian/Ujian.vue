@@ -194,10 +194,10 @@
 				    </div>
 		    	</div>
 		    </div>
-		    <div class="form-group">
-		    	<b-form-checkbox  value="1" v-model="advance">Show setting advance</b-form-checkbox>
-		    </div>
-		    <div class="row" v-if="advance == '1'">
+			<div class="text-center mb-3">
+				<button class="btn btn-outline-dark rounded-pill" @click="advance = !advance">{{ advance ? 'Less' : 'More'}} setting</button>
+			</div>
+		    <div class="row" v-if="advance">
 		    	<div class="col-md-4">
 		    		<div class="form-group">
 		    			<b-form-checkbox switch value="1" v-model="data.setting.acak_soal">Acak Soal</b-form-checkbox>
@@ -214,7 +214,7 @@
 		    		</div>
 		    	</div>
 		    </div>
-		    <div class="row" v-if="advance == '1'">
+		    <div class="row" v-if="advance">
 		    	<div class="col-md-12">
 		    		<label>Urutan ujian tipe</label>
 		    	</div>
