@@ -109,7 +109,7 @@
                                       <select class="form-control" v-model="tipe_soal">
                                           <option value="1">Pilihan ganda</option>
                                           <option value="4">Pilihan ganda kompleks</option>
-                                          <option value="5">Menjodohkan</option>
+                                          <option value="5" v-if="false">Menjodohkan</option>
                                           <option value="6">Isian singkat</option>
                                           <option value="2">Essai</option>
                                           <option value="3">Listening</option>

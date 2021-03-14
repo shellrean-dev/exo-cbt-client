@@ -311,7 +311,7 @@
                     </div>
                 </div>
             </b-collapse>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-d>
+            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-d v-if="false">
                 <span class="when-opened">
                     <i class="flaticon-circle"></i>
                 </span>

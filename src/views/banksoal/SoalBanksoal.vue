@@ -66,7 +66,7 @@
                                     <option :value.int="1">Pilihan ganda</option>
                                     <option :value.int="4">Pilihan ganda kompleks</option>
                                     <option :value.int="3">Listening</option>
-                                    <option :value.int="5">Menjodohkan</option>
+                                    <option :value.int="5" v-if="false">Menjodohkan</option>
                                     <option :value.int="6">Isian singkat</option>
                                     <option :value.int="2">Uraian</option>
                                 </select>
