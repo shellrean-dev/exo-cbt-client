@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <div class="row justify-content-center">
 				<div class="col-md-4">
-					<div class="card" style="border: 1.9px dashed #2517a3">
+					<div class="card" style="border: 1.9px solid #2517a3">
 						<div class="card-body">
 							<div class="d-flex justify-content-between">
 								<router-link :to="{ name: 'ujian.event.data' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
@@ -88,7 +88,7 @@
       </div>
       <div class="row justify-content-center">
 				<div class="col-md-4">
-					<div class="card" style="border: 1.9px dashed #2517a3">
+					<div class="card" style="border: 1.9px solid #2517a3">
 						<div class="card-body">
 							<div class="d-flex justify-content-between">
 								<router-link :to="{ name: 'ujian.event.data' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
@@ -214,7 +214,7 @@
 	    margin: 0 auto;
 	    background: #FFF;
 	    padding: 0.5cm;
-	    border: 1px dashed #2517a3;
+	    border: 1px solid #2517a3;
 	}
 	.page * {
 	    font-family: arial;
