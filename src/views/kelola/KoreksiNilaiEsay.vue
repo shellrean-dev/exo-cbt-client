@@ -44,7 +44,7 @@
                                             <tr>
                                                 <td>Jawaban peserta</td>
                                                 <td>
-                                                    <div v-html="row.item.esay"></div>
+                                                    <div><pre>{{ row.item.esay }}</pre></div>
                                                 </td>
                                             </tr>
                                             <tr>
