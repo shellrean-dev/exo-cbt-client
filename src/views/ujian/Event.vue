@@ -80,7 +80,7 @@
 												<td>
 													<b-button variant="primary" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
 													<b-button variant="success" size="sm" class="mr-1" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
-													<b-button size="sm" variant="success" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
+													<b-button size="sm" variant="outline-success" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
 														Download absensi
 													</b-button>
 												</td>
@@ -90,17 +90,17 @@
 								</b-card>
 							</template>
 							<template v-slot:cell(action)="row">
-								<b-button variant="light" size="sm" class="mr-1" @click="downloadBeritaAcara(row.item.id)" :disabled="isLoading">
-									<i class="flaticon-download"></i> Berita acara
-								</b-button>
 								<b-button variant="warning" size="sm" class="mr-1" @click="getData(row.item.id)" :disabled="isLoading">
 									<i class="flaticon-edit"></i> Edit
 								</b-button>
-								<b-button variant="info" size="sm" class="mr-1" :to="{ name: 'ujian.event.peserta', params: { event_id: row.item.id} }" :disabled="isLoading">
+								<b-button variant="danger" size="sm" class="mr-1" @click="remove(row.item.id)" :disabled="isLoading">
+									<i class="flaticon2-trash"></i> Hapus
+								</b-button>
+								<b-button variant="outline-success" size="sm" class="mr-1" :to="{ name: 'ujian.event.peserta', params: { event_id: row.item.id} }" :disabled="isLoading">
 									<i class="flaticon-profile-1"></i> Kartu Peserta
 								</b-button>
-								<b-button variant="danger" size="sm" @click="remove(row.item.id)" :disabled="isLoading">
-									<i class="flaticon2-trash"></i> Hapus
+								<b-button variant="outline-success" size="sm" class="mr-1" :to="{name: 'event.berita.acara', params: {id: row.item.id}}" :disabled="isLoading">
+									<i class="flaticon-download"></i> Berita acara
 								</b-button>
 							</template>
 						</b-table>
