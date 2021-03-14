@@ -21,11 +21,10 @@
                 <img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-height: 46px" alt="Logo">
               </div>
               <div class="flex-fill text-center">
-                <h4>BERITA ACARA PELAKSANAAN <br /> <span class="text-uppercase">{{ event.name }}</span> <br />TAHUN PELAJARAN {{ semester }}</h4>
+                <h4 class="text-uppercase">BERITA ACARA PELAKSANAAN <br /> {{ event.name }} <br />TAHUN PELAJARAN {{ semester }}</h4>
               </div>
               <div>
-                <img 
-                :src="'/img/logo.jpg'" style="max-height: 46px" alt="Logo">
+                <div style="width: 46px"></div>
               </div>
             </div>
             <section style="line-height: 2;" v-if="typeof sekolah.value != 'undefined'" >
@@ -136,8 +135,10 @@
             <footer style="line-height: 2;position: absolute; bottom: 0; width: 100%; left: 0">
               <div class="d-flex">
                 <div class="border border-dark mr-1" style="width: 20px"></div>
-                <div class="border border-dark flex-fill text-center">
-                  SMK LETRIS INDONESIA
+                <div class="border border-dark flex-fill text-center text-uppercase" 
+                v-if="typeof sekolah.value != 'undefined'"
+                >
+                  {{ sekolah.value.nama_sekolah}}
                 </div>
                 <div class="border border-dark ml-1" style="width: 20px"></div>
               </div>
