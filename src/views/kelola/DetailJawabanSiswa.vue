@@ -4,9 +4,23 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'kelola.hasil.ujian' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-					<button class="btn float-right btn-primary btn-sm mx-1" @click="print" :disabled="isLoading">Print</button>
+					<button class="btn float-right btn-primary btn-sm mx-1" @click="print" :disabled="isLoading"><i class="flaticon2-print"></i> Cetak rincian jawaban</button>
                 </div>
                 <div class="card-body back" id="printDetailJawaban">
+					<div class="hide" v-if="jawaban && jawaban.length > 0">
+                        <h2 class="text-center mb-5">RINCIAN JAWABAN PESERTA</h2>
+						<hr>
+                        <table class="table table-sm table-borderless h4">
+							<tr>
+                                <td width="200px">No Ujian</td>
+                                <td>: {{ jawaban[0].peserta_no_ujian }}</td>
+                            </tr>
+                            <tr>
+                                <td>Nama Peserta</td>
+                                <td>: {{ jawaban[0].peserta_nama }}</td>
+                            </tr>
+                        </table>
+                    </div>
                 	<div class="paper">
                 		<div class="table-responsive-md">
                 		<table class="table table-sm">
@@ -25,9 +39,7 @@
 													<tr v-for="(opsi, index) in jawab.soal.jawabans" :key="opsi.id">
 														<td width="20px"></td>
 														<td style="text-transform: uppercase;" :class="{ 'corect' : opsi.correct == '1' }"> {{ index | charIndex }} ) 
-															<!-- <i v-show="opsi.correct == '1'"  class="flaticon-star text-warning"></i>  -->
 															<StarFillineYellow style="height:15px;" v-show="opsi.correct == '1'"></StarFillineYellow>
-															<!-- <i v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)" class="flaticon-add-label-button text-info"></i> -->
 															<TagIcon style="height:15px;" v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)"></TagIcon>
 														</td>
 														<td v-html="opsi.text_jawaban"></td>
@@ -89,10 +101,18 @@ export default {
     },
 	async created() {
 		try {
+			this.$store.commit('LOADING_PAGE', true)
 			await this.getDetailJawabanSiswa(this.$route.params.id)
+			this.$store.commit('LOADING_PAGE', false)
 		} catch (error) {
+			this.$store.commit('LOADING_PAGE', false)
 			this.$bvToast.toast(error.message, errorToas())
 		}
 	}
 }
 </script>
+<style>
+.hide {
+    display: none;
+}
+</style>
