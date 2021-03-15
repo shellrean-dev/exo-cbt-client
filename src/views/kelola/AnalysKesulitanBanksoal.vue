@@ -4,9 +4,23 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'kelola.analys.banksoal' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-                    <button class="btn float-right btn-primary btn-sm mx-1" @click="print" :disabled="isLoading">Print</button>
+                    <button class="btn float-right btn-primary btn-sm mx-1" @click="print" :disabled="isLoading"><i class="flaticon2-print"></i> Cetak analisis banksoal</button>
                 </div>
                 <div class="card-body back" id="printSoal">
+                    <div v-if="banksoal" class="hide">
+                        <h2 class="text-center mb-5">ANALISIS BANKSOAL</h2>
+                        <hr>
+                        <table class="table table-sm table-borderless h4">
+                            <tr>
+                                <td width="200px">Kode Banksoal</td>
+                                <td>: {{ banksoal.kode_banksoal }}</td>
+                            </tr>
+                            <tr>
+                                <td>Mata Pelajaran</td>
+                                <td>: {{ banksoal.matpel.nama }}</td>
+                            </tr>
+                        </table>
+                    </div>
                     <div class="paper">
                         <div class="table-responsive-md">
                             <table class="table table-sm table-bordered">
@@ -78,7 +92,8 @@ export default {
     computed: {
         ...mapGetters(['isLoading']),
         ...mapState('banksoal',{
-            analys: state => state.analys
+            analys: state => state.analys,
+            banksoal: state => state.banksoal,
         })
     },
     filters: {
@@ -87,17 +102,26 @@ export default {
         }
     },
     methods: {
-        ...mapActions('banksoal',['getAllSoalAnalys']),
+        ...mapActions('banksoal',['getAllSoalAnalys','getBanksoalById']),
         print() {
             this.$htmlToPaper('printSoal');
         }
     },
     async created() {
         try {
+            this.$store.commit('LOADING_PAGE', true)
             await this.getAllSoalAnalys(this.$route.params.banksoal)
+            await this.getBanksoalById(this.$route.params.banksoal)
+            this.$store.commit('LOADING_PAGE', false)
         } catch (error) {
+            this.$store.commit('LOADING_PAGE', false)
             this.$bvToast.toast(error.message, errorToas())
         }
     }
 }
 </script>
+<style>
+.hide {
+    display: none;
+}
+</style>
