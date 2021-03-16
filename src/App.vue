@@ -1,7 +1,11 @@
 <template>
     <div>
         <loading :active.sync="loadPage" 
-        :is-full-page="true" :loader="'dots'" :color="'#1f1498'"></loading>
+        :is-full-page="true" 
+        :loader="'dots'" 
+        :height="45"
+        :width="45"
+        :color="'#1f1498'"></loading>
 
         <app-sidebar v-show="isAuth"/>
         <div :class="{ 'c-wrapper' : isAuth }">
