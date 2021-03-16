@@ -86,6 +86,9 @@
                             <template v-slot:cell(show_details)="row">
                                 <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
+                            <template v-slot:cell(no)="row">
+                                {{ ((page-1)*hasils.per_page) + row.index+1 }}
+                            </template>
                             <template v-slot:row-details="row">
                                 <b-card>
                                     <table class="table table-bordered">
@@ -229,6 +232,7 @@ export default {
             pageOptions: [40, 100, 200],
             fields: [
                 { key: 'show_details', label: 'Detail' },
+                { key: 'no', label: '#' },
                 { key: 'peserta.no_ujian', label: 'No ujian' },
                 { key: 'peserta.nama', label: 'Nama peserta' },
                 { key: 'action', label: 'Aksi' },
