@@ -70,13 +70,13 @@
                                         v-model="row.item.addTime"
                                         ></b-form-input>
                                         <b-input-group-append>
-                                        <b-button @click="addMoreTime(row.item.addTime, row.item.peserta.id); row.item.addTime = ''" :disabled="isLoading">Tambah</b-button>
+                                        <b-button @click="addMoreTime(row.item.addTime, row.item.peserta_id); row.item.addTime = ''" :disabled="isLoading">Tambah</b-button>
                                         </b-input-group-append>
                                     </b-input-group>
                                 </b-card>
                             </template>
                             <template v-slot:cell(status)="row">
-                                {{ row.item.status }}
+                                {{ getText(row.item.status_ujian) }}
                                 <b-button variant="danger" :disabled="isLoading" class="mr-1" size="sm" @click="forceClose(row.item.peserta_id)" 
                                 v-if="row.item.status_ujian == 3">
                                     Force close
@@ -102,13 +102,18 @@ export default {
             fields: [
                 { key: 'show_details', label: 'Detail' },
                 { key: 'no', label: '#'},
-                { key: 'peserta.no_ujian', label: 'No ujian', sortable: true },
-                { key: 'peserta.nama', label: 'Nama peserta', sortable: true },
+                { key: 'no_ujian', label: 'No ujian', sortable: true },
+                { key: 'nama', label: 'Nama peserta', sortable: true },
                 { key: 'mulai_ujian', label: 'Mulai ujian', sortable: true },
                 { key: 'status', label: 'Status', sortable: true }
             ],
             jadwal: 0,
-            search: ''
+            search: '',
+            textStatus: {
+                '0': 'Belum mulai',
+                '3': 'Sedang mengerjakan',
+                '1': 'Test selesai'
+            }
         }
     },
     computed: {
@@ -120,7 +125,7 @@ export default {
         filteredList() {
             if(this.pesertas) {
                 return this.pesertas.filter(post => {
-                    return post.peserta.no_ujian.toLowerCase().includes(this.search.toLowerCase())
+                    return post.no_ujian.toLowerCase().includes(this.search.toLowerCase())
                 })
             }
         }
@@ -214,6 +219,9 @@ export default {
                 return;
             }
             this.getPesertas(this.jadwal)
+        },
+        getText(i) {
+            return this.textStatus[i]
         }
     },
     async created() {
