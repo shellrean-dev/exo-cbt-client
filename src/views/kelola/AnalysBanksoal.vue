@@ -54,6 +54,9 @@
                     </div>
                     <div class="table-responsive-md" v-if="typeof banksoals.data != 'undefined'">
                         <b-table striped hover bordered small :fields="fields" :items="banksoals.data" show-empty>
+                            <template v-slot:cell(no)="row">
+                                {{ row.index+1 }}
+                            </template>
                             <template v-slot:cell(actions)="row">
                                 <b-button :to="{ name: 'kelola.analys.kesulitan.banksoal', params: {banksoal: row.item.id} }" variant="primary" size="sm">
                                     <i class="flaticon-graphic"></i> Hasil analisa
@@ -97,6 +100,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'no', label: '#'},
                 { key: 'kode_banksoal', label: 'Kode banksoal'},
                 { key: 'matpel.nama', label: 'Mata pelajaran'},
                 { key: 'actions', label: 'Aksi' }
