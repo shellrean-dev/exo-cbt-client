@@ -166,7 +166,7 @@ const actions = {
         commit('SET_LOADING',true, { root: true })
 
         return new Promise(( resolve, reject ) => {
-            $axios.get(`pesertas/login?page=${state.page}&q=${search}`)
+            $axios.get(`pesertas/login?page=${state.login_page}&q=${search}`)
             .then((response) => {
                 commit('ASSIGN_PESERTA_LOGIN', response.data.data)
                 commit('SET_LOADING',false, { root: true })
