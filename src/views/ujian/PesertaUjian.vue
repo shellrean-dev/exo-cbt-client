@@ -59,9 +59,12 @@
                             <template v-slot:cell(show_details)="row">
                                 <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
+                            <template v-slot:cell(no)="row">
+                                {{ row.index+1 }}
+                            </template>
                             <template v-slot:row-details="row">
                                 <b-card>
-                                    <b-input-group size="sm">
+                                    <b-input-group size="sm" v-if="[0,3].includes(row.item.status_ujian)">
                                         <b-form-input
                                         placeholder="Waktu dalam menit"
                                         v-model="row.item.addTime"
@@ -98,6 +101,7 @@ export default {
         return {
             fields: [
                 { key: 'show_details', label: 'Detail' },
+                { key: 'no', label: '#'},
                 { key: 'peserta.no_ujian', label: 'No ujian', sortable: true },
                 { key: 'peserta.nama', label: 'Nama peserta', sortable: true },
                 { key: 'mulai_ujian', label: 'Mulai ujian', sortable: true },
