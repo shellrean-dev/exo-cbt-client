@@ -13,8 +13,21 @@
                         </div>
                     </div>
                     <br>
+                    <div class="row mb-2">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3"><i class="flaticon-search"></i></span>
+                                </div>
+                                <input class="form-control" v-model="search"/>
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="pesertas.data"  show-empty>
+                            <template v-slot:cell(no)="row">
+                                {{ ((page-1)*pesertas.per_page) + row.index+1}}
+                            </template>
                             <template v-slot:cell(reset)="row">
                                 <b-button :disabled="isLoading" size="sm" variant="danger" @click="resetPeserta(row.item.id)"><i class="flaticon-refresh"></i> reset api token</b-button>
                             </template>
@@ -36,6 +49,8 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                </div>
             </div>
         </div>
     </div>
@@ -43,16 +58,19 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
 import { successToas, errorToas} from '@/entities/notif'
+import _ from 'lodash'
 
 export default {
     name: 'DataPesertaReset',
     data() {
         return {
             fields: [
+                { key: 'no', label: '#'},
                 { key: 'no_ujian', label: 'No ujian', sortable: true },
                 { key: 'nama', label: 'Nama peserta', sortable: true },
                 { key: 'reset', label: 'Reset'}
             ],
+            search: '',
         }
     },
     computed: {
@@ -89,10 +107,22 @@ export default {
                     }
                 }
             })
+        },
+        async changeData() {
+            try {
+                await this.getPesertasLogin(this.search)
+            } catch (error) {
+                this.$bvToast.toast(error.message, errorToas())
+            }
         }
     },
     watch: {
-
+        search:  _.debounce(function (value) {
+			this.changeData()
+        }, 500),
+        page() {
+            this.changeData()
+        }
     },
     async created() {
         try {
