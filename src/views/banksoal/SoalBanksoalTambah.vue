@@ -32,7 +32,8 @@
                               <div class="card-body">
                                   <div class="table-responsive-md">
                                       <table class="table table-borderless" v-if="show_opsi">
-                                          <tr v-for="(pilih, index) in pilihan" :key="index" v-if="[1,2,3,4].includes(parseInt(tipe_soal))">
+                                          <template v-if="[1,2,3,4].includes(parseInt(tipe_soal))">
+                                          <tr v-for="(pilih, index) in pilihan" :key="index">
                                               <td width="10px" v-if="[1,2,3,4].includes(parseInt(tipe_soal))">
                                                   <b-form-radio name="correct" size="md" :value="index" v-model="correct" v-if="[1,3].includes(parseInt(tipe_soal))"><span class="text-uppercase">{{ index | charIndex }}</span></b-form-radio>
                                                   <div class="form-check" v-if="4 == parseInt(tipe_soal)">
@@ -53,7 +54,9 @@
                                                 </button>
                                               </td>
                                           </tr>
-                                          <tr v-for="(pilih, index) in options" :key="index" v-if="tipe_soal == 6">
+                                          </template>
+                                          <template v-if="tipe_soal == 6">
+                                          <tr v-for="(pilih, index) in options" :key="index">
                                               <td>
                                                   <transition name="fade">
                                                     <ckeditor v-model="options[index]" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
@@ -65,7 +68,9 @@
                                                 </button>
                                               </td>
                                           </tr>
-                                          <tr v-for="(pilih, index) in pairs" :key="index" v-if="tipe_soal == 5">
+                                          </template>
+                                          <template v-if="tipe_soal == 5">
+                                          <tr v-for="(pilih, index) in pairs" :key="index">
                                               <td>
                                                   <transition name="fade">
                                                     <ckeditor v-model="pairs[index]['a']" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
@@ -82,6 +87,7 @@
                                                 </button>
                                               </td>
                                           </tr>
+                                          </template>
                                           <tr>
                                             <td colspan="3">
                                               <button class="btn btn-sm btn-outline-primary rounded-0" title="Tambah pilihan" @click="addOpsi">
@@ -173,13 +179,16 @@
                                       <select class="form-control" v-model="layout">
                                           <option value="1">Jawaban kebawah</option>
                                           <option value="2">Jawaban 2 kolom (3x2)</option>
+                                          <option value="3">Jawaban kebawah (tabel)</option>
+                                          <option value="4">Soal kiri jawaban kanan</option>
                                       </select>
                                     </div>
                                 </div>
                                 <div>
-                                  <img style="max-width:200px;" src="/img/layout/layout-1.svg" v-show="layout == 1" />
-                                  <img style="max-width:200px;" src="/img/layout/layout-2.svg" v-show="layout == 2" />
-                                  <img style="max-width:200px;" src="/img/layout/layout-3.svg" v-show="layout == 3" />
+                                  <img style="max-width:200px;" src="/img/layout/l-1.svg" v-show="layout == 1" />
+                                  <img style="max-width:200px;" src="/img/layout/l-2.svg" v-show="layout == 2" />
+                                  <img style="max-width:200px;" src="/img/layout/l-3.svg" v-show="layout == 3" />
+                                  <img style="max-width:200px;" src="/img/layout/l-4.svg" v-show="layout == 4" />
                                 </div>
                               </div>
                           </div>
