@@ -24,7 +24,18 @@
                         </div>
                     </div>
                     <div class="table-responsive-md">
-                        <b-table striped hover bordered small :fields="fields" :items="pesertas.data"  show-empty>
+                        <b-table 
+                        striped 
+                        hover 
+                        bordered 
+                        small 
+                        :fields="fields" 
+                        :items="pesertas.data"  
+                        show-empty
+                        selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger">
                             <template v-slot:cell(no)="row">
                                 {{ ((page-1)*pesertas.per_page) + row.index+1}}
                             </template>
@@ -34,7 +45,18 @@
                         </b-table>
                         <div class="row mt-2" v-if="typeof pesertas.data != 'undefined' ">
                             <div class="col-md-6">
-                                <p><i class="fa fa-bars"></i> {{ pesertas.data.length }} item dari {{ pesertas.total }} total data</p>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="flaticon-list-3"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="flaticon2-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkResetPeserta">
+                                        <i class="flaticon2-trash"></i> Bulk reset peserta
+                                    </b-button>
+                                </div>
+                                <p><i class="fa fa-bars"></i> <b>{{ pesertas.data.length }}</b> peserta dari <b>{{ pesertas.total }}</b> total data peserta</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -71,6 +93,7 @@ export default {
                 { key: 'reset', label: 'Reset'}
             ],
             search: '',
+            selected: []
         }
     },
     computed: {
@@ -86,7 +109,38 @@ export default {
         }
     },
     methods: {
-        ...mapActions('peserta', ['getPesertasLogin', 'resetLoginPeserta']),
+        ...mapActions('peserta', ['getPesertasLogin', 'resetLoginPeserta','multiResetLoginPeserta']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
+        bulkResetPeserta() {
+            this.$swal({
+                title: 'Reset peserta',
+                text: 'Peserta yang dipilih akan logout otomatis saat berinteraksi dengan server',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c9c9ca',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then(async (result) => {
+                if (result.value) {
+                    try {
+                        await this.multiResetLoginPeserta(this.selected.map((item) => item.id).join(','))
+                        this.selected = []
+                        this.getPesertasLogin()
+                        this.$bvToast.toast('Login peserta berhasil direset', successToas())
+                    } catch (error) {
+                        this.$bvToast.toast(error.message, errorToas())
+                    }
+                }
+            })
+        },
         resetPeserta(id) {
             this.$swal({
                 title: 'Reset peserta',
