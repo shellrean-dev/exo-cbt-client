@@ -193,6 +193,21 @@ const actions = {
             })
         })
     },
+    multiResetLoginPeserta({ commit }, payload) {
+        commit('SET_LOADING',true, { root: true })
+
+        return new Promise(( resolve, reject ) => {
+            $axios.get(`pesertas/multi-reset-login?q=${payload}`)
+            .then((response) => {
+                commit('SET_LOADING',false, { root: true })
+                resolve(response.data)
+            })
+            .catch((error) => {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            })
+        })
+    },
     removePesertaMultiple({ commit }, payload) {
         commit('SET_LOADING', true, { root: true })
 
