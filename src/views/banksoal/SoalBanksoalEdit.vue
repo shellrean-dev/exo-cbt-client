@@ -168,13 +168,16 @@
                                         <select class="form-control" v-model="layout">
                                             <option value="1">Jawaban kebawah</option>
                                             <option value="2">Jawaban 2 kolom</option>
+                                            <option value="3">Jawaban kebawah (tabel)</option>
+                                            <option value="4">Soal kiri jawaban kanan</option>
                                         </select>
                                       </div>
                                   </div>
                                   <div>
-                                  <img style="max-width:200px;" src="/img/layout/layout-1.svg" v-show="layout == 1" />
-                                  <img style="max-width:200px;" src="/img/layout/layout-2.svg" v-show="layout == 2" />
-                                  <img style="max-width:200px;" src="/img/layout/layout-3.svg" v-show="layout == 3" />
+                                  <img style="max-width:200px;" src="/img/layout/l-1.svg" v-show="layout == 1" />
+                                  <img style="max-width:200px;" src="/img/layout/l-2.svg" v-show="layout == 2" />
+                                  <img style="max-width:200px;" src="/img/layout/l-3.svg" v-show="layout == 3" />
+                                  <img style="max-width:200px;" src="/img/layout/l-4.svg" v-show="layout == 4" />
                                 </div>
                         </div>
                     </div>
