@@ -4,11 +4,27 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'banksoal.soal', params: { banksoal_id: $route.params.banksoal_id } }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-                    <a :href="baseURL+'/download/format-input-soal-doc.docx'" class="btn btn-primary btn-sm" download>
-                        <i class="flaticon-download"></i> Download format
+                    <a :href="baseURL+'/download/format-input-soal-doc.docx'" class="btn btn-primary btn-sm mr-1" download>
+                        <i class="flaticon-download"></i> Download format 1
+                    </a>
+                    <a :href="baseURL+'/download/format-input-soal-doc-2.docx'" class="btn btn-primary btn-sm" download>
+                        <i class="flaticon-download"></i> Download format 2
                     </a>
                 </div>
                 <div class="card-body">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="flaticon-browser"></i></span>
+                                </div>
+                                <select class="custom-select" v-model="format">
+                                    <option value="1" selected>Format 1</option>
+                                    <option value="2" >Format 2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
@@ -42,6 +58,7 @@ export default {
             allow: ['docx'],
             label: '',
             file: '',
+            format: '1'
         }
     },
     computed: {
@@ -65,6 +82,7 @@ export default {
 
             let formData = new FormData()
             formData.append('file',this.file)
+            formData.append('format', this.format)
             this.uploadSoal({id: this.$route.params.banksoal_id, data: formData})
             .then((res) => {
                 this.file = ''
