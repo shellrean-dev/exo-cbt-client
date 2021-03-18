@@ -91,6 +91,20 @@ const actions = {
 			})
 		})
 	},
+	multipleDeleteSoal({ commit }, payload) {
+		return new Promise((resolve, reject) => {
+			commit('SET_LOADING',true, { root: true })
+			$axios.get(`soals/delete/multiple?q=${payload}`)
+			.then((response) => {
+				commit('SET_LOADING',false, { root: true })
+				resolve(response.data)
+			})
+			.catch((err) => {
+				commit('SET_LOADING',false, { root: true })
+				reject(err.response.data)
+			})
+		})
+	},
 	uploadSoal({ commit }, payload) {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async (resolve, reject) => {

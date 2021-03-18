@@ -76,7 +76,12 @@
                     <hr style="border-top: 1.9px dashed #ccc">
                     <template v-if="soals && typeof soals.data != 'undefined'">
                         <div class="table-responsive-md">
-                        <b-table striped hover bordered small :fields="fields" :items="soals.data" show-empty>
+                        <b-table striped hover bordered small :fields="fields" :items="soals.data" show-empty
+                        selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger"
+                        >
                         	<template v-slot:cell(index)="data">
     				        	{{ from+data.index }}
     				      	</template>
@@ -134,7 +139,18 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <p v-if="soals.data"><i class="fa fa-bars"></i> {{ soals.data.length }} item dari {{ soals.total }} total data</p>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="flaticon-list-3"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="flaticon2-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkRemove">
+                                        <i class="flaticon2-trash"></i> Bulk remove
+                                    </b-button>
+                                </div>
+                                <p v-if="soals.data"><i class="fa fa-bars"></i> {{ soals.data.length }} soal dari {{ soals.total }} total soal</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
@@ -189,6 +205,7 @@ export default {
 			search: '',
             isBusy: true,
             tipe_soal: '',
+            selected: []
 		}
 	},
 	computed: {
@@ -207,17 +224,54 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('soal',['getSoals','removeSoal']),
+        ...mapActions('soal',['getSoals','removeSoal','multipleDeleteSoal']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
+        bulkRemove() {
+            this.$swal({
+                title: 'Informasi',
+                text: "Tindakan ini akan menghapus soal secara permanent, pastikan soal tidak digunakan untuk ujian",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c9c9ca',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then((result) => {
+                if (result.value) {
+                    this.multipleDeleteSoal(this.selected.map((item) => item.id).join(','))
+                    .then((res) => {
+                        this.getAllSoal({ search: this.search, perPage: this.perPage })
+                        this.$bvToast.toast('Data soal berhasil dihapus.', successToas())
+                    })
+                    .catch((error) => {
+                        this.$bvToast.toast(error.message, errorToas())
+                    })
+                }
+            })
+        },
 		getAllSoal(payload) {
+            this.selected = []
+            this.isBusy = true
 			this.getSoals({ search: payload.search, perPage: payload.perPage, banksoal_id: this.$route.params.banksoal_id, type: payload.type })
             .then(() => {
                 this.isBusy = false
+            })
+            .catch((error) => {
+                this.isBusy = false
+                this.$bvToast.toast(error.message, errorToas())
             })
 		},
 		deleteBanksoal(id) {
 			this.$swal({
                 title: 'Informasi',
-                text: "Tindakan ini akan menghapus secara permanent!",
+                text: "Tindakan ini akan menghapus soal secara permanent, pastikan soal tidak digunakan untuk ujian",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
