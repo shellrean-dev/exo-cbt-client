@@ -57,22 +57,31 @@
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="filteredList" show-empty>
                             <template v-slot:cell(show_details)="row">
-                                <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
+                                <b-button size="sm"
+                                v-if="[0,3].includes(parseInt(row.item.status_ujian))"
+                                @click="row.toggleDetails" 
+                                :variant="row.detailsShowing ? 'danger' : 'info'"><i 
+                                :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'"
+                                /></b-button>
                             </template>
                             <template v-slot:cell(no)="row">
                                 {{ row.index+1 }}
                             </template>
                             <template v-slot:row-details="row">
                                 <b-card>
-                                    <b-input-group size="sm" v-if="[0,3].includes(row.item.status_ujian)">
-                                        <b-form-input
-                                        placeholder="Waktu dalam menit"
-                                        v-model="row.item.addTime"
-                                        ></b-form-input>
-                                        <b-input-group-append>
-                                        <b-button @click="addMoreTime(row.item.addTime, row.item.peserta_id); row.item.addTime = ''" :disabled="isLoading">Tambah</b-button>
-                                        </b-input-group-append>
-                                    </b-input-group>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <b-input-group size="sm" v-if="[0,3].includes(parseInt(row.item.status_ujian))">
+                                                <b-form-input
+                                                placeholder="Waktu dalam menit"
+                                                v-model="row.item.addTime"
+                                                ></b-form-input>
+                                                <b-input-group-append>
+                                                <b-button @click="addMoreTime(row.item.addTime, row.item.peserta_id); row.item.addTime = ''" :disabled="isLoading">Tambah</b-button>
+                                                </b-input-group-append>
+                                            </b-input-group>
+                                        </div>
+                                    </div>
                                 </b-card>
                             </template>
                             <template v-slot:cell(status)="row">
@@ -88,6 +97,7 @@
                         </b-table>
                     </div>
                 </div>
+                <div class="card-footer"></div>
             </div>
         </div>
     </div>

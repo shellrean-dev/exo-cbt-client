@@ -87,6 +87,8 @@
             </b-table>
           </div>
         </div>
+        <div class="card-footer">
+        </div>
       </div>
     </div>
     <b-modal id="modal-group" noCloseOnBackdrop title="Tambah grup">

@@ -15,6 +15,7 @@
 						<table class="table table-sm table-bordered table-hover table-striped">
 							<thead>
 								<tr>
+									<th>#</th>
 									<th>Nama ujian</th>
 									<th>Tanggal</th>
 									<th>Mulai</th>
@@ -22,8 +23,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="jadwal in jadwals" :key="jadwal.id">
-									<td>{{ jadwal.alias }}
+								<tr v-for="(jadwal, index) in jadwals" :key="jadwal.id">
+									<td>{{ index+1 }}</td>
+									<td>{{ jadwal.alias }}</td>
 									<td>{{ jadwal.tanggal }}</td>
 									<td>{{ jadwal.mulai }}</td>
 									<td>

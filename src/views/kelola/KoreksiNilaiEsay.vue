@@ -15,6 +15,9 @@
                     <br>
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="esies.data" show-empty>
+                            <template v-slot:cell(no)="row">
+                                {{ ((page-1)*esies.per_page) + row.index+1}}
+                            </template>
                             <template v-slot:cell(show_details)="row">
                                 <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
@@ -82,6 +85,8 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                </div>
             </div>
         </div>
     </div>
@@ -95,6 +100,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'no', label: '#' },
                 { key: 'show_details', label: 'Detail' },
             ],
             val: 0

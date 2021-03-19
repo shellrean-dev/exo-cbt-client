@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="table-responsive-md" v-if="typeof banksoals.data != 'undefined'">
-                        <b-table striped hover bordered small :fields="fields" :items="banksoals.data" show-empty>
+                        <b-table striped hover bordered small :fields="fields" :items="banksoals.data" show-empty class="mb-2">
                             <template v-slot:cell(no)="row">
                                 {{ row.index+1 }}
                             </template>
@@ -85,6 +85,8 @@
                             Loading...
                         </div>
                     </template>
+                </div>
+                <div class="card-footer">
                 </div>
             </div>
         </div>
