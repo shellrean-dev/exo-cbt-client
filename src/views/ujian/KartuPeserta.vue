@@ -78,7 +78,7 @@
                         <template v-for="(jadwal,index) in event_jadwal.jadwal">
                           <tr v-if="checkSesi(peserta, jadwal) != 0" :key="index">
                             <td>{{ jadwal.tanggal }}</td>
-                            <td>{{ jadwal.mulai }}</td>
+							<td>{{ getWaktuMulai(peserta, jadwal) }}
                             <td>{{ jadwal.name }}</td>
                             <td>
                               {{  checkSesi(peserta, jadwal) }}
@@ -181,12 +181,19 @@ export default {
       this.$htmlToPaper('printKartu');
     },
     checkSesi(peserta, jadwal) {
-      let sesi_jadwal = jadwal.sesi.find((sesi) => { return sesi.peserta.includes(peserta.id) })
+      	let sesi_jadwal = jadwal.sesi.find((sesi) => { return sesi.peserta.includes(peserta.id) })
 	    if(typeof sesi_jadwal != 'undefined') {
 		    return sesi_jadwal.sesi;
 	    }
 	    return 0
     },
+	getWaktuMulai(peserta, jadwal) {
+		let sesi_jadwal = jadwal.sesi.find((sesi) => { return sesi.peserta.includes(peserta.id) })
+	    if(typeof sesi_jadwal != 'undefined') {
+			return jadwal.mulai_sesi[parseInt(sesi_jadwal.sesi)-1]
+	    }
+	    return '-'
+	},
     chunk(arr, size) {
 	    return Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => { return arr.slice(i * size, i * size + size) });
     }

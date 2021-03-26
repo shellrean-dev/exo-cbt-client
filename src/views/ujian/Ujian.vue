@@ -235,6 +235,36 @@
 	                </div>
 	              </draggable>
 		    	</div>
+				<div class="col-md-12" v-if="data.event_id">
+					<hr>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Jam masuk sesi 1</label>
+								<datetime inputId="mulai1" v-model="data.mulai_sesi[0]" input-class="form-control" type="time" value-zone="Asia/Jakarta"></datetime>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Jam masuk sesi 2</label>
+								<datetime inputId="mulai2" v-model="data.mulai_sesi[1]" input-class="form-control" type="time" value-zone="Asia/Jakarta"></datetime>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Jam masuk sesi 3</label>
+								<datetime inputId="mulai3" v-model="data.mulai_sesi[2]" input-class="form-control" type="time" value-zone="Asia/Jakarta"></datetime>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Jam masuk sesi 4</label>
+								<datetime inputId="mulai4" v-model="data.mulai_sesi[3]" input-class="form-control" type="time" value-zone="Asia/Jakarta"></datetime>
+							</div>
+						</div>
+					</div>
+					<div class="mt-2 alert alert-info">Jam masuk sesi tidak akan berpengaruh terhadap waktu ujian, ini hanya akan tampil pada kartu peserta</div>
+				</div>
             </div>
 		    <template v-slot:modal-footer="{ cancel }">
 		      <b-button size="sm" variant="primary" @click="postUjian" :disabled="isLoading">
@@ -323,7 +353,13 @@ export default {
                         { name: "Isian Singkat", id: 6},
 		                { name: "Uraian", id: 2 },
 		            ],
-				}
+				},
+				mulai_sesi: [
+					'',
+					'',
+					'',
+					''	
+				]
 			},
 			event: {
 				name: ''
@@ -381,7 +417,8 @@ export default {
 						lama: this.data.lama,
 						tanggal: this.data.tanggal,
 						event_id: this.data.event_id,
-						setting: this.data.setting
+						setting: this.data.setting,
+						mulai_sesi: this.data.mulai_sesi,
 					})
 
 					this.$bvToast.toast('Jadwal berhasil ditambahkan.', successToas())
@@ -426,8 +463,14 @@ export default {
                     { name: "Menjodohkan", id: 5},
                     { name: "Isian Singkat", id: 6},
 		            { name: "Uraian", id: 2 },
-		    ],
-			}
+		    	],
+			},
+			this.mulai_sesi = [
+				'',
+				'',
+				'',
+				''	
+			]
 		},
 		seterStatus(id,status) {
 			this.setStatus({
@@ -483,6 +526,7 @@ export default {
 				this.data.alias = provider.alias
 				this.data.setting = provider.setting
 				this.update = id,
+				this.data.mulai_sesi = provider.mulai_sesi
 
 				this.$bvModal.show('modal-scoped')
 			} catch (error) {
