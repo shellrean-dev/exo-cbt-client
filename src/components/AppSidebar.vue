@@ -24,7 +24,7 @@
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
               <router-link class="c-sidebar-nav-link" :to="{ name: 'jurusan.data' }"
-              :class="[currentPage.includes('jurusan.data') ? activeClass : '']"> 
+              :class="[currentPage.includes('jurusan.data') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> Jurusan
               </router-link>
             </li>
@@ -37,25 +37,31 @@
 
             <li class="c-sidebar-nav-item" >
               <router-link class="c-sidebar-nav-link" :to="{ name: 'matpel.data' }"
-              :class="[currentPage.includes('matpel.data') ? activeClass : '']"> 
+              :class="[currentPage.includes('matpel.data') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> Matpel
               </router-link>
             </li>
             <li class="c-sidebar-nav-item" >
               <router-link class="c-sidebar-nav-link" :to="{ name: 'guru.data' }"
-              :class="[currentPage.includes('guru.data') ? activeClass : '']"> 
+              :class="[currentPage.includes('guru.data') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> User
               </router-link>
             </li>
             <li class="c-sidebar-nav-item" >
               <router-link class="c-sidebar-nav-link" :to="{ name: 'grup.data' }"
-              :class="[currentPage.includes('grup.data') ? activeClass : '']"> 
+              :class="[currentPage.includes('grup.data') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> Grup
+              </router-link>
+            </li>
+            <li class="c-sidebar-nav-item" >
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'agama.data' }"
+              :class="[currentPage.includes('agama.data') ? activeClass : '']"> 
+                <span class="c-sidebar-nav-icon"></span> Agama
               </router-link>
             </li>
           </ul>
         </li>
-        
+
          <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }"
           :class="[currentPage.includes('banksoal.data') ? activeClass : '']">
@@ -149,7 +155,7 @@
         </li>
         <li class="c-sidebar-nav-item">
           <a class="c-sidebar-nav-link" href="#" @click.prevent="logout">
-            <i class="mr-3 flaticon-logout"></i> 
+            <i class="mr-3 flaticon-logout"></i>
             Logout
           </a>
         </li>
@@ -202,11 +208,11 @@ export default {
         await this.getSettingSekolah()
       } catch (error) {
         this.$bvToast.toast(error.message, errorToas())
-      }  
+      }
     }
   }
 }
 </script>
 <style type="text/css">
-  
+
 </style>
