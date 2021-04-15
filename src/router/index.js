@@ -74,6 +74,9 @@ const DetailJawabanSiswa = () => import('@/views/kelola/DetailJawabanSiswa')
 import GroupIndex from '@/views/grup/Index'
 const DataGrup = () => import('@/views/grup/Grup')
 
+import AgamaIndex from '@/views/agama/Index'
+const DataAgama = () => import('@/views/agama/Agama')
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -442,6 +445,18 @@ const routes = [
         path: '',
         name: 'grup.data',
         component: DataGrup
+      }
+    ]
+  },
+  {
+    path: '/agama',
+    component: AgamaIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'agama.data',
+        component: DataAgama
       }
     ]
   }
