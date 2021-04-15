@@ -19,14 +19,14 @@
 
           </div>
           <div class="table-responsive-md">
-            <b-table 
+            <b-table
             striped hover bordered small show-empty
-            :fields="fields" 
+            :fields="fields"
             :items="groupping"
             >
               <template v-slot:cell(show_details)="row">
-                <b-button size="sm" 
-                @click="row.toggleDetails" 
+                <b-button size="sm"
+                @click="row.toggleDetails"
                 :variant="row.detailsShowing ? 'danger' : 'info'">
                   <i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" />
                 </b-button>
@@ -104,13 +104,13 @@
         </select>
       </div>
       <template v-slot:modal-footer="{  }">
-		    <b-button size="sm" variant="primary" 
-        @click="submit" 
+		    <b-button size="sm" variant="primary"
+        @click="submit"
         :disabled="isLoading">
 		      {{ isLoading ? 'Processing...' : 'Simpan' }}
 		    </b-button>
-		    <b-button size="sm" variant="secondary" 
-        @click="close()" 
+		    <b-button size="sm" variant="secondary"
+        @click="close()"
         :disabled="isLoading">
 		      Cancel
 		    </b-button>
@@ -128,17 +128,17 @@
         v-model="str_no_ujian"
         >
         <div class="input-group-append">
-          <button class="btn btn-primary" type="button" 
-          :disabled="isLoading" 
+          <button class="btn btn-primary" type="button"
+          :disabled="isLoading"
           @click="addMultipleMember()">
             <i class="flaticon-app"></i> Tambahkan
           </button>
         </div>
       </div>
-      <b-table 
+      <b-table
       ref="selectableTable"
       striped hover bordered small show-empty
-      :fields="fields2" 
+      :fields="fields2"
       :items="filteredMembers"
       selectable
       @row-selected="onRowSelected"
@@ -156,15 +156,15 @@
         </template>
       </b-table>
       <div class="btn-group" role="group" aria-label="Basic example">
-        <b-button variant="outline-dark" size="sm" 
+        <b-button variant="outline-dark" size="sm"
         @click="selectAllRows">
           <i class="flaticon-list-3"></i> Select all
         </b-button>
-        <b-button variant="outline-dark" size="sm" 
+        <b-button variant="outline-dark" size="sm"
         @click="clearSelected">
           <i class="flaticon2-reload"></i> Clear selected
         </b-button>
-        <b-button variant="outline-danger" size="sm" 
+        <b-button variant="outline-danger" size="sm"
         @click="bulkRemove">
           <i class="flaticon2-trash"></i> Bulk remove
         </b-button>
@@ -229,7 +229,7 @@ export default {
       if (!this.groups) {
         return []
       }
-      return this.groups.filter((item) => item.parent_id == 0)
+      return this.groups.filter((item) => item.parent_id == 0 || item.parent_id == null)
     },
     filteredMembers() {
       if (!this.members) {
