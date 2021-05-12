@@ -14,6 +14,7 @@ import ujian from './ujian'
 import event from './event'
 import setting from './setting'
 import grup from './grup'
+import feature from './feature'
 
 Vue.use(Vuex)
 
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     ujian,
     event,
     setting,
-    grup
+    grup,
+    feature
   },
   state: {
     errors: [],

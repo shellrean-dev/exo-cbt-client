@@ -10,14 +10,14 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>ID</th>
+                <th>Kode</th>
                 <th>Nama</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(agama, index) in agamas">
                 <td width="50px">{{ index +1 }}</td>
-                <td width="280px">{{ agama.id }}</td>
+                <td width="280px">{{ agama.kode }}</td>
                 <td>{{ agama.nama }}</td>
               </tr>
             </tbody>

@@ -140,7 +140,7 @@
 		      <h5>Setting ujian</h5>
 		    </template>
 		    <div class="form-group">
-				<label>Event</label>
+				<label>Event (optional) <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('form_setting_ujian_event')"><i class="flaticon-info"></i></button></label>
 				<v-select label="name" :options="events" v-model="data.event_id" :reduce="name => name.id"></v-select>
 				<small class="text-danger" v-if="errors.event_id">{{ errors.event_id[0] }}</small>
 			</div>
@@ -293,6 +293,18 @@
 		      </b-button>
 		    </template>
 		</b-modal>
+
+		<b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
 	</div>
 </template>
 <script>
@@ -380,6 +392,7 @@ export default {
 			ujians: state => state.ujians
 		}),
 		...mapState('event', { events: state => state.events_all }),
+		...mapState('feature',['feature_info']),
 		...mapState('banksoal', {
 			banksoals: state => state.allBanksoals
 		}),
@@ -396,6 +409,7 @@ export default {
 		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken', 'removeUjian', 'getUjianById', 'updateUjian']),
 		...mapActions('event',['addEvent','getAllEvents']),
 		...mapActions('banksoal', ['getAllBanksoals']),
+		...mapActions('feature', ['getFeatureInfo']),
 		async postUjian() {
 			if(this.update != 0) {
 				try {
@@ -532,6 +546,12 @@ export default {
 			} catch (error) {
 				this.$bvToast.toast(error.message, errorToas())
 			}
+		},
+		featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
 		}
 	},
 	watch: {

@@ -8,6 +8,12 @@ const $axios = axios.create({
     },
 })
 
+const $v3 = axios.create({
+    headers: {
+        'Accept': 'application/json'
+    },
+})
+
 const $axios2 = axios.create({
     headers: {
         'Accept': 'application/vnd.openxmlformats-officedocument'
@@ -20,6 +26,17 @@ $axios.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
         config.url = store.state.baseURL+'/api/v1/' + config.url
+        return config;
+    },
+    function ( error ) {
+        return Promise.reject( error )
+    }
+)
+
+$v3.interceptors.request.use (
+    function ( config ) {
+        config.headers.Authorization = 'Bearer '+store.state.token;
+        config.url = store.state.baseURL+'/api/v3/' + config.url
         return config;
     },
     function ( error ) {
@@ -55,5 +72,23 @@ $axios.interceptors.response.use(
       return Promise.reject(error);
     }
 )
-export { $axios2, $axios }
+
+$v3.interceptors.response.use(
+    (response) => {
+        return response
+    }, 
+    (error) => {
+      if (error.response.status == 401) {
+        new Promise((resolve, reject) => {
+            delete localStorage.token
+            resolve()
+        }).then(() => {
+            store.state.token = localStorage.getItem('token')
+            router.push({ name: 'login' })
+        })
+      }
+      return Promise.reject(error);
+    }
+)
+export { $axios2, $axios, $v3 }
 export default $axios
