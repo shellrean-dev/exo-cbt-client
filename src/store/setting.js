@@ -5,6 +5,8 @@ const state = () => ({
     set_sekolah: {},
     set_airlock: {},
     set_ujian: {},
+    set_token: {},
+    set_public: {},
     auth: {}
 })
 
@@ -35,6 +37,19 @@ const mutations = {
                 text_welcome: payload.value.text_welcome,
                 text_finish: payload.value.text_finish
             },
+            type: 'general'
+        }
+    },
+    ASSIGN_SETTING_PUBLIC(state, payload) {
+        state.set_public = {
+            logo: payload.logo,
+            sekolah_name: payload.sekolah_name
+        }
+    },
+    ASSIGN_SETTING_TOKEN(state, payload) {
+        state.set_token = {
+            name: 'token',
+            value: payload.value,
             type: 'general'
         }
     },
@@ -151,11 +166,55 @@ const actions = {
             }
         })
     },
-     setSettingUjian({ commit, state }) {
+    setSettingUjian({ commit, state }) {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async(resolve, reject) => {
             try {
                 let network = await $axios.post('settings', state.set_ujian)
+
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    getSettingPublic({ commit }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.get(`settings-public-sekolah`)
+
+                commit('ASSIGN_SETTING_PUBLIC', network.data.data)
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    getSettingToken({ commit }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.get(`settings?setting=token`)
+
+                commit('ASSIGN_SETTING_TOKEN', network.data.data)
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    setSettingUjian({ commit, state }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.post('settings', state.set_token)
 
                 commit('SET_LOADING', false, { root: true })
                 resolve(network.data)

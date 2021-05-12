@@ -30,6 +30,13 @@
                                 <input type="text" v-model="data.nama_sekolah" class="form-control">
                             </div>
                             <div class="form-group">
+                                <label>Tingkat</label>
+                                <select name="tingkat" id="tingkat" v-model="data.tingkat" class="form-control">
+                                    <option value="SMP">SMP</option>
+                                    <option value="SMK-SMA">SMK/SMA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>Email</label>
                                 <input type="email" v-model="data.email" class="form-control">
                             </div>
@@ -79,7 +86,8 @@ export default {
                 email: '',
                 alamat: '',
                 kepala_sekolah: '',
-                nip_kepsek: ''
+                nip_kepsek: '',
+                tingkat: ''
             }
         }
     },
@@ -96,7 +104,8 @@ export default {
                 email: provider.value.email,
                 alamat: provider.value.alamat,
                 kepala_sekolah: provider.value.kepala_sekolah,
-                nip_kepsek: provider.value.nip_kepsek
+                nip_kepsek: provider.value.nip_kepsek,
+                tingkat: provider.value.tingkat
             }
         },
         async store() {

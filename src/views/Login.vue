@@ -9,10 +9,10 @@
                 <div>
                   <div class="d-flex align-items-center">
                     <div style="background-color: #373752" class="py-2 px-2 rounded mr-3 align-self-start">
-                      <img src="/img/logo.png" style="max-height: 46px"/>
+                      <img :src="set_public.logo ? set_public.logo : '/img/logo.png'" style="max-height: 46px"/>
                     </div>
                     <div >
-                      <h4>Extraordinary-CBT Login</h4>
+                      <h4>{{ set_public.sekolah_name ? set_public.sekolah_name : 'Extraordinary-CBT Login' }}</h4>
                       <p class="text-muted">Selamat datang di aplikasi pengelola ujian. Masukkan email dan password</p>
                     </div>
                   </div>
@@ -92,14 +92,15 @@ export default {
   computed: {
     ...mapGetters(['isAuth','isLoading','baseURL']),
     ...mapState('setting', {
-      auth: state => state.auth
+      auth: state => state.auth,
+      set_public: state => state.set_public
     }),
     ...mapState(['errors'])
   },
   methods: {
     ...mapActions('auth', ['submit']),
     ...mapActions('user',['getUserLogin']),
-    ...mapActions('setting', ['getSetAuth','getSettingSekolah']),
+    ...mapActions('setting', ['getSetAuth','getSettingSekolah', 'getSettingPublic']),
     async postLogin() {
       try {
         let provider = await this.submit(this.data)
@@ -118,6 +119,7 @@ export default {
   created() {
     let d = new Date()
     this.year = d.getFullYear()
+    this.getSettingPublic()
   },
   watch: {
     auth() {

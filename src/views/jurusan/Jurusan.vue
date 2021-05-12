@@ -65,6 +65,9 @@
                         ref="selectableTable"
                         selected-variant="danger"
                         >
+                        <template v-slot:cell(no)="row">
+                            {{ row.index+1 }}
+                        </template>
                         <template v-slot:cell(actions)="row">
                             <b-button variant="warning" size="sm" class="mr-1" :to="{ name: 'jurusan.edit', params: { id: row.item.id } }" :disabled="isLoading">
                                 <i class="flaticon-edit"></i> Edit
@@ -130,7 +133,8 @@ export default {
               name: 'flip-list'
             },
             fields: [
-               { key: 'id', label: 'ID Jurusan', sortable: true },
+               { key: 'no', label: '#'},
+               { key: 'kode', label: 'Kode Jurusan', sortable: true },
                { key: 'nama', label: 'Nama', sortable: true },
                { key: 'actions', label: 'Aksi' } 
             ],

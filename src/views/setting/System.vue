@@ -8,11 +8,18 @@
                 <div class="card-body">
                 	<div class="row">
                 		<div class="col-md-4">
-							<table class="table table-bordered table-sm">
+							<table class="table table-bordered">
 								<tr>
 									<td>
 										<router-link :to="{ name: 'system.ujian' }" class="link">
 		                       				Ujian
+		                      			</router-link>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<router-link :to="{ name: 'system.token' }" class="link">
+		                       				Token
 		                      			</router-link>
 									</td>
 								</tr>

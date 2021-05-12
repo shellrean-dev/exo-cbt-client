@@ -12,6 +12,7 @@ const SetSystem = () => import( '@/views/setting/System')
 const SetAirlock = () => import( '@/views/setting/Airlock')
 const SetG2fk = () => import( '@/views/setting/G2fk')
 const SetUjian = () => import( '@/views/setting/Ujian')
+const SetToken = () => import( '@/views/setting/Token')
 
 import JurusanIndex from '@/views/jurusan/Index'
 const DataJurusan = () => import( '@/views/jurusan/Jurusan')
@@ -130,6 +131,12 @@ const routes = [
         name: 'system.ujian',
         component: SetUjian,
         meta: { title: 'Setting ujian' }
+      },
+      {
+        path: 'token',
+        name: 'system.token',
+        component: SetToken,
+        meta: { title: 'Setting token' }
       }
     ]
   },
