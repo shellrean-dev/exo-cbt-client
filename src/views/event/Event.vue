@@ -3,9 +3,12 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					<b-button variant="primary" size="sm" @click="$bvModal.show('modal-scoped-event')">
-						Tambah event ujian
-					</b-button>
+					<div class="d-flex justify-content-between">
+						<b-button variant="primary" size="sm" @click="$bvModal.show('modal-scoped-event')">
+							Tambah event ujian
+						</b-button>
+						<button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_event_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -207,6 +210,17 @@
 		      	</b-button>
 		    </template>
 		</b-modal>
+		<b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
 	</div>
 </template>
 <script>
@@ -246,6 +260,7 @@ export default {
 	},
 	computed: {
 		...mapState(['isLoading','baseURL']),
+		...mapState('feature',['feature_info']),
 		...mapState('event', {
 			events: state => state.events
 		}),
@@ -260,6 +275,7 @@ export default {
 	},
 	methods: {
 		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi', 'copySesiFromDefault', 'getLinkPDFBeritaAcara','getLinkPDFAbsensi']),
+		...mapActions('feature', ['getFeatureInfo']),
 		close() {
 			this.$bvModal.hide('modal-scoped-event')
 			this.update = 0
@@ -390,6 +406,12 @@ export default {
 			} catch(e) {
 				this.$bvToast.toast(e.message, errorToas())
 			}
+		},
+		featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
 		}
 	},
 	async created() {

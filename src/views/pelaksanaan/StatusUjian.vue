@@ -3,7 +3,10 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					Ujian yang dilaksanakan
+					<div class="d-flex justify-content-between">
+						<span>Ujian yang dilaksanakan</span>
+						<button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_jurusan_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
 				</div>
 				<div class="card-body">
 					<div class="mb-2">
@@ -53,6 +56,17 @@
 				</div>
 			</div>
 		</div>
+		<b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
 	</div>
 </template>
 <script>
@@ -68,6 +82,7 @@ export default {
 	},
 	computed: {
 		...mapGetters(['isLoading']),
+		...mapState('feature',['feature_info']),
 		...mapState('ujian', {
 			jadwals: state => state.ujianActive,
 			token: state => state.token
@@ -77,6 +92,7 @@ export default {
 		...mapActions('ujian' ,[
 			'getUjianActive', 'changeSesi', 'getToken', 'rilisToken'
 		]),
+		...mapActions('feature', ['getFeatureInfo']),
 		async rilis() {
 			try {
 				await this.rilisToken()
@@ -94,6 +110,12 @@ export default {
 			} catch (error) {
 				this.$bvToast.toast(error.message, errorToas())	
 			}
+		},
+		featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
 		}
 	},
 	async created() {

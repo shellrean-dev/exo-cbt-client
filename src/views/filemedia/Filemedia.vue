@@ -3,7 +3,10 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-header">
-					Daftar direktori tersedia
+					<div class="d-flex justify-content-between">
+						<span>Daftar direktori tersedia</span>
+						<button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_filemedia_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive-md" v-if="typeof directories.data != 'undefined'">
@@ -41,6 +44,17 @@
 				<div class="card-footer"></div>
 			</div>
 		</div>
+		<b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
 	</div>
 </template>
 <script>
@@ -65,6 +79,7 @@ export default {
 	},
 	computed: {
 		...mapState(['isLoading']),
+		...mapState('feature',['feature_info']),
 		...mapState('filemedia', {
 			directories: state => state.directories
 		}),
@@ -79,11 +94,18 @@ export default {
 	},
 	methods: {
 		...mapActions('filemedia',['getDirectories','addDirectory']),
+		...mapActions('feature', ['getFeatureInfo']),
 		bytesToSize(bytes) {
 		   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 		   if (bytes == 0) return '0 Byte';
 		   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 		   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+		},
+		featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
 		}
 	},
 	watch: {

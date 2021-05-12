@@ -3,8 +3,13 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <router-link :to="{ name: 'banksoal.data' }" class="btn btn-light btn-sm mr-1 mt-1">Kembali</router-link>
-                    <router-link :to="{ name: 'banksoal.soal.tambah', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah soal</router-link>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <router-link :to="{ name: 'banksoal.data' }" class="btn btn-light btn-sm mr-1 mt-1">Kembali</router-link>
+                            <router-link :to="{ name: 'banksoal.soal.tambah', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah soal</router-link>
+                        </div>
+                        <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_soal_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -175,6 +180,17 @@
                 </div>
             </div>
         </div>
+        <b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
    </div>
 </template>
 <script>
@@ -210,6 +226,7 @@ export default {
 	},
 	computed: {
         ...mapGetters(['isLoading', 'baseURL']),
+        ...mapState('feature',['feature_info']),
 		...mapState('soal', {
             soals: state => state.soals,
             from: state => state.from
@@ -225,6 +242,7 @@ export default {
 	},
 	methods: {
         ...mapActions('soal',['getSoals','removeSoal','multipleDeleteSoal']),
+        ...mapActions('feature', ['getFeatureInfo']),
         onRowSelected(items) {
             this.selected = items
         },
@@ -297,7 +315,13 @@ export default {
         getTextParse(text, v) {
             const data = JSON.parse(text)
             return data[v].text
-        }
+        },
+        featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
+		}
 	},
 	watch: {
         page() {

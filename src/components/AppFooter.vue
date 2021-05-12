@@ -1,5 +1,5 @@
 <template>
-    <footer class="c-footer">
+    <footer class="c-footer bg-white">
         <div>&copy; {{ year }} <a href="">Extraordinary-CBT</a></div>
      </footer>
 </template>

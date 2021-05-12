@@ -3,10 +3,15 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <button class="btn btn-primary btn-sm"
-          @click="$bvModal.show('modal-group')"
-          >Tambah grup</button>
-    		</div>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-primary btn-sm"
+            @click="$bvModal.show('modal-group')"
+            >Tambah grup</button>
+            <button class="btn-sm btn btn-white" title="Informasi" 
+            @click="featureInfo('page_grup_tabel')"
+            ><i class="flaticon-info"></i></button>
+          </div>
+        </div>
         <div class="card-body">
           <div class="row">
             <div class="col-sm-5">
@@ -170,29 +175,40 @@
         </b-button>
       </div>
       <template v-slot:modal-footer="{ cancel }">
-				<b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
-		      Tutup
-		    </b-button>
-		  </template>
+        <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+          Tutup
+        </b-button>
+      </template>
     </b-modal>
     <b-modal id="modal-import-group-member" noCloseOnBackdrop title="Import Anggota grup">
       <div class="form-group">
-				<div class="input-group">
-					<div class="custom-file">
-						<input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
-						<label class="custom-file-label" for="inputGroupFile04">{{ label ? label : 'Pilih file excel...' }}</label>
-					</div>
-					<div class="input-group-append">
-						<button class="btn btn-success" type="button" :disabled="isLoading" @click="submitImportGroupMember">{{ isLoading ? 'Processing...' : 'Upload' }}</button>
-					</div>
-				</div>
-				<a :href="baseURL+`/download/format-group-member-import.xlsx`" download>Download format</a>
-			</div>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
+            <label class="custom-file-label" for="inputGroupFile04">{{ label ? label : 'Pilih file excel...' }}</label>
+          </div>
+          <div class="input-group-append">
+            <button class="btn btn-success" type="button" :disabled="isLoading" @click="submitImportGroupMember">{{ isLoading ? 'Processing...' : 'Upload' }}</button>
+          </div>
+        </div>
+        <a :href="baseURL+`/download/format-group-member-import.xlsx`" download>Download format</a>
+      </div>
       <template v-slot:modal-footer="{ cancel }">
-			  <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
-		    	Tutup
-		    </b-button>
-		  </template>
+        <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+          Tutup
+        </b-button>
+      </template>
+    </b-modal>
+    <b-modal id="modal-feature-info" size="lg">
+      <template v-slot:modal-header="{ close }">
+        <h5>Informasi Fitur</h5>
+      </template>
+      <div v-html="feature_info.content"></div>
+      <template v-slot:modal-footer="{ cancel }">
+        <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+          Cancel
+        </b-button>
+      </template>
     </b-modal>
   </div>
 </template>
@@ -224,6 +240,7 @@ export default {
   computed: {
     ...mapState(['baseURL']),
     ...mapGetters(['isLoading']),
+    ...mapState('feature',['feature_info']),
     ...mapState('grup', ['group','groups','members']),
     groupping() {
       if (!this.groups) {
@@ -250,6 +267,9 @@ export default {
       'importMultipleGroupMember',
       'deleteGroupMemberById',
       'deleteMultipleGroupMember'
+    ]),
+    ...mapActions('feature', [
+      'getFeatureInfo'
     ]),
     onRowSelected(items) {
       this.selected = items
@@ -396,7 +416,7 @@ export default {
     },
     onFileChange(e) {
       this.label = e.target.files[0].name
-			this.file = e.target.files[0]
+      this.file = e.target.files[0]
     },
     async submitImportGroupMember() {
       try {
@@ -413,6 +433,12 @@ export default {
       } catch (e) {
         this.$bvToast.toast(e.message, errorToas())
       }
+    },
+    featureInfo(name) {
+      this.getFeatureInfo(name)
+      .then(() => {
+        this.$bvModal.show('modal-feature-info')
+      })
     }
   },
   created() {

@@ -3,7 +3,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Peserta ujian
+                    <div class="d-flex justify-content-between">
+                        <span>Peserta ujian</span>
+                        <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_jurusan_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -100,6 +103,17 @@
                 <div class="card-footer"></div>
             </div>
         </div>
+        <b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
     </div>
 </template>
 <script>
@@ -128,6 +142,7 @@ export default {
     },
     computed: {
         ...mapGetters(['isLoading']),
+        ...mapState('feature',['feature_info']),
         ...mapState('ujian', {
             jadwals: state => state.ujianActive,
             pesertas: state => state.pesertas
@@ -142,6 +157,7 @@ export default {
     },
     methods: {
         ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive','addMoreTimeUjianSiswa']),
+        ...mapActions('feature', ['getFeatureInfo']),
         async resetPeserta(id) {
             if(this.jadwal == 0) {
                 this.$swal({
@@ -232,7 +248,13 @@ export default {
         },
         getText(i) {
             return this.textStatus[i]
-        }
+        },
+        featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
+		}
     },
     async created() {
         try {

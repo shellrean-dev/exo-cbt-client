@@ -3,8 +3,10 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-header">
-					<button @click="$bvModal.show('modal-scoped')" class="btn btn-sm btn-primary">Tambah jadwal</button>
-					<button @click="$bvModal.show('modal-scoped-event')" class="btn btn-sm btn-outline-primary ml-1">Tambah event</button>
+					<div class="d-flex justify-content-between">
+						<button @click="$bvModal.show('modal-scoped')" class="btn btn-sm btn-primary">Tambah jadwal</button>
+						<button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_ujian_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -408,8 +410,8 @@ export default {
 	methods: {
 		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken', 'removeUjian', 'getUjianById', 'updateUjian']),
 		...mapActions('event',['addEvent','getAllEvents']),
-		...mapActions('banksoal', ['getAllBanksoals']),
 		...mapActions('feature', ['getFeatureInfo']),
+		...mapActions('banksoal', ['getAllBanksoals']),
 		async postUjian() {
 			if(this.update != 0) {
 				try {
@@ -552,7 +554,7 @@ export default {
 			.then(() => {
 				this.$bvModal.show('modal-feature-info')
 			})
-		}
+		},
 	},
 	watch: {
 		page() {

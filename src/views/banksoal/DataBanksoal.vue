@@ -3,7 +3,10 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <b-button @click="showModalCreate" size="sm" variant="primary">Tambah banksoal</b-button>
+                    <div class="d-flex justify-content-between">
+                        <b-button @click="showModalCreate" size="sm" variant="primary">Tambah banksoal</b-button>
+                        <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_banksoal_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
                 </div>
                 <div class="card-body">
                      <div class="row">
@@ -456,7 +459,17 @@
               </b-button>
             </template>
         </b-modal>
-
+        <b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
     </div>
 </template>
 <script>
@@ -518,6 +531,7 @@ export default {
     computed: {
         ...mapGetters(['isLoading']),
         ...mapState(['errors']),
+        ...mapState('feature',['feature_info']),
         ...mapState('banksoal', {
             banksoals: state => state.banksoals
         }),
@@ -536,6 +550,7 @@ export default {
     methods: {
         ...mapActions('banksoal', ['getBanksoals','addBanksoal','removeBanksoal','getBanksoalById','updateBanksoal','duplicateBanksoal']),
         ...mapActions('matpel',['getAllMatpels']),
+        ...mapActions('feature', ['getFeatureInfo']),
         showModalCreate() {
             this.data.kode_banksoal = generateBanksoalCode()
             this.$bvModal.show('modal-scoped')
@@ -690,7 +705,13 @@ export default {
                     })
                 }
             })
-        }
+        },
+        featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
+		}
     },
     watch: {
         page() {

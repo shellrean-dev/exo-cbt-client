@@ -3,7 +3,10 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Koreksi jawaban peserta
+                    <div class="d-flex justify-content-between">
+                        <span>Koreksi jawaban peserta</span>
+                        <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_koreksi_esay_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -31,6 +34,17 @@
                 </div>
             </div>
         </div>
+        <b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
     </div>
 </template>
 <script>
@@ -50,10 +64,18 @@ export default {
         }
     },
     computed: {
-        ...mapState('ujian',{ banksoals: state => state.ujiansExists })
+        ...mapState('ujian',{ banksoals: state => state.ujiansExists }),
+        ...mapState('feature',['feature_info']),
     },
     methods: {
-        ...mapActions('ujian',['getExistsEsay'])
+        ...mapActions('ujian',['getExistsEsay']),
+        ...mapActions('feature', ['getFeatureInfo']),
+        featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
+		}
     },
     async created() {
         try {

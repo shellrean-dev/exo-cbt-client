@@ -3,7 +3,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Reset peserta
+                    <div class="d-flex justify-content-between">
+                        <span>Reset peserta</span>
+                        <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_reset_login_peserta_tabel')"><i class="flaticon-info"></i></button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -75,6 +78,17 @@
                 </div>
             </div>
         </div>
+        <b-modal id="modal-feature-info" size="lg">
+		    <template v-slot:modal-header="{ close }">
+		      <h5>Informasi Fitur</h5>
+		    </template>
+			<div v-html="feature_info.content"></div>
+            <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Cancel
+		      </b-button>
+		    </template>
+		</b-modal>
     </div>
 </template>
 <script>
@@ -99,6 +113,7 @@ export default {
     computed: {
         ...mapGetters(['isLoading']),
         ...mapState('peserta', { pesertas: state => state.peserta_login }),
+        ...mapState('feature',['feature_info']),
         page: {
             get() {
                 return this.$store.state.peserta.login_page
@@ -110,6 +125,7 @@ export default {
     },
     methods: {
         ...mapActions('peserta', ['getPesertasLogin', 'resetLoginPeserta','multiResetLoginPeserta']),
+        ...mapActions('feature', ['getFeatureInfo']),
         onRowSelected(items) {
             this.selected = items
         },
@@ -168,7 +184,13 @@ export default {
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
-        }
+        },
+        featureInfo(name) {
+			this.getFeatureInfo(name)
+			.then(() => {
+				this.$bvModal.show('modal-feature-info')
+			})
+		}
     },
     watch: {
         search:  _.debounce(function (value) {

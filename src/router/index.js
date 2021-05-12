@@ -53,14 +53,14 @@ const DataDirFilemedia = () => import('@/views/filemedia/DirFilemedia')
 
 import UjianIndex from '@/views/ujian/Index'
 const DataUjian = () => import('@/views/ujian/Ujian')
-const StatusUjian = () => import('@/views/ujian/StatusUjian')
-const PesertaUjian = () => import('@/views/ujian/PesertaUjian')
-const ResetPesertaUjian = () => import('@/views/ujian/ResetPesertaUjian')
-const DataEvent = () => import('@/views/ujian/Event')
-const EventPeserta = () => import('@/views/ujian/KartuPeserta');
+const StatusUjian = () => import('@/views/pelaksanaan/StatusUjian')
+const PesertaUjian = () => import('@/views/pelaksanaan/PesertaUjian')
+const ResetPesertaUjian = () => import('@/views/pelaksanaan/ResetPesertaUjian')
 
 import EventIndex from '@/views/event/Index'
 const BeritaAcara = () => import('@/views/event/BeritaAcara')
+const DataEvent = () => import('@/views/event/Event')
+const EventPeserta = () => import('@/views/event/KartuPeserta');
 
 import KelolaIndex from '@/views/kelola/Index'
 const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
@@ -360,18 +360,6 @@ const routes = [
         name: 'peserta.reset',
         component: ResetPesertaUjian,
         meta: { title: 'Reset peserta ujian' }
-      },
-      {
-        path: 'event',
-        name: 'ujian.event.data',
-        component: DataEvent,
-        meta: { title: 'Manage event ujian'}
-      },
-      {
-        path: 'event/:event_id/peserta',
-        name: 'ujian.event.peserta',
-        component: EventPeserta,
-        meta: { title: 'Kartu Event Peserta' }
       }
     ]
   },
@@ -381,10 +369,22 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       {
+        path: '',
+        name: 'ujian.event.data',
+        component: DataEvent,
+        meta: { title: 'Manage event ujian'}
+      },
+      {
         path: ':id/berita-acara',
         name: 'event.berita.acara',
         component: BeritaAcara,
         meta: { title: 'Berita Acara' }
+      },
+      {
+        path: ':event_id/peserta',
+        name: 'ujian.event.peserta',
+        component: EventPeserta,
+        meta: { title: 'Kartu Event Peserta' }
       }
     ]
   },
