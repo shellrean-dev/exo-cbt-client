@@ -13,7 +13,7 @@
 						<div class="col-md-6">
 							<div class="input-group">
 							  <div class="custom-file">
-							    <input type="file" class="custom-file-input" @change="onFileChange">
+							    <input type="file" class="custom-file-input" @change="onFileChange" ref="fileupload">
 							    <label class="custom-file-label">{{ label ? label : 'Pilih file excel...' }}</label>
 							  </div>
 							  <div class="input-group-append">
@@ -69,6 +69,7 @@ export default {
 			.then((res) => {
 				this.file = ''
 				this.label = ''
+				this.$refs.fileupload.value = ''
 		        this.$bvToast.toast('Mata pelajaran berhasil diimport.', successToas())
 			})
 			.catch((error) => {
