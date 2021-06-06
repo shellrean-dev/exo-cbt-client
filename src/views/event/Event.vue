@@ -92,18 +92,20 @@
 									</div>
 								</b-card>
 							</template>
+							<template v-slot:cell(support)="row">
+								<b-button variant="outline-success" size="sm" class="mr-1" :to="{ name: 'ujian.event.peserta', params: { event_id: row.item.id} }" :disabled="isLoading">
+									<i class="flaticon-profile-1"></i> Kartu Peserta
+								</b-button>
+								<b-button variant="outline-success" size="sm" class="mr-1" :to="{name: 'event.berita.acara', params: {id: row.item.id}}" :disabled="isLoading">
+									<i class="flaticon-download"></i> Berita acara
+								</b-button>
+							</template>
 							<template v-slot:cell(action)="row">
 								<b-button variant="warning" size="sm" class="mr-1" @click="getData(row.item.id)" :disabled="isLoading">
 									<i class="flaticon-edit"></i> Edit
 								</b-button>
 								<b-button variant="danger" size="sm" class="mr-1" @click="remove(row.item.id)" :disabled="isLoading">
 									<i class="flaticon2-trash"></i> Hapus
-								</b-button>
-								<b-button variant="outline-success" size="sm" class="mr-1" :to="{ name: 'ujian.event.peserta', params: { event_id: row.item.id} }" :disabled="isLoading">
-									<i class="flaticon-profile-1"></i> Kartu Peserta
-								</b-button>
-								<b-button variant="outline-success" size="sm" class="mr-1" :to="{name: 'event.berita.acara', params: {id: row.item.id}}" :disabled="isLoading">
-									<i class="flaticon-download"></i> Berita acara
 								</b-button>
 							</template>
 						</b-table>
@@ -239,8 +241,9 @@ export default {
 	data() {
 		return {
 			fields: [
-				{ key: 'show_details', label: 'Detail' },
+				{ key: 'show_details', label: 'Daftar Ujian' },
 				{ key: 'name', label: 'Nama event' },
+				{ key: 'support', label: 'Kelengkapan' },
 				{ key: 'action', label: 'Aksi' }
 			],
 			perPage: 10,

@@ -23,18 +23,23 @@
 
           <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'jurusan.data' }"
-              :class="[currentPage.includes('jurusan.data') ? activeClass : '']">
-                <span class="c-sidebar-nav-icon"></span> Jurusan
-              </router-link>
-            </li>
-            <li class="c-sidebar-nav-item">
               <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.data' }"
               :class="[currentPage.includes('peserta.data') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> Peserta
               </router-link>
             </li>
-
+            <li class="c-sidebar-nav-item" >
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'grup.data' }"
+              :class="[currentPage.includes('grup.data') ? activeClass : '']">
+                <span class="c-sidebar-nav-icon"></span> Grup-peserta
+              </router-link>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'jurusan.data' }"
+              :class="[currentPage.includes('jurusan.data') ? activeClass : '']">
+                <span class="c-sidebar-nav-icon"></span> Jurusan
+              </router-link>
+            </li>
             <li class="c-sidebar-nav-item" >
               <router-link class="c-sidebar-nav-link" :to="{ name: 'matpel.data' }"
               :class="[currentPage.includes('matpel.data') ? activeClass : '']">
@@ -45,12 +50,6 @@
               <router-link class="c-sidebar-nav-link" :to="{ name: 'guru.data' }"
               :class="[currentPage.includes('guru.data') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> User
-              </router-link>
-            </li>
-            <li class="c-sidebar-nav-item" >
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'grup.data' }"
-              :class="[currentPage.includes('grup.data') ? activeClass : '']">
-                <span class="c-sidebar-nav-icon"></span> Grup
               </router-link>
             </li>
             <li class="c-sidebar-nav-item" >
