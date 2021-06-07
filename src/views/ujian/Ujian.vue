@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="table-responsive-md" v-if="ujians && typeof ujians.data != 'undefined'">
-						<b-table striped hover bordered small :fields="fields" :items="ujians.data" show-empty>
+						<b-table striped hover bordered small :fields="fields" :items="ujian_tables" show-empty>
 							<template v-slot:cell(show_details)="row">
                                 <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
@@ -72,6 +72,17 @@
                                         		<td >Banksoal</td>
                                         		<td><b-badge variant="success" class="mr-1" v-for="(kode,index) in row.item.kode_banksoal" v-text="kode" :key="index"></b-badge></td>
                                         	</tr>
+											<tr>
+												<td>Grup</td>
+												<td>
+													<div v-if="row.item.groups.length > 0">
+														<b-badge variant="success" class="mr-1" v-for="(name,index) in row.item.groups" v-text="name" :key="index"></b-badge>
+													</div>
+													<div v-else>
+														<b-badge variant="primary">Semua grup</b-badge>
+													</div>
+												</td>
+											</tr>
                                         	<tr>
                                         		<td>Setting</td>
                                         		<td>
@@ -146,8 +157,24 @@
 				<v-select label="name" :options="events" v-model="data.event_id" :reduce="name => name.id"></v-select>
 				<small class="text-danger" v-if="errors.event_id">{{ errors.event_id[0] }}</small>
 			</div>
+			<div class="form-group">
+		    	<label>Grup (optional) <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('form_setting_ujian_group')"><i class="flaticon-info"></i></button></label>
+		    	<div class="text-center text-light my-2" v-show="!banksoals">
+				  <b-spinner small type="grow"></b-spinner> Loading...
+                </div>
+		    	<multiselect 
+				v-model="data.group_ids" 
+				tag-placeholder="Cari untuk menambah grup" 
+				placeholder="Tambah grup" 
+				label="name" track-by="id" 
+				:options="groups" 
+				:multiple="true" 
+				:taggable="true"
+				v-if="groups"></multiselect>
+		    	<small class="text-danger" v-if="errors.group_ids">{{ errors.group_ids[0] }}</small>
+		    </div>
 		    <div class="form-group">
-		    	<label>Banksoal</label>
+		    	<label>Banksoal <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('form_setting_ujian_banksoal')"><i class="flaticon-info"></i></button></label>
 		    	<div class="text-center text-light my-2" v-show="!banksoals">
 				  <b-spinner small type="grow"></b-spinner> Loading...
                 </div>
@@ -331,6 +358,7 @@ export default {
 	created() {
 		this.getUjians({ perPage: this.perPage })
 		this.getAllBanksoals()
+		this.getAllGroup()
 		this.getAllEvents()
 	},
 	data() {
@@ -352,6 +380,7 @@ export default {
 				lama: 0,
 				tanggal: '',
 				banksoal_id: '',
+				group_ids: '',
 				server_id: '',
 				alias: '',
 				event_id: '',
@@ -398,6 +427,7 @@ export default {
 		...mapState('banksoal', {
 			banksoals: state => state.allBanksoals
 		}),
+		...mapState('grup', ['groups']),
 		page: {
 			get() {
 				return this.$store.state.ujian.page
@@ -405,6 +435,24 @@ export default {
 			set(val) {
 				this.$store.commit('ujian/SET_PAGE', val)
 			}
+		},
+		ujian_tables() {
+			if (typeof this.ujians.data != 'undefined') {
+				let now = new Date();
+				return this.ujians.data.map((obj) => {
+					if (obj.status_ujian == '1') {
+						obj._rowVariant = "info";
+					}
+					let curr = new Date(obj.tanggal + " " + obj.mulai)
+					curr.setDate(curr.getDate() + 1);
+					if (now > curr) {
+						obj._rowVariant = "danger";
+					}
+
+					return obj;
+				})
+			}
+			return {};
 		}
 	},
 	methods: {
@@ -412,6 +460,7 @@ export default {
 		...mapActions('event',['addEvent','getAllEvents']),
 		...mapActions('feature', ['getFeatureInfo']),
 		...mapActions('banksoal', ['getAllBanksoals']),
+		...mapActions('grup',['getAllGroup']),
 		async postUjian() {
 			if(this.update != 0) {
 				try {
@@ -427,6 +476,7 @@ export default {
 				try {
 					await this.addUjian({
 						banksoal_id: this.data.banksoal_id,
+						group_ids: this.data.group_ids,
 						alias: this.data.alias,
 						mulai: this.data.mulai,
 						berakhir: this.data.berakhir,
@@ -461,6 +511,7 @@ export default {
 		},
 		clearForm() {
 			this.data.banksoal_id = '',
+			this.data.group_ids = '',
 			this.data.mulai = '',
 			this.data.berakhir = '',
 			this.data.lama = '',
@@ -534,7 +585,14 @@ export default {
 				let dara = provider.banksoal_id.map((item) => {
 					return this.banksoals.find(x => x.id == item.id)
 				})
+				let groups = '';
+				if (provider.group_ids != null) {
+					groups = provider.group_ids.map((item) => {
+						return this.groups.find(x => x.id == item.id)
+					})
+				}
 				this.data.banksoal_id = dara,
+				this.data.group_ids = groups,
 				this.data.mulai = provider.mulai,
 				this.data.lama = provider.lama / 60,
 				this.data.tanggal = provider.tanggal,
