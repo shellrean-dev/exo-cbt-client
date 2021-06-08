@@ -442,6 +442,8 @@ export default {
 				return this.ujians.data.map((obj) => {
 					if (obj.status_ujian == '1') {
 						obj._rowVariant = "info";
+					} else {
+						obj._rowVariant = "";
 					}
 					let curr = new Date(obj.tanggal + " " + obj.mulai)
 					curr.setDate(curr.getDate() + 1);
