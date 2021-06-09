@@ -58,7 +58,19 @@
                         </div>
                     </div>
                     <div class="table-responsive-md">
-                        <b-table striped hover bordered small :fields="fields" :items="filteredList" show-empty>
+                        <b-table 
+                        striped 
+                        hover 
+                        bordered 
+                        small 
+                        :fields="fields" 
+                        :items="filteredList" 
+                        show-empty
+                        selectable
+                        @row-selected="onRowSelected"
+                        ref="selectableTable"
+                        selected-variant="danger"
+                        >
                             <template v-slot:cell(show_details)="row">
                                 <b-button size="sm"
                                 v-if="[0,3].includes(parseInt(row.item.status_ujian))"
@@ -98,6 +110,24 @@
                                 </b-button>
                             </template>
                         </b-table>
+                        <div class="row mt-2" v-if="typeof filteredList != 'undefined' ">
+                            <div class="col-md-6">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+                                        <i class="flaticon-list-3"></i> Select all
+                                    </b-button>
+                                    <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                                        <i class="flaticon2-reload"></i> Clear selected
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkResetUjian">
+                                        <i class="flaticon2-trash"></i> Bulk reset ujian
+                                    </b-button>
+                                    <b-button variant="outline-danger" size="sm" @click="bulkForceClose">
+                                        <i class="flaticon2-trash"></i> Bulk force close
+                                    </b-button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer"></div>
@@ -137,7 +167,8 @@ export default {
                 '0': 'Belum mulai',
                 '3': 'Sedang mengerjakan',
                 '1': 'Test selesai'
-            }
+            },
+            selected: []
         }
     },
     computed: {
@@ -156,8 +187,45 @@ export default {
         }
     },
     methods: {
-        ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive','addMoreTimeUjianSiswa']),
+        ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive','addMoreTimeUjianSiswa', 'multiResetUjianPeserta']),
         ...mapActions('feature', ['getFeatureInfo']),
+        onRowSelected(items) {
+            this.selected = items
+        },
+        selectAllRows() {
+            this.$refs.selectableTable.selectAllRows()
+        },
+        clearSelected() {
+            this.$refs.selectableTable.clearSelected()
+        },
+        bulkResetUjian() {
+            this.$swal({
+                title: 'Reset ujian',
+                text: 'Ujian akan direset pada peserta yang dipilih',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c9c9ca',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then(async (result) => {
+                if (result.value) {
+                    try {
+                        await this.multiResetUjianPeserta({
+                            jadwal: this.jadwal,
+                            ids: this.selected.map((item) => item.peserta_id).join(',')
+                        })
+                        this.selected = []
+                        this.getPesertas(this.jadwal)
+                        this.$bvToast.toast('Ujian berhasil direset', successToas())
+                    } catch (error) {
+                        this.$bvToast.toast(error.message, errorToas())
+                    }
+                }
+            })
+        },
+        bulkForceClose() {
+
+        },
         async resetPeserta(id) {
             if(this.jadwal == 0) {
                 this.$swal({
@@ -247,7 +315,7 @@ export default {
             this.getPesertas(this.jadwal)
         },
         getText(i) {
-            return this.textStatus[i]
+            return this.textStatus[parseInt(i.trim())]
         },
         featureInfo(name) {
 			this.getFeatureInfo(name)
