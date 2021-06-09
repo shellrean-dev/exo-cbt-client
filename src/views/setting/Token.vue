@@ -44,10 +44,10 @@ export default {
         })
     },
     methods: {
-        ...mapActions('setting',['getSettingToken', 'setSettingUjian']),
+        ...mapActions('setting',['getSettingToken', 'setSettingToken']),
         async submit() {
             try {
-                await this.setSettingUjian()
+                await this.setSettingToken()
                 this.getSettingToken()
                 this.$bvToast.toast('Setting berhasil disimpan', successToas())
             } catch(error) {

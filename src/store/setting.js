@@ -210,7 +210,7 @@ const actions = {
             }
         })
     },
-    setSettingUjian({ commit, state }) {
+    setSettingToken({ commit, state }) {
         commit('SET_LOADING', true, { root: true })
         return new Promise(async(resolve, reject) => {
             try {
