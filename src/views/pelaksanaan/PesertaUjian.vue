@@ -187,7 +187,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive','addMoreTimeUjianSiswa', 'multiResetUjianPeserta']),
+        ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive','addMoreTimeUjianSiswa', 'multiResetUjianPeserta', 'multiSelesaiUjianPeserta']),
         ...mapActions('feature', ['getFeatureInfo']),
         onRowSelected(items) {
             this.selected = items
@@ -199,9 +199,17 @@ export default {
             this.$refs.selectableTable.clearSelected()
         },
         bulkResetUjian() {
+            if(this.jadwal == 0) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih jadwal dulu",
+                  icon: 'error',
+                })
+                return
+            }
             this.$swal({
                 title: 'Reset ujian',
-                text: 'Ujian akan direset pada peserta yang dipilih',
+                text: 'Tindakan ini akan menghapus seluruh data ujian siswa, termasuk nilai siswa jika telah di selesaikan sebelumnya.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -224,7 +232,37 @@ export default {
             })
         },
         bulkForceClose() {
-
+            if(this.jadwal == 0) {
+                this.$swal({
+                  title: 'Hei!!',
+                  text: "Pilih jadwal dulu",
+                  icon: 'error',
+                })
+                return
+            }
+            this.$swal({
+                title: 'Selesaikan ujian',
+                text: 'Tindakan ini akan menyelesaikan ujian siswa pada jadwal ini, dan mengenerate nilai',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c9c9ca',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then(async (result) => {
+                if (result.value) {
+                    try {
+                        await this.multiSelesaiUjianPeserta({
+                            jadwal: this.jadwal,
+                            ids: this.selected.map((item) => item.peserta_id).join(',')
+                        })
+                        this.selected = []
+                        this.getPesertas(this.jadwal)
+                        this.$bvToast.toast('Ujian peserta berhasil ditutup paksa', successToas())
+                    } catch (error) {
+                        this.$bvToast.toast(error.message, errorToas())
+                    }
+                }
+            })
         },
         async resetPeserta(id) {
             if(this.jadwal == 0) {
