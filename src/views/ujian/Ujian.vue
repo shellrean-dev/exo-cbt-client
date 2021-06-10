@@ -70,13 +70,13 @@
                                         	</tr>
                                         	<tr>
                                         		<td >Banksoal</td>
-                                        		<td><b-badge variant="success" class="mr-1" v-for="(kode,index) in row.item.kode_banksoal" v-text="kode" :key="index"></b-badge></td>
+                                        		<td><b-badge variant="primary" class="mr-1" v-for="(kode,index) in row.item.kode_banksoal" v-text="kode" :key="index"></b-badge></td>
                                         	</tr>
 											<tr>
 												<td>Grup</td>
 												<td>
 													<div v-if="row.item.groups.length > 0">
-														<b-badge variant="success" class="mr-1" v-for="(name,index) in row.item.groups" v-text="name" :key="index"></b-badge>
+														<b-badge variant="primary" class="mr-1" v-for="(name,index) in row.item.groups" v-text="name" :key="index"></b-badge>
 													</div>
 													<div v-else>
 														<b-badge variant="primary">Semua grup</b-badge>
@@ -89,6 +89,7 @@
                                         			<b-badge :variant="row.item.setting.acak_soal == '1' ? 'success' : 'dark' " class="mr-1">Acak soal</b-badge>
                                         			<b-badge :variant="row.item.setting.acak_opsi == '1' ? 'success' : 'dark'" class="mr-1">Acak opsi</b-badge>
                                         			<b-badge :variant="row.item.setting.token == '1' ? 'success' : 'dark'" class="mr-1">Token aktif</b-badge>
+													<b-badge :variant="row.item.view_result == '1' ? 'success' : 'dark'" class="mr-1">Tampilkan nilai pada siswa</b-badge>
                                         		</td>
                                         	</tr>
                                         	<tr>
@@ -224,7 +225,7 @@
 		    	</div>
 		    </div>
 			<div class="text-center mb-3">
-				<button class="btn btn-outline-dark rounded-pill" @click="advance = !advance">{{ advance ? 'Less' : 'More'}} setting</button>
+				<button class="btn btn-primary" @click="advance = !advance">{{ advance ? 'Less' : 'More'}} setting</button>
 			</div>
 		    <div class="row" v-if="advance">
 		    	<div class="col-md-4">
@@ -243,6 +244,13 @@
 		    		</div>
 		    	</div>
 		    </div>
+			<div class="row" v-if="advance">
+				<div class="col-md-6">
+		    		<div class="form-group">
+		    			<b-form-checkbox switch :value="1" v-model="data.view_result">Tampilkan nilai di siswa</b-form-checkbox>
+		    		</div>
+		    	</div>
+			</div>
 		    <div class="row" v-if="advance">
 		    	<div class="col-md-12">
 		    		<label>Urutan ujian tipe</label>
@@ -402,7 +410,8 @@ export default {
 					'',
 					'',
 					''	
-				]
+				],
+				view_result: 0
 			},
 			event: {
 				name: ''
@@ -487,6 +496,7 @@ export default {
 						event_id: this.data.event_id,
 						setting: this.data.setting,
 						mulai_sesi: this.data.mulai_sesi,
+						view_result: this.data.view_result == 1 ? 1 : 0
 					})
 
 					this.$bvToast.toast('Jadwal berhasil ditambahkan.', successToas())
@@ -539,7 +549,8 @@ export default {
 				'',
 				'',
 				''	
-			]
+			],
+			this.view_result = 0
 		},
 		seterStatus(id,status) {
 			this.setStatus({
@@ -603,6 +614,7 @@ export default {
 				this.data.setting = provider.setting
 				this.update = id,
 				this.data.mulai_sesi = provider.mulai_sesi
+				this.data.view_result = provider.view_result
 
 				this.$bvModal.show('modal-scoped')
 			} catch (error) {
