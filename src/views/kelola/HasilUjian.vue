@@ -280,7 +280,7 @@ export default {
             if (!this.groups) {
                 return []
             }
-            return this.groups.filter((item) => item.parent_id == 0)
+            return this.groups.filter((item) => item.parent_id == 0 || item.parent_id == null)
         },
         childs() {
             if (!this.groups || this.groupParent == 0) {
