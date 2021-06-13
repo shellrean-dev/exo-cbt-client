@@ -15,6 +15,7 @@ import event from './event'
 import setting from './setting'
 import grup from './grup'
 import feature from './feature'
+import channel from './channel'
 
 Vue.use(Vuex)
 
@@ -33,7 +34,8 @@ export default new Vuex.Store({
     event,
     setting,
     grup,
-    feature
+    feature,
+    channel
   },
   state: {
     errors: [],

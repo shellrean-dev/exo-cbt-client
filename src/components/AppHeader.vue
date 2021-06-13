@@ -59,11 +59,13 @@ export default {
             password: '',
             password2: '',
             score: 0,
-            error: false
+            error: false,
+            channel_1: ''
         }
     },
     computed: {
-        ...mapState('user', ['authenticated'])
+        ...mapState('user', ['authenticated']),
+        ...mapState('channel',['socket','socket_2'])
     },
     components: {
       'breadcrumb' : Breadcrumb,
@@ -71,6 +73,7 @@ export default {
     methods: {
         ...mapActions('auth', ['loggedOut']),
         ...mapActions('user', ['changeUserPassword']),
+        ...mapActions('channel', ['getUserOnChannel', 'setUserToChannel']),
         async logout() {
             try {
               await this.loggedOut()
@@ -104,7 +107,23 @@ export default {
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
+        },
+        connectSocket(){
+            this.socket.open();
+            this.socket_2.open();
+            this.socket.emit('getin', {
+                user: this.authenticated,
+                channel: this.channel_1
+            });
+            this.socket_2.emit('getin_student', {
+                user: this.authenticated,
+                channel: this.channel_2
+            });
         }
+    },
+    created(){
+        this.channel_1 = 'teacher_connect_chanel'
+        this.channel_2 = 'student_connect_channel'
     },
     watch:{
         password2(val) {
@@ -113,7 +132,22 @@ export default {
             } else {
                 this.error = false
             }
+        },
+        authenticated(val) {
+            if(!this.socket.connected) {
+                this.connectSocket()
+            }
         }
-    }
+    },
+    mounted(){
+        if(typeof this.authenticated.email != 'undefined') {
+            this.connectSocket()
+        }
+    },
+    destroyed() {
+        this.socket.emit('exit', { channel: this.channel_1 })
+        this.socket.close()
+    },
+
 }
 </script>

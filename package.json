@@ -17,6 +17,7 @@
     "luxon": "^1.24.1",
     "perfect-scrollbar": "^1.5.0",
     "register-service-worker": "^1.7.1",
+    "socket.io-client": "2.3.0",
     "tiptap": "^1.29.0",
     "tiptap-extensions": "^1.31.0",
     "vue": "^2.6.11",
