@@ -36,7 +36,7 @@
                 <div class="card-header">
                   Siswa terkoneksi
                 </div>
-                <div class="list-group">
+                <div class="list-group" v-if="students.length > 0">
                   <div class="list-group-item"
                   v-for="(student, index) in students"
                   :key="index"
@@ -55,6 +55,9 @@
                     </div>
                   </div>
                 </div>
+                <div class="py-2 px-4"
+                v-else
+                >Tidak ada peserta terkoneksi</div>
                 <div class="card-footer"></div>
               </div>
             </div>
@@ -109,10 +112,10 @@ export default {
     onSocketConnect2() {
       this.socket_2.emit('monitor_student', { channel: this.channel_2 })
       this.socket_2.on('monit_student', (users) => {
-        this.students = users
+        this.students = users.filter((item) => typeof item.no_ujian != 'undefined')
       })
       this.socket_2.on('is_online_student', (user) => {
-        if(typeof user.no_ujian != 'undefined') {
+        if(typeof user.no_ujian != 'undefined' && user.no_ujian != '' && user.no_ujian != null) {
           let index = this.students.map(item => item.id).indexOf(user.id)
           if(index == -1) {
             this.students.push(user)
