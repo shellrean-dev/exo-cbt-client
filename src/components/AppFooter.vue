@@ -1,6 +1,6 @@
 <template>
     <footer class="c-footer">
-        <div>&copy; {{ year }} <a href="">Extraordinary-CBT</a></div>
+        <div>&copy; {{ year }} <a href="">Extraordinary-CBT v2.0.1</a></div>
      </footer>
 </template>
 <script>
