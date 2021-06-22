@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <div class="fixed-bottom text-center text-muted bg-light">&copy; {{ year }} <a>Extraordinary-CBT</a></div>
+    <div class="fixed-bottom text-center text-muted bg-light">&copy; {{ year }} <a>Extraordinary-CBT v3.0.0 - ristretto</a></div>
   </div>
 </template>
 <script>
