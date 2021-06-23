@@ -102,9 +102,13 @@
                             <template v-slot:cell(con)="row">
                                 <b-badge variant="success"
                                 v-if="row.item.con"
+                                pill
+                                class="p-2"
                                 >Terhubung</b-badge>
                                 <b-badge variant="danger"
                                 v-else
+                                pill
+                                class="p-2"
                                 >Terputus</b-badge>
                             </template>
                             <template v-slot:cell(status)="row">
