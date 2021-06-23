@@ -147,6 +147,7 @@ export default {
     destroyed() {
         this.socket.emit('exit', { channel: this.channel_1 })
         this.socket.close()
+        this.socket_2.close()
     },
 
 }
