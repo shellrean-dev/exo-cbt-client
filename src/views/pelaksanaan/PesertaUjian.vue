@@ -99,6 +99,14 @@
                                     </div>
                                 </b-card>
                             </template>
+                            <template v-slot:cell(con)="row">
+                                <b-badge variant="success"
+                                v-if="row.item.con"
+                                >Terhubung</b-badge>
+                                <b-badge variant="danger"
+                                v-else
+                                >Terputus</b-badge>
+                            </template>
                             <template v-slot:cell(status)="row">
                                 {{ getText(row.item.status_ujian) }}
                                 <b-button variant="danger" :disabled="isLoading" class="mr-1" size="sm" @click="forceClose(row.item.peserta_id)" 
@@ -130,7 +138,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer"></div>
+                <div class="card-footer">
+                    <div><span class="badge badge-danger">Terputus</span> Koneksi peserta terputus</div>
+                    <div><span class="badge badge-success">Terhubung</span> Koneksi peserta terhubung</div>
+                </div>
             </div>
         </div>
         <b-modal id="modal-feature-info" size="lg">
@@ -154,12 +165,13 @@ export default {
     data() {
         return {
             fields: [
-                { key: 'show_details', label: 'Detail' },
+                { key: 'show_details', label: 'Tambahan' },
                 { key: 'no', label: '#'},
                 { key: 'no_ujian', label: 'No ujian', sortable: true },
                 { key: 'nama', label: 'Nama peserta', sortable: true },
                 { key: 'mulai_ujian', label: 'Mulai ujian', sortable: true },
-                { key: 'status', label: 'Status', sortable: true }
+                { key: 'status', label: 'Status'},
+                { key: 'con', label: 'Koneksi'}
             ],
             jadwal: 0,
             search: '',
@@ -168,7 +180,11 @@ export default {
                 '3': 'Sedang mengerjakan',
                 '1': 'Test selesai'
             },
-            selected: []
+            selected: [],
+            onlines: [],
+            channel_2: '',
+            has_getted: false,
+            blockdor: 0
         }
     },
     computed: {
@@ -178,12 +194,24 @@ export default {
             jadwals: state => state.ujianActive,
             pesertas: state => state.pesertas
         }),
+        ...mapState('channel',['socket_2']),
         filteredList() {
             if(this.pesertas) {
+                this.blockdor;;
                 return this.pesertas.filter(post => {
                     return post.no_ujian.toLowerCase().includes(this.search.toLowerCase())
+                }).map((item) => {
+                    if (this.onlines.map((item) => item.id).includes(item.peserta_id)) {
+                        item.con = 1
+                        item._rowVariant = '';
+                    } else {
+                        item._rowVariant = "dark";
+                        item.con = 0
+                    }
+                    return item;
                 })
             }
+            return [];
         }
     },
     methods: {
@@ -360,17 +388,57 @@ export default {
 			.then(() => {
 				this.$bvModal.show('modal-feature-info')
 			})
-		}
+		},
+        onSocketConnect2() {
+            this.socket_2.emit('monitor_student', { channel: this.channel_2 })
+            this.socket_2.on('monit_student', (users) => {
+                this.onlines = users.filter((item) => typeof item.no_ujian != 'undefined')
+            })
+            this.socket_2.on('is_online_student', (user) => {
+                if(typeof user.no_ujian != 'undefined' && user.no_ujian != '' && user.no_ujian != null) {
+                    let index = this.onlines.map(item => item.id).indexOf(user.id)
+                    if(index == -1) {
+                        this.onlines.push(user)
+                    }
+                }
+            })
+            this.socket_2.on('is_offline', (user) => {
+                if(typeof user.no_ujian != 'undefined') {
+                    let index = this.onlines.map(item => item.id).indexOf(user.id)
+                    if(index != -1) {
+                        this.onlines.splice(index,1)
+                    }
+                }
+            })
+        }
     },
     async created() {
+        this.channel_2 = 'student_connect_channel'
+        
         try {
             await this.getUjianActive()
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
         }
     },
+    mounted() {
+        this.socket_2.on('connect', () => {
+            if(!this.has_getted) {
+                this.onSocketConnect2()
+                this.has_getted = true
+                this.blockdor++;
+            }
+        })
+
+        if(!this.has_getted && this.socket_2.connected) {
+            this.onSocketConnect2()
+            this.has_getted = true
+            this.blockdor++;
+        }
+    },
     watch: {
         async jadwal() {
+            this.socket_2.emit('monitor_student', { channel: this.channel_2 })
             if(this.jadwal != 0 || this.jadwal != '') {
                 try {
                     await this.getPesertas(this.jadwal)
