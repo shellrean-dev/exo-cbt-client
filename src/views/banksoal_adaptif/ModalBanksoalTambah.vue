@@ -47,7 +47,7 @@
     <template v-slot:modal-footer="{ cancel }">
       <b-button variant="primary" size="sm"
       :disabled="isLoading"
-      v-on:click="_createBanksoal"
+      v-on:click="_actionButton"
       >
         <b-spinner small type="grow"
         v-show="isLoading"></b-spinner> Simpan
@@ -65,6 +65,7 @@ import { mapGetters, mapState, mapActions } from 'vuex'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 import { generateBanksoalCode } from '@/entities/generate'
+import { Notif } from '@/entities/notif'
 export default {
   components: {
     vSelect
@@ -87,25 +88,53 @@ export default {
   methods: {
     ...mapActions('banksoal_adaptif', [
       'getDataBanksoalAdaptif',
-      'createDataBanksoalAdaptif']),
-    async _createBanksoal() {
-      try {
-        await this.createDataBanksoalAdaptif()
-        this.$store.state.banksoal_adaptif.banksoal = {}
-        this.getDataBanksoalAdaptif()
-        this.$bvModal.hide('modal-banksoal-tambah')
-      } catch (e) {
-
-      } finally {
-
+      'createDataBanksoalAdaptif',
+      'updateDataBanksoalAdaptif']),
+    _actionButton() {
+      if (typeof this.banksoal.id != 'undefined' && this.banksoal.id != '') {
+        this._updateBanksoal()
+      } else {
+        this._createBanksoal()
       }
     },
-    _updateBanksoal() {
-
+    async _createBanksoal() {
+      try {
+        this.$store.commit('_start_loading_page')
+        await this.createDataBanksoalAdaptif()
+        this.$store.state.banksoal_adaptif.banksoal = {}
+        this.$emit('refresh')
+        this.$bvModal.hide('modal-banksoal-tambah')
+        this.$bvToast.toast('banksoal berhasil ditambah', Notif.success)
+      } catch (e) {
+        this.$bvToast.toast(e.message, Notif.error)
+      } finally {
+        this.$store.commit('_stop_loading_page')
+      }
+    },
+    async _updateBanksoal() {
+      try {
+        this.$store.commit('_start_loading_page')
+        await this.updateDataBanksoalAdaptif()
+        this.$store.state.banksoal_adaptif.banksoal = {}
+        this.$emit('refresh')
+        this.$bvModal.hide('modal-banksoal-tambah')
+        this.$bvToast.toast('banksoal berhasil diubah', Notif.success)
+      } catch (e) {
+        this.$bvToast.toast(e.message, Notif.error)
+      } finally {
+        this.$store.commit('_stop_loading_page')
+      }
+    },
+    _initialBanksoalBehave() {
+      if (typeof this.banksoal.id != 'undefined') {
+        this.max_pg = this.banksoal.max_pg
+      } else {
+        this.banksoal.code = generateBanksoalCode()
+      }
     }
   },
   created() {
-    this.banksoal.code = generateBanksoalCode()
+    this._initialBanksoalBehave()
   },
   watch: {
     max_pg(v){

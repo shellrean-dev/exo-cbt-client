@@ -10,6 +10,9 @@ const mutations = {
     _assign_data_banksoals(state, payload) {
         state.banksoals = payload
     },
+    _assign_data_banksoal(state, payload) {
+        state.banksoal = payload
+    },
     _set_page(state, payload) {
         state.page = payload
     }
@@ -17,7 +20,9 @@ const mutations = {
 
 const actions = {
     getDataBanksoalAdaptif,
-    createDataBanksoalAdaptif
+    updateDataBanksoalAdaptif,
+    createDataBanksoalAdaptif,
+    getSingleDataBanksoalAdaptif,
 }
 
 function getError(error) {
@@ -60,6 +65,22 @@ function getDataBanksoalAdaptif({ commit, state }, p) {
     })
 }
 
+function getSingleDataBanksoalAdaptif({ commit }, banksoal_id) {
+    let url = `banksoal-adaptif/${banksoal_id}`
+    return new Promise(async (v, r) => {
+        try {
+            commit('_start_loading', '', { root: true })
+            let network = await $v3.get(url)
+            commit('_assign_data_banksoal', network.data.data)
+            v(network.data)
+        } catch (e) {
+            r(getError(e))
+        } finally {
+            commit('_stop_loading', '', { root: true })
+        }
+    })
+}
+
 function createDataBanksoalAdaptif({ commit, state }) {
     let url = `banksoal-adaptif`
 
@@ -68,6 +89,21 @@ function createDataBanksoalAdaptif({ commit, state }) {
             commit('_start_loading', '', { root: true })
             let network = await $v3.post(url, state.banksoal)
 
+            v(network.data)
+        } catch (e) {
+            r(getError(e))
+        } finally {
+            commit('_stop_loading', '', { root: true })
+        }
+    })
+}
+
+function updateDataBanksoalAdaptif({ commit, state }) {
+    let url = `banksoal-adaptif/${state.banksoal.id}`
+    return new Promise(async (v, r) => {
+        try {
+            commit('_start_loading', '', { root: true })
+            let network = await $v3.put(url, state.banksoal)
             v(network.data)
         } catch (e) {
             r(getError(e))

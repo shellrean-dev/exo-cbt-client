@@ -70,6 +70,11 @@
                     <i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" />
                   </b-button>
                 </template>
+                <template v-slot:cell(actions)="row">
+                  <b-button class="mr-1" size="sm" variant="warning"
+                  v-on:click="_getSingleDataBanksoalAdaptif(row.item.id)"
+                  ><i class="flaticon-edit"></i> Edit</b-button>
+                </template>
               </b-table>
             </div>
           </template>
@@ -80,7 +85,7 @@
       </div>
     </div>
     <feature-info-modal></feature-info-modal>
-    <modal-banksoal-tambah></modal-banksoal-tambah>
+    <modal-banksoal-tambah v-on:refresh="_getDataBanksoalAdaptif"></modal-banksoal-tambah>
   </div>
 </template>
 <script>
@@ -103,6 +108,7 @@ export default {
       fields: [
         { key: 'show_details', label:'Detail' },
         { key: 'code', label: 'Kode banksoal' },
+        { key: 'name', label: 'Nama banksoal' },
         { key: 'matpel.nama', label: 'Mata pelajaran' },
         { key: 'actions', label: 'Aksi' }
       ]
@@ -122,7 +128,8 @@ export default {
     ...mapActions('feature', [
       'getFeatureInfo']),
     ...mapActions('banksoal_adaptif', [
-      'getDataBanksoalAdaptif']),
+      'getDataBanksoalAdaptif',
+      'getSingleDataBanksoalAdaptif']),
     ...mapActions('matpel', [
       'getAllMatpels']),
     async _featureInfo(name) {
@@ -158,6 +165,17 @@ export default {
         await this.getAllMatpels()
       } catch (e) {
 
+      }
+    },
+    async _getSingleDataBanksoalAdaptif(banksoal_id) {
+      try {
+        this.$store.commit('_start_loading_page')
+        await this.getSingleDataBanksoalAdaptif(banksoal_id)
+        this.$bvModal.show('modal-banksoal-tambah')
+      } catch (e) {
+
+      } finally {
+        this.$store.commit('_stop_loading_page')
       }
     }
   },

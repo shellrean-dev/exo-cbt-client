@@ -21,3 +21,18 @@ export function errorToas() {
         solid: true
     }
 }
+
+export const Notif = {
+    success: {
+        title: "Sukses",
+        variant: 'success',
+    },
+    error: {
+        title: "Error",
+        variant: 'danger',
+    },
+    warning: {
+        title: "Warning",
+        variant: 'warning',
+    }
+}
