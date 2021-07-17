@@ -16,6 +16,7 @@ import setting from './setting'
 import grup from './grup'
 import feature from './feature'
 import channel from './channel'
+import banksoal_adaptif from './banksoal_adaptif'
 
 Vue.use(Vuex)
 
@@ -35,7 +36,8 @@ export default new Vuex.Store({
     setting,
     grup,
     feature,
-    channel
+    channel,
+    banksoal_adaptif
   },
   state: {
     errors: [],
@@ -70,6 +72,18 @@ export default new Vuex.Store({
     },
     LOADING_PAGE(state, payload) {
       state.loadPage = payload
+    },
+    _start_loading_page(state) {
+      state.loadPage = true
+    },
+    _stop_loading_page(state) {
+      state.loadPage = false
+    },
+    _start_loading(state) {
+      state.isLoading = true
+    },
+    _stop_loading(state) {
+      state.isLoading = false
     },
     SET_BASEURL(state, payload) {
       state.baseURL = payload

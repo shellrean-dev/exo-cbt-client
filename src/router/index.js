@@ -47,6 +47,9 @@ const SoalBanksoalEdit = () => import('@/views/banksoal/SoalBanksoalEdit')
 const SoalBanksoalPrev = () => import('@/views/banksoal/SoalBanksoalPrev')
 const SoalBanksoalUpload = () => import( '@/views/banksoal/SoalBanksoalUpload')
 
+import BanksoalAdaptifIndex from '@/views/banksoal_adaptif/Index'
+const DataBanksoalAdaptif = () => import('@/views/banksoal_adaptif/DataBanksoal')
+
 import FilemediaIndex from '@/views/filemedia/Index'
 const DataFilemedia = () => import('@/views/filemedia/Filemedia')
 const DataDirFilemedia = () => import('@/views/filemedia/DirFilemedia')
@@ -310,6 +313,19 @@ const routes = [
         name: 'banksoal.prev',
         component: SoalBanksoalPrev,
         meta: { title: 'Preview soal banksoal' }
+      }
+    ]
+  },
+  {
+    path: '/banksoal-adaptif',
+    component: BanksoalAdaptifIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'banksoal.adaptif.data',
+        component: DataBanksoalAdaptif,
+        meta: { title: 'Manage banksoal adaptif' }
       }
     ]
   },

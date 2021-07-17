@@ -159,7 +159,7 @@
                     </template>
                 </div> 
                 <div class="card-footer">
-                    <strong>Sematic kode banksoal : </strong> <u>kode-tahun-matpel(singkat)</u> <strong>Contoh : </strong> E3D-MTK-2020
+                    <strong>Sematic kode banksoal : </strong> <u>kode-tahun-matpel(singkat)</u> <strong>Contoh : </strong> E3D-2020-MTK
                 </div>
             </div>
         </div>
