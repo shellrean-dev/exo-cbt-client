@@ -69,6 +69,18 @@
                                                 </button>
                                               </td>
                                           </tr>
+                                                <template
+                                                  v-if="tipe_soal == 6"
+                                                >
+                                                  <tr>
+                                                    <td colspan="2">
+                                                      <b-form-checkbox
+                                                        v-model="case_sensitive"
+                                                        value="1" switch>{{ case_sensitive == '1' ? 'Case Sensitive' : 'Tidak Case-Sensitive' }}</b-form-checkbox>
+                                                    </td>
+                                                  </tr>
+
+                                                </template>
                                           <tr v-for="(pilih, index) in options" :key="index" v-if="tipe_soal == 6">
                                               <td>
                                                   <transition name="fade">
@@ -185,6 +197,10 @@
                     </div>
                 </div>
                 <div class="card-footer">
+                    <div class="alert alert-warning">
+                      <strong>Warning</strong><br>
+                      <span>Sangat tidak disarankan untuk mengubah soal pada banksoal ketika sudah/sedang digunakan pada ujian, bisa menyebabkan gagal pada analisa. gunakan fitur duplikat akan lebih disarankan.</span>
+                    </div>
                     <b-button variant="primary" size="sm" :disabled="isLoading" @click.prevent="postSoalBanksoal">
                         <b-spinner small type="grow" v-show="isLoading"></b-spinner>
                         Simpan
@@ -245,6 +261,7 @@ export default {
           'Authorization' : 'Bearer '+store.state.token
         }
       },
+      case_sensitive: '1'
     }
   },
   filters: {
@@ -286,6 +303,7 @@ export default {
         this.audio = (response.data.audio != null ? response.data.audio : '')
         this.direction = (response.data.direction != null ? response.data.direction : '')
         this.layout = response.data.layout
+        this.case_sensitive = response.data.case_sensitive
         if(this.tipe_soal == 4) {
           response.data.jawabans.map((item, index) => {
             if(item.correct == "1") {
@@ -333,7 +351,8 @@ export default {
             rujukan: this.rujukan,
             selected: this.selected,
             direction: this.direction,
-            layout: this.layout
+            layout: this.layout,
+            case_sensitive: this.case_sensitive
           }
         })
         .then((data) => {

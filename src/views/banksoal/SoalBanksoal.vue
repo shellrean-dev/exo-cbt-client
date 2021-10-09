@@ -117,7 +117,7 @@
                                         </td>
     					          		<td v-if="[1,3,4,6].includes(row.item.tipe_soal)" >
     					          			<div v-html="jawab.text_jawaban"></div>
-    					          		</td> 
+    					          		</td>
                                         <td v-if="row.item.tipe_soal == 5">
                                             <div v-html="getTextParse(jawab.text_jawaban, 'a')"></div>
                                         </td>
@@ -131,6 +131,12 @@
                                           <td v-html="row.item.rujukan"></td>
                                       </tr>
                                   </table>
+                        <template
+                        v-if="row.item.tipe_soal == 6"
+                        >
+                          <p v-if="row.item.case_sensitive == '1'"><small>* <i>Jawaban bersifat case sensitive, artinya besar/kecil nya huruf berpengaruh</i></small></p>
+                          <p v-if="row.item.case_sensitive == '0'"><small>* <i>Jawaban tidak bersifat case sensitive, artinya besar/kecil nya huruf tidak berpengaruh</i></small></p>
+                        </template>
     					        </b-card>
     					    </template>
 
@@ -177,6 +183,10 @@
                     </template>
                 </div>
                 <div class="card-footer">
+                  <div class="alert alert-warning">
+                    <strong>Warning</strong><br>
+                    <span>Sangat tidak disarankan untuk mengubah soal pada banksoal ketika sudah/sedang digunakan pada ujian, bisa menyebabkan gagal pada analisa. gunakan fitur duplikat akan lebih disarankan.</span>
+                  </div>
                 </div>
             </div>
         </div>

@@ -56,6 +56,13 @@
                                           </tr>
                                           </template>
                                           <template v-if="tipe_soal == 6">
+                                            <tr>
+                                              <td colspan="2">
+                                                <b-form-checkbox
+                                                  v-model="case_sensitive"
+                                                  value="1" switch>{{ case_sensitive == '1' ? 'Case Sensitive' : 'Tidak Case-Sensitive' }}</b-form-checkbox>
+                                              </td>
+                                            </tr>
                                           <tr v-for="(pilih, index) in options" :key="index">
                                               <td>
                                                   <transition name="fade">
@@ -254,6 +261,7 @@ export default {
           'Authorization' : 'Bearer '+store.state.token
         }
       },
+      case_sensitive: '1'
     }
   },
   computed: {
@@ -335,6 +343,7 @@ export default {
           audio: this.audio,
           direction: this.direction,
           layout: this.layout,
+          case_sensitive: this.case_sensitive
         })
         .then((data) => {
           this.pilihan = this.pilihan.map((item) => {
