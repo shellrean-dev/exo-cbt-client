@@ -7,7 +7,8 @@ import $axios from '@/services/api.js'
 const state = () => ({
     groups: [],
     group: {},
-    members: []
+    members: [],
+    page: 1
 })
 
 /**
@@ -23,6 +24,9 @@ const mutations = {
     },
     _assign_data_members(state, payload) {
         state.members = payload
+    },
+    _set_page(state, payload) {
+        state.page = payload
     }
 }
 
@@ -47,7 +51,7 @@ const actions = {
 
 /**
  * Let's play the game
- * 
+ *
  */
 export default {
     namespaced: true,
@@ -57,7 +61,7 @@ export default {
 }
 
 /**
- * get all group 
+ * get all group
  * @param object store
  */
 function getAllGroup({ commit }) {
@@ -136,7 +140,7 @@ function updateGroup({ commit, state }) {
         try {
             commit('SET_LOADING', true, { root: true })
             const network = await $axios.put(`groups/${state.group.id}`, state.group)
-            
+
             commit('SET_LOADING', false, { root: true })
             v(network.data)
         } catch (e) {
@@ -192,11 +196,11 @@ function deleteGroupById({ commit }, groupId) {
  * @param object store
  * @param int groupId
  */
-function getGroupMemberById({ commit }, groupId) {
+function getGroupMemberById({ commit, state }, groupId) {
     return new Promise(async (v, r) => {
         try {
             commit('SET_LOADING', true, { root: true })
-            const network = await $axios.get(`group_members?q=${groupId}`)
+            const network = await $axios.get(`group_members?q=${groupId}&page=${state.page}`)
 
             commit('_assign_data_members', network.data.data)
             commit('SET_LOADING', false, { root: true })

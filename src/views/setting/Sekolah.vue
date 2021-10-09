@@ -3,20 +3,22 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    Informasi sekolah
+                    Informasi instansi
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Nama sekolah</label>
+                                <label>Nama instansi</label>
                                 <input type="text" v-model="data.nama_sekolah" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Tingkat</label>
+                                <label>Tipe instansi</label>
                                 <select name="tingkat" id="tingkat" v-model="data.tingkat" class="form-control">
-                                    <option value="SMP">SMP</option>
-                                    <option value="SMK-SMA">SMK/SMA</option>
+                                    <option value="UMUM">Instansi UMUM</option>
+                                    <option value="SD">Sekolah SD</option>
+                                    <option value="SMP">Sekolah SMP</option>
+                                    <option value="SMK-SMA">Sekolah SMK/SMA</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -27,13 +29,13 @@
                                 <label>Alamat</label>
                                 <textarea class="form-control" v-model="data.alamat"></textarea>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label>Kepala sekolah</label>
+                                <label>Kepala instansi</label>
                                 <input type="text" class="form-control" v-model="data.kepala_sekolah">
                             </div>
                             <div class="form-group">
-                                <label>NIP Kepala sekolah</label>
+                                <label>NIP Kepala instansi</label>
                                 <input type="text" class="form-control" v-model="data.nip_kepsek">
                             </div>
                         </div>
@@ -42,19 +44,19 @@
                     </div>
                     <div class="form-group">
                         <b-button variant="primary" @click="store" :disabled="isLoading">
-                            <i class="cil-save"></i> {{ isLoading ? 'Processing..' : 'Simpan' }} 
+                            <i class="cil-save"></i> {{ isLoading ? 'Processing..' : 'Simpan' }}
                         </b-button>
                     </div>
                 </div>
                 <div class="card-footer">
-                    
+
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    Logo sekolah
+                    Logo instansi
                 </div>
                 <div class="card-body">
                     <div class="d-flex mb-3">
@@ -63,7 +65,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Logo sekolah</label>
+                                <label>Logo instansi</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                       <input type="file" class="custom-file-input" @change="onFileChange">
@@ -71,7 +73,7 @@
                                     </div>
                                     <div class="input-group-append">
                                       <b-button variant="primary" @click="storeLogo">
-                                        <i class="flaticon-upload-1"></i> 
+                                        <i class="flaticon-upload-1"></i>
                                         Upload</b-button>
                                     </div>
                                 </div>
@@ -139,7 +141,7 @@ export default {
             try {
                 let formData = new FormData()
                 formData.append('image',this.file)
-                
+
                 await this.changeLogoSekolah(formData)
                 let provider = await this.getSettingSekolah()
                 if(provider) {
@@ -159,7 +161,7 @@ export default {
             }
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
-        }   
+        }
     }
 }
 </script>

@@ -13,7 +13,7 @@
         <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{  name: 'sekolah.setting' }"
           :class="[currentPage.includes('sekolah.setting') ? activeClass : '']">
-            <i class="mr-3 flaticon-home-2"></i> Informasi sekolah
+            <i class="mr-3 flaticon-home-2"></i> Informasi instansi
           </router-link>
         </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
@@ -54,7 +54,7 @@
             </li>
             <li class="c-sidebar-nav-item" >
               <router-link class="c-sidebar-nav-link" :to="{ name: 'agama.data' }"
-              :class="[currentPage.includes('agama.data') ? activeClass : '']"> 
+              :class="[currentPage.includes('agama.data') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> Agama
               </router-link>
             </li>

@@ -7,7 +7,7 @@
             <button class="btn btn-primary btn-sm"
             @click="$bvModal.show('modal-group')"
             >Tambah grup</button>
-            <button class="btn-sm btn btn-white" title="Informasi" 
+            <button class="btn-sm btn btn-white" title="Informasi"
             @click="featureInfo('page_grup_tabel')"
             ><i class="flaticon-info"></i></button>
           </div>
@@ -160,19 +160,34 @@
           </button>
         </template>
       </b-table>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <b-button variant="outline-dark" size="sm"
-        @click="selectAllRows">
-          <i class="flaticon-list-3"></i> Select all
-        </b-button>
-        <b-button variant="outline-dark" size="sm"
-        @click="clearSelected">
-          <i class="flaticon2-reload"></i> Clear selected
-        </b-button>
-        <b-button variant="outline-danger" size="sm"
-        @click="bulkRemove">
-          <i class="flaticon2-trash"></i> Bulk remove
-        </b-button>
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <b-button variant="outline-dark" size="sm"
+            @click="selectAllRows">
+              <i class="flaticon-list-3"></i> Select all
+            </b-button>
+            <b-button variant="outline-dark" size="sm"
+            @click="clearSelected">
+              <i class="flaticon2-reload"></i> Clear selected
+            </b-button>
+            <b-button variant="outline-danger" size="sm"
+            @click="bulkRemove">
+              <i class="flaticon2-trash"></i> Bulk remove
+            </b-button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="float-right">
+            <b-pagination
+              size="sm"
+              v-model="page"
+              :total-rows="members.total"
+              :per-page="members.per_page"
+              :disabled="isLoading"
+            ></b-pagination>
+          </div>
+        </div>
       </div>
       <template v-slot:modal-footer="{ cancel }">
         <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
@@ -252,7 +267,15 @@ export default {
       if (!this.members) {
         return []
       }
-      return this.members
+      return this.members.data
+    },
+    page: {
+      get() {
+        return this.$store.state.grup.page
+      },
+      set(val) {
+        this.$store.commit('grup/_set_page', val)
+      }
     }
   },
   methods: {
@@ -443,6 +466,11 @@ export default {
   },
   created() {
     this.getDataAllGroup()
+  },
+  watch: {
+    page() {
+      this.getDataMembers(this.current_group_id)
+    }
   }
 }
 </script>
