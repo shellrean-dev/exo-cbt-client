@@ -62,12 +62,12 @@
                         </div>
                     </div>
                     <div class="table-responsive-md" v-if="matpels && typeof matpels.data != 'undefined'">
-                        <b-table 
+                        <b-table
                         id="table-transition-example"
                         primary-key="kode_mapel" :tbody-transition-props="transProps"
                         striped hover bordered small show-empty
-                        :fields="fields" 
-                        :items="matpels.data" 
+                        :fields="fields"
+                        :items="matpels.data"
                         selectable
                         @row-selected="onRowSelected"
                         ref="selectableTable"
@@ -81,18 +81,32 @@
                                     <div class="table-responsive-md">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <td width="230">Type</td>
+                                                <td width="230">Setting matpel</td>
                                                 <td>
-                                                    <b-badge variant="success" class="mr-1" v-show="row.item.jurusans == 0 && row.item.agama == 0">umum</b-badge>
-                                                    <b-badge variant="success" class="mr-1" v-show="row.item.jurusans != 0">khusus</b-badge>
-                                                    <b-badge variant="success" class="mr-1" v-show="row.item.agama != 0">agama</b-badge>
-                                                    <b-badge variant="info" class="mr-1" v-if="row.item.jurusans != 0" v-for="(jur, index) in row.item.jurusans" v-text="jur.nama" :key="index"></b-badge>
+                                                  <ul>
+                                                    <li v-show="row.item.jurusans == 0 && row.item.agama == 0">umum tanpa kecuali</li>
+                                                    <li v-show="row.item.jurusans != 0">khusus jurusan</li>
+                                                    <ul v-if="row.item.jurusans != 0">
+                                                      <li
+                                                        v-for="(jur, index) in row.item.jurusans"
+                                                        v-text="jur.nama" :key="index"
+                                                      ></li>
+                                                    </ul>
+                                                    <li v-show="row.item.agama != 0">agama tertentu</li>
+                                                  </ul>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Tim pengoreksi</td>
                                                 <td>
-                                                    <b-badge variant="success" class="mr-1" v-if="row.item.correctors_name != 0" v-for="(corector, index) in row.item.correctors_name" v-text="corector.name" :key="index"></b-badge>
+                                                  <ul
+                                                    v-if="row.item.correctors_name != 0"
+                                                  >
+                                                    <li
+                                                      v-for="(corector, index) in row.item.correctors_name"
+                                                      v-text="corector.name" :key="index"
+                                                    ></li>
+                                                  </ul>
                                                 </td>
                                             </tr>
                                         </table>
@@ -100,7 +114,7 @@
                                 </b-card>
                             </template>
                             <template v-slot:cell(nama)="row">
-                                {{ row.item.nama }} 
+                                {{ row.item.nama }}
                             </template>
                             <template v-slot:cell(actions)="row">
                                 <router-link :to="{ name: 'matpel.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
@@ -144,7 +158,7 @@
                             Loading...
                         </div>
                     </template>
-    			</div> 
+    			</div>
                 <div class="card-footer">
                     <strong>Sematic kode matpel : </strong> <u>kode-nomor-kategori</u> <strong>Contoh :</strong> BC-012-U (U: Umum, A: Agama, K: khusus)
                 </div>
