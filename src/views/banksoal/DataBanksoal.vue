@@ -103,6 +103,14 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                          <tr>
+                                            <td><span class="badge badge-info">Mengurutkan</span></td>
+                                            <td>
+                                              <div class="d-flex justify-content-between">
+                                                <span>{{ row.item.jumlah_mengurutkan }}</span><b-badge variant="success">{{ row.item.persen.mengurutkan }} </b-badge>
+                                              </div>
+                                            </td>
+                                          </tr>
                                             <tr>
                                                 <td><span class="badge badge-info">Isian Singkat</span></td>
                                                 <td>
@@ -177,12 +185,12 @@
                 <input type="text" class="form-control" :class="{ 'is-invalid' : errors.kode_banksoal }"  placeholder="Kode banksoal" v-model="data.kode_banksoal">
                 <p class="text-danger" v-if="errors.kode_banksoal">{{ errors.kode_banksoal[0] }}</p>
             </div>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-a>
+            <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-a>
                 <span class="when-opened">
-                    <i class="flaticon-circle"></i>
+                    <i class="flaticon2-down"></i>
                 </span>
                 <span class="when-closed">
-                    <i class="flaticon2-add"></i>
+                    <i class="flaticon2-next"></i>
                 </span>
                 Pilihan ganda
             </b-button>
@@ -223,12 +231,12 @@
                     </div>
                 </div>
             </b-collapse>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-b>
+            <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-b>
                 <span class="when-opened">
-                    <i class="flaticon-circle"></i>
+                    <i class="flaticon2-down"></i>
                 </span>
-                <span class="when-closed">
-                    <i class="flaticon2-add"></i>
+              <span class="when-closed">
+                    <i class="flaticon2-next"></i>
                 </span>
                 Pilihan ganda kompleks
             </b-button>
@@ -269,12 +277,12 @@
                     </div>
                 </div>
             </b-collapse>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-c>
+            <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-c>
                 <span class="when-opened">
-                    <i class="flaticon-circle"></i>
+                    <i class="flaticon2-down"></i>
                 </span>
-                <span class="when-closed">
-                    <i class="flaticon2-add"></i>
+              <span class="when-closed">
+                    <i class="flaticon2-next"></i>
                 </span>
                 Listening
             </b-button>
@@ -314,12 +322,12 @@
                     </div>
                 </div>
             </b-collapse>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-d>
+            <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-d>
                 <span class="when-opened">
-                    <i class="flaticon-circle"></i>
+                    <i class="flaticon2-down"></i>
                 </span>
-                <span class="when-closed">
-                    <i class="flaticon2-add"></i>
+              <span class="when-closed">
+                    <i class="flaticon2-next"></i>
                 </span>
                 Menjodohkan
             </b-button>
@@ -359,12 +367,12 @@
                     </div>
                 </div>
             </b-collapse>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-e>
+            <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-e>
                 <span class="when-opened">
-                    <i class="flaticon-circle"></i>
+                    <i class="flaticon2-down"></i>
                 </span>
-                <span class="when-closed">
-                    <i class="flaticon2-add"></i>
+              <span class="when-closed">
+                    <i class="flaticon2-next"></i>
                 </span>
                 Isian singkat
             </b-button>
@@ -404,12 +412,12 @@
                     </div>
                 </div>
             </b-collapse>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-f>
+            <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-f>
                 <span class="when-opened">
-                    <i class="flaticon-circle"></i>
+                    <i class="flaticon2-down"></i>
                 </span>
-                <span class="when-closed">
-                    <i class="flaticon2-add"></i>
+              <span class="when-closed">
+                    <i class="flaticon2-next"></i>
                 </span>
                 Uraian
             </b-button>
@@ -449,6 +457,51 @@
                     </div>
                 </div>
             </b-collapse>
+          <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-g>
+               <span class="when-opened">
+                    <i class="flaticon2-down"></i>
+                </span>
+            <span class="when-closed">
+                    <i class="flaticon2-next"></i>
+                </span>
+            Mengurutkan
+          </b-button>
+          <b-collapse id="collapse-g" class="mt-2">
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Mengurutkan</strong>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group">
+                  <label>Jumlah soal mengurutkan</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend" v-show="data.jumlah_soal_mengurutkan > 0">
+                      <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_mengurutkan -= 1"><b>-</b></button>
+                    </div>
+                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_mengurutkan }" v-model.number="data.jumlah_soal_mengurutkan" placeholder="Jumlah soal mengurutkan">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_mengurutkan += 1"><b>+</b></button>
+                    </div>
+                  </div>
+                  <p class="text-danger" v-if="errors.jumlah_soal_mengurutkan">{{ errors.jumlah_soal_mengurutkan[0] }}</p>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>Persen</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend" v-show="data.persen.mengurutkan > 0">
+                      <button class="btn btn-outline-secondary" type="button" @click="data.persen.mengurutkan -= 1"><b>-</b></button>
+                    </div>
+                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.mengurutkan" @input="checkTotal()">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="button" @click="data.persen.mengurutkan += 1"><b>+</b></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </b-collapse>
             <template v-slot:modal-footer="{ ok, cancel}">
 
               <b-button variant="primary" size="sm" :disabled="isLoading" @click="!update ? postBanksoal() : updateData()">
@@ -513,13 +566,15 @@ export default {
                 jumlah_soal_ganda_kompleks: 0,
                 jumlah_soal_menjodohkan: 0,
                 jumlah_soal_isian_singkat: 0,
+                jumlah_soal_mengurutkan: 0,
                 persen: {
                     pilihan_ganda: 0,
                     pilihan_ganda_komplek: 0,
                     menjodohkan: 0,
                     isian_singkat: 0,
                     listening: 0,
-                    esay: 0
+                    esay: 0,
+                    mengurutkan: 0
                 }
             },
             selected: '',
@@ -568,6 +623,7 @@ export default {
                     jumlah_soal_ganda_kompleks: this.data.jumlah_soal_ganda_kompleks,
                     jumlah_isian_singkat: this.data.jumlah_soal_isian_singkat,
                     jumlah_menjodohkan: this.data.jumlah_soal_menjodohkan,
+                    jumlah_mengurutkan: this.data.jumlah_soal_mengurutkan,
                     persen: this.data.persen
                 })
 
@@ -591,6 +647,7 @@ export default {
                 jumlah_soal_ganda_kompleks: this.data.jumlah_soal_ganda_kompleks,
                 jumlah_isian_singkat: this.data.jumlah_soal_isian_singkat,
                 jumlah_menjodohkan: this.data.jumlah_soal_menjodohkan,
+                jumlah_mengurutkan: this.data.jumlah_soal_mengurutkan,
                 persen: this.data.persen
             }
             this.updateBanksoal({
@@ -642,13 +699,15 @@ export default {
                 jumlah_soal_ganda_kompleks: 0,
                 jumlah_soal_menjodohkan: 0,
                 jumlah_soal_isian_singkat: 0,
+                jumlah_soal_mengurutkan: 0,
                 persen: {
                     pilihan_ganda: 0,
                     pilihan_ganda_komplek: 0,
                     menjodohkan: 0,
                     isian_singkat: 0,
                     listening: 0,
-                    esay: 0
+                    esay: 0,
+                    mengurutkan: 0
                 }
             }
         },
@@ -667,6 +726,7 @@ export default {
                     jumlah_soal_ganda_kompleks: response.jumlah_soal_ganda_kompleks,
                     jumlah_soal_isian_singkat: response.jumlah_isian_singkat,
                     jumlah_soal_menjodohkan: response.jumlah_menjodohkan,
+                    jumlah_soal_mengurutkan: response.jumlah_mengurutkan,
                     persen: response.persen
                 }
                 this.update = response.id
