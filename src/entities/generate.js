@@ -13,12 +13,12 @@ export function generateBanksoalCode() {
    let d = new Date();
    let yea = d.getFullYear();
 
-   return `${id}-${yea}-`
+   return `BKSL-${id}-${yea}`
 }
 
 export function generateMatpelCode() {
    let id1 = makeid(2)
    let id2 = makeid(3)
 
-   return `${id1}-${id2}-`
+   return `MTPL-${id1}-${id2}`
 }
