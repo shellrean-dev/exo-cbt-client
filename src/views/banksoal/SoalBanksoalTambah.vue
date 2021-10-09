@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="row">
                       <div class="col-md-8">
-                         <div class="card rounded-0" style="border:1px dashed #00f;">
+                         <div class="card" style="border:1px solid #00f;">
                               <div class="card-header bg-white">
                                   <b><i class="flaticon2-sheet"></i> Pertanyaan</b>
                               </div>
@@ -16,7 +16,7 @@
                                 <ckeditor v-model="question" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                               </div>
                           </div>
-                          <div class="card" v-if="tipe_soal == 2" style="border:1px dashed #00f;">
+                          <div class="card" v-if="tipe_soal == 2" style="border:1px solid #00f;">
                               <div class="card-header bg-white">
                                   <b><i class="flaticon2-paper"></i> Jawaban rujukan</b>
                               </div>
@@ -24,7 +24,7 @@
                                 <ckeditor v-model="rujukan" v-if="showEditor" :config="editorConfig"  type="inline"></ckeditor>
                               </div>
                           </div>
-                          <div class="card rounded-0" v-if="[1,3,4,5,6].includes(parseInt(tipe_soal))" style="border:1px dashed #00f;">
+                          <div class="card " v-if="[1,3,4,5,6].includes(parseInt(tipe_soal))" style="border:1px solid #00f;">
                               <div class="card-header bg-white">
                                   <b v-if="[1,3,4,5].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Pilihan</b>
                                   <b v-if="[6].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Jawaban</b>
@@ -108,7 +108,7 @@
                           </div>
                       </div>
                       <div class="col-md-4">
-                          <div class="card rounded-0" style="border:1px dashed #00f;">
+                          <div class="card" style="border:1px solid #00f;">
                               <div class="card-header bg-white">
                                   <b><i class="flaticon-settings-1"></i> Setting soal</b>
                               </div>
