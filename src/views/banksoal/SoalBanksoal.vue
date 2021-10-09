@@ -71,7 +71,7 @@
                                     <option :value.int="1">Pilihan ganda</option>
                                     <option :value.int="4">Pilihan ganda kompleks</option>
                                     <option :value.int="3">Listening</option>
-                                    <option :value.int="5" v-if="false">Menjodohkan</option>
+                                    <option :value.int="5">Menjodohkan</option>
                                     <option :value.int="6">Isian singkat</option>
                                     <option :value.int="2">Uraian</option>
                                 </select>
@@ -134,8 +134,8 @@
                         <template
                         v-if="row.item.tipe_soal == 6"
                         >
-                          <p v-if="row.item.case_sensitive == '1'"><small>* <i>Jawaban bersifat case sensitive, artinya besar/kecil nya huruf berpengaruh</i></small></p>
-                          <p v-if="row.item.case_sensitive == '0'"><small>* <i>Jawaban tidak bersifat case sensitive, artinya besar/kecil nya huruf tidak berpengaruh</i></small></p>
+                          <p v-if="row.item.case_sensitive == '1'" class="badge badge-warning">Case-Sensitive</p>
+                          <p v-if="row.item.case_sensitive == '0'" class="badge badge-warning">Tidak Case-Sensitive</p>
                         </template>
     					        </b-card>
     					    </template>
