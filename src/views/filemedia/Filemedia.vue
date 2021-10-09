@@ -10,14 +10,31 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive-md" v-if="typeof directories.data != 'undefined'">
-						<b-list-group>
-						  <b-list-group-item class="d-flex justify-content-between align-items-center" v-for="(directory,index) in directories.data" :key="index">
-						    <router-link :to="{ name: 'filemedia.directory', params: { 'directory_id' : directory.id } }">{{ directory.name }}</router-link> 
-						    <div>
-								<b-badge class="mr-1">{{ directory.file_count }}</b-badge>
-						    </div>
-						  </b-list-group-item>
-						</b-list-group>
+            <table class="table table-sm table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nama Direktori</th>
+                  <th>Jumah file</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(directory,index) in directories.data"
+                  :key="'directory_file_index_'+index"
+                >
+                  <td>
+                    {{ index + 1}}
+                  </td>
+                  <td>
+                    <router-link :to="{ name: 'filemedia.directory', params: { 'directory_id' : directory.id } }">{{ directory.name }}</router-link>
+                  </td>
+                  <td>
+                    <b-badge class="mr-1">{{ directory.file_count }}</b-badge>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 						<div class="row mt-2">
                             <div class="col-md-6">
 

@@ -1,6 +1,7 @@
 <template>
-    <footer class="c-footer bg-white">
-        <div>&copy; {{ year }} <a href="">Extraordinary-CBT v3.0.0 - ristretto</a></div>
+    <footer class="c-footer bg-white d-flex justify-content-between">
+        <div>&copy; {{ year }} <span>Extraordinary-CBT v3.0.0 - ristretto</span></div>
+      <div><span>renjana.org</span></div>
      </footer>
 </template>
 <script>
