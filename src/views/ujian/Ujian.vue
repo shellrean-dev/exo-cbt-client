@@ -86,18 +86,22 @@
                                         	<tr>
                                         		<td>Setting</td>
                                         		<td>
-                                        			<b-badge :variant="row.item.setting.acak_soal == '1' ? 'success' : 'dark' " class="mr-1">Acak soal</b-badge>
-                                        			<b-badge :variant="row.item.setting.acak_opsi == '1' ? 'success' : 'dark'" class="mr-1">Acak opsi</b-badge>
-                                        			<b-badge :variant="row.item.setting.token == '1' ? 'success' : 'dark'" class="mr-1">Token aktif</b-badge>
-													<b-badge :variant="row.item.view_result == '1' ? 'success' : 'dark'" class="mr-1">Tampilkan nilai pada siswa</b-badge>
+                                              <ul>
+                                                <li>Acak soal {{ row.item.setting.acak_soal == '1' ? '&#10004;' : '&#10007;'}}</li>
+                                                <li>Acak opsi {{ row.item.setting.acak_opsi == '1' ? '&#10004;' : '&#10007;'}}</li>
+                                                <li>Token aktif {{ row.item.setting.token == '1' ? '&#10004;' : '&#10007;'}}</li>
+                                                <li>Tampilkan nilai pada siswa {{ row.item.view_result == '1' ? '&#10004;' : '&#10007;'}}</li>
+                                              </ul>
                                         		</td>
                                         	</tr>
                                         	<tr>
                                         		<td>Urutan</td>
                                         		<td>
-                                        			<b-badge variant="primary" class="mr-1" v-for="list in row.item.setting.list" :key="'list_'+list.id">
-                                        				{{ list.name }} 
-                                        			</b-badge>
+                                              <ul>
+                                                <li v-for="list in row.item.setting.list" :key="'list_'+list.id">
+                                                  {{ list.name }}
+                                                </li>
+                                              </ul>
                                         		</td>
                                         	</tr>
                                         </table>
@@ -126,7 +130,7 @@
 	                        </div>
 	                        <div class="col-md-6">
 	                            <div class="float-right">
-	                                <b-pagination 
+	                                <b-pagination
 	                                    size="sm"
 	                                    v-model="page"
 	                                    :total-rows="ujians.total"
@@ -163,13 +167,13 @@
 		    	<div class="text-center text-light my-2" v-show="!banksoals">
 				  <b-spinner small type="grow"></b-spinner> Loading...
                 </div>
-		    	<multiselect 
-				v-model="data.group_ids" 
-				tag-placeholder="Cari untuk menambah grup" 
-				placeholder="Tambah grup" 
-				label="name" track-by="id" 
-				:options="groups" 
-				:multiple="true" 
+		    	<multiselect
+				v-model="data.group_ids"
+				tag-placeholder="Cari untuk menambah grup"
+				placeholder="Tambah grup"
+				label="name" track-by="id"
+				:options="groups"
+				:multiple="true"
 				:taggable="true"
 				v-if="groups"></multiselect>
 		    	<small class="text-danger" v-if="errors.group_ids">{{ errors.group_ids[0] }}</small>
@@ -179,13 +183,13 @@
 		    	<div class="text-center text-light my-2" v-show="!banksoals">
 				  <b-spinner small type="grow"></b-spinner> Loading...
                 </div>
-		    	<multiselect 
-				v-model="data.banksoal_id" 
-				tag-placeholder="Cari untuk menambah banksoal" 
-				placeholder="Tambah banksoal" 
-				label="kode_banksoal" track-by="id" 
-				:options="banksoals" 
-				:multiple="true" 
+		    	<multiselect
+				v-model="data.banksoal_id"
+				tag-placeholder="Cari untuk menambah banksoal"
+				placeholder="Tambah banksoal"
+				label="kode_banksoal" track-by="id"
+				:options="banksoals"
+				:multiple="true"
 				:taggable="true"
 				v-if="banksoals"></multiselect>
 		    	<small class="text-danger" v-if="errors.banksoal_id">{{ errors.banksoal_id[0] }}</small>
@@ -255,7 +259,7 @@
 		    	<div class="col-md-12">
 		    		<label>Urutan ujian tipe</label>
 		    	</div>
-		    	<div class="col-md-12">	
+		    	<div class="col-md-12">
 	               <draggable
 	                :list="data.setting.list"
 	                class="list-group"
@@ -409,7 +413,7 @@ export default {
 					'',
 					'',
 					'',
-					''	
+					''
 				],
 				view_result: 0
 			},
@@ -548,7 +552,7 @@ export default {
 				'',
 				'',
 				'',
-				''	
+				''
 			],
 			this.view_result = 0
 		},

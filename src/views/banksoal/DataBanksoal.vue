@@ -73,7 +73,7 @@
                                         <table class="table table-bordered mt-2">
                                             <tr>
                                                 <td width="150px"><span class="badge badge-info">PG</span></td>
-                                                <td> 
+                                                <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_soal }}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda }} </b-badge>
                                                     </div>
@@ -90,7 +90,7 @@
                                             <tr>
                                                 <td><span class="badge badge-info">Listening</span></td>
                                                 <td>
-                                                    <div class="d-flex justify-content-between">    
+                                                    <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_soal_listening }}</span><b-badge variant="success">{{ row.item.persen.listening }} </b-badge>
                                                     </div>
                                                 </td>
@@ -98,7 +98,7 @@
                                             <tr>
                                                 <td><span class="badge badge-info">Menjodohkan</span></td>
                                                 <td>
-                                                    <div class="d-flex justify-content-between">    
+                                                    <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_menjodohkan }}</span><b-badge variant="success">{{ row.item.persen.menjodohkan }} </b-badge>
                                                     </div>
                                                 </td>
@@ -106,7 +106,7 @@
                                             <tr>
                                                 <td><span class="badge badge-info">Isian Singkat</span></td>
                                                 <td>
-                                                    <div class="d-flex justify-content-between">    
+                                                    <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_isian_singkat }}</span><b-badge variant="success">{{ row.item.persen.isian_singkat }} </b-badge>
                                                     </div>
                                                 </td>
@@ -157,7 +157,7 @@
                             Loading...
                         </div>
                     </template>
-                </div> 
+                </div>
                 <div class="card-footer">
                     <strong>Sematic kode banksoal : </strong> <u>kode-tahun-matpel(singkat)</u> <strong>Contoh : </strong> E3D-2020-MTK
                 </div>
@@ -314,7 +314,7 @@
                     </div>
                 </div>
             </b-collapse>
-            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-d v-if="false">
+            <b-button size="sm" variant="outline-info" class="mr-1" v-b-toggle.collapse-d>
                 <span class="when-opened">
                     <i class="flaticon-circle"></i>
                 </span>
@@ -572,7 +572,7 @@ export default {
                 })
 
                 this.$bvToast.toast('Banksoal berhasil ditambah.', successToas())
-                this.getBanksoals({ perPage: this.perPage })  
+                this.getBanksoals({ perPage: this.perPage })
                 this.clearForm()
                 this.$bvModal.hide('modal-scoped')
             } catch (error) {
@@ -599,7 +599,7 @@ export default {
             })
             .then((res) => {
                 this.$bvToast.toast('Banksoal berhasil diubah.', successToas())
-                this.getBanksoals({ perPage: this.perPage })  
+                this.getBanksoals({ perPage: this.perPage })
                 this.clearForm()
                 this.$bvModal.hide('modal-scoped')
                 this.update = 0

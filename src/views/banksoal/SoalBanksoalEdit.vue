@@ -6,7 +6,7 @@
                     <router-link :to="{ name: 'banksoal.soal', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-light btn-sm">Kembali</router-link>
                 </div>
                 <div class="card-body">
-                    
+
                       <div class="row">
                         <div class="col-md-8">
                                   <div class="card rounded-0" style="border:1px dashed #00f;">
@@ -108,7 +108,7 @@
                                           <select class="form-control" v-model="tipe_soal">
                                               <option value="1">Pilihan ganda</option>
                                               <option value="4">Pilihan ganda kompleks</option>
-                                              <option value="5" v-if="false">Menjodohkan</option>
+                                              <option value="5">Menjodohkan</option>
                                               <option value="6">Isian singkat</option>
                                               <option value="2">Essai</option>
                                               <option value="3">Listening</option>
@@ -386,7 +386,7 @@ export default {
         await newdata.splice(index,1)
         this.pairs = []
         await this.pairs.push(...newdata)
-        
+
         this.show_opsi = true
       } else if(this.tipe_soal == 6) {
         this.show_opsi = false
@@ -394,7 +394,7 @@ export default {
         await newdata.splice(index,1)
         this.options = []
         await this.options.push(...newdata)
-        
+
         this.show_opsi = true
       }
     },

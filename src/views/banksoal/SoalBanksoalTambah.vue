@@ -115,7 +115,7 @@
                                       <select class="form-control" v-model="tipe_soal">
                                           <option value="1">Pilihan ganda</option>
                                           <option value="4">Pilihan ganda kompleks</option>
-                                          <option value="5" v-if="false">Menjodohkan</option>
+                                          <option value="5">Menjodohkan</option>
                                           <option value="6">Isian singkat</option>
                                           <option value="2">Essai</option>
                                           <option value="3">Listening</option>
@@ -133,7 +133,7 @@
                                             <label class="custom-file-label">{{ labelDirection ? labelDirection : 'Pilih File...' }}</label>
                                         </div>
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" 
+                                            <button class="btn btn-primary" type="button"
                                             :disabled="isLoading"
                                             @click="submitFileDirection">Upload</button>
                                         </div>
@@ -150,7 +150,7 @@
                                           <label class="custom-file-label">{{ labelAudio ? labelAudio : 'Pilih File...' }}</label>
                                         </div>
                                         <div class="input-group-append">
-                                          <button class="btn btn-primary" type="button" 
+                                          <button class="btn btn-primary" type="button"
                                           :disabled="isLoading"
                                           @click="submitFile">Upload</button>
                                         </div>
@@ -454,7 +454,7 @@ export default {
         await newdata.splice(index,1)
         this.pairs = []
         await this.pairs.push(...newdata)
-        
+
         this.show_opsi = true
       } else if(this.tipe_soal == 6) {
         this.show_opsi = false
@@ -462,7 +462,7 @@ export default {
         await newdata.splice(index,1)
         this.options = []
         await this.options.push(...newdata)
-        
+
         this.show_opsi = true
       }
     },

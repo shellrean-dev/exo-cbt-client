@@ -4,8 +4,7 @@ import io from 'socket.io-client'
 const state = () => ({
 	users: [],
 	socket: io(process.env.VUE_APP_SOCKET,{autoConnect: false, 'forceNew':true}),
-	socket_2: io(process.env.VUE_APP_SOCKET,{autoConnect: false, 'forceNew':true}),
-	center: io(process.env.VUE_APP_CENTER_SOCKET,{autoConnect: false})
+	socket_2: io(process.env.VUE_APP_SOCKET,{autoConnect: false, 'forceNew':true})
 })
 
 const mutations = {
