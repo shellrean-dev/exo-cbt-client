@@ -74,6 +74,7 @@
                                     <option :value.int="5">Menjodohkan</option>
                                     <option :value.int="6">Isian singkat</option>
                                     <option :value.int="2">Uraian</option>
+                                    <option :value.int="7">Mengurutkan</option>
                                 </select>
                             </div>
                         </div>
@@ -115,7 +116,12 @@
                                             <i class="flaticon2-correct text-success" v-show="jawab.correct == '1'"></i>
                                             <i class="flaticon2-hexagonal text-danger" v-show="jawab.correct == '0'"></i>
                                         </td>
-    					          		<td v-if="[1,3,4,6].includes(row.item.tipe_soal)" >
+                            <td v-if="[7].includes(row.item.tipe_soal)"
+                            width="30"
+                            >
+                              &#8595;
+                            </td>
+    					          		<td v-if="[1,3,4,6,7].includes(row.item.tipe_soal)" >
     					          			<div v-html="jawab.text_jawaban"></div>
     					          		</td>
                                         <td v-if="row.item.tipe_soal == 5">
@@ -183,10 +189,6 @@
                     </template>
                 </div>
                 <div class="card-footer">
-                  <div class="alert alert-warning">
-                    <strong>Warning</strong><br>
-                    <span>Sangat tidak disarankan untuk mengubah soal pada banksoal ketika sudah/sedang digunakan pada ujian, bisa menyebabkan gagal pada analisa. gunakan fitur duplikat akan lebih disarankan.</span>
-                  </div>
                 </div>
             </div>
         </div>
@@ -319,7 +321,7 @@ export default {
             })
 		},
         tipeSoal(i) {
-            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan', 'Isian singkat']
+            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan', 'Isian singkat', 'Mengurutkan']
             return index[i-1]
         },
         getTextParse(text, v) {

@@ -41,9 +41,9 @@ const EditGuru = () => import('@/views/guru/Edit')
 import BanksoalIndex from '@/views/banksoal/Index'
 const DataBanksoal = () => import( '@/views/banksoal/DataBanksoal')
 const SoalBanksoal = () => import('@/views/banksoal/SoalBanksoal')
-const SoalBanksoalTambah = () => import('@/views/banksoal/SoalBanksoalTambah')
+const SoalBanksoalTambah = () => import('@/views/banksoal/soal/SoalTambah')
 const SoalBanksoalTemplate = () => import('@/views/banksoal/SoalBanksoalTemplate')
-const SoalBanksoalEdit = () => import('@/views/banksoal/SoalBanksoalEdit')
+const SoalBanksoalEdit = () => import('@/views/banksoal/soal/SoalEdit')
 const SoalBanksoalPrev = () => import('@/views/banksoal/SoalBanksoalPrev')
 const SoalBanksoalUpload = () => import( '@/views/banksoal/SoalBanksoalUpload')
 

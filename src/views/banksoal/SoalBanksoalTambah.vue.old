@@ -126,6 +126,7 @@
                                           <option value="6">Isian singkat</option>
                                           <option value="2">Essai</option>
                                           <option value="3">Listening</option>
+                                          <option value="7">Mengurutkan</option>
                                       </select>
                                     </div>
                                 </div>
