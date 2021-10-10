@@ -128,15 +128,11 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import { GChart } from 'vue-google-charts'
-import { successToas, errorToas} from '@/entities/notif'
-import StarFillineYellow from '@/components/icon/StarFillineYellow'
+import { errorToas} from '@/entities/notif'
 
 export default {
   name: 'SoalBanksoal',
   components: {
-    GChart,
-    StarFillineYellow
   },
   computed: {
     ...mapGetters(['isLoading']),

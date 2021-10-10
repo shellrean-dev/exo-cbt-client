@@ -123,8 +123,10 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Kosong</td>
-                                            <td v-text="row.item.tidak_diisi"></td>
+                                          <td>Mengurutkan</td>
+                                          <td>
+                                            Salah {{ row.item.jumlah_salah_mengurutkan }} : Benar {{ row.item.jumlah_benar_mengurutkan }}
+                                          </td>
                                         </tr>
                                         <tr>
                                             <td>Point esay</td>
@@ -199,8 +201,8 @@
                 <v-select label="nama" :options="jurusans" multiple v-model="jurusan_download" :reduce="nama => nama.id"></v-select>
             </div>
             <template v-slot:modal-footer="{ cancel }">
-		      <b-button size="sm" variant="primary" 
-              @click="download" 
+		      <b-button size="sm" variant="primary"
+              @click="download"
               :disabled="isLoading || ((jurusan_download == 0 || jurusan_download == '' || jurusan_download == null) && !isGroup)">
 		        {{ isLoading ? 'Processing...' : 'Download' }}
 		      </b-button>
@@ -365,11 +367,11 @@ export default {
                     } else [
                         group = ""
                     ]
-                    await this.getHasilUjian({ 
-                        id: val, 
+                    await this.getHasilUjian({
+                        id: val,
                         jurusan: this.jurusan_select != '' ? this.jurusan_select : 0,
                         group: group,
-                        perPage: this.perPage 
+                        perPage: this.perPage
                     })
                 } catch (error) {
                     this.$bvToast.toast(error.message, errorToas())
@@ -379,10 +381,10 @@ export default {
         async jurusan_select(v) {
             if(v !== '' && v != null) {
                 try {
-                    await this.getHasilUjian({ 
-                        id: this.jadwal, 
+                    await this.getHasilUjian({
+                        id: this.jadwal,
                         jurusan: v,
-                        perPage: this.perPage 
+                        perPage: this.perPage
                     })
                 } catch (error) {
                     this.$bvToast.toast(error.message, errorToas())

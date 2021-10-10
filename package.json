@@ -22,7 +22,6 @@
     "tiptap-extensions": "^1.31.0",
     "vue": "^2.6.11",
     "vue-datetime": "^1.0.0-beta.13",
-    "vue-google-charts": "^0.3.3",
     "vue-html-to-paper": "^1.3.1",
     "vue-json-excel": "^0.2.98",
     "vue-loading-overlay": "^3.3.2",
