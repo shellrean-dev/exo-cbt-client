@@ -136,10 +136,22 @@
                                 </b-card>
                             </template>
                            <template v-slot:cell(actions)="row">
-                                <router-link :to="{ name: 'banksoal.soal', params: {banksoal_id: row.item.id} }" class="btn btn-success btn-sm mr-1"><i class="flaticon-list-2"></i> Soal</router-link>
-                                <b-button class="mr-1" @click="duplikatBanksoal(row.item.id)" size="sm" variant="info" :disabled="isLoading"><i class="flaticon-background"></i> Duplikat</b-button>
-                                <b-button class="mr-1" @click="getDataId(row.item.id)" size="sm" variant="warning" :disabled="isLoading"><i class="flaticon-edit"></i> Edit</b-button>
-                                <button :disabled="isLoading" class="btn btn-danger btn-sm" @click="deleteBanksoal(row.item.id)"><i class="flaticon2-trash"></i> Hapus</button>
+                             <template v-if="row.item.is_locked == 0">
+                               <router-link :to="{ name: 'banksoal.soal', params: {banksoal_id: row.item.id} }" class="btn btn-success btn-sm mr-1"><i class="flaticon-list-2"></i> Soal</router-link>
+                               <b-button class="mr-1" @click="duplikatBanksoal(row.item.id)" size="sm" variant="info" :disabled="isLoading"><i class="flaticon-background"></i> Duplikat</b-button>
+                               <b-button class="mr-1" @click="getDataId(row.item.id)" size="sm" variant="warning" :disabled="isLoading"><i class="flaticon-edit"></i> Edit</b-button>
+                               <button :disabled="isLoading" class="btn btn-danger btn-sm mr-1" @click="deleteBanksoal(row.item.id)"><i class="flaticon2-trash"></i> Hapus</button>
+                               <button
+                                 :disabled="isLoading"
+                                 class="btn btn-light btn-sm"
+                                 @click="lockBanksoal(row.item.id)"><i class="flaticon2-lock"></i> Kunci</button>
+                             </template>
+                             <template v-if="row.item.is_locked == 1">
+                               <button
+                                 :disabled="isLoading"
+                                 class="btn btn-success btn-sm"
+                                 @click="unlockBanksoal(row.item.id)"><i class="flaticon2-unlock"></i> Buka Kunci</button>
+                             </template>
                             </template>
                         </b-table>
                         </div>
@@ -523,6 +535,48 @@
 		      </b-button>
 		    </template>
 		</b-modal>
+      <b-modal id="lock-banksoal-modal">
+        <template v-slot:modal-header="{ close }">
+          <h5>Kunci Banksoal</h5>
+        </template>
+        <div class="alert alert-info">
+          <strong>Info</strong><br>
+          <p>Siapapun tidak bisa melihat isi ataupun melakukan perubahan pada banksoal ini selama terkunci, anda akan bisa melakukannya lagi saat kunci ini dibuka menggunakan kata sandi yang anda buat.</p>
+        </div>
+        <div>
+          <div class="form-group">
+            <label>Buat kata sandi</label>
+            <input class="form-control"  v-model="lockPassword" placeholder="Kata sandi kunci banksoal" type="text">
+          </div>
+        </div>
+        <template v-slot:modal-footer="{ cancel }">
+          <b-button variant="primary" size="sm" :disabled="isLoading" @click="_lockBanksoalPost">
+            <b-spinner small type="grow" v-show="isLoading"></b-spinner> Kunci
+          </b-button>
+          <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+            Cancel
+          </b-button>
+        </template>
+      </b-modal>
+      <b-modal id="unlock-banksoal-modal">
+        <template v-slot:modal-header="{ close }">
+          <h5>Buka kunci Banksoal</h5>
+        </template>
+        <div>
+          <div class="form-group">
+            <label>Masukkan kata sandi</label>
+            <input class="form-control"  v-model="lockPassword" placeholder="Kata sandi kunci banksoal" type="text">
+          </div>
+        </div>
+        <template v-slot:modal-footer="{ cancel }">
+          <b-button variant="primary" size="sm" :disabled="isLoading" @click="_unlockBanksoalPost">
+            <b-spinner small type="grow" v-show="isLoading"></b-spinner> Buka Kunci
+          </b-button>
+          <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+            Cancel
+          </b-button>
+        </template>
+      </b-modal>
     </div>
 </template>
 <script>
@@ -580,7 +634,9 @@ export default {
             selected: '',
             isBusy: true,
             update: 0,
-            error_total: false
+            error_total: false,
+          willLockBanksoalId: '',
+          lockPassword: ''
         }
     },
     computed: {
@@ -603,7 +659,15 @@ export default {
         }
     },
     methods: {
-        ...mapActions('banksoal', ['getBanksoals','addBanksoal','removeBanksoal','getBanksoalById','updateBanksoal','duplicateBanksoal']),
+        ...mapActions('banksoal', [
+          'getBanksoals',
+          'addBanksoal',
+          'removeBanksoal',
+          'getBanksoalById',
+          'updateBanksoal',
+          'duplicateBanksoal',
+          'lockDataBanksoal',
+          'unlockDataBanksoal']),
         ...mapActions('matpel',['getAllMatpels']),
         ...mapActions('feature', ['getFeatureInfo']),
         showModalCreate() {
@@ -744,6 +808,46 @@ export default {
                 this.error_total = false
             }
         },
+      lockBanksoal(id) {
+          this.$bvModal.show('lock-banksoal-modal')
+        this.willLockBanksoalId = id
+      },
+      unlockBanksoal(id) {
+        this.$bvModal.show('unlock-banksoal-modal')
+        this.willLockBanksoalId = id
+      },
+      _lockBanksoalPost() {
+          this.lockDataBanksoal({
+            id: this.willLockBanksoalId,
+            data: {
+              key_lock: this.lockPassword
+            }
+          }).then(() => {
+            this.$bvModal.hide('lock-banksoal-modal')
+            this.getBanksoals({ perPage: this.perPage })
+            this.$bvToast.toast('Banksoal berhasil dikunci.', successToas())
+            this.lockPassword = ''
+          })
+            .catch((error) => {
+              this.$bvToast.toast(error.message, errorToas())
+            })
+      },
+      _unlockBanksoalPost() {
+        this.unlockDataBanksoal({
+          id: this.willLockBanksoalId,
+          data: {
+            key_lock: this.lockPassword
+          }
+        }).then(() => {
+          this.$bvModal.hide('unlock-banksoal-modal')
+          this.getBanksoals({ perPage: this.perPage })
+          this.$bvToast.toast('Banksoal berhasil dibuka.', successToas())
+          this.lockPassword = ''
+        })
+          .catch((error) => {
+            this.$bvToast.toast(error.message, errorToas())
+          })
+      },
         duplikatBanksoal(id) {
             this.$swal({
                 title: 'Informasi',

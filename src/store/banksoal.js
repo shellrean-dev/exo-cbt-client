@@ -12,7 +12,7 @@ const mutations = {
 	ASSIGN_DATA(state, payload) {
 		state.banksoals = payload
     },
-    ASSIGN_ALL_DATA(state, payload){ 
+    ASSIGN_ALL_DATA(state, payload){
         state.allBanksoals = payload
     },
 	SET_PAGE(state, payload) {
@@ -31,11 +31,11 @@ const actions = {
 		let search = typeof payload.search != 'undefined' ? payload.search : ''
         let perPage = typeof payload.perPage != 'undefined' ? payload.perPage : ''
         commit('SET_LOADING', true, { root: true })
-		
+
         return new Promise(async ( resolve, reject ) =>  {
             try {
                 let network = await $axios.get(`banksoals?page=${state.page}&q=${search}&perPage=${perPage}`)
-				
+
                 commit('ASSIGN_DATA', network.data.data)
                 commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
@@ -43,7 +43,7 @@ const actions = {
                 commit('SET_LOADING', false, { root: true })
                 reject(error.response.data)
             }
-		}) 
+		})
     },
     getAllBanksoals({ commit, state }, payload) {
 		let search = typeof payload != 'undefined' ? payload : ''
@@ -56,11 +56,11 @@ const actions = {
             } catch (error) {
                 reject(error.response.data)
             }
-		}) 
+		})
     },
     getBanksoalById({ commit, state }, payload) {
         commit('SET_LOADING', true, { root: true })
-        
+
         return new Promise(async ( resolve, reject ) => {
             try {
                 let network = await $axios.get(`banksoals/${payload}`)
@@ -75,7 +75,7 @@ const actions = {
     },
 	addBanksoal({ commit }, payload) {
         commit('SET_LOADING',true, { root: true })
-        
+
         return new Promise(async (resolve, reject) => {
             try{
                 let network = await $axios.post(`banksoals`, payload)
@@ -94,7 +94,7 @@ const actions = {
     },
     updateBanksoal({ commit, dispatch }, payload) {
         commit('SET_LOADING',true, { root: true })
-        
+
         return new Promise(async (resolve, reject) => {
             try{
                 let network = await $axios.put(`banksoals/${payload.id}`, payload.data)
@@ -107,9 +107,39 @@ const actions = {
             }
         })
     },
+    lockDataBanksoal({ commit }, payload) {
+        commit('SET_LOADING',true, { root: true })
+
+        return new Promise(async (resolve, reject) => {
+            try{
+                let network = await $axios.post(`banksoals/${payload.id}/lock`, payload.data)
+
+                commit('SET_LOADING',false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    unlockDataBanksoal({ commit }, payload) {
+        commit('SET_LOADING',true, { root: true })
+
+        return new Promise(async (resolve, reject) => {
+            try{
+                let network = await $axios.post(`banksoals/${payload.id}/unlock`, payload.data)
+
+                commit('SET_LOADING',false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
     removeBanksoal({ commit }, payload) {
         commit('SET_LOADING',true, { root: true })
-        
+
         return new Promise(async (resolve, reject) => {
             try {
                 let network = await $axios.delete(`banksoals/${payload}`)
@@ -124,9 +154,9 @@ const actions = {
     },
     addSoalBanksoal({ commit }, payload) {
         commit('SET_LOADING',true, { root: true })
-        
+
         return new Promise((resolve, reject) => {
-            $axios.post(`soals`, payload) 
+            $axios.post(`soals`, payload)
             .then((response) => {
                 commit('SET_LOADING', false, { root: true})
                 resolve(response.data)
@@ -157,7 +187,7 @@ const actions = {
     updateSoalBanksoal({ commit }, payload) {
         return new Promise((resolve, reject) => {
             commit('SET_LOADING',true, { root: true })
-            $axios.post(`soals/${payload.id}/edit`, payload.data) 
+            $axios.post(`soals/${payload.id}/edit`, payload.data)
             .then((response) => {
                 commit('CLEAR_ERRORS','', { root: true })
                 commit('SET_LOADING',false, { root: true })
@@ -185,7 +215,7 @@ const actions = {
                 commit('SET_LOADING',false, { root: true })
                 reject(err.response.data)
             })
-        })  
+        })
     },
     duplicateBanksoal({ commit }, payload) {
         commit('SET_LOADING', true, { root: true })
@@ -193,7 +223,7 @@ const actions = {
             $axios.get(`banksoals/${payload}/duplikat`)
             .then((response) => {
                 commit('SET_LOADING',false, { root: true })
-                resolve(response.data) 
+                resolve(response.data)
             })
             .catch((error) => {
                 commit('SET_LOADING',false, { root: true })
