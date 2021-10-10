@@ -48,10 +48,11 @@
                                                         <table class="table table-sm">
                                                             <tr>
                                                                 <td style="text-transform: uppercase;">
-                                                                    <GChart
-                                                                        type="PieChart"
-                                                                        :data="soal.diagram"
-                                                                    />
+<!--                                                                    <GChart-->
+<!--                                                                        type="PieChart"-->
+<!--                                                                        :data="soal.diagram"-->
+<!--                                                                    />-->
+                                                                  <div class="piechart"></div>
                                                                 </td>
                                                             </tr>
                                                             <tr >
@@ -123,5 +124,21 @@ export default {
 <style>
 .hide {
     display: none;
+}
+.piechart {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-image: conic-gradient(
+    pink 70deg,
+    lightblue 0 235deg,
+    orange 0
+  );
+}
+
+.piechart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
