@@ -68,14 +68,18 @@
             <li class="c-sidebar-nav-item">
               <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.data' }"
               :class="[currentPage.includes('banksoal.data') ? activeClass : '']">
-                <span class="c-sidebar-nav-icon"></span> Standar
+                <span class="c-sidebar-nav-icon"></span> Standard
               </router-link>
             </li>
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'banksoal.adaptif.data' }"
-              :class="[currentPage.includes('banksoal.adaptif.data') ? activeClass : '']">
-                <span class="c-sidebar-nav-icon"></span> Adaptif
-              </router-link>
+              <span class="c-sidebar-nav-link">
+                <span class="c-sidebar-nav-icon"></span> Adaptif <span class="badge badge-info">Comming soon</span>
+              </span>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <span class="c-sidebar-nav-link">
+                <span class="c-sidebar-nav-icon"></span> Stream <span class="badge badge-info">Comming soon</span>
+              </span>
             </li>
           </ul>
         </li>

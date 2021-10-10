@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    
+
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@ export default {
             this.file = e.target.files[0]
         },
         uploadFile() {
-            let exten = this.label.substring(this.label.lastIndexOf('.') + 1); 
+            let exten = this.label.substring(this.label.lastIndexOf('.') + 1);
             if(!this.allow.includes(exten)) {
                 this.$bvToast.toast('Hanya format docx yang diizinkan', errorToas())
                 return
@@ -100,7 +100,7 @@ export default {
 
             let formData = new FormData()
             formData.append('file',this.file)
-            formData.append('format', this.format)
+            formData.append('fmt', this.format)
             this.uploadSoal({id: this.$route.params.banksoal_id, data: formData})
             .then((res) => {
                 this.file = ''

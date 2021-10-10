@@ -1,8 +1,8 @@
 <template>
     <div>
-        <loading :active.sync="loadPage" 
-        :is-full-page="true" 
-        :loader="'dots'" 
+        <loading :active.sync="loadPage"
+        :is-full-page="true"
+        :loader="'dots'"
         :height="45"
         :width="45"
         :color="'#1f1498'"></loading>
@@ -45,7 +45,7 @@ export default {
 </script>
 <style lang="scss">
     @import "~@coreui/coreui/scss/coreui";
-    @import 'node_modules/bootstrap-vue/src/index.scss';    
+    @import 'node_modules/bootstrap-vue/src/index.scss';
     @import "assets/plugins/flaticon2/flaticon.css";
 	@import "assets/plugins/flaticon/flaticon.css";
     .swal2-popup {

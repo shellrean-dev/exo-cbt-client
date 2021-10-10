@@ -44,7 +44,8 @@ export default new Vuex.Store({
     isLoading: false,
     loadPage: false,
     token: localStorage.getItem('token'),
-    baseURL: ''
+    baseURL: '',
+      comingsoon: false
   },
   getters: {
     isAuth: state => {
@@ -85,6 +86,9 @@ export default new Vuex.Store({
     _stop_loading(state) {
       state.isLoading = false
     },
+      _set_comming(state) {
+        state.comingsoon = state
+      },
     SET_BASEURL(state, payload) {
       state.baseURL = payload
     }

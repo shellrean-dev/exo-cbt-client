@@ -407,6 +407,7 @@ export default {
                         { name: "Menjodohkan", id: 5},
                         { name: "Isian Singkat", id: 6},
 		                { name: "Uraian", id: 2 },
+            {name: 'Mengurutkan', id: 7}
 		            ],
 				},
 				mulai_sesi: [
@@ -546,6 +547,7 @@ export default {
                     { name: "Menjodohkan", id: 5},
                     { name: "Isian Singkat", id: 6},
 		            { name: "Uraian", id: 2 },
+          { name: 'Mengurutkan', id: 7 },
 		    	],
 			},
 			this.mulai_sesi = [
