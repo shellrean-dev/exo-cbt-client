@@ -69,12 +69,11 @@ import KelolaIndex from '@/views/kelola/Index'
 const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
 const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
 const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
-// const AnalysKesulitanBanksoal = () => import('@/views/kelola/AnalysKesulitanBanksoal')
 const AnalysKesulitanBanksoal = () => import('@/views/kelola/analys/Kesulitan')
 const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
 const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa')
 const HasilUjian = () => import('@/views/kelola/HasilUjian')
-const DetailJawabanSiswa = () => import('@/views/kelola/DetailJawabanSiswa')
+const DetailJawabanSiswa = () => import('@/views/kelola/detail/JawabanSiswa')
 
 import GroupIndex from '@/views/grup/Index'
 const DataGrup = () => import('@/views/grup/Grup')
