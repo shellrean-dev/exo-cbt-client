@@ -61,7 +61,7 @@
                     <label><small>Sub-grup</small></label>
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+                            <span class="input-group-text" id="basic-addon3"><i class="flaticon-browser"></i></span>
                         </div>
                         <select class="custom-select" v-model="groupChild">
                             <option :value="gr.id" v-for="(gr, idx) in childs" :key="idx">{{ gr.name }}</option>
@@ -74,8 +74,8 @@
                 <v-select label="nama" :options="jurusans" multiple v-model="jurusan_download" :reduce="nama => nama.id"></v-select>
             </div>
             <template v-slot:modal-footer="{ cancel }">
-		      <b-button size="sm" variant="primary" 
-              @click="download" 
+		      <b-button size="sm" variant="primary"
+              @click="download"
               :disabled="isLoading || ((jurusan_download == 0 || jurusan_download == '' || jurusan_download == null) && !isGroup)">
 		        {{ isLoading ? 'Processing...' : 'Download' }}
 		      </b-button>
@@ -116,7 +116,7 @@ export default {
     },
     computed: {
         ...mapGetters(['isLoading']),
-        ...mapState('ujian', { 
+        ...mapState('ujian', {
             banksoals: state => state.banksoals,
             ujians: state => state.ujianAll
         }),
@@ -134,7 +134,7 @@ export default {
             if (!this.groups) {
                 return []
             }
-            return this.groups.filter((item) => item.parent_id == 0)
+            return this.groups.filter((item) => item.parent_id === 0 || item.parent_id === null)
         },
         childs() {
             if (!this.groups || this.groupParent == 0) {
@@ -165,7 +165,7 @@ export default {
                     jadwal: jadwal,
                     banksoal: banksoal
                 },
-                name: 'kelola.analys.capaian.siswa.data' 
+                name: 'kelola.analys.capaian.siswa.data'
             })
         },
         async download() {
@@ -220,7 +220,7 @@ export default {
                 try {
                     this.getResultBanksoal(val)
                 } catch (error) {
-                   this.$bvToast.toast(error.message, errorToas()) 
+                   this.$bvToast.toast(error.message, errorToas())
                 }
             }
         }
