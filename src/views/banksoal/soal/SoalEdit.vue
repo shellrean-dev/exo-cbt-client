@@ -35,11 +35,12 @@
                 </div>
               </div>
               <div class="card border-purple"
-                   v-if="[1, 3, 4, 5, 6, 7].includes(parseInt(tipe_soal))">
+                   v-if="[1, 3, 4, 5, 6, 7,8].includes(parseInt(tipe_soal))">
                 <div class="card-header bg-white">
                   <b v-if="[1,3,4,5].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Pilihan</b>
                   <b v-if="[6].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Jawaban</b>
                   <b v-if="[7].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Urutan</b>
+                  <b v-if="[8].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Benar/Salah</b>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive-md">
@@ -175,6 +176,44 @@
                             </button>
                           </td>
                         </tr>
+                      </template>
+                      <template v-if="tipe_soal == 8">
+                        <tr v-for="(_, index) in pilihan"
+                            :key="'opsi_dari_tipe_soal_index_'+index">
+                          <td width="10px">
+                            <div class="form-check">
+                              <input
+                                :checked="selected.includes(index)"
+                                :value="index"
+                                type="checkbox"
+                                class="form-check-input"
+                                @change="_changeCheckbox($event, index)">
+                              <label class="form-check-label">
+                                <span class="text-uppercase">Benar</span>
+                              </label>
+                            </div>
+                          </td>
+                          <td>
+                            <transition name="fade">
+                              <ckeditor type="inline"
+                                        v-model="pilihan[index]"
+                                        v-if="showEditor"
+                                        :config="editorConfig"></ckeditor>
+                            </transition>
+                          </td>
+                          <td width="60px">
+                            <button
+                              v-if="pilihan.length > 2"
+                              class="btn btn-sm btn-light rounded-0"
+                              title="Hapus pilihan"
+                              @click="_removeOpsi(index)">
+                              <i class="flaticon-circle"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </template>
+                      <template v-if="tipe_soal == 9">
+
                       </template>
                       <tr>
                         <td colspan="3">
@@ -326,7 +365,9 @@ export default {
         { k: 4, v: 'Pilihan ganda kompleks' },
         { k: 5, v: 'Menjodohkan' },
         { k: 6, v: 'Isian singkat' },
-        { k: 7, v: 'Mengurutkan' }
+        { k: 7, v: 'Mengurutkan' },
+        { k: 8, v: 'Benar/salah' },
+        { k: 9, v: 'Setuju/tidak' },
       ],
       showEditor: false,
       correct: '',
@@ -471,6 +512,8 @@ export default {
         this.options.push("")
       } else if (this.tipe_soal == 7) {
         this.options.push("")
+      } else if (this.tipe_soal == 8) {
+        this.pilihan.push("")
       }
     },
     _clearForm() {
@@ -504,11 +547,17 @@ export default {
           this.options.push(item.text_jawaban)
         } else if (this.tipe_soal == 7) {
           this.options.push(item.text_jawaban)
+        } else if (this.tipe_soal == 8) {
+          let pilihan = item.text_jawaban
+          if(item.correct == "1") {
+            this.correct = index
+          }
+          this.pilihan.push(pilihan)
         }
       })
     },
     async _removeOpsi(index){
-      if ([1,3,4].includes(parseInt(this.tipe_soal))) {
+      if ([1,3,4,8].includes(parseInt(this.tipe_soal))) {
         this.show_opsi = false
         const newdata = [...this.pilihan]
         await newdata.splice(index,1)
@@ -571,7 +620,7 @@ export default {
       } else {
         this.SET_LOADING(true)
         let sender = []
-        if ([1, 3, 4].includes(parseInt(this.tipe_soal))) {
+        if ([1, 3, 4, 8].includes(parseInt(this.tipe_soal))) {
           this.pilihan.forEach(function (item) {
             sender.push(item)
           })
@@ -624,7 +673,7 @@ export default {
           this.direction = (response.data.direction != null ? response.data.direction : '')
           this.layout = response.data.layout
           this.case_sensitive = response.data.case_sensitive
-          if(this.tipe_soal == 4) {
+          if([4,8].includes(this.tipe_soal)) {
             response.data.jawabans.map((item, index) => {
               if(item.correct == "1") {
                 this.selected.push(index)

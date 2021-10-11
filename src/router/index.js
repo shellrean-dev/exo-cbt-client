@@ -40,7 +40,7 @@ const EditGuru = () => import('@/views/guru/Edit')
 
 import BanksoalIndex from '@/views/banksoal/Index'
 const DataBanksoal = () => import( '@/views/banksoal/DataBanksoal')
-const SoalBanksoal = () => import('@/views/banksoal/SoalBanksoal')
+const SoalBanksoal = () => import('@/views/banksoal/soal/SoalList')
 const SoalBanksoalTambah = () => import('@/views/banksoal/soal/SoalTambah')
 const SoalBanksoalTemplate = () => import('@/views/banksoal/SoalBanksoalTemplate')
 const SoalBanksoalEdit = () => import('@/views/banksoal/soal/SoalEdit')
