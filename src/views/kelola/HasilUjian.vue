@@ -129,8 +129,18 @@
                                           </td>
                                         </tr>
                                         <tr>
+                                        <td>Benar/Salah</td>
+                                        <td>
+                                          Salah {{ row.item.jumlah_salah_benar_salah }} : Benar {{ row.item.jumlah_benar_benar_salah }}
+                                        </td>
+                                      </tr>
+                                        <tr>
                                             <td>Point esay</td>
                                             <td v-text="row.item.point_esay"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Point setuju/tidak</td>
+                                            <td v-text="row.item.point_setuju_tidak"></td>
                                         </tr>
                                         <tr>
                                             <td>Hasil akhir</td>
