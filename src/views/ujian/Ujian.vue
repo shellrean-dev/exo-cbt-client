@@ -407,7 +407,9 @@ export default {
                         { name: "Menjodohkan", id: 5},
                         { name: "Isian Singkat", id: 6},
 		                { name: "Uraian", id: 2 },
-            {name: 'Mengurutkan', id: 7}
+            {name: 'Mengurutkan', id: 7 },
+            {name: 'Benar/salah', id: 8 },
+            {name: 'Setuju/tidak', id: 9 },
 		            ],
 				},
 				mulai_sesi: [
@@ -548,6 +550,8 @@ export default {
                     { name: "Isian Singkat", id: 6},
 		            { name: "Uraian", id: 2 },
           { name: 'Mengurutkan', id: 7 },
+          { name: 'Benar/salah', id: 8 },
+          { name: 'Setuju/tidak', id: 9 },
 		    	],
 			},
 			this.mulai_sesi = [
