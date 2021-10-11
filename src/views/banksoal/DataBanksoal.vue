@@ -131,7 +131,7 @@
                                             <td><span class="badge badge-info">Benar/salah</span></td>
                                             <td>
                                               <div class="d-flex justify-content-between">
-                                                <span>{{ row.item.jumlah_soal_benar_salah }}</span><b-badge variant="success">{{ row.item.persen.benar_salah }} </b-badge>
+                                                <span>{{ row.item.jumlah_benar_salah }}</span><b-badge variant="success">{{ row.item.persen.benar_salah }} </b-badge>
                                               </div>
                                             </td>
                                           </tr>
@@ -139,7 +139,7 @@
                                             <td><span class="badge badge-info">Setuju/tidak</span></td>
                                             <td>
                                               <div class="d-flex justify-content-between">
-                                                <span>{{ row.item.jumlah_soal_setuju_tidak }}</span><b-badge variant="success">{{ row.item.persen.setuju_tidak }} </b-badge>
+                                                <span>{{ row.item.jumlah_setuju_tidak }}</span><b-badge variant="success">{{ row.item.persen.setuju_tidak }} </b-badge>
                                               </div>
                                             </td>
                                           </tr>
