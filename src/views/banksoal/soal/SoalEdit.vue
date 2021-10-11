@@ -35,12 +35,13 @@
                 </div>
               </div>
               <div class="card border-purple"
-                   v-if="[1, 3, 4, 5, 6, 7,8].includes(parseInt(tipe_soal))">
+                   v-if="[1, 3, 4, 5, 6, 7, 8, 9].includes(parseInt(tipe_soal))">
                 <div class="card-header bg-white">
                   <b v-if="[1,3,4,5].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Pilihan</b>
                   <b v-if="[6].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Jawaban</b>
                   <b v-if="[7].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Urutan</b>
                   <b v-if="[8].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Benar/Salah</b>
+                  <b v-if="[9].includes(parseInt(tipe_soal))"><i class="flaticon-signs-1"></i> Argumen</b>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive-md">
@@ -213,7 +214,27 @@
                         </tr>
                       </template>
                       <template v-if="tipe_soal == 9">
-
+                        <tr v-for="(pilih, index) in options"
+                            :key="'soal_isian_setuju_tidak_ops_index_'+index">
+                          <td>
+                            <transition name="fade">
+                              <ckeditor
+                                v-model="options[index]"
+                                v-if="showEditor"
+                                :config="editorConfig"
+                                type="inline"></ckeditor>
+                            </transition>
+                          </td>
+                          <td width="60px">
+                            <button
+                              v-if="options.length > 1"
+                              class="btn btn-sm btn-light rounded-0"
+                              title="Hapus pilihan"
+                              @click="_removeOpsi(index)">
+                              <i class="flaticon-circle"></i>
+                            </button>
+                          </td>
+                        </tr>
                       </template>
                       <tr>
                         <td colspan="3">
@@ -514,6 +535,8 @@ export default {
         this.options.push("")
       } else if (this.tipe_soal == 8) {
         this.pilihan.push("")
+      } else if (this.tipe_soal == 9) {
+        this.options.push("")
       }
     },
     _clearForm() {
@@ -553,6 +576,8 @@ export default {
             this.correct = index
           }
           this.pilihan.push(pilihan)
+        } else if (this.tipe_soal == 9) {
+          this.options.push(item.text_jawaban)
         }
       })
     },
@@ -600,6 +625,14 @@ export default {
         await this.options.push(...newdata)
 
         this.show_opsi = true
+      } else if(this.tipe_soal == 9) {
+        this.show_opsi = false
+        const newdata = [...this.options]
+        await newdata.splice(index,1)
+        this.options = []
+        await this.options.push(...newdata)
+
+        this.show_opsi = true
       }
     },
     _postSoalBanksoal(e) {
@@ -633,6 +666,10 @@ export default {
             sender.push(item)
           })
         } else if (this.tipe_soal == 7) {
+          this.options.forEach(function (item) {
+            sender.push(item)
+          })
+        } else if (this.tipe_soal == 9) {
           this.options.forEach(function (item) {
             sender.push(item)
           })

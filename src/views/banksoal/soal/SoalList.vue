@@ -127,7 +127,7 @@
                         >
                           &#8595;
                         </td>
-                        <td v-if="[1,3,4,6,7,8].includes(row.item.tipe_soal)" >
+                        <td v-if="[1,3,4,6,7,8,9].includes(row.item.tipe_soal)" >
                           <div v-html="jawab.text_jawaban"></div>
                         </td>
                         <td v-if="row.item.tipe_soal == 5">
