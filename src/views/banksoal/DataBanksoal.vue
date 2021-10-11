@@ -127,7 +127,23 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                          <tr>
+                                            <td><span class="badge badge-info">Benar/salah</span></td>
+                                            <td>
+                                              <div class="d-flex justify-content-between">
+                                                <span>{{ row.item.jumlah_soal_benar_salah }}</span><b-badge variant="success">{{ row.item.persen.benar_salah }} </b-badge>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td><span class="badge badge-info">Setuju/tidak</span></td>
+                                            <td>
+                                              <div class="d-flex justify-content-between">
+                                                <span>{{ row.item.jumlah_soal_setuju_tidak }}</span><b-badge variant="success">{{ row.item.persen.setuju_tidak }} </b-badge>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                          <tr>
                                                 <td><span class="badge badge-warning">Soal terinput</span></td>
                                                 <td v-text="row.item.inputed"></td>
                                             </tr>
@@ -514,6 +530,96 @@
               </div>
             </div>
           </b-collapse>
+          <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-h>
+               <span class="when-opened">
+                    <i class="flaticon2-down"></i>
+                </span>
+            <span class="when-closed">
+                    <i class="flaticon2-next"></i>
+                </span>
+            Benar/Salah
+          </b-button>
+          <b-collapse id="collapse-h" class="mt-2">
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Benar/Salah</strong>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group">
+                  <label>Jumlah soal benar/salah</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend" v-show="data.jumlah_soal_benar_salah > 0">
+                      <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_benar_salah -= 1"><b>-</b></button>
+                    </div>
+                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_benar_salah }" v-model.number="data.jumlah_soal_benar_salah" placeholder="Jumlah soal benar/tidak">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_benar_salah += 1"><b>+</b></button>
+                    </div>
+                  </div>
+                  <p class="text-danger" v-if="errors.jumlah_soal_benar_salah">{{ errors.jumlah_soal_benar_salah[0] }}</p>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>Persen</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend" v-show="data.persen.benar_salah > 0">
+                      <button class="btn btn-outline-secondary" type="button" @click="data.persen.benar_salah -= 1"><b>-</b></button>
+                    </div>
+                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.benar_salah" @input="checkTotal()">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="button" @click="data.persen.benar_salah += 1"><b>+</b></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </b-collapse>
+          <b-button size="sm" block variant="outline-info" class="mr-1 text-left my-1" v-b-toggle.collapse-i>
+               <span class="when-opened">
+                    <i class="flaticon2-down"></i>
+                </span>
+            <span class="when-closed">
+                    <i class="flaticon2-next"></i>
+                </span>
+            Setuju/Tidak
+          </b-button>
+          <b-collapse id="collapse-i" class="mt-2">
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Setuju/Tidak</strong>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group">
+                  <label>Jumlah soal setuju/tidak</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend" v-show="data.jumlah_soal_setuju_tidak > 0">
+                      <button class="btn btn-outline-secondary" type="button" @click="data.jumlah_soal_setuju_tidak -= 1"><b>-</b></button>
+                    </div>
+                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.jumlah_soal_setuju_tidak }" v-model.number="data.jumlah_soal_setuju_tidak" placeholder="Jumlah soal setuju/tidak">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="button" @click="data.jumlah_soal_setuju_tidak += 1"><b>+</b></button>
+                    </div>
+                  </div>
+                  <p class="text-danger" v-if="errors.jumlah_soal_setuju_tidak">{{ errors.jumlah_soal_setuju_tidak[0] }}</p>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>Persen</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend" v-show="data.persen.setuju_tidak > 0">
+                      <button class="btn btn-outline-secondary" type="button" @click="data.persen.setuju_tidak -= 1"><b>-</b></button>
+                    </div>
+                    <input type="number" class="form-control" :class="{ 'is-invalid' : errors.persen }" v-model.number="data.persen.setuju_tidak" @input="checkTotal()">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="button" @click="data.persen.setuju_tidak += 1"><b>+</b></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </b-collapse>
             <template v-slot:modal-footer="{ ok, cancel}">
 
               <b-button variant="primary" size="sm" :disabled="isLoading" @click="!update ? postBanksoal() : updateData()">
@@ -621,6 +727,8 @@ export default {
                 jumlah_soal_menjodohkan: 0,
                 jumlah_soal_isian_singkat: 0,
                 jumlah_soal_mengurutkan: 0,
+                jumlah_soal_benar_salah: 0,
+                jumlah_soal_setuju_tidak: 0,
                 persen: {
                     pilihan_ganda: 0,
                     pilihan_ganda_komplek: 0,
@@ -628,7 +736,9 @@ export default {
                     isian_singkat: 0,
                     listening: 0,
                     esay: 0,
-                    mengurutkan: 0
+                    mengurutkan: 0,
+                    benar_salah: 0,
+                    setuju_tidak: 0
                 }
             },
             selected: '',
@@ -688,6 +798,8 @@ export default {
                     jumlah_isian_singkat: this.data.jumlah_soal_isian_singkat,
                     jumlah_menjodohkan: this.data.jumlah_soal_menjodohkan,
                     jumlah_mengurutkan: this.data.jumlah_soal_mengurutkan,
+                    jumlah_benar_salah: this.data.jumlah_soal_benar_salah,
+                    jumlah_setuju_tidak: this.data.jumlah_soal_setuju_tidak,
                     persen: this.data.persen
                 })
 
@@ -712,6 +824,8 @@ export default {
                 jumlah_isian_singkat: this.data.jumlah_soal_isian_singkat,
                 jumlah_menjodohkan: this.data.jumlah_soal_menjodohkan,
                 jumlah_mengurutkan: this.data.jumlah_soal_mengurutkan,
+                jumlah_benar_salah: this.data.jumlah_soal_benar_salah,
+                jumlah_setuju_tidak: this.data.jumlah_soal_setuju_tidak,
                 persen: this.data.persen
             }
             this.updateBanksoal({
@@ -764,6 +878,8 @@ export default {
                 jumlah_soal_menjodohkan: 0,
                 jumlah_soal_isian_singkat: 0,
                 jumlah_soal_mengurutkan: 0,
+                jumlah_soal_benar_salah: 0,
+                jumlah_soal_setuju_tidak: 0,
                 persen: {
                     pilihan_ganda: 0,
                     pilihan_ganda_komplek: 0,
@@ -771,7 +887,9 @@ export default {
                     isian_singkat: 0,
                     listening: 0,
                     esay: 0,
-                    mengurutkan: 0
+                    mengurutkan: 0,
+                    benar_salah: 0,
+                    setuju_tidak: 0
                 }
             }
         },
@@ -791,6 +909,8 @@ export default {
                     jumlah_soal_isian_singkat: response.jumlah_isian_singkat,
                     jumlah_soal_menjodohkan: response.jumlah_menjodohkan,
                     jumlah_soal_mengurutkan: response.jumlah_mengurutkan,
+                    jumlah_soal_benar_salah: response.jumlah_benar_salah,
+                    jumlah_soal_setuju_tidak: response.jumlah_setuju_tidak,
                     persen: response.persen
                 }
                 this.update = response.id

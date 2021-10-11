@@ -321,7 +321,7 @@ export default {
             })
 		},
         tipeSoal(i) {
-            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan', 'Isian singkat', 'Mengurutkan']
+            let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan', 'Isian singkat', 'Mengurutkan', 'Benar/Salah', 'Setuju/Tidak']
             return index[i-1]
         },
         getTextParse(text, v) {
