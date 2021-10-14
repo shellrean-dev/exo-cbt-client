@@ -131,11 +131,24 @@
           </router-link>
         </li>
         <li class="c-sidebar-nav-title">Menu pengolahan</li>
-        <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
-          :class="[currentPage.includes('kelola.koreksi.esay') ? activeClass : '']">
-            <i class="mr-3 flaticon2-drop"></i> Koreksi esay
-          </router-link>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+          <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <i class="mr-3 flaticon2-drop"></i> Koreksi
+          </a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
+                           :class="[currentPage.includes('kelola.koreksi.esay') ? activeClass : '']">
+                <span class="c-sidebar-nav-icon"></span> Koreksi esay
+              </router-link>
+            </li>
+            <li class="c-sidebar-nav-item">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
+                           :class="[currentPage.includes('kelola.koreksi.esay') ? activeClass : '']">
+                <span class="c-sidebar-nav-icon"></span> Koreksi argument
+              </router-link>
+            </li>
+          </ul>
         </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">

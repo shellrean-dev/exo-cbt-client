@@ -66,8 +66,11 @@ const DataEvent = () => import('@/views/event/Event')
 const EventPeserta = () => import('@/views/event/KartuPeserta');
 
 import KelolaIndex from '@/views/kelola/Index'
-const KoreksiEsay = () => import('@/views/kelola/KoreksiEsay')
-const KoreksiNilaiEsay = () => import('@/views/kelola/KoreksiNilaiEsay')
+const KoreksiEsay = () => import('@/views/kelola/koreksi/KoreksiEsayIndex')
+const KoreksiNilaiEsay = () => import('@/views/kelola/koreksi/KoreksiNilaiEsay')
+const KoreksiArgument = () => import('@/views/kelola/koreksi/ArgumentIndex')
+const KoreksiNilaiArgument = () => import('@/views/kelola/koreksi/ArgumentNilai')
+
 const AnalysBanksoal = () => import('@/views/kelola/AnalysBanksoal')
 const AnalysKesulitanBanksoal = () => import('@/views/kelola/analys/Kesulitan')
 const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
