@@ -17,6 +17,7 @@ import grup from './grup'
 import feature from './feature'
 import channel from './channel'
 import banksoal_adaptif from './banksoal_adaptif'
+import penilaian from "./penilaian";
 
 Vue.use(Vuex)
 
@@ -37,7 +38,8 @@ export default new Vuex.Store({
     grup,
     feature,
     channel,
-    banksoal_adaptif
+    penilaian,
+    banksoal_adaptif,
   },
   state: {
     errors: [],

@@ -143,8 +143,8 @@
               </router-link>
             </li>
             <li class="c-sidebar-nav-item">
-              <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.esay' }"
-                           :class="[currentPage.includes('kelola.koreksi.esay') ? activeClass : '']">
+              <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.koreksi.argument' }"
+                           :class="[currentPage.includes('kelola.koreksi.argument') ? activeClass : '']">
                 <span class="c-sidebar-nav-icon"></span> Koreksi argument
               </router-link>
             </li>

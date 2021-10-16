@@ -144,7 +144,9 @@
                                         </tr>
                                         <tr>
                                             <td>Hasil akhir</td>
-                                            <td v-text="row.item.hasil"></td>
+                                            <td>
+                                              {{ (parseInt(row.item.hasil) + parseInt(row.item.point_setuju_tidak)) }}
+                                            </td>
                                         </tr>
                                     </table>
                                 </b-card>

@@ -425,6 +425,18 @@ const routes = [
         meta: { title: 'Koreksi nilai esay' }
       },
       {
+        path: 'koreksi-argument',
+        name: 'kelola.koreksi.argument',
+        component: KoreksiArgument,
+        meta: { title: 'Koreksi argument siswa' }
+      },
+      {
+        path: 'koreksi-argument/:banksoal',
+        name: 'kelola.koreksi.nilai.argument',
+        component: KoreksiNilaiArgument,
+        meta: { title: 'Koreksi nilai argument' }
+      },
+      {
         path: 'analys/banksoal',
         name: 'kelola.analys.banksoal',
         component: AnalysBanksoal,

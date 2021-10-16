@@ -3,14 +3,17 @@ import { $axios, $axios2 } from '@/services/api.js'
 const state = () => ({
 	ujians: [],
 	ujiansExists: [],
+    koreksi_argument_banksoal_datas: [],
 	ujianActive: [],
 	ujianAll: [],
 	pesertas: [],
 	page: 1,
 	koreksi_page: 1,
+    koreksi_argument_page: 1,
 	page_hasil: 1,
 	hasilUjian: [],
 	essies: [],
+    argues: [],
 	sekolahs: [],
 	banksoals: [],
 	capaians: [],
@@ -85,7 +88,16 @@ const mutations = {
 	},
 	ASSIGN_TOKEN(state, payload) {
 		state.token = payload
-	}
+	},
+    _assign_koreksi_argument_banksoal_datas(state, payload) {
+        state.koreksi_argument_banksoal_datas = payload
+    },
+    _assign_jawaban_argument(state, payload) {
+        state.argues = payload
+    },
+    _set_page_koreksi_argument(state, payload) {
+        state.koreksi_argument_page = payload
+    }
 }
 
 const actions = {
@@ -191,7 +203,7 @@ const actions = {
 		return new Promise(async(resolve, reject) => {
 			try {
 				let network = await $axios.post('ujians/token-release', { token: state.diujikan.token })
-			
+
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
 			} catch (error) {
@@ -204,7 +216,7 @@ const actions = {
 		return new Promise(async(resolve, reject) => {
 			try {
 				let network = await $axios.post('ujians/token-change')
-			
+
 				resolve(network.data)
 			} catch (error) {
 				resolve(error.response.data)
@@ -263,7 +275,7 @@ const actions = {
 	addUjian({ commit, state }, payload) {
 		return new Promise((resolve, reject) => {
 			commit('SET_LOADING', true, { root: true })
-			$axios.post(`ujians`, payload) 
+			$axios.post(`ujians`, payload)
 			.then((response) => {
 				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
@@ -330,7 +342,7 @@ const actions = {
 			} catch (error) {
 				commit('SET_LOADING', false, { root: true })
 				reject(error.response.data)
-			}	
+			}
 		})
 	},
 	multiResetUjianPeserta({ commit }, payload) {
@@ -345,7 +357,7 @@ const actions = {
 			} catch (error) {
 				commit('SET_LOADING', false, { root: true })
 				reject(error.response.data)
-			}	
+			}
 		})
 	},
 	selesaiUjianPeserta({ commit }, payload) {
@@ -414,6 +426,34 @@ const actions = {
 			})
 		})
 	},
+    getBanksoalKoreksiArgument({ state, commit }, payload) {
+        return new Promise(async (v,r) => {
+            try {
+                commit('_start_loading', null, { root: true })
+                let resp = await $axios.get(`ujians/argument/exists`, payload)
+                commit('_assign_koreksi_argument_banksoal_datas', resp.data.data)
+                v(resp.data)
+            } catch (e) {
+                r(e.response.data)
+            } finally {
+                commit('_stop_loading', null, { root: true })
+            }
+        })
+    },
+    getKoreksiArgumentByBanksoal({ state, commit }, payload) {
+        return new Promise(async (v,r) => {
+            try {
+                commit('_start_loading', null, { root: true })
+                let resp = await $axios.get(`ujians/argument/${payload}/koreksi`)
+                commit('_assign_jawaban_argument', resp.data.data)
+                v(resp.data)
+            } catch (e) {
+                r(e.response.data)
+            } finally {
+                commit('_stop_loading', null, { root: true })
+            }
+        })
+    },
 	getExistsByBanksoal({ state, commit }, payload) {
 		commit('SET_LOADING', true, { root: true })
 
