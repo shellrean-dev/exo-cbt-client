@@ -145,7 +145,7 @@
                                         <tr>
                                             <td>Hasil akhir</td>
                                             <td>
-                                              {{ (parseInt(row.item.hasil) + parseInt(row.item.point_setuju_tidak)) }}
+                                              {{ (parseInt(row.item.hasil) + parseInt(row.item.point_setuju_tidak) + parseInt(row.item.point_esay)) }}
                                             </td>
                                         </tr>
                                     </table>
