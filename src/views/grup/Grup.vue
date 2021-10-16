@@ -413,7 +413,7 @@ export default {
         this.getDataMembers(this.current_group_id)
         this.$bvToast.toast('Peserta berhasil ditambahkan ke grup', successToas())
       } catch (e) {
-        this.$bvModal.toast(e.message, errorToas())
+        this.$bvToast.toast(e.message, errorToas())
       }
     },
     deleteDataGroupMember(memberId) {

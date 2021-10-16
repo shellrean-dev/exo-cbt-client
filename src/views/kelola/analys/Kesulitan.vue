@@ -10,13 +10,13 @@
             :disabled="isLoading"><i class="flaticon2-print"></i> Cetak analisis banksoal</button>
         </div>
         <div class="card-body back" id="printSoal">
-          <div v-if="banksoal" class="hide">
-            <div class="text-center mb-5">
+          <div v-if="banksoal" class="">
+            <div class="text-center mb-4">
               <h3 class="text-center">ANALISIS BANKSOAL</h3>
               <p>PADA SEMUA HASIL UJIAN YANG DISELENGGARAKAN</p>
             </div>
             <hr>
-            <table class="table table-sm table-borderless h5">
+            <table class="table table-sm table-borderless h6">
               <tr>
                 <td width="200px">Kode Banksoal</td>
                 <td>: {{ banksoal.kode_banksoal }}</td>
@@ -40,7 +40,7 @@
                   </tr>
                   <tr v-for="jawaban in soal.jawaban" :key="jawaban.id">
                     <template v-if="[1,4].includes(soal.tipe_soal)">
-                      <td>
+                      <td width="20px">
                         <span class="text-danger" v-show="jawaban.iscorrect == 0">&hearts;</span>
                         <span class="text-success" v-show="jawaban.iscorrect == 1">&hearts;</span>
                       </td>
@@ -55,7 +55,7 @@
                       </td>
                     </template>
                     <template v-if="[6].includes(soal.tipe_soal)">
-                      <td>
+                      <td width="20px">
                         <span class="text-success">&hearts;</span>
                       </td>
                       <td>
@@ -65,27 +65,42 @@
                       </td>
                     </template>
                     <template v-if="[5].includes(soal.tipe_soal)">
-                      <td>
+                      <td width="20px">
                         <span class="text-success">&harr;</span>
                       </td>
                       <td>
-                        <div class="d-flex">
-                          <div class="px-2 py-1 border"
+                        <div class="d-flex w-100">
+                          <div class="px-2 py-1 border w-50"
                             v-html="parseJson(jawaban.text).a.text">
                           </div>
-                          <div class="px-2 py-1 border"
+                          <div class="px-2 py-1 border w-50"
                             v-html="parseJson(jawaban.text).b.text">
                           </div>
                         </div>
                       </td>
                     </template>
                     <template v-if="[7].includes(soal.tipe_soal)">
-                      <td>
+                      <td width="20px">
                         <span class="text-success">&darr;</span>
                       </td>
                       <td>
                         <div class="px-2 py-1 border">
                           <div v-html="jawaban.text"></div>
+                        </div>
+                      </td>
+                    </template>
+                    <template v-if="[9].includes(soal.tipe_soal)">
+                      <td width="20px">
+                        <span class="text-success">&#10077;</span>
+                      </td>
+                      <td>
+                        <div class="px-2 py-1 border">
+                          <div v-html="jawaban.text">
+                          </div>
+                          <div>
+                            Setuju: {{jawaban.argument.setuju}}<br>
+                            Tidak: {{jawaban.argument.tidak}}
+                          </div>
                         </div>
                       </td>
                     </template>
@@ -97,16 +112,18 @@
                     <td><strong>Tipe</strong></td>
                     <td>{{ tipeSoal(soal.tipe_soal) }}</td>
                   </tr>
-                  <tr>
-                    <td width="20px"></td>
-                    <td><strong>Benar</strong></td>
-                    <td>{{ soal.benar }} peserta</td>
-                  </tr>
-                  <tr>
-                    <td width="20px"></td>
-                    <td><strong>Salah</strong></td>
-                    <td>{{ soal.salah }} peserta</td>
-                  </tr>
+                  <template v-if="[1,3,4,5,6,7,8].includes(soal.tipe_soal)">
+                    <tr>
+                      <td width="20px"></td>
+                      <td><strong>Benar</strong></td>
+                      <td>{{ soal.benar }} peserta</td>
+                    </tr>
+                    <tr>
+                      <td width="20px"></td>
+                      <td><strong>Salah</strong></td>
+                      <td>{{ soal.salah }} peserta</td>
+                    </tr>
+                  </template>
                   <tr>
                     <td width="20px"></td>
                     <td><strong>Soal dijawab oleh</strong></td>
@@ -114,8 +131,13 @@
                   </tr>
                 </table>
                 <b-progress class="mt-2" :max="soal.penjawab" show-value>
-                  <b-progress-bar :value="soal.benar" label="Mudah" variant="success"></b-progress-bar>
-                  <b-progress-bar :value="soal.salah" label="Sulit" variant="danger"></b-progress-bar>
+                  <template v-if="[1,3,4,5,6,7,8].includes(soal.tipe_soal)">
+                    <b-progress-bar :value="soal.benar" label="Mudah" variant="success"></b-progress-bar>
+                    <b-progress-bar :value="soal.salah" label="Sulit" variant="danger"></b-progress-bar>
+                  </template>
+                  <template v-else>
+                    <b-progress-bar :value="100" label="Tingkatan tidak bisa diukur" variant="warning"></b-progress-bar>
+                  </template>
                 </b-progress>
               </template>
             </div>
@@ -155,7 +177,7 @@ export default {
       return JSON.parse(text)
     },
     tipeSoal(i) {
-      let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan', 'Isian singkat', 'Mengurutkan']
+      let index = ['Pilihan ganda','Esay','Listening', 'Pilihan ganda kompleks', 'Menjodohkan', 'Isian singkat', 'Mengurutkan', 'Benar/Salah', 'Setuju/tidak']
       return index[i-1]
     }
   },

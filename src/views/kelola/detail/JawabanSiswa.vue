@@ -36,54 +36,87 @@
                 <table class="table table-sm table-mx table-borderless">
                   <tr>
                     <td width="20px">
-                      <strong v-show="jawab.iscorrect == '1'">{{ index+1 }}.</strong>
-                      <strong v-show="jawab.iscorrect == '0'" style="text-decoration: line-through; text-decoration-color: red">{{ index+1 }}.</strong>
+                      <template v-if="[1,3,4,5,6,7,8].includes(jawab.soal.tipe_soal)">
+                        <strong v-show="jawab.iscorrect == '1'">{{ index+1 }}.</strong>
+                        <strong
+                          v-show="jawab.iscorrect == '0'"
+                          style="text-decoration: line-through;
+                          text-decoration-color: red">{{ index+1 }}.</strong>
+                      </template>
+                      <template>
+                        <strong class="bg-warning">{{ index+1 }}</strong>
+                      </template>
                     </td>
                     <td v-html="jawab.soal.pertanyaan" class="img-non"></td>
                   </tr>
-                  <tr v-for="(opsi, index) in jawab.soal.jawabans" :key="opsi.id">
-                    <template v-if="[1,4].includes(jawab.soal.tipe_soal)">
-                      <td>
-                      </td>
-                      <td>
-                        <div class="py-1 px-2 border">
-                          <div v-html="opsi.text_jawaban"></div>
-                          <span
-                            class="py-1 px-2 border border-warning rounded text-xs"
-                            v-show="opsi.correct == '1'"><strong>Kunci jawaban</strong></span>
-                          <span
-                            class="py-1 px-2 border border-success rounded text-xs"
-                            v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)"><strong>Jawaban peserta</strong></span>
-                        </div>
-                      </td>
-                    </template>
-                    <template v-if="[7].includes(jawab.soal.tipe_soal)">
-                      <td>
-                      </td>
-                      <td>
-                        <div class="px-2 py-1 border">
-                          <div v-html="opsi.text_jawaban"></div>
-                        </div>
-                        <div class="px-2 py-1 border" :style="opsi.id == jawab.mengurutkan[index] ? '' : 'text-decoration: line-through; text-decoration-color: red'">
-                          <div v-html="findUrutan(jawab.soal.jawabans, jawab.mengurutkan[index]).text_jawaban"></div>
-                        </div>
-                      </td>
-                    </template>
-                    <template v-if="[5].includes(jawab.soal.tipe_soal)">
-                      <td>
-                      </td>
-                      <td>
-                        <div class="d-flex">
-                          <div class="px-2 py-1 border"
-                               v-html="parseJson(opsi.text_jawaban).a.text">
+                  <template v-if="[1,4,5,7].includes(jawab.soal.tipe_soal)">
+                    <tr v-for="(opsi, index) in jawab.soal.jawabans" :key="opsi.id">
+                      <template v-if="[1,4].includes(jawab.soal.tipe_soal)">
+                        <td>
+                        </td>
+                        <td>
+                          <div class="py-1 px-2 border">
+                            <div v-html="opsi.text_jawaban"></div>
+                            <span
+                              class="py-1 px-2 border border-warning rounded text-xs"
+                              v-show="opsi.correct == '1'"><strong>Kunci jawaban</strong></span>
+                            <span
+                              class="py-1 px-2 border border-success rounded text-xs"
+                              v-show="opsi.id == jawab.jawab || jawab.jawab_complex.includes(opsi.id)"><strong>Jawaban peserta</strong></span>
                           </div>
-                          <div class="px-2 py-1 border"
-                               v-html="parseJson(opsi.text_jawaban).b.text">
+                        </td>
+                      </template>
+                      <template v-if="[7].includes(jawab.soal.tipe_soal)">
+                        <td>
+                        </td>
+                        <td>
+                          <div class="px-2 py-1 border">
+                            <div v-html="opsi.text_jawaban"></div>
                           </div>
-                        </div>
+                          <div class="px-2 py-1 border" :style="opsi.id == jawab.mengurutkan[index] ? '' : 'text-decoration: line-through; text-decoration-color: red'">
+                            <div v-html="findUrutan(jawab.soal.jawabans, jawab.mengurutkan[index]).text_jawaban"></div>
+                          </div>
+                        </td>
+                      </template>
+                      <template v-if="[5].includes(jawab.soal.tipe_soal)">
+                        <td>
+                        </td>
+                        <td>
+                          <div class="d-flex">
+                            <div class="px-2 py-1 border"
+                                 v-html="parseJson(opsi.text_jawaban).a.text">
+                            </div>
+                            <div class="px-2 py-1 border"
+                                 v-html="parseJson(opsi.text_jawaban).b.text">
+                            </div>
+                          </div>
+                        </td>
+                      </template>
+                    </tr>
+                  </template>
+                  <template v-if="[9].includes(jawab.soal.tipe_soal)">
+                    <tr>
+                      <td></td>
+                      <td>
+                        <table class="table table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Pernyataan</th>
+                              <th>Setuju/Tidak</th>
+                              <th>Argumen</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(opsi, index) in jawab.soal.jawabans" :key="'setuju_tidak_table_opsi_index_'+index">
+                              <td v-html="opsi.text_jawaban"></td>
+                              <td>{{ jawab.setuju_tidak[opsi.id].val == 0 ? 'Tidak Setuju' : 'Setuju' }}</td>
+                              <td>{{ jawab.setuju_tidak[opsi.id].argument }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </td>
-                    </template>
-                  </tr>
+                    </tr>
+                  </template>
                   <template v-if="jawab.soal.tipe_soal == '2'">
                     <tr>
                       <td width="20px">
