@@ -7,7 +7,7 @@
             <span class="c-header-toggler-icon"></span>
         </button>
         <ul class="c-header-nav d-md-down-none">
-            <li class="c-header-nav-item px-3"><a class="c-header-nav-link">Aplikasi pengelola ujian berbasis komputer</a></li>    
+            <li class="c-header-nav-item px-3"><a class="c-header-nav-link">Aplikasi pengelola ujian berbasis komputer</a></li>
         </ul>
         <ul class="c-header-nav ml-auto mr-4">
             <li class="c-header-nav-item dropdown">
@@ -60,7 +60,8 @@ export default {
             password2: '',
             score: 0,
             error: false,
-            channel_1: ''
+            channel_1: '',
+            enable_socket: process.env.VUE_APP_ENABLE_SOCKET
         }
     },
     computed: {
@@ -109,16 +110,18 @@ export default {
             }
         },
         connectSocket(){
+          if ( this.enable_socket === "oke") {
             this.socket.open();
             this.socket_2.open();
             this.socket.emit('getin', {
-                user: this.authenticated,
-                channel: this.channel_1
+              user: this.authenticated,
+              channel: this.channel_1
             });
             this.socket_2.emit('getin_student', {
-                user: this.authenticated,
-                channel: this.channel_2
+              user: this.authenticated,
+              channel: this.channel_2
             });
+          }
         }
     },
     created(){
@@ -145,9 +148,11 @@ export default {
         }
     },
     destroyed() {
+      if (this.enable_socket === "oke") {
         this.socket.emit('exit', { channel: this.channel_1 })
         this.socket.close()
         this.socket_2.close()
+      }
     },
 
 }

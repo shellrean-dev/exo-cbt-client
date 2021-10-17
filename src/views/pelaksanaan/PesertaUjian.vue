@@ -58,13 +58,13 @@
                         </div>
                     </div>
                     <div class="table-responsive-md">
-                        <b-table 
-                        striped 
-                        hover 
-                        bordered 
-                        small 
-                        :fields="fields" 
-                        :items="filteredList" 
+                        <b-table
+                        striped
+                        hover
+                        bordered
+                        small
+                        :fields="fields"
+                        :items="filteredList"
                         show-empty
                         selectable
                         @row-selected="onRowSelected"
@@ -74,8 +74,8 @@
                             <template v-slot:cell(show_details)="row">
                                 <b-button size="sm"
                                 v-if="[0,3].includes(parseInt(row.item.status_ujian))"
-                                @click="row.toggleDetails" 
-                                :variant="row.detailsShowing ? 'danger' : 'info'"><i 
+                                @click="row.toggleDetails"
+                                :variant="row.detailsShowing ? 'danger' : 'info'"><i
                                 :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'"
                                 /></b-button>
                             </template>
@@ -100,20 +100,28 @@
                                 </b-card>
                             </template>
                             <template v-slot:cell(con)="row">
-                                <b-badge variant="success"
-                                v-if="row.item.con"
-                                pill
-                                class="p-2"
-                                >Terhubung</b-badge>
-                                <b-badge variant="danger"
-                                v-else
-                                pill
-                                class="p-2"
-                                >Terputus</b-badge>
+                                <template v-if="enable_socket === 'oke'">
+                                  <b-badge variant="success"
+                                           v-if="row.item.con"
+                                           pill
+                                           class="p-2"
+                                  >Terhubung</b-badge>
+                                  <b-badge variant="danger"
+                                           v-else
+                                           pill
+                                           class="p-2"
+                                  >Terputus</b-badge>
+                                </template>
+                                <template v-if="enable_socket !== 'oke'">
+                                  <b-badge variant="warning"
+                                           pill
+                                           class="p-2"
+                                  >Socket non-active</b-badge>
+                                </template>
                             </template>
                             <template v-slot:cell(status)="row">
                                 {{ getText(row.item.status_ujian) }}
-                                <b-button variant="danger" :disabled="isLoading" class="mr-1" size="sm" @click="forceClose(row.item.peserta_id)" 
+                                <b-button variant="danger" :disabled="isLoading" class="mr-1" size="sm" @click="forceClose(row.item.peserta_id)"
                                 v-if="row.item.status_ujian == 3">
                                     Force close
                                 </b-button>
@@ -143,8 +151,13 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div><span class="badge badge-danger">Terputus</span> Koneksi peserta terputus</div>
-                    <div><span class="badge badge-success">Terhubung</span> Koneksi peserta terhubung</div>
+                    <template v-if="enable_socket === 'oke'">
+                      <div><span class="badge badge-danger">Terputus</span> Koneksi peserta terputus</div>
+                      <div><span class="badge badge-success">Terhubung</span> Koneksi peserta terhubung</div>
+                    </template>
+                    <template v-else>
+                      Socket non-active
+                    </template>
                 </div>
             </div>
         </div>
@@ -188,7 +201,8 @@ export default {
             onlines: [],
             channel_2: '',
             has_getted: false,
-            blockdor: 0
+            blockdor: 0,
+            enable_socket: process.env.VUE_APP_ENABLE_SOCKET
         }
     },
     computed: {
@@ -205,12 +219,14 @@ export default {
                 return this.pesertas.filter(post => {
                     return post.no_ujian.toLowerCase().includes(this.search.toLowerCase())
                 }).map((item) => {
-                    if (this.onlines.map((item) => item.id).includes(item.peserta_id)) {
+                    if (this.enable_socket == 'oke') {
+                      if (this.onlines.map((item) => item.id).includes(item.peserta_id)) {
                         item.con = 1
                         item._rowVariant = '';
-                    } else {
+                      } else {
                         item._rowVariant = "dark";
                         item.con = 0
+                      }
                     }
                     return item;
                 })
@@ -388,37 +404,39 @@ export default {
             return this.textStatus[parseInt(i.trim())]
         },
         featureInfo(name) {
-			this.getFeatureInfo(name)
-			.then(() => {
-				this.$bvModal.show('modal-feature-info')
-			})
-		},
+          this.getFeatureInfo(name)
+          .then(() => {
+            this.$bvModal.show('modal-feature-info')
+          })
+		    },
         onSocketConnect2() {
-            this.socket_2.emit('monitor_student', { channel: this.channel_2 })
-            this.socket_2.on('monit_student', (users) => {
+            if (this.enable_socket === 'oke') {
+              this.socket_2.emit('monitor_student', { channel: this.channel_2 })
+              this.socket_2.on('monit_student', (users) => {
                 this.onlines = users.filter((item) => typeof item.no_ujian != 'undefined')
-            })
-            this.socket_2.on('is_online_student', (user) => {
+              })
+              this.socket_2.on('is_online_student', (user) => {
                 if(typeof user.no_ujian != 'undefined' && user.no_ujian != '' && user.no_ujian != null) {
-                    let index = this.onlines.map(item => item.id).indexOf(user.id)
-                    if(index == -1) {
-                        this.onlines.push(user)
-                    }
+                  let index = this.onlines.map(item => item.id).indexOf(user.id)
+                  if(index == -1) {
+                    this.onlines.push(user)
+                  }
                 }
-            })
-            this.socket_2.on('is_offline', (user) => {
+              })
+              this.socket_2.on('is_offline', (user) => {
                 if(typeof user.no_ujian != 'undefined') {
-                    let index = this.onlines.map(item => item.id).indexOf(user.id)
-                    if(index != -1) {
-                        this.onlines.splice(index,1)
-                    }
+                  let index = this.onlines.map(item => item.id).indexOf(user.id)
+                  if(index != -1) {
+                    this.onlines.splice(index,1)
+                  }
                 }
-            })
+              })
+            }
         }
     },
     async created() {
         this.channel_2 = 'student_connect_channel'
-        
+
         try {
             await this.getUjianActive()
         } catch (error) {
@@ -426,23 +444,27 @@ export default {
         }
     },
     mounted() {
-        this.socket_2.on('connect', () => {
+        if (this.enable_socket === 'oke') {
+          this.socket_2.on('connect', () => {
             if(!this.has_getted) {
-                this.onSocketConnect2()
-                this.has_getted = true
-                this.blockdor++;
+              this.onSocketConnect2()
+              this.has_getted = true
+              this.blockdor++;
             }
-        })
+          })
 
-        if(!this.has_getted && this.socket_2.connected) {
+          if(!this.has_getted && this.socket_2.connected) {
             this.onSocketConnect2()
             this.has_getted = true
             this.blockdor++;
+          }
         }
     },
     watch: {
         async jadwal() {
-            this.socket_2.emit('monitor_student', { channel: this.channel_2 })
+            if (this.enable_socket === 'oke') {
+              this.socket_2.emit('monitor_student', { channel: this.channel_2 })
+            }
             if(this.jadwal != 0 || this.jadwal != '') {
                 try {
                     await this.getPesertas(this.jadwal)
