@@ -25,7 +25,16 @@
                                 {{ row.item.kode_banksoal }}
                             </template>
                             <template v-slot:cell(aksi)="row">
-                                <router-link :to="{ name: 'kelola.koreksi.nilai.esay', params: { banksoal: row.item.id } }" class="btn btn-sm btn-primary"><i class="flaticon-list"></i> Koreksi banksoal ini</router-link>
+                                <router-link
+                                  :to="{ name: 'kelola.koreksi.nilai.esay', params: { banksoal: row.item.id } }"
+                                  class="btn btn-sm btn-primary mr-1">
+                                  <i class="flaticon-list"></i> Koreksi banksoal ini
+                                </router-link>
+                              <button class="btn btn-sm btn-success"
+                              @click="onClickKoreksiOffline(row.item.id)"
+                              >
+                                <i class="flaticon-download"></i> Koreksi offline
+                              </button>
                             </template>
                         </b-table>
                     </div>
@@ -35,16 +44,39 @@
             </div>
         </div>
         <b-modal id="modal-feature-info" size="lg">
-		    <template v-slot:modal-header="{ close }">
-		      <h5>Informasi Fitur</h5>
-		    </template>
-			<div v-html="feature_info.content"></div>
-            <template v-slot:modal-footer="{ cancel }">
-		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
-		        Cancel
-		      </b-button>
-		    </template>
-		</b-modal>
+          <template v-slot:modal-header="{ close }">
+            <h5>Informasi Fitur</h5>
+          </template>
+          <div v-html="feature_info.content"></div>
+              <template v-slot:modal-footer="{ cancel }">
+            <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+              Cancel
+            </b-button>
+          </template>
+      </b-modal>
+
+      <b-modal id="modal-koreksi-offline" hide-footer>
+        <template v-slot:modal-header="{}">
+          <h5>Koreksi Offline Esay</h5>
+        </template>
+        <div>
+          <div class="input-group">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" @change="onFileChange">
+              <label class="custom-file-label">{{ label ? label : 'Pilih file excel...' }}</label>
+            </div>
+            <div class="input-group-append">
+              <button
+                class="btn btn-primary"
+                type="button"
+                :disabled="isLoading"
+                @click="uploadFile">{{ isLoading ? 'Processing...' : 'Upload' }}
+              </button>
+            </div>
+          </div>
+          <a href="#" @click.prevent="downloadJawabanPeserta" download>Download format</a>
+        </div>
+      </b-modal>
     </div>
 </template>
 <script>
@@ -55,27 +87,66 @@ export default {
     name: 'UjianKoreksi',
     data() {
         return {
+          allow: ['xlsx','xls'],
+          label: '',
+          file: '',
             fields: [
                 { key: 'no', label: 'No' },
                 { key: 'kode_banksoal', label: 'Banksoal' },
                 { key: 'nama_matpel', label: 'Matpel' },
                 { key: 'aksi', label: 'Aksi' }
             ],
+          onWillKoreksi: null
         }
     },
     computed: {
+      ...mapState(['isLoading']),
         ...mapState('ujian',{ banksoals: state => state.ujiansExists }),
         ...mapState('feature',['feature_info']),
     },
     methods: {
         ...mapActions('ujian',['getExistsEsay']),
         ...mapActions('feature', ['getFeatureInfo']),
+      ...mapActions('penilaian', ['getLinkExcelJawabanPeserta', 'uploadJawabanPesertaEsay']),
+      onFileChange(e) {
+        this.label = e.target.files[0].name
+        this.file = e.target.files[0]
+      },
+      uploadFile() {
+        let formData = new FormData()
+        formData.append('file',this.file)
+        this.uploadJawabanPesertaEsay(formData)
+          .then((res) => {
+            this.file = ''
+            this.label = ''
+            this.$bvToast.toast('Nilai peserta berhasil diimport.', successToas())
+            this.$bvModal.hide('modal-koreksi-offline')
+            this.getExistsEsay()
+          })
+          .catch((error) => {
+            this.$bvToast.toast(error.message, errorToas())
+          })
+      },
         featureInfo(name) {
-			this.getFeatureInfo(name)
-			.then(() => {
-				this.$bvModal.show('modal-feature-info')
-			})
-		}
+			    this.getFeatureInfo(name)
+            .then(() => {
+              this.$bvModal.show('modal-feature-info')
+            })
+        },
+      onClickKoreksiOffline(id) {
+          this.onWillKoreksi = id
+          this.$bvModal.show('modal-koreksi-offline')
+      },
+      async downloadJawabanPeserta() {
+          try {
+            let provider = await this.getLinkExcelJawabanPeserta({
+              banksoal: this.onWillKoreksi
+            })
+            window.open(provider.data, '_self')
+          } catch (e) {
+            this.$bvToast.toast(e.message, errorToas())
+          }
+      }
     },
     async created() {
         try {
