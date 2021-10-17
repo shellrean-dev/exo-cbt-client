@@ -3,7 +3,9 @@
     <main class="c-main">
       <div class="container-fluid">
         <div class="fade-in">
-          <div class="row">
+          <div class="row"
+          v-if="enable_socket === 'oke'"
+          >
             <div class="col-md-6">
               <div class="card">
                 <div class="card-header">
@@ -62,6 +64,14 @@
               </div>
             </div>
           </div>
+          <div class="row" v-else>
+            <div class="col-md-6">
+              <div class="alert alert-info">
+                <strong>Informasi</strong>
+                Socket tidak diaktifkan
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -79,12 +89,13 @@ export default {
       channel_1: '',
       channel_2: '',
       has_getting: false,
-      has_getting_2: false
+      has_getting_2: false,
+      enable_socket: process.env.VUE_APP_ENABLE_SOCKET
     }
   },
   computed: {
     ...mapState('user', ['authenticated']),
-    ...mapState('channel',['socket','socket_2'])
+    ...mapState('channel', ['socket', 'socket_2'])
   },
   created() {
     this.channel_1 = 'teacher_connect_chanel'
@@ -92,72 +103,77 @@ export default {
   },
   methods: {
     onSocketConnect() {
-      this.socket.emit('monitor', { channel: this.channel_1 })
-      this.socket.on('monit', (users) => {
-        this.users = users
-      })
-      this.socket.on('is_online', (user) => {
-        let index = this.users.map(item => item.id).indexOf(user.id)
-        if(index == -1) {
-          this.users.push(user)
-        }
-      })
-      this.socket.on('is_offline', (user) => {
-        let index = this.users.map(item => item.id).indexOf(user.id)
-        if(index != -1) {
-          this.users.splice(index,1)
-        }
-      })
+      if (this.enable_socket === "oke") {
+        this.socket.emit('monitor', {channel: this.channel_1})
+        this.socket.on('monit', (users) => {
+          this.users = users
+        })
+        this.socket.on('is_online', (user) => {
+          let index = this.users.map(item => item.id).indexOf(user.id)
+          if (index == -1) {
+            this.users.push(user)
+          }
+        })
+        this.socket.on('is_offline', (user) => {
+          let index = this.users.map(item => item.id).indexOf(user.id)
+          if (index != -1) {
+            this.users.splice(index, 1)
+          }
+        })
+      }
     },
     onSocketConnect2() {
-      this.socket_2.emit('monitor_student', { channel: this.channel_2 })
-      this.socket_2.on('monit_student', (users) => {
-        this.students = users.filter((item) => typeof item.no_ujian != 'undefined')
-      })
-      this.socket_2.on('is_online_student', (user) => {
-        if(typeof user.no_ujian != 'undefined' && user.no_ujian != '' && user.no_ujian != null) {
-          let index = this.students.map(item => item.id).indexOf(user.id)
-          if(index == -1) {
-            this.students.push(user)
+      if (this.enable_socket === "oke") {
+        this.socket_2.emit('monitor_student', {channel: this.channel_2})
+        this.socket_2.on('monit_student', (users) => {
+          this.students = users.filter((item) => typeof item.no_ujian != 'undefined')
+        })
+        this.socket_2.on('is_online_student', (user) => {
+          if (typeof user.no_ujian != 'undefined' && user.no_ujian != '' && user.no_ujian != null) {
+            let index = this.students.map(item => item.id).indexOf(user.id)
+            if (index == -1) {
+              this.students.push(user)
+            }
           }
-        }
-      })
-      this.socket_2.on('is_offline', (user) => {
-        if(typeof user.no_ujian != 'undefined') {
-          let index = this.students.map(item => item.id).indexOf(user.id)
-          if(index != -1) {
-            this.students.splice(index,1)
+        })
+        this.socket_2.on('is_offline', (user) => {
+          if (typeof user.no_ujian != 'undefined') {
+            let index = this.students.map(item => item.id).indexOf(user.id)
+            if (index != -1) {
+              this.students.splice(index, 1)
+            }
           }
-        }
-      })
+        })
+      }
     }
   },
   mounted() {
-    this.socket.on('connect', () => {
-      if(!this.has_getting) {
+    if (this.enable_socket === "oke") {
+      this.socket.on('connect', () => {
+        if (!this.has_getting) {
+          this.onSocketConnect()
+          this.has_getting = true
+        }
+      });
+
+      this.socket_2.on('connect', () => {
+        if (!this.has_getting_2) {
+          this.onSocketConnect2()
+          this.has_getting_2 = true
+        }
+      })
+
+      if (!this.has_getting && this.socket.connected) {
         this.onSocketConnect()
         this.has_getting = true
       }
-    });
 
-    this.socket_2.on('connect', () => {
-      if(!this.has_getting_2) {
+      if (!this.has_getting_2 && this.socket_2.connected) {
         this.onSocketConnect2()
         this.has_getting_2 = true
       }
-    })
-
-    if(!this.has_getting && this.socket.connected) {
-      this.onSocketConnect()
-      this.has_getting = true
-    }
-
-    if(!this.has_getting_2 && this.socket_2.connected) {
-      this.onSocketConnect2()
-      this.has_getting_2 = true
     }
   },
-  watch: {
-  }
+  watch: {}
 }
 </script>
