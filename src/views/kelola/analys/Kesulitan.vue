@@ -39,7 +39,7 @@
                     <td v-html="soal.soal" class="img-non"></td>
                   </tr>
                   <tr v-for="jawaban in soal.jawaban" :key="jawaban.id">
-                    <template v-if="[1,4].includes(soal.tipe_soal)">
+                    <template v-if="[1,3,4].includes(soal.tipe_soal)">
                       <td width="20px">
                         <span class="text-danger" v-show="jawaban.iscorrect == 0">&hearts;</span>
                         <span class="text-success" v-show="jawaban.iscorrect == 1">&hearts;</span>
@@ -48,10 +48,7 @@
                         <div class="py-1 px-2 border">
                           <div v-html="jawaban.text"></div>
                         </div>
-                        <b-badge
-                          v-if="soal.tipe_soal == 1"
-                          variant="outline-primary"
-                          class="border-dark border-top border-right border-bottom border-light"><strong>{{jawaban.penjawab}} peserta</strong></b-badge>
+                        <span class="text-xs" v-if="soal.tipe_soal == 1">dipilih oleh {{ jawaban.penjawab }}</span>
                       </td>
                     </template>
                     <template v-if="[6].includes(soal.tipe_soal)">
@@ -86,6 +83,21 @@
                       <td>
                         <div class="px-2 py-1 border">
                           <div v-html="jawaban.text"></div>
+                        </div>
+                      </td>
+                    </template>
+                    <template v-if="[8].includes(soal.tipe_soal)">
+                      <td width="20px">
+                        <span class="text-success">&#10077;</span>
+                      </td>
+                      <td>
+                        <div class="px-2 py-1 border">
+                          <div v-html="jawaban.text">
+                          </div>
+                          <div>
+                            Benar: {{jawaban.benar_salah.benar}}<br>
+                            Salah: {{jawaban.benar_salah.salah}}
+                          </div>
                         </div>
                       </td>
                     </template>

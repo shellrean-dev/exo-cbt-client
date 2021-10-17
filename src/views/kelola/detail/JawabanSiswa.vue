@@ -43,15 +43,15 @@
                           style="text-decoration: line-through;
                           text-decoration-color: red">{{ index+1 }}.</strong>
                       </template>
-                      <template>
+                      <template v-if="[2,9].includes(jawab.soal.tipe_soal)">
                         <strong class="bg-warning">{{ index+1 }}</strong>
                       </template>
                     </td>
                     <td v-html="jawab.soal.pertanyaan" class="img-non"></td>
                   </tr>
-                  <template v-if="[1,4,5,7].includes(jawab.soal.tipe_soal)">
+                  <template v-if="[1,3,4,5,7].includes(jawab.soal.tipe_soal)">
                     <tr v-for="(opsi, index) in jawab.soal.jawabans" :key="opsi.id">
-                      <template v-if="[1,4].includes(jawab.soal.tipe_soal)">
+                      <template v-if="[1,3,4].includes(jawab.soal.tipe_soal)">
                         <td>
                         </td>
                         <td>
@@ -82,16 +82,37 @@
                         <td>
                         </td>
                         <td>
-                          <div class="d-flex">
-                            <div class="px-2 py-1 border"
+                          <div class="d-flex w-100">
+                            <div class="px-2 py-1 border w-50"
                                  v-html="parseJson(opsi.text_jawaban).a.text">
                             </div>
-                            <div class="px-2 py-1 border"
+                            <div class="px-2 py-1 border w-50"
                                  v-html="parseJson(opsi.text_jawaban).b.text">
                             </div>
                           </div>
                         </td>
                       </template>
+                    </tr>
+                  </template>
+                  <template v-if="[8].includes(jawab.soal.tipe_soal)">
+                    <tr>
+                      <td></td>
+                      <td>
+                        <table class="table table-sm table-bordered">
+                          <thead>
+                          <tr>
+                            <th>Pernyataan</th>
+                            <th>Benar/Salah</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr v-for="(opsi, index) in jawab.soal.jawabans" :key="'benar_salah_table_opsi_index_'+index">
+                            <td v-html="opsi.text_jawaban"></td>
+                            <td>{{ jawab.benar_salah[opsi.id] == 0 ? 'Salah' : 'Benar' }}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </td>
                     </tr>
                   </template>
                   <template v-if="[9].includes(jawab.soal.tipe_soal)">
@@ -117,14 +138,15 @@
                       </td>
                     </tr>
                   </template>
-                  <template v-if="jawab.soal.tipe_soal == '2'">
+                  <template v-if="[2,6].includes(jawab.soal.tipe_soal)">
                     <tr>
-                      <td width="20px">
-                        <b-badge
-                          variant="primary"
-                          v-if="jawab.esay_result != '' && jawab.esay_result != null">{{ jawab.esay_result.point }}</b-badge>
+                      <td width="20px"></td>
+                      <td>
+                        <div
+                          v-if="jawab.esay_result != '' && jawab.esay_result != null"
+                        >point: {{ jawab.esay_result.point }}</div>
+                        <div v-html="jawab.esay"></div>
                       </td>
-                      <td v-html="jawab.esay"></td>
                     </tr>
                   </template>
                 </table>

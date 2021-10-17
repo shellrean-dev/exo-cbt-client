@@ -134,6 +134,10 @@
                                           Salah {{ row.item.jumlah_salah_benar_salah }} : Benar {{ row.item.jumlah_benar_benar_salah }}
                                         </td>
                                       </tr>
+                                      <tr>
+                                        <td>Tidak diisi</td>
+                                        <td v-text="row.item.tidak_diisi"></td>
+                                      </tr>
                                         <tr>
                                             <td>Point esay</td>
                                             <td v-text="row.item.point_esay"></td>
