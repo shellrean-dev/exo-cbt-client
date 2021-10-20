@@ -25,12 +25,14 @@ const mutations = {
 	},
 	ASSIGN_FORM(state, payload) {
 		state.jurusan = {
-			nama: payload.nama
+			nama: payload.nama,
+            kode: payload.kode,
 		}
 	},
 	CLEAR_FORM(state) {
 		state.jurusan = {
-			name: ''
+			name: '',
+            kode: ''
 		}
 	}
 }

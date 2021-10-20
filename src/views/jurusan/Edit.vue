@@ -6,11 +6,13 @@
 					<router-link :to="{ name: 'jurusan.data' }" class="btn btn-light btn-sm">kembali</router-link>
 				</div>
 				<div class="card-body">
-					<jurusan-form></jurusan-form>
-					<div class="form-group">
-						<b-button size="sm" variant="primary" @click="submit" :disabled="isLoading">
-                        <b-spinner small type="grow" v-show="isLoading"></b-spinner>Simpan</b-button>
-					</div>
+          <form @submit.pre.prevent="submit">
+            <jurusan-form></jurusan-form>
+            <div class="form-group">
+              <b-button size="sm" variant="primary"type="submit" :disabled="isLoading">
+                          <b-spinner small type="grow" v-show="isLoading"></b-spinner>Simpan</b-button>
+            </div>
+          </form>
 				</div>
 				<div class="card-footer">
 
