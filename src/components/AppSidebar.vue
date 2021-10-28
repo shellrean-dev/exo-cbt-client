@@ -158,7 +158,7 @@
             <li class="c-sidebar-nav-item">
               <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.analys.capaian.siswa' }"
               :class="[currentPage.includes('kelola.analys.capaian.siswa') ? activeClass : '']">
-                <span class="c-sidebar-nav-icon"></span> Capaian siswa
+                <span class="c-sidebar-nav-icon"></span> Capaian peserta
               </router-link>
             </li>
             <li class="c-sidebar-nav-item">

@@ -3,12 +3,12 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Capaian siswa
+                    Capaian peserta ujian
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-5">
-                            <h4 id="traffic" class="card-title mb-0">Capaian siswa</h4>
+                            <h4 id="traffic" class="card-title mb-0">Capaian peserta ujian</h4>
                             <div class="small text-muted">Filter dengan jadwal</div>
                         </div>
                         <div class="d-none d-md-block col-sm-7">
