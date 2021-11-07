@@ -15,7 +15,7 @@
             <VuePerfectScrollbar
                 style="max-height: 80vh; position: relative;"
             >
-            <b-table 
+            <b-table
                 :fields="fields"
                 :items="peserta_sesi"
                 selectable
@@ -36,18 +36,22 @@
                 </template>
             </b-table>
             </VuePerfectScrollbar>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <b-button variant="outline-dark" size="sm" @click="selectAllRows">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <b-button variant="outline-dark" size="sm" @click="selectAllRows">
                     <i class="flaticon-list-3"></i> Select all
-                </b-button>
-                <b-button variant="outline-dark" size="sm" @click="clearSelected">
+                  </b-button>
+                  <b-button variant="outline-dark" size="sm" @click="clearSelected">
                     <i class="flaticon2-reload"></i> Clear selected
-                </b-button>
-                <b-button variant="outline-danger" size="sm" @click="bulkRemove">
+                  </b-button>
+                  <b-button variant="outline-danger" size="sm" @click="bulkRemove">
                     <i class="flaticon2-trash"></i> Bulk remove
-                </b-button>
+                  </b-button>
+                </div>
+                <p><span>Total {{ peserta_sesi.length }} peserta pada sesi {{sesi}}</span></p>
+              </div>
             </div>
-            <p><span>Total {{ peserta_sesi.length }} peserta pada sesi {{sesi}}</span></p>
 		</div>
     </div>
 </template>
@@ -70,7 +74,7 @@ export default {
             fields: [
                { key: 'no', label: 'No'},
                { key: 'no_ujian', label: 'No ujian', sortable: true },
-               { key: 'nama', label: 'Nama peserta', sortable: true } 
+               { key: 'nama', label: 'Nama peserta', sortable: true }
             ],
             selected: []
         }

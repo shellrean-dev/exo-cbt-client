@@ -81,8 +81,8 @@
 												<td>{{ ujian.tanggal }}</td>
 												<td>{{ ujian.mulai }}</td>
 												<td>
-													<b-button variant="primary" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
-													<b-button variant="success" size="sm" class="mr-1" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
+													<b-button variant="outline-info" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
+													<b-button variant="outline-success" size="sm" class="mr-1" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
 													<b-button size="sm" variant="outline-success" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
 														Download absensi
 													</b-button>
@@ -115,7 +115,7 @@
 	                        </div>
 	                        <div class="col-md-6">
 	                            <div class="float-right">
-	                                <b-pagination 
+	                                <b-pagination
 	                                    size="sm"
 	                                    v-model="page"
 	                                    :total-rows="events.total"
@@ -133,7 +133,7 @@
 					</template>
 				</div>
 				<div class="card-footer">
-					
+
 				</div>
 			</div>
 		</div>
@@ -358,7 +358,7 @@ export default {
                         this.$bvToast.toast(error.message, errorToas())
                     })
 				}
-			})	
+			})
 		},
 		aturSesi(id,name){
 			this.current.ujian_id = id

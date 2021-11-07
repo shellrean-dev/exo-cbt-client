@@ -62,17 +62,20 @@
                         </div>
                     </div>
                     <div class="table-responsive-md" v-if="typeof users.data != 'undefined'">
-                        <b-table 
+                        <b-table
                         id="table-transition-example"
                         :tbody-transition-props="transProps"
                         striped hover bordered small show-empty
-                        :fields="fields" 
-                        :items="users.data" 
+                        :fields="fields"
+                        :items="users.data"
                         selectable
                         @row-selected="onRowSelected"
                         ref="selectableTable"
                         selected-variant="danger"
                         >
+                          <template v-slot:cell(no)="row">
+                            {{(perPage*(page-1)) + row.index + 1}}
+                          </template>
                             <template v-slot:cell(actions)="row">
                                 <router-link :to="{ name: 'guru.edit', params: { id: row.item.id } }" class="btn btn-warning btn-sm mr-1">
                                     <i class="flaticon-edit"></i> Edit
@@ -145,6 +148,7 @@ export default {
               name: 'flip-list'
             },
             fields: [
+              { key: 'no', label: '#', sortable: false },
                 { key: 'id', label: 'ID', sortable: true },
                 { key: 'name', label: 'Nama', sortable: true},
                 { key: 'email', label: 'Email', sortable: true},
@@ -244,6 +248,17 @@ export default {
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
         }
+    },
+  watch: {
+    page() {
+      this.getUsers({ search: this.search, perPage: this.perPage })
+    },
+    search:  _.debounce(function (value) {
+      this.getUsers({ search: this.search, perPage: this.perPage })
+    }, 500),
+    perPage() {
+      this.getUsers({ search: this.search, perPage: this.perPage })
     }
+  }
 }
 </script>

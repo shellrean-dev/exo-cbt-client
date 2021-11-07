@@ -52,12 +52,12 @@
               <div class="row h-100 justify-content-center align-items-center  mx-auto">
                 <img src="/img/bg6.svg" class="d-none d-md-block" style="width: 100%; max-width:400px;">
               </div>
-            </div> 
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="fixed-bottom text-center text-muted bg-light">&copy; {{ year }} <a>Extraordinary-CBT v3.0.0 - ristretto</a></div>
+    <div class="fixed-bottom text-center text-muted bg-light">&copy; 2019 - {{ year }} <a>Extraordinary-CBT {{ version }}</a></div>
   </div>
 </template>
 <script>

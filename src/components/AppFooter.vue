@@ -1,7 +1,6 @@
 <template>
     <footer class="c-footer bg-white d-flex justify-content-between">
-        <div>&copy; {{ year }} <span>Extraordinary-CBT v3.0.0 - ristretto</span></div>
-      <div><span>renjana.org</span></div>
+        <div>&copy; 2019 - {{ year }} <span>Extraordinary-CBT {{ version }}</span></div>
      </footer>
 </template>
 <script>
