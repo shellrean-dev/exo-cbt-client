@@ -5,6 +5,8 @@ const state = () => ({
 	events: [],
 	peserta_sesi: [],
 	event_jadwal: {},
+	event_summary: {},
+	peserta_no_start: [],
 	page: 1
 })
 
@@ -23,6 +25,12 @@ const mutations = {
 	},
 	SET_PAGE(state, payload) {
 		state.page = payload
+	},
+	_assign_event_summary(state, payload) {
+		state.event_summary = payload
+	},
+	_assign_peserta_not_start(state, payload) {
+		state.peserta_no_start = payload
 	}
 }
 
@@ -225,6 +233,36 @@ const actions = {
 				commit('SET_LOADING', true, { root: true })
 				let network = await $axios.get(`absensi-ujian/${payload.ujian_id}/link?q=${payload.sesi}`);
 
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	getSummaryEvent({ commit }, jadwalId) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`events/ujian/${jadwalId}/summary-simple`);
+				
+				commit('_assign_event_summary', network.data.data)
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
+	getPesertaNotStart({ commit }, jadwalId) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`events/ujian/${jadwalId}/peserta-not-start`);
+				
+				commit('_assign_peserta_not_start', network.data.data)
 				commit('SET_LOADING', false, { root: true })
 				resolve(network.data)
 			} catch (error) {

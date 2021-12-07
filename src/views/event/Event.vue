@@ -65,7 +65,7 @@
                                 <b-button size="sm" @click="row.toggleDetails" :variant="row.detailsShowing ? 'danger' : 'info'"><i :class="row.detailsShowing ? 'flaticon-circle' : 'flaticon2-add'" /></b-button>
                             </template>
 							<template v-slot:row-details="row">
-								<b-card>
+								<b-card no-body class="py-1 px-1">
 									<div class="table-responsive-md">
 										<table class="table table-bordered">
 											<tr>
@@ -81,10 +81,13 @@
 												<td>{{ ujian.tanggal }}</td>
 												<td>{{ ujian.mulai }}</td>
 												<td>
-													<b-button variant="outline-info" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
-													<b-button variant="outline-success" size="sm" class="mr-1" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
-													<b-button size="sm" variant="outline-success" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
+													<b-button variant="info text-left" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
+													<b-button variant="outline-success text-left" size="sm" class="mr-1" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
+													<b-button size="sm" variant="outline-success text-left" class="mr-1" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
 														Download absensi
+													</b-button>
+													<b-button size="sm" @click="_summarizeEvent(ujian.id)" variant="outline-danger text-left" :disabled="isLoading">
+														Rangkuman
 													</b-button>
 												</td>
 											</tr>
@@ -223,6 +226,54 @@
 		      </b-button>
 		    </template>
 		</b-modal>
+		<b-modal id="modal-rangkuman-event" size="lg">
+			<template v-slot:modal-header="{ close }">
+		      <h5>Rangkuman Event</h5>
+		    </template>
+				<div>
+					<table class="table table-sm table-bordered">
+						<tr>
+							<td>Nama event</td>
+							<td>{{ event_summary.event_name }}</td>
+						</tr>
+						<tr>
+							<td>Nama ujian</td>
+							<td>{{ event_summary.jadwal_name }}</td>
+						</tr>
+						<tr>
+							<td>Peserta selesai</td>
+							<td>{{ event_summary.finish }}</td>
+						</tr>
+						<tr>
+							<td>Peserta mengerjakan</td>
+							<td>{{ event_summary.on_work }}</td>
+						</tr>
+						<tr>
+							<td>Peserta belum mengerjakan</td>
+							<td>{{ event_summary.no_start }} <a href="" @click="$event.preventDefault(); _getPesertaNotStart(event_summary.id);">fetch data peserta</a></td>
+						</tr>
+					</table>
+					<small>Data diambil pada: {{ event_summary.timestamp }}</small>
+					<table class="table table-sm table-bordered">
+						<tr>
+							<th>#</th>
+							<th>No Ujian</th>
+							<th>Nama Peserta</th>
+						</tr>
+						<tr v-for="(peserta, index) in peserta_no_start">
+							<td>{{ index+1 }}</td>
+							<td>{{ peserta.no_ujian }}</td>
+							<td>{{ peserta.nama }}</td>
+						</tr>
+					</table>
+					<small>Data yang dikirim maksimal 100 peserta</small>
+				</div>
+				 <template v-slot:modal-footer="{ cancel }">
+		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+		        Close
+		      </b-button>
+		    </template>
+		</b-modal>
 	</div>
 </template>
 <script>
@@ -241,7 +292,7 @@ export default {
 	data() {
 		return {
 			fields: [
-				{ key: 'show_details', label: 'Daftar Ujian' },
+				{ key: 'show_details', label: 'Detail' },
 				{ key: 'name', label: 'Nama event' },
 				{ key: 'support', label: 'Kelengkapan' },
 				{ key: 'action', label: 'Aksi' }
@@ -265,7 +316,9 @@ export default {
 		...mapState(['isLoading','baseURL']),
 		...mapState('feature',['feature_info']),
 		...mapState('event', {
-			events: state => state.events
+			events: state => state.events,
+			event_summary: state => state.event_summary,
+			peserta_no_start: state => state.peserta_no_start
 		}),
 		page: {
 			get() {
@@ -277,7 +330,18 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('event', ['getEvents','addEvent', 'getEventById', 'updateEvent', 'removeEvent', 'importToSesi', 'copySesiFromDefault', 'getLinkPDFBeritaAcara','getLinkPDFAbsensi']),
+		...mapActions('event', [
+			'getEvents',
+			'addEvent', 
+			'getEventById', 
+			'updateEvent', 
+			'removeEvent', 
+			'importToSesi', 
+			'copySesiFromDefault', 
+			'getLinkPDFBeritaAcara',
+			'getLinkPDFAbsensi',
+			'getSummaryEvent',
+			'getPesertaNotStart']),
 		...mapActions('feature', ['getFeatureInfo']),
 		close() {
 			this.$bvModal.hide('modal-scoped-event')
@@ -415,6 +479,22 @@ export default {
 			.then(() => {
 				this.$bvModal.show('modal-feature-info')
 			})
+		},
+		async _summarizeEvent(ujianID) {
+			try {
+				this.$store.state.event.peserta_no_start = []
+				await this.getSummaryEvent(ujianID)
+				this.$bvModal.show('modal-rangkuman-event')
+			} catch (e) {
+
+			}
+		},
+		async _getPesertaNotStart(ujianId) {
+			try {
+				await this.getPesertaNotStart(ujianId)
+			} catch (e) {
+			
+			}
 		}
 	},
 	async created() {
