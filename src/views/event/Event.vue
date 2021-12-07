@@ -226,7 +226,7 @@
 		      </b-button>
 		    </template>
 		</b-modal>
-		<b-modal id="modal-rangkuman-event" size="lg">
+		<b-modal id="modal-rangkuman-event" size="lg" noCloseOnBackdrop>
 			<template v-slot:modal-header="{ close }">
 		      <h5>Rangkuman Event</h5>
 		    </template>

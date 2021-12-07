@@ -10,9 +10,22 @@
 				</div>
 				<div class="card-body">
 					<div class="mb-2">
-						<span class="badge badge-light">{{ token.status == 0 ? 'Tidak aktif' :'Aktif' }}</span>
-						<h1>{{ token.token }}</h1>
-						<button class="btn btn-sm btn-primary" v-if="token.status == 0" @click="rilis" :disabled="isLoading">Relese token</button>
+						<table class="table table-sm table-borderless">
+							<tr>
+								<td width="150px">Token</td>
+								<td><strong>{{ token.token }}</strong></td>
+							</tr>
+							<tr>
+								<td>Status</td>
+								<td>{{ token.status == 0 ? 'Tidak aktif' :'Aktif' }}</td>
+							</tr>
+							<tr>
+								<td>Aksi</td>
+								<td>
+									<button class="btn btn-sm btn-primary" v-if="token.status == 0" @click="rilis" :disabled="isLoading">&#9745; Relese token</button>
+								</td>
+							</tr>
+						</table>
 					</div>
 					<div class="table-responsive">
 						<table class="table table-sm table-bordered table-hover table-striped">

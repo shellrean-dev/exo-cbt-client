@@ -105,12 +105,12 @@
                                            v-if="row.item.con"
                                            pill
                                            class="p-2"
-                                  >Terhubung</b-badge>
+                                  >&#9786; Terhubung</b-badge>
                                   <b-badge variant="danger"
                                            v-else
                                            pill
                                            class="p-2"
-                                  >Terputus</b-badge>
+                                  >&#9785; Terputus</b-badge>
                                 </template>
                                 <template v-if="enable_socket !== 'oke'">
                                   <b-badge variant="warning"
@@ -126,7 +126,7 @@
                                     Force close
                                 </b-button>
                                 <b-button variant="outline-danger" :disabled="isLoading" size="sm" @click="resetPeserta(row.item.peserta_id)">
-                                    Reset ujian
+                                    &#9850; Reset ujian
                                 </b-button>
                             </template>
                         </b-table>
@@ -222,9 +222,7 @@ export default {
                     if (this.enable_socket == 'oke') {
                       if (this.onlines.map((item) => item.id).includes(item.peserta_id)) {
                         item.con = 1
-                        item._rowVariant = '';
                       } else {
-                        item._rowVariant = "dark";
                         item.con = 0
                       }
                     }
