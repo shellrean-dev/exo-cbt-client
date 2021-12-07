@@ -56,7 +56,7 @@ import { generateMatpelCode } from '@/entities/generate'
 export default {
 	name: 'FormMatpel',
 	created() {
-		this.getUserLists()
+		this.gatewayUserCorrectorList()
 		this.allJurusan()
 		this.getAgamas()
 	},
@@ -80,7 +80,7 @@ export default {
 	methods: {
 		...mapActions('jurusan',['allJurusan']),
 		...mapActions('agama', ['getAgamas']),
-		...mapActions('user',['getUserLists'])
+		...mapActions('user',['getUserLists', 'gatewayUserCorrectorList'])
 	},
 	watch: {
 		matpel() {

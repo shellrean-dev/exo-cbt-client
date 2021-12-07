@@ -1,4 +1,4 @@
-import { $axios, $axios2 } from '@/services/api.js'
+import { $axios, $axios2, $gateway } from '@/services/api.js'
 
 const state = () => ({
 	ujians: [],
@@ -147,7 +147,7 @@ const actions = {
 	getUjianActive({ commit, state }, payload) {
 		return new Promise(async(resolve, reject) => {
 			try {
-				let network = await $axios.get('ujians/active-status')
+				let network = await $gateway.get('ujians/active-status')
 
 				commit('ASSIGN_DATA_ACTIVE', network.data.data)
 				resolve(network.data)
@@ -227,7 +227,7 @@ const actions = {
 		commit('SET_LOADING', true, { root: true })
 		let search = typeof payload != 'undefined' ? payload: ''
 		return new Promise((resolve, reject) => {
-			$axios.get(`ujians/all`)
+			$gateway.get(`ujians/all`)
 			.then((response) => {
 				commit('ASSIGN_DATA_ALL', response.data.data)
 				commit('SET_LOADING', false, { root: true })

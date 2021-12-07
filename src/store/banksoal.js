@@ -1,4 +1,5 @@
 import $axios from '@/services/api.js'
+import { $gateway } from '@/services/api.js'
 
 const state = () => ({
     banksoals: [],
@@ -49,7 +50,7 @@ const actions = {
 		let search = typeof payload != 'undefined' ? payload : ''
 		return new Promise(async ( resolve, reject ) =>  {
             try {
-                let network = await $axios.get(`banksoals/all`)
+                let network = await $gateway.get(`banksoals/all`)
 
 				commit('ASSIGN_ALL_DATA', network.data.data)
 				resolve(network.data)

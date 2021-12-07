@@ -1,4 +1,5 @@
 import $axios from '@/services/api.js'
+import { $gateway } from '@/services/api.js'
 
 const state = () => ({
     users: [],
@@ -49,6 +50,18 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             try {
                 let network = await $axios.get(`user-lists`)
+
+                commit('ASSIGN_USER', network.data.data)
+                resolve(network.data)
+            } catch (error) {
+                reject(error.response.data)
+            }
+        })
+    },
+    gatewayUserCorrectorList({ commit }) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let network = await $gateway.get(`users/correctors`)
 
                 commit('ASSIGN_USER', network.data.data)
                 resolve(network.data)

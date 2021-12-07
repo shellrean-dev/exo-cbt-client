@@ -22,6 +22,12 @@ const $axios2 = axios.create({
     responseType: 'blob',
 })
 
+const $gateway = axios.create({
+    headers: {
+        'Accept': 'application/json'
+    },
+})
+
 $axios.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
@@ -55,7 +61,36 @@ $axios2.interceptors.request.use (
     }
 )
 
+$gateway.interceptors.request.use (
+    function ( config ) {
+        config.headers.Authorization = 'Bearer '+store.state.token;
+        config.url = store.state.baseURL+'/api/gateway/' + config.url
+        return config;
+    },
+    function ( error ) {
+        return Promise.reject( error )
+    }
+)
+
 $axios.interceptors.response.use(
+    (response) => {
+        return response
+    }, 
+    (error) => {
+      if (error.response.status == 401) {
+        new Promise((resolve, reject) => {
+            delete localStorage.token
+            resolve()
+        }).then(() => {
+            store.state.token = localStorage.getItem('token')
+            router.push({ name: 'login' })
+        })
+      }
+      return Promise.reject(error);
+    }
+)
+
+$gateway.interceptors.response.use(
     (response) => {
         return response
     }, 
@@ -90,5 +125,5 @@ $v3.interceptors.response.use(
       return Promise.reject(error);
     }
 )
-export { $axios2, $axios, $v3 }
+export { $axios2, $axios, $v3, $gateway }
 export default $axios

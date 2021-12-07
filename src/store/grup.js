@@ -1,4 +1,5 @@
 import $axios from '@/services/api.js'
+import { $gateway } from '@/services/api.js'
 
 /**
  * state for grup
@@ -68,7 +69,7 @@ function getAllGroup({ commit }) {
     return new Promise(async (r, v) => {
         try {
             commit('SET_LOADING', true, { root: true })
-            const network = await $axios.get(`groups?q=all`)
+            const network = await $gateway.get(`groups/all`)
 
             commit('_assign_data_groups', network.data.data)
             commit('SET_LOADING', false, { root: true })

@@ -1,4 +1,5 @@
 import $axios from '@/services/api.js'
+import { $gateway } from '@/services/api.js'
 
 const state = () => ({
 	matpels: [],
@@ -74,7 +75,7 @@ const actions = {
     getAllMatpels({ commit, state }, payload) {
         return new Promise(async ( resolve, reject ) =>  {
             try {
-                let network = await $axios.get(`matpels/all`)
+                let network = await $gateway.get(`matpels/all`)
 
                 commit('ASSIGN_ALL_DATA', network.data.data)
                 resolve(network.data)

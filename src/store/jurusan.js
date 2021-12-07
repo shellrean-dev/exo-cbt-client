@@ -1,4 +1,5 @@
 import $axios from '@/services/api.js'
+import {  $gateway, gateway } from '../services/api'
 
 const state = () => ({
 	all_jurusan: [],
@@ -41,7 +42,7 @@ const actions = {
 	allJurusan({ commit }) {
         return new Promise(async ( resolve, reject) => {
         	try {
-        		let network = await $axios.get(`jurusans/all`)
+        		let network = await $gateway.get(`jurusans/all`)
 
         		commit('ASSIGN_ALL_DATA', network.data.data)
      			commit('SET_LOADING', false, { root: true })
