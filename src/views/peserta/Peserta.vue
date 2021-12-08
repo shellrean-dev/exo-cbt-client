@@ -102,6 +102,9 @@
                                 	</div>
                                 </b-card>
                             </template>
+                            <template v-slot:cell(status)="row">
+                                <b-badge :variant="row.item.status == 1 ? 'success' : 'warning'">{{ row.item.status == 1 ? 'Aktif' : 'Tidak aktif' }}</b-badge>
+							</template>
 							<template v-slot:cell(actions)="row">
                                 <b-button variant="warning" class="mr-1" size="sm" :to="{ name: 'peserta.edit', params: { id: row.item.id } }">
                                 	<i class="flaticon-edit"></i> Edit
@@ -179,6 +182,7 @@ export default {
 				{ key: 'show_details', label: 'Detail' },
 				{ key: 'no_ujian', label: 'No ujian' },
 				{ key: 'nama_peserta', label: 'Nama peserta' },
+                { key: 'status', label: 'Status' },
 				{ key: 'actions', label: 'Aksi' }
 			],
 			search: '',

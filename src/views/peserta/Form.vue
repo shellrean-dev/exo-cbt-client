@@ -36,6 +36,13 @@
 			<label>Agama</label>
 			<v-select label="nama" :options="agamas" v-model="peserta.agama_id" :reduce="nama => nama.id"></v-select>
 		</div>
+		<div class="form-group">
+			<label>Status</label>
+			<select class="form-control" v-model="peserta.status">
+				<option value="1">Aktif</option>
+				<option value="0">Tidak aktif</option>
+			</select>
+		</div>
 	</div>
 </template>
 <script>

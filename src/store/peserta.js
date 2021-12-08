@@ -9,7 +9,8 @@ const state = () => ({
         password: '',
         jurusan_id: '',
         sesi: 1,
-        agama_id: ''
+        agama_id: '',
+        status: 1
     },
     page: 1,
     login_page: 1,
@@ -36,7 +37,8 @@ const mutations = {
             password: payload.password,
             jurusan_id: payload.jurusan_id,
             sesi: payload.sesi,
-            agama_id: payload.agama_id
+            agama_id: payload.agama_id,
+            status: payload.status
         }
     },
     CLEAR_FORM(state) {
