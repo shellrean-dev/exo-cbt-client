@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <span>Peserta ujian</span>
-                        <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_jurusan_tabel')"><i class="flaticon-info"></i></button>
+                        <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_status_peserta_table')"><i class="flaticon-info"></i></button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -187,6 +187,7 @@ export default {
                 { key: 'no_ujian', label: 'No ujian', sortable: true },
                 { key: 'nama', label: 'Nama peserta', sortable: true },
                 { key: 'mulai_ujian', label: 'Mulai ujian', sortable: true },
+                { key: 'selesai_ujian', label: 'Selesai ujian', },
                 { key: 'status', label: 'Status'},
                 { key: 'con', label: 'Koneksi'}
             ],

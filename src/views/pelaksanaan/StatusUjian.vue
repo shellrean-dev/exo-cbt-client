@@ -5,7 +5,7 @@
 				<div class="card-header">
 					<div class="d-flex justify-content-between">
 						<span>Ujian yang dilaksanakan</span>
-						<button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_jurusan_tabel')"><i class="flaticon-info"></i></button>
+						<button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_status_ujian_table')"><i class="flaticon-info"></i></button>
                     </div>
 				</div>
 				<div class="card-body">

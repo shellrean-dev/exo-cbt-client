@@ -90,69 +90,89 @@
                                 {{ ((page-1)*hasils.per_page) + row.index+1 }}
                             </template>
                             <template v-slot:row-details="row">
-                                <b-card>
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td width="200px">Listening</td>
-                                            <td>
-                                                Salah {{ row.item.jumlah_salah_listening }} : Benar {{ row.item.jumlah_benar_listening }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pilihan ganda</td>
-                                            <td>
-                                                Salah {{ row.item.jumlah_salah }} : Benar {{ row.item.jumlah_benar }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pilihan ganda komplek</td>
-                                            <td>
-                                                Salah {{ row.item.jumlah_salah_complek }} : Benar {{ row.item.jumlah_benar_complek }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Isian singkat</td>
-                                            <td>
-                                                Salah {{ row.item.jumlah_salah_isian_singkat }} : Benar {{ row.item.jumlah_benar_isian_singkat }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Menjodohkan</td>
-                                            <td>
-                                                Salah {{ row.item.jumlah_salah_menjodohkan }} : Benar {{ row.item.jumlah_benar_menjodohkan }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                          <td>Mengurutkan</td>
-                                          <td>
-                                            Salah {{ row.item.jumlah_salah_mengurutkan }} : Benar {{ row.item.jumlah_benar_mengurutkan }}
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                        <td>Benar/Salah</td>
-                                        <td>
-                                          Salah {{ row.item.jumlah_salah_benar_salah }} : Benar {{ row.item.jumlah_benar_benar_salah }}
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>Tidak diisi</td>
-                                        <td v-text="row.item.tidak_diisi"></td>
-                                      </tr>
-                                        <tr>
-                                            <td>Point esay</td>
-                                            <td v-text="row.item.point_esay"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Point setuju/tidak</td>
-                                            <td v-text="row.item.point_setuju_tidak"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hasil akhir</td>
-                                            <td>
-                                              {{ (parseInt(row.item.hasil) + parseInt(row.item.point_setuju_tidak) + parseInt(row.item.point_esay)) }}
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <b-card no-body class="py-2 px-2">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td width="200px">Mulai ujian</td>
+                                                    <td>{{ row.item.ujian.mulai }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="200px">Selesai ujian</td>
+                                                    <td>{{ row.item.ujian.selesai }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="200px">Pengerjaan</td>
+                                                    <td>{{ row.item.ujian.pengerjaan }}</td>
+                                                </tr>
+                                            </table>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td width="200px">Listening</td>
+                                                    <td>
+                                                        Salah {{ row.item.jumlah_salah_listening }} : Benar {{ row.item.jumlah_benar_listening }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pilihan ganda</td>
+                                                    <td>
+                                                        Salah {{ row.item.jumlah_salah }} : Benar {{ row.item.jumlah_benar }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pilihan ganda komplek</td>
+                                                    <td>
+                                                        Salah {{ row.item.jumlah_salah_complek }} : Benar {{ row.item.jumlah_benar_complek }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Isian singkat</td>
+                                                    <td>
+                                                        Salah {{ row.item.jumlah_salah_isian_singkat }} : Benar {{ row.item.jumlah_benar_isian_singkat }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Menjodohkan</td>
+                                                    <td>
+                                                        Salah {{ row.item.jumlah_salah_menjodohkan }} : Benar {{ row.item.jumlah_benar_menjodohkan }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Mengurutkan</td>
+                                                    <td>
+                                                        Salah {{ row.item.jumlah_salah_mengurutkan }} : Benar {{ row.item.jumlah_benar_mengurutkan }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Benar/Salah</td>
+                                                    <td>
+                                                    Salah {{ row.item.jumlah_salah_benar_salah }} : Benar {{ row.item.jumlah_benar_benar_salah }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td width="200px">Tidak diisi</td>
+                                                    <td v-text="row.item.tidak_diisi"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Point esay</td>
+                                                    <td v-text="row.item.point_esay"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Point setuju/tidak</td>
+                                                    <td v-text="row.item.point_setuju_tidak"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hasil akhir</td>
+                                                    <td>
+                                                    {{ (parseInt(row.item.hasil) + parseInt(row.item.point_setuju_tidak) + parseInt(row.item.point_esay)) }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </b-card>
                             </template>
                             <template v-slot:cell(action)="row">
