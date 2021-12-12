@@ -63,16 +63,17 @@
                             </template>
 
                             <template v-slot:row-details="row">
-                                <b-card>
+                                <b-card no-body class="py-2 px-2">
                                     <div class="table-responsive-md">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <td width="150px">Pembuat</td><td v-text="row.item.user.name"></td>
+                                                <td width="150px">Pembuat</td>
+                                                <td>{{ row.item.created_by }} | <a :href="`mailto:${row.item.email_creator}`">{{ row.item.email_creator }}</a></td>
                                             </tr>
                                         </table>
                                         <table class="table table-bordered mt-2">
                                             <tr>
-                                                <td width="150px"><span class="badge badge-info">PG</span></td>
+                                                <td width="150px">PG</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_soal }}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda }} </b-badge>
@@ -80,7 +81,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><span class="badge badge-info">PG Kompleks</span></td>
+                                                <td>PG Kompleks</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_soal_ganda_kompleks}}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda_komplek }} </b-badge>
@@ -88,7 +89,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><span class="badge badge-info">Listening</span></td>
+                                                <td>Listening</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_soal_listening }}</span><b-badge variant="success">{{ row.item.persen.listening }} </b-badge>
@@ -96,7 +97,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><span class="badge badge-info">Menjodohkan</span></td>
+                                                <td>Menjodohkan</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_menjodohkan }}</span><b-badge variant="success">{{ row.item.persen.menjodohkan }} </b-badge>
@@ -104,7 +105,7 @@
                                                 </td>
                                             </tr>
                                           <tr>
-                                            <td><span class="badge badge-info">Mengurutkan</span></td>
+                                            <td>Mengurutkan</td>
                                             <td>
                                               <div class="d-flex justify-content-between">
                                                 <span>{{ row.item.jumlah_mengurutkan }}</span><b-badge variant="success">{{ row.item.persen.mengurutkan }} </b-badge>
@@ -112,7 +113,7 @@
                                             </td>
                                           </tr>
                                             <tr>
-                                                <td><span class="badge badge-info">Isian Singkat</span></td>
+                                                <td>Isian Singkat</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_isian_singkat }}</span><b-badge variant="success">{{ row.item.persen.isian_singkat }} </b-badge>
@@ -120,7 +121,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><span class="badge badge-info">Uraian</span></td>
+                                                <td>Uraian</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>{{ row.item.jumlah_soal_esay }}</span><b-badge variant="success">{{ row.item.persen.esay }} </b-badge>
@@ -128,7 +129,7 @@
                                                 </td>
                                             </tr>
                                           <tr>
-                                            <td><span class="badge badge-info">Benar/salah</span></td>
+                                            <td>Benar/salah</td>
                                             <td>
                                               <div class="d-flex justify-content-between">
                                                 <span>{{ row.item.jumlah_benar_salah }}</span><b-badge variant="success">{{ row.item.persen.benar_salah }} </b-badge>
@@ -136,7 +137,7 @@
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td><span class="badge badge-info">Setuju/tidak</span></td>
+                                            <td>Setuju/tidak</td>
                                             <td>
                                               <div class="d-flex justify-content-between">
                                                 <span>{{ row.item.jumlah_setuju_tidak }}</span><b-badge variant="success">{{ row.item.persen.setuju_tidak }} </b-badge>
@@ -144,7 +145,7 @@
                                             </td>
                                           </tr>
                                           <tr>
-                                                <td><span class="badge badge-warning">Soal terinput</span></td>
+                                                <td>Soal terinput</td>
                                                 <td v-text="row.item.inputed"></td>
                                             </tr>
                                         </table>
@@ -709,7 +710,7 @@ export default {
             fields: [
                 { key: 'show_details', label: 'Detail' },
                 { key: 'kode_banksoal', label: 'Kode banksoal', sortable: true},
-                { key: 'matpel.nama', label: 'Mata pelajaran', sortable: true},
+                { key: 'matpel_name', label: 'Mata pelajaran', sortable: true},
                 { key: 'actions', label: 'Aksi' }
             ],
             perPage: 20,
