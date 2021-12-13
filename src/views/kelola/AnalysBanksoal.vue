@@ -104,7 +104,7 @@ export default {
             fields: [
                 { key: 'no', label: '#'},
                 { key: 'kode_banksoal', label: 'Kode banksoal'},
-                { key: 'matpel.nama', label: 'Mata pelajaran'},
+                { key: 'matpel_name', label: 'Mata pelajaran'},
                 { key: 'actions', label: 'Aksi' }
             ],
             perPage: 20,
