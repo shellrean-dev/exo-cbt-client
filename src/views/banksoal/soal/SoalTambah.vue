@@ -495,7 +495,6 @@ export default {
     },
     _changeCheckbox(e, index) {
       if (e.target.checked === false) {
-        let index = this.selected.indexOf(val)
         if (index !== -1) {
           this.selected.splice(index, 1)
         }
