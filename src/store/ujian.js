@@ -345,6 +345,21 @@ const actions = {
 			}
 		})
 	},
+	hapusUjianPeserta({ commit }, id) {
+		commit('SET_LOADING', true, { root: true })
+
+		return new Promise(async (resolve, reject) => {
+			try {
+				let network = await $axios.get(`ujians/peserta-ujian/${id}/delete`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
 	multiResetUjianPeserta({ commit }, payload) {
 		commit('SET_LOADING', true, { root: true })
 

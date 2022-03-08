@@ -125,8 +125,14 @@
                                 v-if="row.item.status_ujian == 3">
                                     Force close
                                 </b-button>
-                                <b-button variant="outline-danger" :disabled="isLoading" size="sm" @click="resetPeserta(row.item.peserta_id)">
+                                <b-button variant="outline-danger" :disabled="isLoading" size="sm" @click="resetPeserta(row.item.peserta_id)"
+                                v-if="row.item.status_ujian != 0"
+                                >
                                     &#9850; Reset ujian
+                                </b-button>
+                                <b-button variant="warning" :disabled="isLoading" size="sm" @click="hapusPeserta(row.item.id)"
+                                v-if="row.item.status_ujian == 0">
+                                    &#9850; Hapus ujian
                                 </b-button>
                             </template>
                         </b-table>
@@ -220,7 +226,7 @@ export default {
                 return this.pesertas.filter(post => {
                     return post.no_ujian.toLowerCase().includes(this.search.toLowerCase())
                 }).map((item) => {
-                    if (this.enable_socket == 'oke') {
+                    if (this.enable_socket === 'oke') {
                       if (this.onlines.map((item) => item.id).includes(item.peserta_id)) {
                         item.con = 1
                       } else {
@@ -234,7 +240,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive','addMoreTimeUjianSiswa', 'multiResetUjianPeserta', 'multiSelesaiUjianPeserta']),
+        ...mapActions('ujian', ['getPesertas', 'resetUjianPeserta', 'selesaiUjianPeserta', 'getUjianActive','addMoreTimeUjianSiswa', 'multiResetUjianPeserta', 'multiSelesaiUjianPeserta', 'hapusUjianPeserta']),
         ...mapActions('feature', ['getFeatureInfo']),
         onRowSelected(items) {
             this.selected = items
@@ -308,6 +314,25 @@ export default {
                     } catch (error) {
                         this.$bvToast.toast(error.message, errorToas())
                     }
+                }
+            })
+        },
+        async hapusPeserta(id) {
+            this.$swal({
+                title: 'Informasi',
+                text: "Tindakan ini hanya akan menghapus ujian siswa, peserta yang bersangkutan akan otomatis logout bila berinteraksi dengan server.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#c3c3c3',
+                confirmButtonText: 'Iya, Lanjutkan!'
+            }).then(async (result) => {
+                try {
+                    await this.hapusUjianPeserta(id)
+                    this.getPesertas(this.jadwal)
+                    this.$bvToast.toast('Ujian peserta berhasil direset', successToas())
+                } catch (error) {
+                    this.$bvToast.toast(error.message, errorToas())
                 }
             })
         },
@@ -463,6 +488,9 @@ export default {
         async jadwal() {
             if (this.enable_socket === 'oke') {
               this.socket_2.emit('monitor_student', { channel: this.channel_2 })
+              this.socket_2.on('monit_student', (users) => {
+                this.onlines = users.filter((item) => typeof item.no_ujian != 'undefined')
+              })
             }
             if(this.jadwal != 0 || this.jadwal != '') {
                 try {
