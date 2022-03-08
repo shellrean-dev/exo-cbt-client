@@ -179,8 +179,12 @@ export default {
   },
   methods: {
     ...mapActions('ujian',['getDetailJawabanSiswa']),
-    print() {
-      this.$htmlToPaper('printDetailJawaban');
+    async print() {
+      let currWindow = document.title
+      document.title = this.jawaban[0].peserta_no_ujian+"_"+this.jawaban[0].peserta_nama
+      await this.$htmlToPaper('printDetailJawaban', null, () => {
+        document.title = currWindow
+      });
     },
     findUrutan(fromArr, id) {
       return fromArr.find((item) => item.id == id);

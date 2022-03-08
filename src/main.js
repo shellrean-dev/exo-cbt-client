@@ -56,7 +56,8 @@ const options = {
   styles: [
     'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
     '/css/free.min.css'
-  ]
+  ],
+  windowTitle: window.document.title
 }
 
 Vue.use(VueHtmlToPaper, options);
