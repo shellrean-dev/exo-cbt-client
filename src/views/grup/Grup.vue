@@ -218,7 +218,9 @@
       <template v-slot:modal-header="{ close }">
         <h5>Informasi Fitur</h5>
       </template>
+      <template v-if="_is_feature_info">
       <div v-html="feature_info.content"></div>
+      </template>
       <template v-slot:modal-footer="{ cancel }">
         <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
           Cancel
@@ -276,7 +278,13 @@ export default {
       set(val) {
         this.$store.commit('grup/_set_page', val)
       }
-    }
+    },
+    _is_feature_info() {
+            if(typeof this.feature_info != 'undefined') {
+                return true
+            }
+            return false
+        }
   },
   methods: {
     ...mapActions('grup', [

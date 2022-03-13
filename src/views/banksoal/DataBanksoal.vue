@@ -70,6 +70,10 @@
                                                 <td width="150px">Pembuat</td>
                                                 <td>{{ row.item.created_by }} | <a :href="`mailto:${row.item.email_creator}`">{{ row.item.email_creator }}</a></td>
                                             </tr>
+                                            <tr v-if="row.item.is_locked">
+                                                <td width="150px">Dikunci oleh</td>
+                                                <td><a :href="`mailto:${row.item.email_locker}`">{{ row.item.email_locker }}</a></td>
+                                            </tr>
                                         </table>
                                         <table class="table table-bordered mt-2">
                                             <tr>
@@ -635,7 +639,9 @@
 		    <template v-slot:modal-header="{ close }">
 		      <h5>Informasi Fitur</h5>
 		    </template>
-			<div v-html="feature_info.content"></div>
+        <template v-if="_is_feature_info">
+			    <div v-html="feature_info.content"></div>
+        </template>
             <template v-slot:modal-footer="{ cancel }">
 		      <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
 		        Cancel
@@ -767,6 +773,12 @@ export default {
             set(val) {
                 this.$store.commit('banksoal/SET_PAGE', val)
             }
+        },
+        _is_feature_info() {
+          if(typeof this.feature_info != 'undefined') {
+            return true
+          }
+          return false
         }
     },
     methods: {

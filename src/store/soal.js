@@ -106,24 +106,37 @@ const actions = {
 		})
 	},
 	uploadSoal({ commit }, payload) {
-        commit('SET_LOADING', true, { root: true })
-        return new Promise(async (resolve, reject) => {
-            try {
-                let network = await $axios.post(`soals/import-word/${payload.id}`, payload.data, {
-                    onUploadProgress: function( progressEvent ) {
-                        commit('UPLOAD_PROGRESS_BAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
-                    }.bind(this)
-                })
-                commit('UPLOAD_PROGRESS_BAR', 0);
-                commit('SET_LOADING',false, { root: true })
-                resolve(network.data)
-            } catch (error) {
-                commit('UPLOAD_PROGRESS_BAR', 0);
-                commit('SET_LOADING',false, { root: true })
-                reject(error.response.data)
-            }
+    commit('SET_LOADING', true, { root: true })
+    return new Promise(async (resolve, reject) => {
+      try {
+        let network = await $axios.post(`soals/import-word/${payload.id}`, payload.data, {
+          onUploadProgress: function( progressEvent ) {
+            commit('UPLOAD_PROGRESS_BAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+          }.bind(this)
         })
-    }
+        commit('UPLOAD_PROGRESS_BAR', 0);
+        commit('SET_LOADING',false, { root: true })
+        resolve(network.data)
+      } catch (error) {
+          commit('UPLOAD_PROGRESS_BAR', 0);
+          commit('SET_LOADING',false, { root: true })
+          reject(error.response.data)
+      }
+    })
+  },
+	sendSoalBulk({ commit }, payload) {
+		commit('SET_LOADING', true, { root: true })
+		return new Promise(async(resolve, reject) => {
+			try {
+				let network = await $axios.post(`soals/bulk`, payload)
+				resolve(network.data)
+			} catch (e) {
+				reject(e)
+			} finally {
+				commit('SET_LOADING',false, { root: true })
+			}
+		})
+	}
 }
 
 export default {

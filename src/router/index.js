@@ -46,6 +46,7 @@ const SoalBanksoalTemplate = () => import('@/views/banksoal/SoalBanksoalTemplate
 const SoalBanksoalEdit = () => import('@/views/banksoal/soal/SoalEdit')
 const SoalBanksoalPrev = () => import('@/views/banksoal/SoalBanksoalPrev')
 const SoalBanksoalUpload = () => import( '@/views/banksoal/SoalBanksoalUpload')
+const SoalBanksoalTambahBulk = () => import('@/views/banksoal/soal_bulk/SoalTambah')
 
 import BanksoalAdaptifIndex from '@/views/banksoal_adaptif/Index'
 const DataBanksoalAdaptif = () => import('@/views/banksoal_adaptif/DataBanksoal')
@@ -316,6 +317,12 @@ const routes = [
         name: 'banksoal.prev',
         component: SoalBanksoalPrev,
         meta: { title: 'Preview soal banksoal' }
+      },
+      {
+        path: ':banksoal_id/soal_bulk/tambah',
+        name: 'banksoal.soal.tambah.bulk',
+        component: SoalBanksoalTambahBulk,
+        meta: { title: 'Tambah soal' }
       }
     ]
   },
