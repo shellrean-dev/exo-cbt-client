@@ -99,11 +99,9 @@
                                             <tr>
                                                 <td>Tim pengoreksi</td>
                                                 <td>
-                                                  <ul
-                                                    v-if="row.item.correctors_name != 0"
-                                                  >
+                                                  <ul>
                                                     <li
-                                                      v-for="(corector, index) in row.item.correctors_name"
+                                                      v-for="(corector, index) in row.item.correctors"
                                                       v-text="corector.name" :key="index"
                                                     ></li>
                                                   </ul>
