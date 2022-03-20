@@ -78,6 +78,7 @@ const AnalysSiswa = () => import('@/views/kelola/AnalysSiswa')
 const AnalysCapaianSiswa = () => import('@/views/kelola/AnalysCapaianSiswa')
 const HasilUjian = () => import('@/views/kelola/HasilUjian')
 const DetailJawabanSiswa = () => import('@/views/kelola/detail/JawabanSiswa')
+const LedgerPeserta = () => import('@/views/kelola/ledger/LedgerPeserta')
 
 import GroupIndex from '@/views/grup/Index'
 const DataGrup = () => import('@/views/grup/Grup')
@@ -478,6 +479,12 @@ const routes = [
         name: 'kelola.hasil.ujian.siswa',
         component: DetailJawabanSiswa,
         meta: { title: 'Detail jawaban siswa'}
+      },
+      {
+        path: 'ledger-peserta',
+        name: 'kelola.ledger.peserta',
+        component: LedgerPeserta,
+        meta: { title: 'Ledger peserta' }
       }
     ]
   },

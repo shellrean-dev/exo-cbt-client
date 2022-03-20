@@ -176,6 +176,12 @@
           </router-link>
         </li>
         <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'kelola.ledger.peserta' }"
+          :class="[currentPage.includes('kelola.ledger.peserta') ? activeClass : '']">
+            <i class="mr-3 flaticon2-drop"></i>Ledger peserta
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'system.setting' }"
           :class="[currentPage.includes('ksystem.setting') ? activeClass : '']">
             <i class="mr-3 flaticon2-drop"></i>Setting

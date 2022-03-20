@@ -580,6 +580,20 @@ const actions = {
 			}
 		})
 	},
+	getLedgerPesertaHasilUjianLink({ commit }, payload) {
+		return new Promise(async(resolve, reject) => {
+			try {
+				commit('SET_LOADING', true, { root: true })
+				let network = await $axios.get(`ujians-ledger/${payload.event_id}/${payload.no_ujian}/link`)
+
+				commit('SET_LOADING', false, { root: true })
+				resolve(network.data)
+			} catch (error) {
+				commit('SET_LOADING', false, { root: true })
+				reject(error.response.data)
+			}
+		})
+	},
 	removeUjian({ state, commit }, payload) {
 		commit('SET_LOADING', true, { root: true })
 		return new Promise(async(resolve, reject) => {

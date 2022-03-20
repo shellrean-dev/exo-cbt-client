@@ -1,4 +1,5 @@
 import $axios from '@/services/api.js'
+import { $gateway } from '@/services/api.js'
 
 const state = () => ({
 	events_all: [],
@@ -56,7 +57,7 @@ const actions = {
 	getAllEvents({ commit, state }, payload) {
 		let search = typeof payload != 'undefined' ? payload: ''
 		return new Promise((resolve, reject) => {
-			$axios.get(`events/all`)
+			$gateway.get(`events/all`)
 			.then((response) => {
 				commit('ASSIGN_DATA_ALL', response.data.data)
 				resolve(response.data)
