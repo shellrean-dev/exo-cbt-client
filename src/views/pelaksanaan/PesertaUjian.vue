@@ -252,7 +252,7 @@ export default {
                         item.con = 0
                       }
 
-                      if(this.ontabs.includes(item.peserta_id)) {
+                      if(this.ontabs.map((item) => item).includes(item.peserta_id)) {
                           item.tab = 1
                       } else {
                           item.tab = 0
@@ -476,7 +476,6 @@ export default {
                   let index = this.onlines.map(item => item.id).indexOf(user.id)
                   if(index == -1) {
                     this.onlines.push(user)
-                    this.ontabs.push(user.id)
                   }
                   this.ontabs.push(user.id)
                 }
@@ -494,10 +493,7 @@ export default {
                 this.ontabs.push(users)
               })
               this.socket_2.on('is_not_tab_online_student', (users) => {
-                  let idx = this.ontabs.indexOf(users)
-                  if(idx != -1) {
-                    this.ontabs.splice(idx, 1)
-                  }
+                  this.ontabs = this.ontabs.filter((item) => item != users)
               })
             }
         }
