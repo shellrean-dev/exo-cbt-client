@@ -112,6 +112,18 @@
                                            class="p-2"
                                   >&#9785; Terputus</b-badge>
                                 </template>
+                                <template v-if="enable_socket === 'oke'">
+                                  <b-badge variant="success"
+                                           v-if="row.item.tab"
+                                           pill
+                                           class="p-2"
+                                  >&#9786; In Tab</b-badge>
+                                  <b-badge variant="warning"
+                                           v-else
+                                           pill
+                                           class="p-2"
+                                  >&#9785; Not in tab</b-badge>
+                                </template>
                                 <template v-if="enable_socket !== 'oke'">
                                   <b-badge variant="warning"
                                            pill
@@ -159,7 +171,11 @@
                 <div class="card-footer">
                     <template v-if="enable_socket === 'oke'">
                       <div><span class="badge badge-danger">Terputus</span> Koneksi peserta terputus</div>
-                      <div><span class="badge badge-success">Terhubung</span> Koneksi peserta terhubung</div>
+                      <div class="mb-2"><span class="badge badge-success">Terhubung</span> Koneksi peserta terhubung</div>
+                    </template>
+                    <template v-if="enable_socket === 'oke'">
+                      <div><span class="badge badge-danger">Not in tab</span> Peserta sedang tidak berada di tab ujian</div>
+                      <div><span class="badge badge-success">In tab</span> Peserta sedang berada di tab ujian</div>
                     </template>
                     <template v-else>
                       Socket non-active
@@ -208,6 +224,7 @@ export default {
             },
             selected: [],
             onlines: [],
+            ontabs: [],
             channel_2: '',
             has_getted: false,
             blockdor: 0,
@@ -233,6 +250,12 @@ export default {
                         item.con = 1
                       } else {
                         item.con = 0
+                      }
+
+                      if(this.ontabs.includes(item.peserta_id)) {
+                          item.tab = 1
+                      } else {
+                          item.tab = 0
                       }
                     }
                     return item;
@@ -462,6 +485,15 @@ export default {
                     this.onlines.splice(index,1)
                   }
                 }
+              })
+              this.socket_2.on('is_in_tab_online_student', (users) => {
+                this.ontabs.push(users)
+              })
+              this.socket_2.on('is_not_tab_online_student', (users) => {
+                  let idx = this.ontabs.indexOf(users)
+                  if(idx != -1) {
+                    this.ontabs.splice(idx, 1)
+                  }
               })
             }
         }
