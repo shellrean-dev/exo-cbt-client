@@ -174,7 +174,7 @@
                       <div class="mb-2"><span class="badge badge-success">Terhubung</span> Koneksi peserta terhubung</div>
                     </template>
                     <template v-if="enable_socket === 'oke'">
-                      <div><span class="badge badge-danger">Not in tab</span> Peserta sedang tidak berada di tab ujian</div>
+                      <div><span class="badge badge-warning">Not in tab</span> Peserta sedang tidak berada di tab ujian</div>
                       <div><span class="badge badge-success">In tab</span> Peserta sedang berada di tab ujian</div>
                     </template>
                     <template v-else>
@@ -469,21 +469,25 @@ export default {
               this.socket_2.emit('monitor_student', { channel: this.channel_2 })
               this.socket_2.on('monit_student', (users) => {
                 this.onlines = users.filter((item) => typeof item.no_ujian != 'undefined')
+                this.ontabs = users.filter((item) => typeof item.no_ujian != 'undefined' && item.intab == true).map((item) => item.id)
               })
               this.socket_2.on('is_online_student', (user) => {
                 if(typeof user.no_ujian != 'undefined' && user.no_ujian != '' && user.no_ujian != null) {
                   let index = this.onlines.map(item => item.id).indexOf(user.id)
                   if(index == -1) {
                     this.onlines.push(user)
+                    this.ontabs.push(user.id)
                   }
+                  this.ontabs.push(user.id)
                 }
               })
               this.socket_2.on('is_offline', (user) => {
                 if(typeof user.no_ujian != 'undefined') {
                   let index = this.onlines.map(item => item.id).indexOf(user.id)
                   if(index != -1) {
-                    this.onlines.splice(index,1)
+                    this.onlines = this.onlines.filter((item) => item.id != user.id)
                   }
+                  this.ontabs = this.ontabs.filter((item) => item != user.id)
                 }
               })
               this.socket_2.on('is_in_tab_online_student', (users) => {
@@ -530,6 +534,7 @@ export default {
               this.socket_2.emit('monitor_student', { channel: this.channel_2 })
               this.socket_2.on('monit_student', (users) => {
                 this.onlines = users.filter((item) => typeof item.no_ujian != 'undefined')
+                this.ontabs = users.filter((item) => typeof item.no_ujian != 'undefined' && item.intab == true).map((item) => item.id)
               })
             }
             if(this.jadwal != 0 || this.jadwal != '') {
