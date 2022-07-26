@@ -86,6 +86,9 @@ const DataGrup = () => import('@/views/grup/Grup')
 import AgamaIndex from '@/views/agama/Index'
 const DataAgama = () => import('@/views/agama/Agama')
 
+import BackupIndex from '@/views/backup/Index'
+const DataBackup = () => import('@/views/backup/Backup')
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -509,6 +512,18 @@ const routes = [
         path: '',
         name: 'agama.data',
         component: DataAgama
+      }
+    ]
+  },
+  {
+    path: '/backup',
+    component: BackupIndex,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'backup.data',
+        component: DataBackup
       }
     ]
   }

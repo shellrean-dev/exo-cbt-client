@@ -33,6 +33,7 @@ const mutations = {
         state.set_ujian = {
             name: 'ujian',
             value: {
+                autoblock: payload.value.autoblock,
                 reset: payload.value.reset,
                 text_welcome: payload.value.text_welcome,
                 text_finish: payload.value.text_finish

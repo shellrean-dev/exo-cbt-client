@@ -18,6 +18,7 @@ import feature from './feature'
 import channel from './channel'
 import banksoal_adaptif from './banksoal_adaptif'
 import penilaian from "./penilaian";
+import backup from './backup'
 
 Vue.use(Vuex)
 
@@ -40,6 +41,7 @@ export default new Vuex.Store({
     channel,
     penilaian,
     banksoal_adaptif,
+    backup,
   },
   state: {
     errors: [],
@@ -47,7 +49,7 @@ export default new Vuex.Store({
     loadPage: false,
     token: localStorage.getItem('token'),
     baseURL: '',
-      comingsoon: false
+    comingsoon: false
   },
   getters: {
     isAuth: state => {
@@ -88,9 +90,9 @@ export default new Vuex.Store({
     _stop_loading(state) {
       state.isLoading = false
     },
-      _set_comming(state) {
-        state.comingsoon = state
-      },
+    _set_comming(state) {
+      state.comingsoon = state
+    },
     SET_BASEURL(state, payload) {
       state.baseURL = payload
     }

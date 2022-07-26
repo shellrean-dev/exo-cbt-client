@@ -12,6 +12,9 @@
                         <b-form-checkbox v-model="ujian.value.reset" switch :value="true" :disabled="isLoading">
                             Aktifkan reset login peserta
                         </b-form-checkbox>
+                        <b-form-checkbox v-model="ujian.value.autoblock" switch :value="true" :disabled="isLoading">
+                            Aktifkan auto block peserta tab in tab
+                        </b-form-checkbox>
                         <div class="form-group mt-4">
                             <label>Text Welcome / Peraturan Ujian</label>
                             <ckeditor v-model="ujian.value.text_welcome"  type="inline" :disabled="isLoading"></ckeditor>

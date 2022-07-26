@@ -183,8 +183,15 @@
         </li>
         <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'system.setting' }"
-          :class="[currentPage.includes('ksystem.setting') ? activeClass : '']">
+          :class="[currentPage.includes('system.setting') ? activeClass : '']">
             <i class="mr-3 flaticon2-drop"></i>Setting
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-title">Menu sistem</li>
+        <li class="c-sidebar-nav-item" v-if="user.role != 'guru'">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'backup.data' }"
+          :class="[currentPage.includes('backup.data') ? activeClass : '']">
+            <i class="mr-3 flaticon2-drop"></i>Backup & Restore
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">

@@ -98,6 +98,10 @@
                                             <td>Sesi default</td>
                                             <td>{{ row.item.sesi }}</td>
                                         </tr>
+                                        <tr v-if="row.item.status != 1">
+                                            <td>Block reason</td>
+                                            <td>{{ row.item.block_reason }}</td>
+                                        </tr>
                                 	</table>
                                 	</div>
                                 </b-card>

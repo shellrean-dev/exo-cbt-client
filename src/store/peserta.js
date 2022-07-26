@@ -38,7 +38,8 @@ const mutations = {
             jurusan_id: payload.jurusan_id,
             sesi: payload.sesi,
             agama_id: payload.agama_id,
-            status: payload.status
+            status: payload.status,
+            block_reason: payload.block_reason
         }
     },
     CLEAR_FORM(state) {
