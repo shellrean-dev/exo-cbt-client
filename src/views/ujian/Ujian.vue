@@ -83,6 +83,10 @@
 													</div>
 												</td>
 											</tr>
+                                            <tr>
+                                                <td>Minimum pengerjaan</td>
+                                                <td>{{ row.item.min_test > 0 ? row.item.min_test+' menit' : 'Tidak di set' }}</td>
+                                            </tr>
                                         	<tr>
                                         		<td>Setting</td>
                                         		<td>
@@ -231,6 +235,19 @@
 			<div class="text-center mb-3">
 				<button class="btn btn-primary" @click="advance = !advance">{{ advance ? 'Less' : 'More'}} setting</button>
 			</div>
+            <div class="form-gorup mb-5" v-if="advance">
+                <label>Minimum pengerjaan (menit)</label>
+                <div class="input-group">
+                    <div class="input-group-prepend" v-show="data.min_test > 0">
+                        <button class="btn btn-outline-secondary" type="button" @click="data.min_test -= 1"><b>-</b></button>
+                    </div>
+                    <input inputId="durasi" type="number" class="form-control" :class="{ 'is-invalid' : errors.min_test }" name="" placeholder="Menit" v-model.number="data.min_test">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button" @click="data.min_test += 1"><b>+</b></button>
+                    </div>
+                </div>
+                <div class="invalid-feedback" v-if="errors.lama">{{ errors.lama[0] }}</div>
+            </div>
 		    <div class="row" v-if="advance">
 		    	<div class="col-md-4">
 		    		<div class="form-group">
@@ -397,6 +414,7 @@ export default {
 				server_id: '',
 				alias: '',
 				event_id: '',
+                min_test: 0,
 				setting: {
 					acak_opsi: false,
 					acak_soal: false,
@@ -510,7 +528,8 @@ export default {
 						event_id: this.data.event_id,
 						setting: this.data.setting,
 						mulai_sesi: this.data.mulai_sesi,
-						view_result: this.data.view_result == 1 ? 1 : 0
+						view_result: this.data.view_result == 1 ? 1 : 0,
+                        min_test: this.data.min_test
 					})
 
 					this.$bvToast.toast('Jadwal berhasil ditambahkan.', successToas())
@@ -568,6 +587,7 @@ export default {
 				''
 			],
 			this.view_result = 0
+            this.data.min_test = 0
 		},
 		seterStatus(id,status) {
 			this.setStatus({
@@ -632,6 +652,7 @@ export default {
 				this.update = id,
 				this.data.mulai_sesi = provider.mulai_sesi
 				this.data.view_result = provider.view_result
+                this.data.min_test = provider.min_test
 
 				this.$bvModal.show('modal-scoped')
 			} catch (error) {

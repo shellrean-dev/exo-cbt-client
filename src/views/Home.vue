@@ -6,6 +6,35 @@
           <div class="row"
           v-if="enable_socket === 'oke'"
           >
+            <div class="col-md-12">
+              <b-card no-body class="mb-1">
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                  <b-button block v-b-toggle.accordion-2 variant="success">Topologi</b-button>
+                </b-card-header>
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                  <b-button block v-b-toggle.accordion-1 variant="success">From developer</b-button>
+                </b-card-header>
+                <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+                  <b-card-body>
+                    <img src="/img/topologi.png" style="max-width: 400px; width: 100%"/>
+                  </b-card-body>
+                </b-collapse>
+                <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel">
+                  <b-card-body>
+                    <p><strong>Anda tidak boleh: </strong><br>
+                      <ul>
+                        <li>Menghapus setiap pemberitahuan hak cipta, merek dagang atau pemeberitahuan hak milik lainnya yang terkandung dalam Aplikasi;</li>
+                        <li>Menyalin, memodifikasi, mengadaptasi, menerjemahkan, membuat karya turunan dari, mendistribusikan, memberikan lisensi, menjual, mengalihkan, menampilkan di muka umum sebagaian maupun seluruhnya, merekayasa balik (reverse engineer), mentransmisikan, memindahkan, menyiarkan, menguraikan, atau membongkar bagian manapun dari atau dengan cara lain mengeksploitasi Aplikasi.</li>
+                        <li>Memberikan lisensi, mensublisensikan, menjual, menjual kembali, memindahkan, mengalihkan, mendistrubusikan atau mengeksploitasi secara komersial atau membuat tersedia kepada pihak lain Aplikasi.</li>
+                        <li>Menggunakan dan/atau mengakses secara tidak resmi Aplikasi untuk (a) merusak, melemahkan atau membahayakan setiap aspek dari Aplikasi atau sisten dan jaringan.</li>
+                      </ul>
+                      <strong>Batasan Tanggung Jawab Kami</strong> <br>
+                      Kami menyediakan Aplikasi sebagaimana adanya. Kami tidak berkewajiban untuk mengawasi akses atau penggunaan Anda atas Aplikasi. Namun, Kami tetap melakukan pengawasan untuk tujuan memastikan kelancaran penggunaan Aplikasi dan untuk memastikan kepatuhan terhadap Ketentuan Penggunaan ini.
+                    </p>
+                  </b-card-body>
+                </b-collapse>
+              </b-card>
+            </div>
             <div class="col-md-6">
               <div class="card">
                 <div class="card-header">
