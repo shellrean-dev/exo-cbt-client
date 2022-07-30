@@ -43,6 +43,13 @@
 				<option value="0">Tidak aktif</option>
 			</select>
 		</div>
+		<div class="form-group">
+			<label>Anti-block</label>
+			<select class="form-control" v-model="peserta.antiblock">
+				<option :value="false">Tidak aktif</option>
+				<option :value="true">Aktif</option>
+			</select>
+		</div>
 		<div class="form-group" v-show="peserta.status == '0'">
 			<label>Alasan block (Optional)</label>
 			<input type="text" class="form-control" placeholder="Alasan block" v-model="peserta.block_reason">

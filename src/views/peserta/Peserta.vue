@@ -102,6 +102,10 @@
                                             <td>Block reason</td>
                                             <td>{{ row.item.block_reason }}</td>
                                         </tr>
+                                        <tr>
+                                            <td>Anti Block</td>
+                                            <td>{{ row.item.antiblock? 'Yes' : 'No' }}</td>
+                                        </tr>
                                 	</table>
                                 	</div>
                                 </b-card>
