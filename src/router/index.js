@@ -25,6 +25,7 @@ const AddPeserta = () => import( '@/views/peserta/Add')
 const EditPeserta = () => import( '@/views/peserta/Edit')
 const UploadPeserta = () => import( '@/views/peserta/Upload')
 const KartuPeserta = () => import( '@/views/peserta/Kartu')
+const BlockedPeserta = () => import( '@/views/peserta/BlockedPeserta')
 
 import MatpelIndex from '@/views/matpel/Index'
 const DataMatpel = () => import( '@/views/matpel/Matpel')
@@ -210,8 +211,14 @@ const routes = [
         name: 'peserta.kartu',
         component: KartuPeserta,
         meta: { title: 'Kartu peserta' }
+      },
+      {
+        path: 'blocked',
+        name: 'peserta.blocked',
+        component: BlockedPeserta,
+        meta: { title: 'Blocked peserta '}
       }
-    ]
+    ],
   },
   {
     path: '/matpel',

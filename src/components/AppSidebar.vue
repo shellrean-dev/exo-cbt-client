@@ -130,6 +130,13 @@
             Reset login peserta
           </router-link>
         </li>
+        <li class="c-sidebar-nav-item">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.blocked' }"
+          :class="[currentPage.includes('peserta.blocked') ? activeClass : '']">
+            <i class="mr-3 flaticon2-drop"></i>
+            Blocked peserta
+          </router-link>
+        </li>
         <li class="c-sidebar-nav-title">Menu pengolahan</li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
           <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">

@@ -3,6 +3,7 @@ import $axios from '@/services/api.js'
 const state = () => ({
     pesertas: [],
     peserta_login: [],
+    blocked_pesertas: [],
     peserta: {
         no_ujian: '',
         nama: '',
@@ -24,6 +25,9 @@ const mutations = {
     },
     ASSIGN_PESERTA_LOGIN(state, payload) {
         state.peserta_login = payload
+    },
+    ASSIGN_PESERTA_BLOCKED(state, payload) {
+        state.blocked_pesertas = payload
     },
     SET_PAGE(state, payload) {
         state.page = payload
@@ -226,6 +230,37 @@ const actions = {
                 commit('SET_LOADING', false, { root: true })
                 reject(error.response.data)
             }
+        })
+    },
+    getPesertasBlocked({ commit }) {
+        commit('SET_LOADING',true, { root: true })
+
+        return new Promise(( resolve, reject ) => {
+            $axios.get(`pesertas/status-blocked`)
+            .then((response) => {
+                commit('ASSIGN_PESERTA_BLOCKED', response.data.data)
+                commit('SET_LOADING',false, { root: true })
+                resolve(response.data)
+            })
+            .catch((error) => {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            })
+        })
+    },
+    unblockPeserta({ commit }, payload) {
+        commit('SET_LOADING',true, { root: true })
+
+        return new Promise(( resolve, reject ) => {
+            $axios.delete(`pesertas/unblock?peserta_id=${payload}`)
+            .then((response) => {
+                commit('SET_LOADING',false, { root: true })
+                resolve(response.data)
+            })
+            .catch((error) => {
+                commit('SET_LOADING',false, { root: true })
+                reject(error.response.data)
+            })
         })
     }
 }
