@@ -15,6 +15,9 @@
                         <b-form-checkbox v-model="ujian.value.autoblock" switch :value="true" :disabled="isLoading">
                             Aktifkan auto block peserta tab in tab
                         </b-form-checkbox>
+                        <b-form-checkbox v-model="ujian.value.only_fullscreen" switch :value="true" :disabled="isLoading">
+                            Hanya izinkan saat full-screen
+                        </b-form-checkbox>
                         <div class="form-group mt-4">
                             <label>Text Welcome / Peraturan Ujian</label>
                             <ckeditor v-model="ujian.value.text_welcome"  type="inline" :disabled="isLoading"></ckeditor>

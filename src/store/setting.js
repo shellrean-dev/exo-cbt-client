@@ -36,7 +36,8 @@ const mutations = {
                 autoblock: payload.value.autoblock,
                 reset: payload.value.reset,
                 text_welcome: payload.value.text_welcome,
-                text_finish: payload.value.text_finish
+                text_finish: payload.value.text_finish,
+                only_fullscreen: payload.value.only_fullscreen
             },
             type: 'general'
         }
