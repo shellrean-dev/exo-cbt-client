@@ -59,6 +59,7 @@
                     Logo instansi
                 </div>
                 <div class="card-body">
+                    
                     <div class="d-flex mb-3">
                         <img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-height: 66px">
                     </div>
@@ -83,6 +84,40 @@
                 </div>
                 <div class="card-footer"></div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    Header instansi
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="form-group" v-for="line,index in lines">
+                            <label for="">Text Line (html tag allow)- {{ index+1 }}</label>
+                            <input type="text" v-model="lines[index]" class="form-control form-control-sm">
+                        </div>
+                        <button class="btn btn-sm btn-secondary mr-1"  @click="() => lines.pop()">Hapus line</button>
+                        <button class="btn btn-sm btn-primary" @click="() => lines.push('')">Tambah line</button>
+                    </div>
+                    <hr>
+                    <div class="d-flex">
+                        <div style="width: 100px">
+                            <img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-width: 100px" alt="Logo">
+                        </div>
+                        <div class="flex-fill text-center">
+                            <div v-for="line in lines" v-html="line"></div>
+                        </div>
+                        <div style="width: 100px"></div>
+                    </div>
+                    <hr style="height:2px;border:none;color:#333;background-color:#333;margin-bottom: 1px;">
+                    <hr style="height:1px;border:none;color:#333;background-color:#333;margin-top: 0;">
+                </div>
+                <div class="card-footer">
+                    <div class="form-group">
+                        <b-button variant="primary" @click="storeKopHeader" :disabled="isLoading">
+                            <i class="cil-save"></i> {{ isLoading ? 'Processing..' : 'Simpan' }}
+                        </b-button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -104,7 +139,14 @@ export default {
                 kepala_sekolah: '',
                 nip_kepsek: '',
                 tingkat: ''
-            }
+            },
+            lines: [
+                "<small>YAYASAN EXTRAORDINARY CBT SHELLREAN</small>",
+                "<small>(EXO-CBT) PROVINSI DKI JAKARTA</small>",
+                "<strong>SMK NEGERI NUSANTARA</strong>",
+                "<small>STATUS AKREDITASI: A</small>",
+                "<em><small>Alamat: Jl. Nusantara A1, DKI Jakarta</small></em>"
+            ]
         }
     },
     computed: {
@@ -112,7 +154,7 @@ export default {
         ...mapState('setting', { sekolah: state => state.set_sekolah })
     },
     methods: {
-        ...mapActions('setting',['getSettingSekolah','storeSettingSekolah', 'changeLogoSekolah']),
+        ...mapActions('setting',['getSettingSekolah','storeSettingSekolah', 'changeLogoSekolah','getSettingHeaderKop', 'setSettingHeaderKop']),
         changeData(provider) {
             this.data = {
                 logo: provider.value.logo,
@@ -128,7 +170,18 @@ export default {
             try {
                 await this.storeSettingSekolah(this.data)
                 this.getSettingSekolah()
-                this.$bvToast.toast('Data sekolah berhasil disimpan', successToas())
+                this.$bvToast.toast('Data instansi berhasil disimpan', successToas())
+            } catch (error) {
+                this.$bvToast.toast(error.message, errorToas())
+            }
+        },
+        async storeKopHeader() {
+            try {
+                this.$store.commit('setting/ASSIGN_SETTING_HEADER_KOP', {
+                    value: JSON.stringify(this.lines)
+                })
+                this.setSettingHeaderKop()
+                this.$bvToast.toast('Kop instansi berhasil disimpan', successToas())
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
@@ -151,6 +204,12 @@ export default {
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
+        },
+        async parseHeaderKop(header) {
+            let data = JSON.parse(header.value == null || header.value == '' ? '[]' : header.value)
+            if(data.length > 1) {
+                this.lines = data
+            }
         }
     },
     async created() {
@@ -158,6 +217,10 @@ export default {
             let provider = await this.getSettingSekolah()
             if(provider) {
                 this.changeData(provider)
+            }
+            let kopHeader = await this.getSettingHeaderKop()
+            if(kopHeader) {
+                this.parseHeaderKop(kopHeader.data)
             }
         } catch (error) {
             this.$bvToast.toast(error.message, errorToas())
