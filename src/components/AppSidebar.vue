@@ -71,16 +71,6 @@
                 <span class="c-sidebar-nav-icon"></span> Standard
               </router-link>
             </li>
-            <li class="c-sidebar-nav-item">
-              <span class="c-sidebar-nav-link">
-                <span class="c-sidebar-nav-icon"></span> Adaptif <span class="badge badge-info">Comming soon</span>
-              </span>
-            </li>
-            <li class="c-sidebar-nav-item">
-              <span class="c-sidebar-nav-link">
-                <span class="c-sidebar-nav-icon"></span> Stream <span class="badge badge-info">Comming soon</span>
-              </span>
-            </li>
           </ul>
         </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" v-if="user.role != 'guru'">

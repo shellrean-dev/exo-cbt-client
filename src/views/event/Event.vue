@@ -83,9 +83,10 @@
 												<td>
 													<b-button variant="info text-left" size="sm" class="mr-1" @click="aturSesi(ujian.id,ujian.alias)"><i class="flaticon-clock-2"></i> Atur sesi</b-button>
 													<b-button variant="outline-success text-left" size="sm" class="mr-1" @click="importSesi(ujian.id,ujian.alias)"><i class="flaticon-upload-1"></i> Import sesi</b-button>
-													<b-button size="sm" variant="outline-success text-left" class="mr-1" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
+													<!-- <b-button size="sm" variant="outline-success text-left" class="mr-1" @click="curr_id = ujian.id; $bvModal.show('download-absensi');" :disabled="isLoading">
 														Download absensi
-													</b-button>
+													</b-button> -->
+													<b-button variant="success text-left" size="sm" class="mr-1" :to="{ name: 'event.absensi', params: { id: ujian.id, event_id: row.item.id }}">Absensi</b-button>
 													<b-button size="sm" @click="_summarizeEvent(ujian.id)" variant="outline-danger text-left" :disabled="isLoading">
 														Rangkuman
 													</b-button>

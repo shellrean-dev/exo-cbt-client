@@ -62,6 +62,7 @@ export default {
       { key: 'no', label: '#' },
       { key: 'no_ujian', label: 'No ujian' },
       { key: 'nama_peserta', label: 'Nama peserta' },
+      { key: 'block_reason', label: 'Alasan block' },
       { key: 'actions', label: 'Aksi' }
     ],
     selected: []

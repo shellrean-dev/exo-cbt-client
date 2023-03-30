@@ -8,6 +8,17 @@
                 </div>
                 <div class="card-body back" id="printSoal">
                 	<div class="paper">
+						<div class="d-flex">
+							<div style="width: 100px">
+								<img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-width: 100px" alt="Logo">
+							</div>
+							<div class="flex-fill text-center">
+								<div v-for="line in lines" v-html="line"></div>
+							</div>
+							<div style="width: 100px"></div>
+							</div>
+							<hr style="height:2px;border:none;color:#333;background-color:#333;margin-bottom: 1px;">
+							<hr style="height:1px;border:none;color:#333;background-color:#333;margin-top: 0;">
                 		<div class="table-responsive-md">
                 		<table class="table table-sm">
 							<tr v-for="(soal, index) in soals" :key="soal.id">
@@ -52,14 +63,23 @@
 
 	export default {
 		name: 'SoalBanksoal',
+		data() {
+			return {
+				lines: []
+			}
+		},
 		components: {
 			StarFillineYellow
 		},
 		created() {
 			this.getAllSoalPaper()
+			this.getKopHeader()
 		},
 		computed: {
 	        ...mapGetters(['isLoading']),
+			...mapState('setting',{
+				sekolah: state => state.set_sekolah,
+				}),
 			...mapState('soal', {
 	            soals: state => state.allSoals
 			}),
@@ -79,6 +99,7 @@
 		},
 		methods: {
 			...mapActions('soal',['getSoals','getAllSoal','removeSoal']),
+			...mapActions('setting', ['getSettingHeaderKop']),
 			getAllSoalPaper() {
 				this.getAllSoal({ banksoal_id: this.$route.params.banksoal_id })
 	            .then(() => {
@@ -90,7 +111,20 @@
 			},
 			print() {
 	            this.$htmlToPaper('printSoal');
-	        }
+	        },
+			async getKopHeader() {
+				try {
+					let network = await this.getSettingHeaderKop()
+					if(network.data) {
+					let data = JSON.parse(network.data.value == null || network.data.value == '' ? '[]' : network.data.value)
+						if(data.length > 1) {
+							this.lines = data
+						}
+					}
+				} catch (error) {
+					this.$bvToast.toast(error.message, errorToas())
+				}
+			}
 		}
 	}
 </script>

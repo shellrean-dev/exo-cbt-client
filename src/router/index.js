@@ -66,6 +66,7 @@ import EventIndex from '@/views/event/Index'
 const BeritaAcara = () => import('@/views/event/BeritaAcara')
 const DataEvent = () => import('@/views/event/Event')
 const EventPeserta = () => import('@/views/event/KartuPeserta');
+const Absensi = () => import('@/views/event/Absensi')
 
 import KelolaIndex from '@/views/kelola/Index'
 const KoreksiEsay = () => import('@/views/kelola/koreksi/KoreksiEsayIndex')
@@ -422,6 +423,12 @@ const routes = [
         name: 'ujian.event.peserta',
         component: EventPeserta,
         meta: { title: 'Kartu Event Peserta' }
+      },
+      {
+        path: ':event_id/:id/absensi',
+        name: 'event.absensi',
+        component: Absensi,
+        meta: { title: 'Absensi' }
       }
     ]
   },

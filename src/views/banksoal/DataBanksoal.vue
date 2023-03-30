@@ -80,7 +80,7 @@
                                                 <td width="150px">PG</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
-                                                        <span>{{ row.item.jumlah_soal }}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda }} </b-badge>
+                                                        <span>Akan tampil: {{ row.item.jumlah_soal }} diinput: {{ row.item.pg_inputted }}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda }} </b-badge>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -88,7 +88,7 @@
                                                 <td>PG Kompleks</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
-                                                        <span>{{ row.item.jumlah_soal_ganda_kompleks}}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda_komplek }} </b-badge>
+                                                        <span>Akan tampil: {{ row.item.jumlah_soal_ganda_kompleks}} diinput: {{ row.item.pg_komplek_inputted }}</span><b-badge variant="success">{{ row.item.persen.pilihan_ganda_komplek }} </b-badge>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -96,7 +96,7 @@
                                                 <td>Listening</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
-                                                        <span>{{ row.item.jumlah_soal_listening }}</span><b-badge variant="success">{{ row.item.persen.listening }} </b-badge>
+                                                        <span>Akan tampil: {{ row.item.jumlah_soal_listening }} diinput: {{ row.item.listening_inputted }}</span><b-badge variant="success">{{ row.item.persen.listening }} </b-badge>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -104,7 +104,7 @@
                                                 <td>Menjodohkan</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
-                                                        <span>{{ row.item.jumlah_menjodohkan }}</span><b-badge variant="success">{{ row.item.persen.menjodohkan }} </b-badge>
+                                                        <span>Akan tampil: {{ row.item.jumlah_menjodohkan }} diinput: {{ row.item.menjodohkan_inputted }}</span><b-badge variant="success">{{ row.item.persen.menjodohkan }} </b-badge>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -112,7 +112,7 @@
                                             <td>Mengurutkan</td>
                                             <td>
                                               <div class="d-flex justify-content-between">
-                                                <span>{{ row.item.jumlah_mengurutkan }}</span><b-badge variant="success">{{ row.item.persen.mengurutkan }} </b-badge>
+                                                <span>Akan tampil: {{ row.item.jumlah_mengurutkan }} diinput: {{ row.item.urutan_inputted }}</span><b-badge variant="success">{{ row.item.persen.mengurutkan }} </b-badge>
                                               </div>
                                             </td>
                                           </tr>
@@ -120,7 +120,7 @@
                                                 <td>Isian Singkat</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
-                                                        <span>{{ row.item.jumlah_isian_singkat }}</span><b-badge variant="success">{{ row.item.persen.isian_singkat }} </b-badge>
+                                                        <span>Akan tampil: {{ row.item.jumlah_isian_singkat }} diinput: {{row.item.isian_singkat_inputted}}</span><b-badge variant="success">{{ row.item.persen.isian_singkat }} </b-badge>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -128,7 +128,7 @@
                                                 <td>Uraian</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
-                                                        <span>{{ row.item.jumlah_soal_esay }}</span><b-badge variant="success">{{ row.item.persen.esay }} </b-badge>
+                                                        <span>Akan tampil: {{ row.item.jumlah_soal_esay }} diinput: {{row.item.esay_inputted}}</span><b-badge variant="success">{{ row.item.persen.esay }} </b-badge>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -136,7 +136,7 @@
                                             <td>Benar/salah</td>
                                             <td>
                                               <div class="d-flex justify-content-between">
-                                                <span>{{ row.item.jumlah_benar_salah }}</span><b-badge variant="success">{{ row.item.persen.benar_salah }} </b-badge>
+                                                <span>Akan tampil: {{ row.item.jumlah_benar_salah }} diinput: {{ row.item.benar_salah_inputted }}</span><b-badge variant="success">{{ row.item.persen.benar_salah }} </b-badge>
                                               </div>
                                             </td>
                                           </tr>
@@ -144,7 +144,7 @@
                                             <td>Setuju/tidak</td>
                                             <td>
                                               <div class="d-flex justify-content-between">
-                                                <span>{{ row.item.jumlah_setuju_tidak }}</span><b-badge variant="success">{{ row.item.persen.setuju_tidak }} </b-badge>
+                                                <span>Akan tampil: {{ row.item.jumlah_setuju_tidak }} diinput: {{ row.item.setuju_tidak_inputted }}</span><b-badge variant="success">{{ row.item.persen.setuju_tidak }} </b-badge>
                                               </div>
                                             </td>
                                           </tr>

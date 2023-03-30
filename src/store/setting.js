@@ -7,6 +7,7 @@ const state = () => ({
     set_ujian: {},
     set_token: {},
     set_public: {},
+    set_header_kop: {},
     auth: {}
 })
 
@@ -36,7 +37,8 @@ const mutations = {
                 autoblock: payload.value.autoblock,
                 reset: payload.value.reset,
                 text_welcome: payload.value.text_welcome,
-                text_finish: payload.value.text_finish
+                text_finish: payload.value.text_finish,
+                only_fullscreen: payload.value.only_fullscreen
             },
             type: 'general'
         }
@@ -50,6 +52,13 @@ const mutations = {
     ASSIGN_SETTING_TOKEN(state, payload) {
         state.set_token = {
             name: 'token',
+            value: payload.value,
+            type: 'general'
+        }
+    },
+    ASSIGN_SETTING_HEADER_KOP(state, payload) {
+        state.set_header_kop = {
+            name: 'header_kop',
             value: payload.value,
             type: 'general'
         }
@@ -216,6 +225,35 @@ const actions = {
         return new Promise(async(resolve, reject) => {
             try {
                 let network = await $axios.post('settings', state.set_token)
+
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    getSettingHeaderKop({ commit }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.get(`settings?setting=header_kop`)
+
+                commit('ASSIGN_SETTING_HEADER_KOP', network.data.data)
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
+    setSettingHeaderKop({ commit, state }) {
+        commit('SET_LOADING', true, { root: true })
+        return new Promise(async(resolve, reject) => {
+            try {
+                let network = await $axios.post('settings', state.set_header_kop)
 
                 commit('SET_LOADING', false, { root: true })
                 resolve(network.data)
