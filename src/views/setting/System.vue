@@ -20,6 +20,13 @@
               </span>
             </div>
           </router-link>
+            <router-link :to="{ name: 'user.agent.whitelist' }" class="list-group-item list-group-item-action">
+                <div class="d-flex justify-content-between">
+              <span>
+                <i class="flaticon-computer"></i> User Agent Whitelist
+              </span>
+                </div>
+            </router-link>
         </div>
       <div class="card-footer">
       </div>

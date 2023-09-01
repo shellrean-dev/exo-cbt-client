@@ -13,6 +13,7 @@ const SetAirlock = () => import( '@/views/setting/Airlock')
 const SetG2fk = () => import( '@/views/setting/G2fk')
 const SetUjian = () => import( '@/views/setting/Ujian')
 const SetToken = () => import( '@/views/setting/Token')
+const SetUAWhitelist = () => import('@/views/setting/UAWhitelist.vue')
 
 import JurusanIndex from '@/views/jurusan/Index'
 const DataJurusan = () => import( '@/views/jurusan/Jurusan')
@@ -89,6 +90,7 @@ import AgamaIndex from '@/views/agama/Index'
 const DataAgama = () => import('@/views/agama/Agama')
 
 import BackupIndex from '@/views/backup/Index'
+import UAWhitelist from "@/views/setting/UAWhitelist.vue";
 const DataBackup = () => import('@/views/backup/Backup')
 
 Vue.use(VueRouter)
@@ -150,6 +152,11 @@ const routes = [
         name: 'system.token',
         component: SetToken,
         meta: { title: 'Setting token' }
+      },
+      {
+        path: 'user-agent-whitelist',
+        name: 'user.agent.whitelist',
+        component: UAWhitelist
       }
     ]
   },
@@ -544,7 +551,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

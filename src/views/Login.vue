@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <div class="fixed-bottom text-center text-muted bg-light">&copy; 2019 - {{ year }} <a>Extraordinary-CBT {{ version }}</a></div>
+    <div class="fixed-bottom text-center text-muted bg-light">&copy; 2019 - {{ year }} <a>Extraordinary-CBT {{ app_version }}</a></div>
   </div>
 </template>
 <script>
@@ -84,7 +84,6 @@ export default {
       passwordType: 'password',
       year: '',
       airlock: false,
-      version: process.env.VUE_APP_VERSION
     }
   },
   async created() {
@@ -101,7 +100,8 @@ export default {
     ...mapGetters(['isAuth','isLoading','baseURL']),
     ...mapState('setting', {
       auth: state => state.auth,
-      set_public: state => state.set_public
+      set_public: state => state.set_public,
+        app_version: state => state.app_version
     }),
     ...mapState(['errors'])
   },

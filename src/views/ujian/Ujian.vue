@@ -507,7 +507,9 @@ export default {
 		async postUjian() {
 			if(this.update != 0) {
 				try {
+          this.data.view_result = this.data.view_result ? this.data.view_result : 0
 					await this.updateUjian({ id: this.update, data: this.data })
+
 					this.getUjians({ perPage: this.perPage })
 					this.$bvModal.hide('modal-scoped')
 					this.update = 0
