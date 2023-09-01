@@ -566,6 +566,20 @@ const actions = {
 			}
 		})
 	},
+    getLinkExcelCapaianSiswaMC({ commit }, payload) {
+        return new Promise(async(resolve, reject) => {
+            try {
+                commit('SET_LOADING', true, { root: true })
+                let network = await $axios.get(`ujians/${payload.ujian}/banksoal/${payload.banksoal}/capaian-siswa-mc/link?q=${payload.jurusan}&group=${payload.group}`)
+
+                commit('SET_LOADING', false, { root: true })
+                resolve(network.data)
+            } catch (error) {
+                commit('SET_LOADING', false, { root: true })
+                reject(error.response.data)
+            }
+        })
+    },
 	getLinkExcelHasilUjian({ commit }, payload) {
 		return new Promise(async(resolve, reject) => {
 			try {

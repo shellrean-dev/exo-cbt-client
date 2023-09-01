@@ -32,9 +32,12 @@
                     <div class="table-responsive-md">
                         <b-table striped hover bordered small :fields="fields" :items="banksoals" show-empty>
                             <template v-slot:cell(actions)="row">
-                                <b-button :disabled="isLoading" variant="success" size="sm" @click="banksoal_id = row.item.id; $bvModal.show('modal-scoped-download-capaian-ujian')">
-                                    <i class="flaticon-download"></i> Download
+                                <b-button :disabled="isLoading" class="mr-2" variant="success" size="sm" @click="banksoal_id = row.item.id; $bvModal.show('modal-scoped-download-capaian-ujian')">
+                                    <i class="flaticon-download"></i> Download format 1
                                 </b-button>
+                              <b-button :disabled="isLoading" variant="success" size="sm" @click="banksoal_id = row.item.id; $bvModal.show('modal-scoped-download-capaian-ujian-mc')">
+                                <i class="flaticon-download"></i> Download format 2 (MC Only)
+                              </b-button>
                             </template>
                         </b-table>
                     </div>
@@ -84,6 +87,52 @@
 		      </b-button>
 		    </template>
 		</b-modal>
+
+
+
+      <b-modal id="modal-scoped-download-capaian-ujian-mc" hide-header>
+        <div class="mb-2">
+          <b-form-checkbox switch v-model="isGroup">Gunakan grup</b-form-checkbox>
+        </div>
+        <div class="row" v-if="isGroup">
+          <div class="col-12 col-md-6" v-if="isGroup">
+            <label><small>Grup</small></label>
+            <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2"><i class="flaticon-browser"></i></span>
+              </div>
+              <select class="custom-select" v-model="groupParent">
+                <option :value="gr.id" v-for="(gr, idx) in groupping" :key="idx">{{ gr.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-md-6" v-if="isGroup">
+            <label><small>Sub-grup</small></label>
+            <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3"><i class="flaticon-browser"></i></span>
+              </div>
+              <select class="custom-select" v-model="groupChild">
+                <option :value="gr.id" v-for="(gr, idx) in childs" :key="idx">{{ gr.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" v-if="!isGroup">
+          <label>Jurusan</label>
+          <v-select label="nama" :options="jurusans" multiple v-model="jurusan_download" :reduce="nama => nama.id"></v-select>
+        </div>
+        <template v-slot:modal-footer="{ cancel }">
+          <b-button size="sm" variant="primary"
+                    @click="downloadMC"
+                    :disabled="isLoading || ((jurusan_download == 0 || jurusan_download == '' || jurusan_download == null) && !isGroup)">
+            {{ isLoading ? 'Processing...' : 'Download' }}
+          </b-button>
+          <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
+            Cancel
+          </b-button>
+        </template>
+      </b-modal>
     </div>
 </template>
 <script>
@@ -146,7 +195,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions('ujian',['getAllUjians','getResultBanksoal', 'downloadExcel','getLinkExcelCapaianSiswa']),
+        ...mapActions('ujian',['getAllUjians','getResultBanksoal', 'downloadExcel','getLinkExcelCapaianSiswa', 'getLinkExcelCapaianSiswaMC']),
         ...mapActions('jurusan',['allJurusan']),
         ...mapActions('grup', ['getAllGroup']),
         capaian(jadwal, banksoal) {
@@ -203,7 +252,43 @@ export default {
             } catch (error) {
                 this.$bvToast.toast(error.message, errorToas())
             }
+        },
+      async downloadMC() {
+        if(!this.jadwal) {
+          this.$swal({
+            title: 'Hei!!',
+            text: "Pilih ujian terlebih dahulu",
+            icon: 'error',
+          })
+          return;
         }
+        try {
+          let group = 0;
+          let jurusan = 0;
+          if (this.isGroup) {
+            if (this.groupChild == 0) {
+              group = this.groupParent
+            } else {
+              group = this.groupChild
+            }
+            jurusan = ""
+          } else {
+            jurusan = this.jurusan_download.join(",")
+            group = ""
+          }
+
+          let provider = await this.getLinkExcelCapaianSiswaMC({
+            ujian: this.jadwal,
+            banksoal: this.banksoal_id,
+            jurusan: jurusan,
+            group: group
+          })
+
+          window.open(provider.data, '_self')
+        } catch (error) {
+          this.$bvToast.toast(error.message, errorToas())
+        }
+      }
     },
     async created() {
         try {
