@@ -4,16 +4,12 @@ import store from '@/store'
 
 const Home = () => import('@/views/Home')
 const Login = () => import('@/views/Login')
-const Oauth = () => import('@/views/Oauth')
 
 import SettingIndex from '@/views/setting/Index'
 const SetSekolah = () => import( '@/views/setting/Sekolah')
 const SetSystem = () => import( '@/views/setting/System')
-const SetAirlock = () => import( '@/views/setting/Airlock')
-const SetG2fk = () => import( '@/views/setting/G2fk')
 const SetUjian = () => import( '@/views/setting/Ujian')
 const SetToken = () => import( '@/views/setting/Token')
-const SetUAWhitelist = () => import('@/views/setting/UAWhitelist.vue')
 
 import JurusanIndex from '@/views/jurusan/Index'
 const DataJurusan = () => import( '@/views/jurusan/Jurusan')
@@ -102,11 +98,6 @@ const routes = [
     component: Login
   },
   {
-    path: '/oauth/:token',
-    name: 'oauth',
-    component: Oauth
-  },
-  {
     path: '/',
     name: 'home',
     component: Home,
@@ -128,18 +119,6 @@ const routes = [
         name: 'system.setting',
         component: SetSystem,
         meta: { title: 'Setting system' }
-      },
-      {
-        path: 'airlock',
-        name: 'system.airlock',
-        component: SetAirlock,
-        meta: { title: 'Setting airlock authentication' }
-      },
-      {
-        path: 'g2fa',
-        name: 'system.g2fa',
-        component: SetG2fk,
-        meta: { title: 'Setting google 2 factor authentication' }
       },
       {
         path: 'ujian',

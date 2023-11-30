@@ -107,7 +107,7 @@ export default {
         autoGrow_maxHeight: 600,
         extraPlugins: 'sourcedialog',
         allowedContent: true,
-        filebrowserUploadUrl: this.$store.state.baseURL+'/api/v1/file/upload?',
+        filebrowserUploadUrl: '/api/v1/file/upload?',
         fileTools_requestHeaders: {
           'Accept': 'application/json',
           'Authorization' : 'Bearer '+this.$store.state.token

@@ -10,7 +10,7 @@
                 	<div class="paper">
 						<div class="d-flex">
 							<div style="width: 100px">
-								<img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" style="max-width: 100px" alt="Logo">
+								<img v-if="typeof sekolah.value != 'undefined'" :src="sekolah.value.logo != '' ? sekolah.value.logo : '/admin-system/img/logo.jpg'" style="max-width: 100px" alt="Logo">
 							</div>
 							<div class="flex-fill text-center">
 								<div v-for="line in lines" v-html="line"></div>

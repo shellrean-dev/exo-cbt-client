@@ -24,12 +24,12 @@
                             <tr>
                                 <td width="50px">1</td>
                                 <td>Docx</td>
-                                <td><a :href="baseURL+'/download/format-input-soal-doc.docx'"> <i class="flaticon-download"></i> Download Docx format 1</a></td>
+                                <td><a :href="'/download/format-input-soal-doc.docx'"> <i class="flaticon-download"></i> Download Docx format 1</a></td>
                             </tr>
                             <tr>
                                 <td width="50px">2</td>
                                 <td>Docx | HTML Zip</td>
-                                <td><a :href="baseURL+'/download/format-input-soal-doc-2.docx'"><i class="flaticon-download"></i> Download Docx format 2</a></td>
+                                <td><a :href="'/download/format-input-soal-doc-2.docx'"><i class="flaticon-download"></i> Download Docx format 2</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -104,7 +104,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['isLoading','baseURL']),
+        ...mapGetters(['isLoading']),
         ...mapState('feature',['feature_info']),
         ...mapState('soal', {
             percent: state => state.uploadPercentage

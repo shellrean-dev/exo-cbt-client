@@ -310,7 +310,7 @@
                   <div class="form-group" v-if="direction != ''">
                     <label>File direction</label>
                     <div class="input-group">
-                      <audio-player :file="baseURL+'/storage/audio/'+direction"></audio-player>
+                      <audio-player :file="direction"></audio-player>
                       <b-button size="sm" variant="danger" class="btn-icon"
                                 @click="_removeDirection"><i class="flaticon-circle"></i></b-button>
                     </div>
@@ -318,7 +318,7 @@
                   <div class="form-group" v-if="audio != ''">
                     <label>File audio</label>
                     <div class="input-group">
-                      <audio-player :file="baseURL+'/storage/audio/'+audio"></audio-player>
+                      <audio-player :file="audio"></audio-player>
                       <b-button size="sm" variant="danger" class="btn-icon"
                                 @click="_removeAudio"><i class="flaticon-circle"></i></b-button>
                     </div>
@@ -338,10 +338,10 @@
                     </div>
                   </div>
                   <div>
-                    <img style="max-width:200px;" src="/img/layout/l-1.svg" v-show="layout == 1" />
-                    <img style="max-width:200px;" src="/img/layout/l-2.svg" v-show="layout == 2" />
-                    <img style="max-width:200px;" src="/img/layout/l-3.svg" v-show="layout == 3" />
-                    <img style="max-width:200px;" src="/img/layout/l-4.svg" v-show="layout == 4" />
+                    <img style="max-width:200px;" :src="'/admin-system/img/layout/l-1.svg'" v-show="layout == 1" />
+                    <img style="max-width:200px;" :src="'/admin-system/img/layout/l-2.svg'" v-show="layout == 2" />
+                    <img style="max-width:200px;" :src="'/admin-system/img/layout/l-3.svg'" v-show="layout == 3" />
+                    <img style="max-width:200px;" :src="'/admin-system/img/layout/l-4.svg'" v-show="layout == 4" />
                   </div>
                 </div>
               </div>
@@ -414,7 +414,7 @@ export default {
         autoGrow_maxHeight: 600,
         extraPlugins: 'sourcedialog',
         allowedContent: true,
-        filebrowserUploadUrl: this.$store.state.baseURL+'/api/v1/file/upload?',
+        filebrowserUploadUrl: '/api/v1/file/upload?',
         fileTools_requestHeaders: {
           'Accept': 'application/json',
           'Authorization' : 'Bearer '+this.$store.state.token
@@ -424,7 +424,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLoading','baseURL']),
+    ...mapGetters(['isLoading']),
     ...mapState(['errors']),
     ...mapState('banksoal',{
       banksoal: state => state.banksoal
@@ -451,7 +451,7 @@ export default {
       formData.append('image', file);
       formData.append('directory_id', this.banksoal.directory_id)
       const response = await $axios.post('directory/filemedia', formData);
-      return this.baseURL+'/storage/'+response.data.data.dirname+'/'+response.data.data.filename
+      return response.data.data.filename
     },
     _isDirectionEmpty() {
       return (this.direction == '' && this.tipe_soal == 3);
@@ -713,7 +713,7 @@ export default {
       this.jmlh_pilihan_listening = val.jumlah_pilihan_listening
       this._initEditor()
       this.getContentFilemedia(val.directory_id)
-      this.editorConfig.filebrowserUploadUrl = this.baseURL+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
+      this.editorConfig.filebrowserUploadUrl = '/api/v1/file/upload?directory_id='+this.banksoal.directory_id
       this.showEditor = true
     },
     direktory(val) {

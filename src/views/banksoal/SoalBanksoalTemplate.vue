@@ -6,8 +6,8 @@
           <div class="d-flex justify-content-between">
             <div>
               <router-link :to="{ name: 'banksoal.soal', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-              <a :href="baseURL+'/download/format-input-soal-pg.docx'" class="btn btn-primary btn-sm mr-1" download><i class="flaticon-download"></i> Download format PG</a>
-              <a :href="baseURL+'/download/format-input-soal-esay.docx'" class="btn btn-primary btn-sm" download><i class="flaticon-download"></i> Download format Esay</a>
+              <a :href="'/download/format-input-soal-pg.docx'" class="btn btn-primary btn-sm mr-1" download><i class="flaticon-download"></i> Download format PG</a>
+              <a :href="'/download/format-input-soal-esay.docx'" class="btn btn-primary btn-sm" download><i class="flaticon-download"></i> Download format Esay</a>
             </div>
             <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_soal_template_tabel')"><i class="flaticon-info"></i></button>
           </div>
@@ -92,7 +92,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLoading','baseURL']),
+    ...mapGetters(['isLoading']),
     ...mapState(['errors','token']),
     ...mapState('feature',['feature_info']),
     ...mapState('banksoal',{
@@ -136,7 +136,7 @@ export default {
   },
   watch: {
     banksoal(value) {
-      this.editorConfig.filebrowserUploadUrl = this.baseURL+'/api/v1/file/upload?directory_id='+this.banksoal.directory_id
+      this.editorConfig.filebrowserUploadUrl = '/api/v1/file/upload?directory_id='+this.banksoal.directory_id
       this.showEditor = true
     }
   }

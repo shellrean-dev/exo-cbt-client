@@ -38,10 +38,10 @@
 											{{ ((page-1)*contentDirectory.per_page) + row.index+1}}
 										</template>
 										<template v-slot:cell(view)="row">
-											<img :src="baseURL+'/storage/'+row.item.dirname+'/'+row.item.filename" class="img-thumbnail" style="max-width: 50px">
+											<img :src="row.item.filename" class="img-thumbnail" style="max-width: 50px">
 										</template>
 										<template v-slot:cell(link)="row">
-											<code>{{ baseURL+'/storage/'+row.item.dirname+'/'+row.item.filename }}</code>
+											<code>{{ row.item.filename }}</code>
 										</template>
 										<template v-slot:cell(actions)="row">
 											<b-button @click="removeFilemediaa(row.item.id)" variant="danger" size="sm" :disabled="isLoading" ><i class="flaticon2-trash"></i> Hapus</b-button>
@@ -106,7 +106,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['isLoading','baseURL']),
+		...mapGetters(['isLoading']),
 		...mapState('filemedia', {
 			contentDirectory: state => state.contentFilemedia
 		}),

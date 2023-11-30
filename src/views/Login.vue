@@ -9,7 +9,7 @@
                 <div>
                   <div class="d-flex align-items-center">
                     <div style="background-color: #fff" class="py-2 px-2 rounded mr-3 align-self-start border">
-                      <img :src="set_public.logo ? set_public.logo : '/img/logo.png'" style="max-height: 46px"/>
+                      <img :src="set_public.logo ? set_public.logo : '/admin-system/img/logo.png'" style="max-height: 46px"/>
                     </div>
                     <div >
                       <h4>{{ set_public.sekolah_name ? set_public.sekolah_name : 'Extraordinary-CBT Login' }}</h4>
@@ -46,7 +46,7 @@
                     <b-button :variant="isLoading ? 'secondary' : 'dark'" class="mr-1" block :disabled="isLoading" type="submit">
                       {{ isLoading ? 'Processing...' : 'Login' }}
                     </b-button>
-                    <a :href="baseURL+'/api/v1/login/sso'" class="btn btn-outline-dark" v-if="airlock">
+                    <a :href="'/api/v1/login/sso'" class="btn btn-outline-dark" v-if="airlock">
                       Dinasti Sign On
                     </a>
                     </form>
@@ -56,7 +56,7 @@
             </div>
             <div class="col-md-6 col-lg-8 h-100">
               <div class="row h-100 justify-content-center align-items-center  mx-auto">
-                <img src="/img/bg6.svg" class="d-none d-md-block" style="width: 100%; max-width:400px;">
+                <img :src="'/admin-system/img/bg9.svg'" class="d-none d-md-block" style="width: 100%; max-width:400px;">
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuth','isLoading','baseURL']),
+    ...mapGetters(['isAuth','isLoading']),
     ...mapState('setting', {
       auth: state => state.auth,
       set_public: state => state.set_public,

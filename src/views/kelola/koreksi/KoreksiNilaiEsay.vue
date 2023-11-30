@@ -118,6 +118,11 @@ export default {
             }
         }
     },
+    watch: {
+      page() {
+        this.getExistsByBanksoal(this.$route.params.banksoal)
+      }
+    },
     methods: {
         ...mapActions('ujian',['getExistsByBanksoal', 'submitNilaiEsay']),
         submitNilai(id) {

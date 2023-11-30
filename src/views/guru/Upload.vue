@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <router-link :to="{ name: 'guru.data' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-                    <a :href="baseURL+'/download/format-user-import.xlsx'" class="btn btn-primary btn-sm" download>
+                    <a :href="'/download/format-user-import.xlsx'" class="btn btn-primary btn-sm" download>
                         <i class="flaticon-download"></i> Download format
                     </a>
                 </div>
@@ -45,7 +45,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['isLoading','baseURL']),
+        ...mapGetters(['isLoading']),
         ...mapState('user', {
             percent: state => state.uploadPercentage
         })

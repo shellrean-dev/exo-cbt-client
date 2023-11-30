@@ -4,7 +4,7 @@
 			<div class="card">
 				<div class="card-header">
 					<router-link :to="{ name: 'peserta.data' }" class="btn btn-light btn-sm mr-1">Kembali</router-link>
-					<a :href="baseURL+'/download/format-peserta-import.xlsx'" class="btn btn-primary btn-sm" download>
+					<a :href="'/download/format-peserta-import.xlsx'" class="btn btn-primary btn-sm" download>
 						<i class="flaticon-download"></i> Download format
 					</a>
 				</div>
@@ -44,7 +44,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['isLoading','baseURL']),
+		...mapGetters(['isLoading']),
 		...mapState('peserta', {
 			percent: state => state.uploadPercentage
 		})

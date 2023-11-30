@@ -31,7 +31,7 @@ const $gateway = axios.create({
 $axios.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
-        config.url = store.state.baseURL+'/api/v1/' + config.url
+        config.url = '/api/v1/' + config.url
         return config;
     },
     function ( error ) {
@@ -42,7 +42,7 @@ $axios.interceptors.request.use (
 $v3.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
-        config.url = store.state.baseURL+'/api/v3/' + config.url
+        config.url = '/api/v3/' + config.url
         return config;
     },
     function ( error ) {
@@ -53,7 +53,7 @@ $v3.interceptors.request.use (
 $axios2.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
-        config.url = store.state.baseURL+'/api/v1/' + config.url
+        config.url = '/api/v1/' + config.url
         return config;
     },
     function ( error ) {
@@ -64,7 +64,7 @@ $axios2.interceptors.request.use (
 $gateway.interceptors.request.use (
     function ( config ) {
         config.headers.Authorization = 'Bearer '+store.state.token;
-        config.url = store.state.baseURL+'/api/gateway/' + config.url
+        config.url = '/api/gateway/' + config.url
         return config;
     },
     function ( error ) {

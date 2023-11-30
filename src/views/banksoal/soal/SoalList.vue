@@ -107,11 +107,11 @@
                   <b-card style="border:1px dashed #00f;">
                     <div v-if="row.item.direction != null" class="mb-3">
                       <strong>Direction</strong><br>
-                      <audio-player :file="baseURL+'/storage/audio/'+row.item.direction"></audio-player>
+                      <audio-player :file="row.item.direction"></audio-player>
                     </div>
                     <div v-html="row.item.pertanyaan"></div>
                     <div v-if="row.item.audio != null" class="mb-2">
-                      <audio-player :file="baseURL+'/storage/audio/'+row.item.audio"></audio-player>
+                      <audio-player :file="row.item.audio"></audio-player>
                     </div>
                     <table class="table" v-if="row.item.jawabans != ''">
                       <tr v-for="(jawab, index) in row.item.jawabans" :key="index">
@@ -246,7 +246,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLoading', 'baseURL']),
+    ...mapGetters(['isLoading']),
     ...mapState('feature',['feature_info']),
     ...mapState('soal', {
       soals: state => state.soals,

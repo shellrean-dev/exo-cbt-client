@@ -50,7 +50,7 @@
 						  <td style="width: 30px">
 						    <img 
 							v-if="typeof sekolah.value != 'undefined'" 
-							:src="sekolah.value.logo != '' ? baseURL+'/storage/'+sekolah.value.logo : '/img/logo.jpg'" 
+							:src="sekolah.value.logo != '' ? sekolah.value.logo : '/admin-system/img/logo.jpg'" 
 							style="max-height: 46px" height="40">
 						  </td>
 						  <td align="center">
@@ -145,7 +145,7 @@ export default {
   	...mapState('setting',{
       sekolah: state => state.set_sekolah
       }),
-  	...mapGetters(['isLoading','baseURL']),
+  	...mapGetters(['isLoading']),
   	...mapState('peserta', {
   	  pesertas: state => state.pesertas
   	}),

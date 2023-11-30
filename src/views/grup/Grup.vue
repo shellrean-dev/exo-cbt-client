@@ -206,7 +206,7 @@
             <button class="btn btn-success" type="button" :disabled="isLoading" @click="submitImportGroupMember">{{ isLoading ? 'Processing...' : 'Upload' }}</button>
           </div>
         </div>
-        <a :href="baseURL+`/download/format-group-member-import.xlsx`" download>Download format</a>
+        <a :href="`/download/format-group-member-import.xlsx`" download>Download format</a>
       </div>
       <template v-slot:modal-footer="{ cancel }">
         <b-button size="sm" variant="secondary" @click="cancel()" :disabled="isLoading">
@@ -255,7 +255,6 @@ export default {
     }
   },
   computed: {
-    ...mapState(['baseURL']),
     ...mapGetters(['isLoading']),
     ...mapState('feature',['feature_info']),
     ...mapState('grup', ['group','groups','members']),
