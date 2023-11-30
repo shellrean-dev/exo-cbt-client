@@ -38,7 +38,7 @@
 											{{ ((page-1)*contentDirectory.per_page) + row.index+1}}
 										</template>
 										<template v-slot:cell(view)="row">
-											<img :src="row.item.filename" class="img-thumbnail" style="max-width: 50px">
+											<img :src="row.item.path" class="img-thumbnail" style="max-width: 50px">
 										</template>
 										<template v-slot:cell(link)="row">
 											<code>{{ row.item.filename }}</code>
@@ -99,7 +99,7 @@ export default {
 			fields: [
                { key: 'no', label: '#'},
 			   { key: 'view', label: 'Gambar'},
-			   { key: 'link', label: 'Link' },
+			   { key: 'link', label: 'Filename' },
                { key: 'actions', label: 'Aksi' } 
 			],
 			selected: []

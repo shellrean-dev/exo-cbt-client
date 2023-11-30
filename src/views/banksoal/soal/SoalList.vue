@@ -7,7 +7,7 @@
             <div>
               <router-link :to="{ name: 'banksoal.data' }" class="btn btn-light btn-sm mr-1 mt-1">Kembali</router-link>
               <router-link :to="{ name: 'banksoal.soal.tambah', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah soal</router-link>
-              <router-link :to="{ name: 'banksoal.soal.tambah.bulk', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah soal bulk</router-link>
+              <!-- <router-link :to="{ name: 'banksoal.soal.tambah.bulk', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-primary mr-1 btn-sm mt-1">Tambah soal bulk</router-link> -->
             </div>
             <button class="btn-sm btn btn-white" title="Informasi" @click="featureInfo('page_soal_tabel')"><i class="flaticon-info"></i></button>
           </div>
@@ -26,9 +26,6 @@
               <router-link :to="{ name: 'banksoal.upload' }" class="btn float-right btn-outline-success btn-sm">
                 <i class="flaticon-upload-1"></i>
                 Import soal
-              </router-link>
-              <router-link :to="{ name: 'banksoal.soal.paste', params: { 'banksoal_id' : $route.params.banksoal_id } }" class="btn btn-outline-primary btn-sm  mx-1 float-right">
-                <i class="flaticon-file-2"></i> Paste soal
               </router-link>
             </div>
           </div>

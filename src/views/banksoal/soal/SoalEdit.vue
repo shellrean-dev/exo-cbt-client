@@ -447,7 +447,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('filemedia', ['getContentFilemedia','getDirectories','uploadFileAudio','getDirectory','addFilemedia']),
+    ...mapActions('filemedia', ['getDirectories','uploadFileAudio','getDirectory','addFilemedia']),
     ...mapActions('banksoal',['updateSoalBanksoal','getBanksoalById']),
     ...mapActions('soal', ['editSoalBanksoal']),
     ...mapMutations(['CLEAR_ERRORS','SET_LOADING']),
@@ -513,7 +513,6 @@ export default {
       formData.append('image',this.image)
       this.addFilemedia(formData)
         .then((resp) => {
-          this.getContentFilemedia(this.banksoal.directory_id)
           this.$bvToast.toast('Filemedia berhasil ditambahkan.', successToas())
         })
         .catch((err) => {
@@ -725,24 +724,16 @@ export default {
   },
   watch: {
     banksoal(val) {
-      this.jmlh_pilihan = val.jumlah_pilihan
-      this.jmlh_pilihan_listening = val.jumlah_pilihan_listening
-      this.getContentFilemedia(val.directory_id)
-      this.showEditor = true
-    },
-    data_soal() {
-      this._initEditor()
-    },
-    direktory(val) {
-      if(val != '') {
-        this.getContentFilemedia(val)
-        this.getContentFilemedia(val.directory_id)
-        this.editorConfig.filebrowserUploadUrl = '/api/v1/file/upload?directory_id='+this.banksoal.directory_id
+      if (typeof val.directory_id !== 'undefined') {
+        this.jmlh_pilihan = val.jumlah_pilihan
+        this.jmlh_pilihan_listening = val.jumlah_pilihan_listening
+
+        this.editorConfig.filebrowserUploadUrl = '/api/v1/file/upload?directory_id='+val.directory_id
         this.showEditor = true
       }
     },
-    page() {
-      this.getContentFilemedia(this.banksoal.directory_id)
+    data_soal() {
+      this._initEditor()
     },
     tipe_soal() {
       this._initEditor()
