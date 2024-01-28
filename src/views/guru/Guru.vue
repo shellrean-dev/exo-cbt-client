@@ -150,9 +150,10 @@ export default {
             },
             fields: [
               { key: 'no', label: '#', sortable: false },
-                { key: 'id', label: 'ID', sortable: true },
-                { key: 'name', label: 'Nama', sortable: true},
-                { key: 'email', label: 'Email', sortable: true},
+                { key: 'id', label: 'ID', sortable: false },
+              { key: 'role', label: 'Role', sortable: false},
+                { key: 'name', label: 'Nama', sortable: false},
+                { key: 'email', label: 'Email', sortable: false},
                 { key: 'actions', label: 'Aksi' }
             ],
             perPage: 20,
