@@ -204,7 +204,7 @@
                           </td>
                           <td width="60px">
                             <button
-                              v-if="pilihan.length > 2"
+                              v-if="pilihan.length > 1"
                               class="btn btn-sm btn-light rounded-0"
                               title="Hapus pilihan"
                               @click="_removeOpsi(index)">
@@ -558,7 +558,7 @@ export default {
       } else if(this.tipe_soal == 7) {
         jml = 4
       } else if (this.tipe_soal == 8) {
-        jml = 2
+        jml = 1
       } else if (this.tipe_soal == 9) {
         jml = 2
       }
