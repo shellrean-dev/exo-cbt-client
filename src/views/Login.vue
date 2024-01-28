@@ -54,11 +54,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-8 h-100">
-              <div class="row h-100 justify-content-center align-items-center  mx-auto">
-                <img :src="'/admin-system/img/bg9.svg'" class="d-none d-md-block" style="width: 100%; max-width:400px;">
-              </div>
-            </div>
           </div>
         </div>
       </div>

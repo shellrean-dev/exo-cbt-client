@@ -104,60 +104,60 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/setting',
+    path: '/msxDOoaCaCuZYDshDoSH',
     component: SettingIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: 'sekolah',
+        path: 'H5T5PiNMir0zXHOzAlPP',
         name: 'sekolah.setting',
         component: SetSekolah,
         meta: { title: 'Data sekolah' }
       },
       {
-        path: 'system',
+        path: 'OjsjffzkZ0o6NgpP7Mna',
         name: 'system.setting',
         component: SetSystem,
         meta: { title: 'Setting system' }
       },
       {
-        path: 'ujian',
+        path: 'l2OpZJGlymwIDTh3JSol',
         name: 'system.ujian',
         component: SetUjian,
         meta: { title: 'Setting ujian' }
       },
       {
-        path: 'token',
+        path: 'iplLe7X7ncKxkHiUNEcQ',
         name: 'system.token',
         component: SetToken,
         meta: { title: 'Setting token' }
       },
       {
-        path: 'user-agent-whitelist',
+        path: 'YbAcg2XTyPly240mrNgW',
         name: 'user.agent.whitelist',
         component: UAWhitelist
       }
     ]
   },
   {
-    path: '/jurusan',
+    path: '/OVx1MkBcsKxvIQRlOiGb',
     component: JurusanIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'Fj58ufaUPyRF8bfhjMY3',
         name: 'jurusan.data',
         component: DataJurusan,
         meta: { title: 'Manage jurusan' }
       },
       {
-        path: 'add',
+        path: '6rI0BDWAHZiukPP0XklO',
         name: 'jurusan.add',
         component: AddJurusan,
         meta: { title: 'Tambah jurusan' }
       },
       {
-        path: 'edit/:id',
+        path: 'EHwJHVNounHTupzWdjcs/:id',
         name: 'jurusan.edit',
         component: EditJurusan,
         meta: { title: 'Edit nama jurusan' }
@@ -165,42 +165,42 @@ const routes = [
     ]
   },
   {
-    path: '/peserta',
+    path: '/OczNnu8GWBveDLurtYGo',
     component: PesertaIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'ebY4Yy6rXiVFpCsPdE1w',
         name: 'peserta.data',
         component: DataPeserta,
         meta: { title: 'Manage peserta' }
       },
       {
-        path: 'add',
+        path: 'l6fwO7wGuPVqoNUCtB1h',
         name: 'peserta.add',
         component: AddPeserta,
         meta: { title: 'Tambah peserta' }
       },
       {
-        path: 'edit/:id',
+        path: '0IwThp4uGhMPzl6k1rGO/:id',
         name: 'peserta.edit',
         component: EditPeserta,
         meta: { title: 'Edit data peserta' }
       },
       {
-        path: 'upload',
+        path: 'ALu4sJN4QHVDwQaQqZD8',
         name: 'peserta.upload',
         component: UploadPeserta,
         meta: { title: 'Upload datapeserta' }
       },
       {
-        path: 'kartu',
+        path: 'aF9VdS8Z7TcjjntXQYav',
         name: 'peserta.kartu',
         component: KartuPeserta,
         meta: { title: 'Kartu peserta' }
       },
       {
-        path: 'blocked',
+        path: 'pJjcq4s79QWrQ26q8gRF',
         name: 'peserta.blocked',
         component: BlockedPeserta,
         meta: { title: 'Blocked peserta '}
@@ -208,30 +208,30 @@ const routes = [
     ],
   },
   {
-    path: '/matpel',
+    path: '/W7zv50p9fDT2i1gn9zWy',
     component: MatpelIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'vkVu4RW8qEfxsXA7APxJ',
         name: 'matpel.data',
         component: DataMatpel,
         meta: { title: 'Manage mata pelajaran' }
       },
       {
-        path: 'add',
+        path: 'UxvXCgSBDdJsy89yMwfE',
         name: 'matpel.add',
         component: AddMatpel,
         meta: { title: 'Tambah mata pelajara' }
       },
       {
-        path: 'edit/:id',
+        path: 'vua1TsZLnODNTU7Yvk2E/:id',
         name: 'matpel.edit',
         component: EditMatpel,
         meta: { title: 'Edit mata pelajaran' }
       },
       {
-        path: 'upload',
+        path: 'eweFdwWLt9G2pJOsqug5',
         name: 'matpel.upload',
         component: UploadMatpel,
         meta: { title: 'Upload mata pelajaran' }
@@ -239,30 +239,30 @@ const routes = [
     ]
   },
   {
-    path: '/pengguna',
+    path: '/mcgenibEq2FGn6mLX8TE',
     component: GuruIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'nOx6gK1nYq3wHNIEpkNt',
         name: 'guru.data',
         component: DataGuru,
         meta: { title: 'Manage pengguna' }
       },
       {
-        path: 'add',
+        path: 'iURrRWJiaQ2jL1a63nlL',
         name: 'guru.add',
         component: AddGuru,
         meta: { title: 'Tambah pengguna' }
       },
       {
-        path: 'edit/:id',
+        path: 'FbRD5UTOPPUSXJpFxlma/:id',
         name: 'guru.edit',
         component: EditGuru,
         meta: { title: 'Edit pengguna' }
       },
       {
-        path: 'upload',
+        path: 'fc6tAAVRVPSurO5hN9FM',
         name: 'guru.upload',
         component: UploadGuru,
         meta: { title: 'Upload pengguna' }
@@ -270,54 +270,54 @@ const routes = [
     ]
   },
   {
-    path: '/banksoal',
+    path: '/djDX93svWCsFXOIv40Ly',
     component: BanksoalIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'iijezPzKHwVzITnCJHp1',
         name: 'banksoal.data',
         component: DataBanksoal,
         meta: { title: 'Manage banksoal' }
       },
       {
-        path: ':banksoal_id/soal',
+        path: ':banksoal_id/W0qWOQ1oXzcUpmgXN7y5',
         name: 'banksoal.soal',
         component: SoalBanksoal,
         meta: { title: 'Manage soal' }
       },
       {
-        path: ':banksoal_id/soal/tambah',
+        path: ':banksoal_id/408bktE669vhwAPgofe5/AVUOVGCfCiTPwtikKFgP',
         name: 'banksoal.soal.tambah',
         component: SoalBanksoalTambah,
         meta: { title: 'Tambah soal' }
       },
       {
-        path: ':banksoal_id/soal/paste',
+        path: ':banksoal_id/oHQ2RworawVDj5hWLmPr/IvViuMHt0grdqts18DAt',
         name: 'banksoal.soal.paste',
         component: SoalBanksoalTemplate,
         meta: { title: 'Tambah soal' }
       },
       {
-        path: ':banksoal_id/upload',
+        path: ':banksoal_id/2AtLJVJCooCShX66ZsVa',
         name: 'banksoal.upload',
         component: SoalBanksoalUpload,
         meta: { title: 'Upload soal banksoal' }
       },
       {
-        path: ':banksoal_id/soal/:soal_id',
+        path: ':banksoal_id/IetL04hcdM7w4idMeahx/:soal_id',
         name: 'banksoal.soal.edit',
         component : SoalBanksoalEdit,
         meta: { title: 'Edit soal' }
       },
       {
-        path: ':banksoal_id/prev',
+        path: ':banksoal_id/ymiWG674yQnYjvOgngA6',
         name: 'banksoal.prev',
         component: SoalBanksoalPrev,
         meta: { title: 'Preview soal banksoal' }
       },
       {
-        path: ':banksoal_id/soal_bulk/tambah',
+        path: ':banksoal_id/xILFhkvQIaVGCqjJJyDW/0KBmRFCpdc8fDiOzRxkS',
         name: 'banksoal.soal.tambah.bulk',
         component: SoalBanksoalTambahBulk,
         meta: { title: 'Tambah soal' }
@@ -325,12 +325,12 @@ const routes = [
     ]
   },
   {
-    path: '/banksoal-adaptif',
+    path: '/4xrRN8ze3oc6cvWID4p1',
     component: BanksoalAdaptifIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'xsBposmJzhCNt3qx3vJY',
         name: 'banksoal.adaptif.data',
         component: DataBanksoalAdaptif,
         meta: { title: 'Manage banksoal adaptif' }
@@ -338,12 +338,12 @@ const routes = [
     ]
   },
   {
-    path: '/filemedia',
+    path: '/eIrBZhDfjdcXzuGtww77',
     component: FilemediaIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'Xj0hkfksfOH0OLeHQUQJ',
         name: 'filemedia.data',
         component: DataFilemedia,
         meta: { title: 'Manage filemedia' }
@@ -357,30 +357,30 @@ const routes = [
     ]
   },
   {
-    path: '/ujian',
+    path: '/1ykkPK6f0pCg3MJLeGEm',
     component: UjianIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'YgIfNj4hiYUUUroL7UCz',
         name: 'ujian.data',
         component: DataUjian,
         meta: { title: 'Manage ujian' }
       },
       {
-        path: 'status',
+        path: 'Bkyp4S6vW6kk7roYabHe',
         name: 'ujian.status',
         component: StatusUjian,
         meta: { title: 'Status ujian' }
       },
       {
-        path: 'peserta',
+        path: 'GUJyeSKBonjg76L6x0r1',
         name: 'ujian.peserta',
         component: PesertaUjian,
         meta: { title: 'Peserta ujian' }
       },
       {
-        path: 'reset/peserta',
+        path: 'NpMiNODYnQHqcpBHgsTe/ZpbkPALzKKUXeaXBM0F0',
         name: 'peserta.reset',
         component: ResetPesertaUjian,
         meta: { title: 'Reset peserta ujian' }
@@ -388,30 +388,30 @@ const routes = [
     ]
   },
   {
-    path: '/event',
+    path: '/FBJsuLERSFMNYYWyug86',
     component: EventIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'ni8dj3Ln3zrn6ZsfLlbL',
         name: 'ujian.event.data',
         component: DataEvent,
         meta: { title: 'Manage event ujian'}
       },
       {
-        path: ':id/berita-acara',
+        path: ':id/Cx74kEGiUJjnQh28E4GJ',
         name: 'event.berita.acara',
         component: BeritaAcara,
         meta: { title: 'Berita Acara' }
       },
       {
-        path: ':event_id/peserta',
+        path: ':event_id/hn5ofmUJhZ2ss7rmfCHA',
         name: 'ujian.event.peserta',
         component: EventPeserta,
         meta: { title: 'Kartu Event Peserta' }
       },
       {
-        path: ':event_id/:id/absensi',
+        path: ':event_id/:id/A7NiIePDxx1AnGGzvAyi',
         name: 'event.absensi',
         component: Absensi,
         meta: { title: 'Absensi' }
@@ -419,72 +419,72 @@ const routes = [
     ]
   },
   {
-    path: '/kelola',
+    path: '/RXKdUukypWfuvZ8dVf3Y',
     component: KelolaIndex,
     meta: { requiresAuth: true },
     children: [
       {
-        path: 'koreksi-esay',
+        path: 'IeGxiUgKXPjAGBIr6i8f',
         name: 'kelola.koreksi.esay',
         component: KoreksiEsay,
         meta: { title: 'Koreksi esay siswa'}
       },
       {
-        path: 'koreksi-esay/:banksoal',
+        path: 'jmMmEX4s3K0kde4IB1aa/:banksoal',
         name: 'kelola.koreksi.nilai.esay',
         component: KoreksiNilaiEsay,
         meta: { title: 'Koreksi nilai esay' }
       },
       {
-        path: 'koreksi-argument',
+        path: 'Hj96q6TrqYth9fiGALcb',
         name: 'kelola.koreksi.argument',
         component: KoreksiArgument,
         meta: { title: 'Koreksi argument siswa' }
       },
       {
-        path: 'koreksi-argument/:banksoal',
+        path: 'qyV0s9WcGkNg7MT7dor0/:banksoal',
         name: 'kelola.koreksi.nilai.argument',
         component: KoreksiNilaiArgument,
         meta: { title: 'Koreksi nilai argument' }
       },
       {
-        path: 'analys/banksoal',
+        path: 'InlDHUb2hGSABLuOl6Gq/XtPbDIqtB0vhOQcSeE3l',
         name: 'kelola.analys.banksoal',
         component: AnalysBanksoal,
         meta: { title: 'Analys banksoal' }
       },
       {
-        path: 'analys/banksoal/:banksoal',
+        path: 'fTvjCJmfPz75o2YUqENK/dfyu4j6hfWGUD3Wgq00I/:banksoal',
         name: 'kelola.analys.kesulitan.banksoal',
         component: AnalysKesulitanBanksoal,
         meta: { title: 'Analys kesulitan banksoal' }
       },
       {
-        path: 'analys/capaian-siswa',
+        path: 'GkAyjte50GQ83fU9IIFB/nmGXFjcju1K6mLvfrTP6',
         name: 'kelola.analys.capaian.siswa',
         component: AnalysSiswa,
         meta: { title: 'Analys capaian siswa' }
       },
       {
-        path: 'analys/capaian-siswa/:banksoal/:jadwal',
+        path: '0VQZgbaaXIa32YXnv4Aw/Nhsv00vGsAMZBd9Hja81/:banksoal/:jadwal',
         name: 'kelola.analys.capaian.siswa.data',
         component: AnalysCapaianSiswa,
         meta: { title: 'Analys capaian siswa' }
       },
       {
-        path: 'hasil-ujian',
+        path: 'rP17Nz5CpHlztD4CRtpa',
         name: 'kelola.hasil.ujian',
         component: HasilUjian,
         meta: { title: 'Hasil ujian' }
       },
       {
-        path: 'hasil-ujian/:id',
+        path: 'mK7RRkvmuoVv5qsd52ip/:id',
         name: 'kelola.hasil.ujian.siswa',
         component: DetailJawabanSiswa,
         meta: { title: 'Detail jawaban siswa'}
       },
       {
-        path: 'ledger-peserta',
+        path: 'pZGjRNmmkSbp2ULZCxCL',
         name: 'kelola.ledger.peserta',
         component: LedgerPeserta,
         meta: { title: 'Ledger peserta' }
@@ -492,7 +492,7 @@ const routes = [
     ]
   },
   {
-    path: '/grup',
+    path: '/jtJzszFnzknk9ZGKg5Xi',
     component: GroupIndex,
     meta: { requiresAuth: true },
     children: [
@@ -504,7 +504,7 @@ const routes = [
     ]
   },
   {
-    path: '/agama',
+    path: '/aAqQwZPtzD7VmkwkjkbT',
     component: AgamaIndex,
     meta: { requiresAuth: true },
     children: [
@@ -516,7 +516,7 @@ const routes = [
     ]
   },
   {
-    path: '/backup',
+    path: '/0Ru9ZMrREkYFDnfLXU1s',
     component: BackupIndex,
     meta: { requiresAuth: true },
     children: [

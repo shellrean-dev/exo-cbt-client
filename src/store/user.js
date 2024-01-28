@@ -5,13 +5,15 @@ const state = () => ({
     users: [],
     users_data: [],
     user: {
+        role: 'guru',
         name: '',
         email: '',
         password: ''
     },
     uploadPercentage: 0,
     authenticated: [],
-    page: 1
+    page: 1,
+    menus: {},
 })
 
 const mutations = {
@@ -24,11 +26,15 @@ const mutations = {
     ASSIGN_USERS(state, payload) {
         state.users_data = payload
     },
+    ASSIGN_MENUS(state, payload) {
+        state.menus = payload
+    },
     SET_PAGE(state, payload) {
         state.page = payload
     },
     ASSIGN_USER_FORM(state, payload) {
         state.user = {
+            role: payload.role,
             name: payload.name,
             email: payload.email
         }
@@ -77,6 +83,7 @@ const actions = {
                 let netowrk = await $axios.get(`user-authenticated`)
 
                 commit('ASSIGN_USER_AUTH', netowrk.data.data)
+                commit('ASSIGN_MENUS', netowrk.data.data.menus)
                 commit('LOADING_PAGE', false, { root: true })
                 resolve(netowrk.data)
             } catch (error) {
@@ -139,7 +146,7 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             try {
                 let network = await $axios.get(`users/${payload}`)
-                
+
                 commit('ASSIGN_USER_FORM', network.data.data)
                 commit('SET_LOADING', false, { root: true })
                 resolve(network.dta)
@@ -154,7 +161,7 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             try {
                 let network = await $axios.put(`users/${payload}`, state.user)
-                
+
                 commit('CLEAR_FORM')
                 commit('SET_LOADING', false, { root: true })
                 resolve(network.dta)
@@ -200,7 +207,7 @@ const actions = {
 
         return new Promise(async(resolve, reject) => {
             try {
-                let network = await $axios.post('users/delete-multiple', payload) 
+                let network = await $axios.post('users/delete-multiple', payload)
 
                 commit('SET_LOADING', false, { root: true })
                 resolve(network.data)

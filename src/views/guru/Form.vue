@@ -1,5 +1,14 @@
 <template>
     <div>
+      <div class="form-group">
+        <label>Akses</label>
+        <select class="form-control" :class="{ 'is-invalid' : errors.role }" v-model="user.role">
+          <option value="admin">Admin</option>
+          <option value="guru">Guru</option>
+          <option value="operator">Operator</option>
+        </select>
+        <p class="text-danger" v-if="errors.role">{{ errors.role[0] }}</p>
+      </div>
         <div class="form-group">
             <label>Nama</label>
             <input type="text" class="form-control" :class="{ 'is-invalid' : errors.name }" placeholder="Nama" v-model="user.name" autofocus="">
