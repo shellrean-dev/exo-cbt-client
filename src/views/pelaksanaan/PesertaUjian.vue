@@ -100,36 +100,6 @@
                                 </b-card>
                             </template>
                             <template v-slot:cell(con)="row">
-                                <template v-if="enable_socket === 'oke'">
-                                  <b-badge variant="success"
-                                           v-if="row.item.con"
-                                           pill
-                                           class="p-2"
-                                  >&#9786; Terhubung</b-badge>
-                                  <b-badge variant="danger"
-                                           v-else
-                                           pill
-                                           class="p-2"
-                                  >&#9785; Terputus</b-badge>
-                                </template>
-                                <template v-if="enable_socket === 'oke'">
-                                  <b-badge variant="success"
-                                           v-if="row.item.tab"
-                                           pill
-                                           class="p-2"
-                                  >&#9786; In Tab</b-badge>
-                                  <b-badge variant="warning"
-                                           v-else
-                                           pill
-                                           class="p-2"
-                                  >&#9785; Not in tab</b-badge>
-                                </template>
-                                <template v-if="enable_socket !== 'oke'">
-                                  <b-badge variant="warning"
-                                           pill
-                                           class="p-2"
-                                  >Socket non-active</b-badge>
-                                </template>
                             </template>
                             <template v-slot:cell(status)="row">
                                 {{ getText(row.item.status_ujian) }}
@@ -169,17 +139,6 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <template v-if="enable_socket === 'oke'">
-                      <div><span class="badge badge-danger">Terputus</span> Koneksi peserta terputus</div>
-                      <div class="mb-2"><span class="badge badge-success">Terhubung</span> Koneksi peserta terhubung</div>
-                    </template>
-                    <template v-if="enable_socket === 'oke'">
-                      <div><span class="badge badge-warning">Not in tab</span> Peserta sedang tidak berada di tab ujian</div>
-                      <div><span class="badge badge-success">In tab</span> Peserta sedang berada di tab ujian</div>
-                    </template>
-                    <template v-else>
-                      Socket non-active
-                    </template>
                 </div>
             </div>
         </div>
@@ -213,7 +172,6 @@ export default {
                 { key: 'mulai_ujian', label: 'Mulai ujian', sortable: true },
                 { key: 'selesai_ujian', label: 'Selesai ujian', },
                 { key: 'status', label: 'Status'},
-                { key: 'con', label: 'Koneksi'}
             ],
             jadwal: 0,
             search: '',
